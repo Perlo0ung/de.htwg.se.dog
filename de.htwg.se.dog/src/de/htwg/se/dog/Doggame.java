@@ -6,5 +6,4 @@ public class Doggame {
 		
 		System.out.println("bla");
 	}
-
 }
