@@ -22,6 +22,7 @@ public class CardStackTest {
 		size = stack.size();
 	}
 	
+	
 	@Test
 	public void testgenerateStack() {
 		//System.out.println(cardStack.size());

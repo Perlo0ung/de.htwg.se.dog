@@ -30,6 +30,8 @@ public class CardStack {
 			
 		}
 		
+		
+		
 	}
 	public void shuffleStack(){
 		Collections.shuffle(cardstack);
