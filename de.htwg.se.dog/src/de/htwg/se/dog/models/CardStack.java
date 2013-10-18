@@ -36,10 +36,10 @@ public class CardStack {
 		return this.cardstack;
 	}
 
-	public Card dealCard(int range) {
+	public Card dealCard(int start, int range) {
 		gen = new Random();
-		int index = gen.nextInt(range);
-		System.out.println(index);
+		int index = gen.nextInt(range - start) + start;
+		System.out.println("RANDOM: "+index);
 		return cardstack.remove(index);
 	}
 }

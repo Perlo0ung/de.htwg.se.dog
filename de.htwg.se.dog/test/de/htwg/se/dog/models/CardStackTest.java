@@ -1,8 +1,6 @@
 package de.htwg.se.dog.models;
 
 import static org.junit.Assert.*;
-
-import java.util.Iterator;
 import java.util.Stack;
 
 import org.junit.Before;
@@ -14,7 +12,9 @@ public class CardStackTest {
 	CardStack cardStack, cardStackSorted;
 	Stack<Card> stack;
 	final int CARDS = 12;
-	final int RANGE = 1;
+	
+	//for pseudo random generation
+	final int RANDOMCARD = 5;
 	int size;
 
 	@Before
@@ -38,6 +38,10 @@ public class CardStackTest {
 
 	@Test
 	public void testdealCard() {
-		assertEquals(cardStack.dealCard(RANGE).getValue(),1);
+		assertEquals(cardStack.dealCard(RANDOMCARD,RANDOMCARD+1).getValue(),RANDOMCARD+1);
+	}
+	@Test
+	public void testgetStack() {
+		assertNotNull(cardStack.getStack());
 	}
 }

@@ -5,7 +5,7 @@ import java.util.LinkedList;
 public class Player {
 
 	public int[] figure;
-	LinkedList<Card> cards;
+	public LinkedList<Card> cards;
 	
 	public Player(){
 		figure = new int[4];
@@ -16,5 +16,8 @@ public class Player {
 		
 		cards = new LinkedList<Card>();
 		
+	}
+	public LinkedList<Card> getCardList(){
+		return this.cards;
 	}
 }
