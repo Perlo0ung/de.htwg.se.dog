@@ -15,5 +15,23 @@ public class Card {
 	public int getValue() {
 		return this.value;
 	}
+	
+	public String getCardName(int value) {
+		switch (value) {
+		case 1:
+			return "Ass";
+		case 11:
+			return "Bube"; 
+		case 12:
+			return "Dame";
+		case 13: 
+			return "König";
+		case 14:
+			return "JOKER";
+		default:
+			return ""+value; 
+		}
+		
+	}
 }
 
