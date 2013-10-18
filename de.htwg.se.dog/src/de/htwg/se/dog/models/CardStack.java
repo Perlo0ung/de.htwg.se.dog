@@ -4,6 +4,7 @@ import java.util.Stack;
 
 public class CardStack {
 
+	@SuppressWarnings("unused")
 	private Stack<Card> cardstack;
 	
 	public CardStack(){
