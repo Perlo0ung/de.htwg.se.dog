@@ -4,8 +4,6 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import de.htwg.se.dog.models.*;
-
 public class CardStackTest {
 	
 	CardStack cardStack;
