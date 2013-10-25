@@ -5,7 +5,7 @@ import java.util.LinkedList;
 public class Player {
 
 	public LinkedList<Figure> figure;
-	public LinkedList<Card> cards;
+	private LinkedList<Card> cards;
 	
 	public Player(int playerNr, int figcount){
 		figure = new LinkedList<Figure>();
@@ -22,5 +22,9 @@ public class Player {
 	
 	public void addCard(Card c) {
 		this.cards.add(c);
+	}
+	
+	public boolean removeCard(Card c){
+		return cards.remove(c);
 	}
 }
