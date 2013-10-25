@@ -4,10 +4,13 @@ import java.util.Random;
 import java.util.Stack;
 
 public class CardStack {
-
+	
+	
 	private Stack<Card> cardstack = null;
 	private final int CARDS = 4;
 	private final int JOKER = 14;
+	private final int ZERO = 0;
+	
 	private Random gen;
 	
 	public CardStack(int size) {
@@ -16,8 +19,8 @@ public class CardStack {
 	}
 
 	public void generateStack(int size) {
-		for (int i = 0; i <= (CARDS-1); i++) {
-			for (int j = 0; j <= size; j++) {
+		for (int i = ZERO; i <= (CARDS-1); i++) {
+			for (int j = ZERO; j <= size; j++) {
 				cardstack.push(new Card(j + 1));
 			}
 		}
