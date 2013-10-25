@@ -27,12 +27,6 @@ public class CardStack {
 		cardstack.push(new Card(JOKER));
 		cardstack.push(new Card(JOKER));
 		cardstack.push(new Card(JOKER));
-		/*
-		 * for (Iterator<Card> iterator = cardstack.iterator();
-		 * iterator.hasNext();) { Card type = (Card) iterator.next();
-		 * System.out.println(type.getValue() + " " +
-		 * type.getCardName(type.getValue())); }
-		 */
 	}
 
 	public Stack<Card> getStack() {
