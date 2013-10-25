@@ -2,6 +2,7 @@ package de.htwg.se.dog.models;
 
 public class Figure {
 	private final int ZERO = 0;
+	private final int FOUR = 0;
 	private final int owner;
 	private final int fignr;
 	
@@ -11,7 +12,7 @@ public class Figure {
 		} else {
 			throw new IllegalArgumentException("Failed to create Figure with Owner:" + owner);
 		}
-		if ( fignr > 0 && fignr <= 4){
+		if ( fignr > ZERO && fignr <= FOUR){
 			this.fignr = fignr;	
 		} else  {
 			throw new IllegalArgumentException("Failed to create Figrue with Fignr:" + fignr);

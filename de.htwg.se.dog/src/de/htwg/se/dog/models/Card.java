@@ -4,9 +4,11 @@ package de.htwg.se.dog.models;
 public class Card {
 	
 	private final int value;
-
+	private final int ZERO = 0;
+	private final int FOURTEEN = 0;
+	
 	protected Card(int value){
-		if (value > 0 && value <= 14) {
+		if (value > ZERO && value <= FOURTEEN) {
 			this.value = value;
 		} else {
 			throw new IllegalArgumentException("Failed to create card with value:" + value);

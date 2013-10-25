@@ -1,6 +1,8 @@
 package de.htwg.se.dog.models;
 
 import static org.junit.Assert.*;
+import de.htwg.se.dog.models.Field;
+import de.htwg.se.dog.models.Figure;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -19,6 +21,7 @@ public class FeldTest {
 		feld2 = new Field(OWNER);
 		feld2.setFigure(f);
 		feld2.setBlocked(true);
+		feld2.getBlocked();
 	}
 	@Test
 	public void testSetFigure() {
@@ -34,7 +37,7 @@ public class FeldTest {
 	}
 	@Test
 	public void setBlocked(){
-		assertEquals(true, feld2.getBlocked());
+		assertEquals(feld2.getBlocked(),true);
 	}
 	@Test
 	public void testIsHouse(){
