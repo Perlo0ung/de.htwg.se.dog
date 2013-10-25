@@ -1,0 +1,41 @@
+package de.htwg.se.dog.models;
+
+public class Feld {
+		
+		private final int owner;
+		private boolean house;
+		private boolean blocked;
+		private Figure figure;
+		
+		public Feld(int owner) {
+			this.blocked = false;
+			if (owner == 0 ) {
+				this.owner = 0;
+				this.house = false;
+			} else {
+				this.owner = owner;
+				this.house = true;
+			}
+		}
+		public void setFigure(Figure f) {
+			this.figure = f;
+		}
+		public Figure getFigure() {
+			return this.figure;
+		}
+		
+		public int getOwner() {
+			return this.owner;
+		}
+		public void setBlocked(boolean a) {
+			this.blocked = a;
+		}
+		public boolean getBlocked() {
+			return this.blocked;
+		}
+		
+		public boolean isHouse(){
+			return this.house;
+		}
+		
+}

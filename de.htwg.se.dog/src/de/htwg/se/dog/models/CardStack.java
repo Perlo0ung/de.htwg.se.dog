@@ -39,7 +39,7 @@ public class CardStack {
 	public Card dealCard(int start, int range) {
 		gen = new Random();
 		int index = gen.nextInt(range - start) + start;
-		System.out.println("RANDOM: "+index);
+		System.out.println("RANDOMINDEX: "+index);
 		return cardstack.remove(index);
 	}
 }

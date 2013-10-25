@@ -17,7 +17,12 @@ public class Player {
 		cards = new LinkedList<Card>();
 		
 	}
+	
 	public LinkedList<Card> getCardList(){
 		return this.cards;
+	}
+	
+	public void addCard(Card c) {
+		this.cards.add(c);
 	}
 }
