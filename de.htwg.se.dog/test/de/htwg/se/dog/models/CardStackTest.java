@@ -28,7 +28,7 @@ public class CardStackTest {
 	public void testgenerateStack() {
 		for (int i = 0; i <= (4 * (CARDS + 1) - 1); i++) {
 			int tmp = stack.elementAt(i).getValue();
-			System.out.println("I: " + i + ", Karte: " + tmp);
+			//System.out.println("I: " + i + ", Karte: " + tmp);
 			assertEquals(i % (CARDS + 1) + 1, tmp);
 		}
 		assertEquals(14, stack.pop().getValue());

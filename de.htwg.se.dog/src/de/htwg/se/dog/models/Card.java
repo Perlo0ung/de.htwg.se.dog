@@ -5,7 +5,7 @@ public class Card {
 	
 	private final int value;
 	private final int ZERO = 0;
-	private final int FOURTEEN = 0;
+	private final int FOURTEEN = 14;
 	
 	protected Card(int value){
 		if (value > ZERO && value <= FOURTEEN) {

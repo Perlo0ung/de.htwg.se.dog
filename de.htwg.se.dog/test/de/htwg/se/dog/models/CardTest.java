@@ -15,8 +15,8 @@ public class CardTest {
 	Card wrong;
 	@Rule
 	public ExpectedException expected = ExpectedException.none();
-	@Before
 	
+	@Before
 	public void setUp() {
 		card = new Card(12);
 	}

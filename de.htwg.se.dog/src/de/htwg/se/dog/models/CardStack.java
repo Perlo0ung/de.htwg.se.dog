@@ -28,15 +28,16 @@ public class CardStack {
 		cardstack.push(new Card(JOKER));
 		cardstack.push(new Card(JOKER));
 	}
-
+	
 	public Stack<Card> getStack() {
 		return this.cardstack;
 	}
-
+	// Gets Card from stack between start inc. and range excl.
+	// ands removes it from the Stack
 	public Card dealCard(int start, int range) {
 		gen = new Random();
 		int index = gen.nextInt(range - start) + start;
-		System.out.println("RANDOMINDEX: "+index);
+		//System.out.println("RANDOMINDEX: "+index);
 		return cardstack.remove(index);
 	}
 }
