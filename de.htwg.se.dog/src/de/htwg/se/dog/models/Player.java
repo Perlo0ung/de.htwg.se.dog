@@ -4,16 +4,14 @@ import java.util.LinkedList;
 
 public class Player {
 
-	public int[] figure;
+	public LinkedList<Figure> figure;
 	public LinkedList<Card> cards;
 	
-	public Player(){
-		figure = new int[4];
-		figure[0] = -1;
-		figure[1] = -1;
-		figure[2] = -1;
-		figure[3] = -1;
-		
+	public Player(int playerNr, int figcount){
+		figure = new LinkedList<Figure>();
+		for ( int i = 0; i < figcount; i++){
+			figure.add(new Figure(playerNr, i+1));
+		}
 		cards = new LinkedList<Card>();
 		
 	}

@@ -1,13 +1,13 @@
 package de.htwg.se.dog.models;
 
-public class Feld {
+public class Field {
 		
 		private final int owner;
 		private boolean house;
 		private boolean blocked;
 		private Figure figure;
 		
-		public Feld(int owner) {
+		public Field(int owner) {
 			this.blocked = false;
 			if (owner == 0 ) {
 				this.owner = 0;

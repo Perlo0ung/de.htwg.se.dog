@@ -32,6 +32,7 @@ public class FigureTest {
 	public void testGetFignr() {
 		assertEquals(fignr, f.getFignr());
 	}
+	
 	@Test(expected=IllegalArgumentException.class)
 	public void testExpectedExceptionWrongFigNr() {
 		fwrong = new Figure(playernr,wrongFignr);
