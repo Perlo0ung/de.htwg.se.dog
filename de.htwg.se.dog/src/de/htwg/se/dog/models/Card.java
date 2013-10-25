@@ -4,8 +4,8 @@ package de.htwg.se.dog.models;
 public class Card {
 	
 	private final int value;
-	private final int ZERO = 0;
-	private final int FOURTEEN = 14;
+	private static final int ZERO = 0;
+	private static final int FOURTEEN = 14;
 	
 	protected Card(int value){
 		if (value > ZERO && value <= FOURTEEN) {
