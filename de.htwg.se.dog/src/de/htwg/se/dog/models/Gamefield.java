@@ -2,7 +2,7 @@ package de.htwg.se.dog.models;
 
 
 public class Gamefield {
-	private final int NOOWNER = 0;
+	private static final int NOOWNER = 0;
 	
 	Field[] gamefield;
 	private final int fieldsTillHouse;

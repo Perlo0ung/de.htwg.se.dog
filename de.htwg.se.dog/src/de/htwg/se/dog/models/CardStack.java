@@ -7,9 +7,9 @@ public class CardStack {
 	
 	
 	private Stack<Card> cardstack = null;
-	private final int CARDS = 4;
-	private final int JOKER = 14;
-	private final int ZERO = 0;
+	private static final int CARDS = 4;
+	private static final int JOKER = 14;
+	private static final int ZERO = 0;
 	
 	private Random gen;
 	

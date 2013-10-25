@@ -1,8 +1,8 @@
 package de.htwg.se.dog.models;
 
 public class Figure {
-	private final int ZERO = 0;
-	private final int FOUR = 4;
+	private static final int ZERO = 0;
+	private static final int FOUR = 4;
 	private final int owner;
 	private final int fignr;
 	
