@@ -7,7 +7,7 @@ import de.htwg.se.dog.models.Figure;
 import org.junit.Before;
 import org.junit.Test;
 
-public class FeldTest {	
+public class FieldTest {	
 	private final int NOOWNER = 0;
 	private final int OWNER = 1;
 	private final int FIGNUM = 1;
