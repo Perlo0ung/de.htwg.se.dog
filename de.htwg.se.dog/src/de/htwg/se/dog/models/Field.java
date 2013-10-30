@@ -17,9 +17,16 @@ public class Field {
 				this.house = true;
 			}
 		}
-		public void setFigure(Figure f) {
+		public void putFigure(Figure f) {
 			this.figure = f;
 		}
+		
+		public Figure removeFigure(){
+			Figure tmp = this.figure;
+			this.figure = null;
+			return tmp;
+		}
+		
 		public Figure getFigure() {
 			return this.figure;
 		}
@@ -27,9 +34,11 @@ public class Field {
 		public int getOwner() {
 			return this.owner;
 		}
+		
 		public void setBlocked(boolean a) {
 			this.blocked = a;
 		}
+		
 		public boolean getBlocked() {
 			return this.blocked;
 		}
@@ -37,5 +46,5 @@ public class Field {
 		public boolean isHouse(){
 			return this.house;
 		}
-		
+
 }

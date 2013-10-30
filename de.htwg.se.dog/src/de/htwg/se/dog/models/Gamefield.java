@@ -8,13 +8,14 @@ public class Gamefield {
 	private final int fieldsTillHouse;
 	private final int playerCount;
 	private final int houseCount;
+	private final int fieldSize;
 	
 	public Gamefield(int fieldsTilHouse, int playerCount, int houseCount){
 		this.fieldsTillHouse = fieldsTilHouse;
 		this.houseCount = houseCount;
 		this.playerCount = playerCount;
-		
-		gamefield = new Field[(fieldsTilHouse+houseCount)*playerCount];
+		this.fieldSize = (houseCount + fieldsTilHouse) * playerCount;
+		gamefield = new Field[fieldSize];
 		generateGamefield();
 	}
 
@@ -37,5 +38,13 @@ public class Gamefield {
 	public int getOwner(int fieldNr){
 		return this.gamefield[fieldNr].getOwner();
 	}
-	
+	public Field[] getGamefield(){
+		return gamefield;
+	}
+	public int getFieldSize(){
+		return fieldSize;
+	}
+	public int getHouseCount(){
+		return houseCount;
+	}
 }
