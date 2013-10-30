@@ -8,9 +8,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class FieldTest {	
-	private final int NOOWNER = 0;
 	private final int OWNER = 1;
 	private final int FIGNUM = 1;
+	public Player owner;
 	public Field feld1;
 	public Field feld2;	
 	Figure f = new Figure(OWNER,FIGNUM);
