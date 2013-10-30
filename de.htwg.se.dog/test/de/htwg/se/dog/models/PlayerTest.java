@@ -48,7 +48,7 @@ public class PlayerTest {
 		@Test
 		public void testAddFigure() {
 			p1.addFigure(temp);
-			assertEquals(p1.figure.size(),4);
+			assertEquals(p1.figure.size(),5);
 		}
 		@Test
 		public void testGetPlayerId() {
