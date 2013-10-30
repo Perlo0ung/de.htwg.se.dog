@@ -1,4 +1,4 @@
-package de.htwg.se.dog.controler;
+package de.htwg.se.dog.controller;
 
 import static org.junit.Assert.*;
 
