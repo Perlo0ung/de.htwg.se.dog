@@ -3,7 +3,7 @@ import de.htwg.se.dog.models.*;
 
 public class Movement {
 		
-	public boolean moveFigure(Gamefield gamefield, int steps, int startfieldnr){
+	public boolean moveFigure(GameField gamefield, int steps, int startfieldnr){
 		Field[] array = gamefield.getGamefield();
 		if(!vaildMove(gamefield, steps, startfieldnr)){
 			return false;
@@ -15,14 +15,14 @@ public class Movement {
 	}
 	
 	
-	public boolean vaildMove(Gamefield gamefield, int steps, int startfieldnr){
+	public boolean vaildMove(GameField gamefield, int steps, int startfieldnr){
 		if(getTargetfield(gamefield, steps, startfieldnr) >= 0){
 			return true;
 		}
 		return false;
 	}
 	
-	public int getTargetfield(Gamefield gamefield, int steps, int startfieldnr){
+	public int getTargetfield(GameField gamefield, int steps, int startfieldnr){
 		Field[] array = gamefield.getGamefield();
 		int counter = steps;
 		int playerNr = array[startfieldnr].getFigure().getOwner();

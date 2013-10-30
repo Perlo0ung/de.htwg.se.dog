@@ -15,17 +15,18 @@ public class FigureTest {
 	int fignr = 4;
 	int wrongPlayernr = -1;
 	int wrongFignr = 34;
+	Player player = new Player(playernr, 0);
 	@Rule
 	public ExpectedException expected = ExpectedException.none();
 	@Before
 	
 	public void setUp() {
-		f = new Figure(playernr, fignr);
+		f = new Figure(player, fignr);
 	}
 	
 	@Test
 	public void testGetOwner() {
-		assertEquals(playernr, f.getOwner());
+		assertEquals(player, f.getOwner());
 	}
 	
 	@Test
@@ -35,15 +36,7 @@ public class FigureTest {
 	
 	@Test(expected=IllegalArgumentException.class)
 	public void testExpectedExceptionWrongFigNr() {
-		fwrong = new Figure(playernr,wrongFignr);
+		fwrong = new Figure(player,wrongFignr);
 		assertNotNull(fwrong);
 	}
-	
-	@Test(expected=IllegalArgumentException.class)
-	public void testExpectedExceptionWrongOwnerNr() {
-		fwrong = new Figure(wrongPlayernr,fignr);
-		assertNotNull(fwrong);
-	}
-	
-
 }

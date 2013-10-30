@@ -7,11 +7,7 @@ public class Figure {
 	private final Player owner;
 	
 	public Figure(Player owner, int fignr){
-		if(owner.getPlayerID() > ZERO){
-			this.owner = owner;
-		} else {
-			throw new IllegalArgumentException("Failed to create Figure with Owner:" + owner);
-		}
+		this.owner = owner;
 		if ( fignr > ZERO && fignr <= FOUR){
 			this.fignr = fignr;	
 		} else  {

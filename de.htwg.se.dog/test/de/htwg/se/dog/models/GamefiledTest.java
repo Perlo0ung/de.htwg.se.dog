@@ -1,7 +1,7 @@
 package de.htwg.se.dog.models;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -9,7 +9,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 public class GamefiledTest {
-	Gamefield f;
+	GameField f;
 	int playerCount = 3;
 	int fieldsTillHouse = 2;
 	int houseCount = 3;
@@ -21,13 +21,16 @@ public class GamefiledTest {
 	
 	@Before
 	public void setUp() {
-		f = new Gamefield(fieldsTillHouse, playerCount, houseCount);
+		f = new GameField(fieldsTillHouse, playerCount, houseCount);
 	}
 	
 	@Test
-	public void testGenerateGamefield() {
+	public void testGenerateGameField() {
 		assertEquals(noowner, f.getOwner(fieldsTillHouse+houseCount));
 		assertEquals(owner, f.getOwner(fieldsTillHouse));
 	}
-	
+	@Test
+	public void testGetGameField(){
+		
+	}
 }

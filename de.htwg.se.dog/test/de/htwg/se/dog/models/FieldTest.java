@@ -8,18 +8,18 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class FieldTest {	
+	private final int NOOWNER = 0;
 	private final int OWNER = 1;
 	private final int FIGNUM = 1;
-	public Player owner;
 	public Field feld1;
 	public Field feld2;	
-	Figure f = new Figure(OWNER,FIGNUM);
+	Figure f = new Figure(new Player(OWNER, 0),FIGNUM);
 	
 	@Before
 	public void setUp() {
 		feld1 = new Field(NOOWNER);
 		feld2 = new Field(OWNER);
-		feld2.setFigure(f);
+		feld2.putFigure(f);
 		feld2.setBlocked(true);
 		feld2.getBlocked();
 	}
@@ -42,6 +42,12 @@ public class FieldTest {
 	@Test
 	public void testIsHouse(){
 		assertEquals(true, feld2.isHouse());
+	}
+	@Test
+	public void testremoveFigure() {
+		Figure tmp = feld2.removeFigure();
+		assertEquals(f, tmp);
+		assertNull(feld2.getFigure());
 	}
 
 }

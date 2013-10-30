@@ -16,6 +16,7 @@ public class PlayerTest {
 		Card card2;
 		int playerNr=1;
 		int figCount=4;
+		Figure temp;
 		
 		@Rule
 		public ExpectedException expected = ExpectedException.none();
@@ -39,5 +40,18 @@ public class PlayerTest {
 			assertEquals(true, p1.getCardList().contains(card2));
 			assertEquals(true, p1.removeCard(card2));
 		}
-		
+		@Test
+		public void testRemoveFigure() {
+			temp = p1.removeFigure();
+			assertEquals(p1.figure.size(),3);
+		}
+		@Test
+		public void testAddFigure() {
+			p1.addFigure(temp);
+			assertEquals(p1.figure.size(),4);
+		}
+		@Test
+		public void testGetPlayerId() {
+			assertEquals(playerNr,p1.getPlayerID());
+		}
 }

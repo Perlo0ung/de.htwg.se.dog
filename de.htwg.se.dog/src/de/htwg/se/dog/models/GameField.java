@@ -1,7 +1,7 @@
 package de.htwg.se.dog.models;
 
 
-public class Gamefield {
+public class GameField {
 	private static final int NOOWNER = 0;
 	
 	Field[] gamefield;
@@ -10,7 +10,7 @@ public class Gamefield {
 	private final int houseCount;
 	private final int fieldSize;
 	
-	public Gamefield(int fieldsTilHouse, int playerCount, int houseCount){
+	public GameField(int fieldsTilHouse, int playerCount, int houseCount){
 		this.fieldsTillHouse = fieldsTilHouse;
 		this.houseCount = houseCount;
 		this.playerCount = playerCount;
