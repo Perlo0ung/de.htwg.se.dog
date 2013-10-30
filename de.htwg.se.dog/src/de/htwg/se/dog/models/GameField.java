@@ -10,11 +10,11 @@ public class GameField {
 	private final int houseCount;
 	private final int fieldSize;
 	
-	public GameField(int fieldsTilHouse, int playerCount, int houseCount){
-		this.fieldsTillHouse = fieldsTilHouse;
+	public GameField(int fieldsTillHouse, int playerCount, int houseCount){
+		this.fieldsTillHouse = fieldsTillHouse;
 		this.houseCount = houseCount;
 		this.playerCount = playerCount;
-		this.fieldSize = (houseCount + fieldsTilHouse) * playerCount;
+		this.fieldSize = (houseCount + fieldsTillHouse) * playerCount;
 		gamefield = new Field[fieldSize];
 		generateGamefield();
 	}

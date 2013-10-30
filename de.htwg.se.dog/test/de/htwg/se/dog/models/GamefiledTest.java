@@ -3,6 +3,8 @@ package de.htwg.se.dog.models;
 import static org.junit.Assert.assertEquals;
 
 
+import static org.junit.Assert.assertNotNull;
+
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -10,6 +12,7 @@ import org.junit.rules.ExpectedException;
 
 public class GamefiledTest {
 	GameField f;
+	GameField temp; 
 	int playerCount = 3;
 	int fieldsTillHouse = 2;
 	int houseCount = 3;
@@ -22,6 +25,7 @@ public class GamefiledTest {
 	@Before
 	public void setUp() {
 		f = new GameField(fieldsTillHouse, playerCount, houseCount);
+		temp = new GameField(fieldsTillHouse, playerCount, houseCount);
 	}
 	
 	@Test
@@ -30,7 +34,15 @@ public class GamefiledTest {
 		assertEquals(owner, f.getOwner(fieldsTillHouse));
 	}
 	@Test
+	public void testGetFieldSize(){
+		assertEquals(temp.getFieldSize(), f.getFieldSize());
+	}
+	@Test
 	public void testGetGameField(){
-		
+		assertNotNull(f.getGamefield());
+	}
+	@Test
+	public void testGetHouseCount(){
+		assertEquals(temp.getHouseCount(), f.getHouseCount());
 	}
 }
