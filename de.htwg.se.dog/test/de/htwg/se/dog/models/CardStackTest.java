@@ -12,6 +12,7 @@ public class CardStackTest {
 	CardStack cardStack, cardStackSorted;
 	Stack<Card> stack;
 	final int CARDS = 12;
+	final int PLAYERS = 12;
 	
 	//for pseudo random generation
 	final int RANDOMCARD = 5;
@@ -19,7 +20,7 @@ public class CardStackTest {
 
 	@Before
 	public void setUp() throws Exception {
-		cardStack = new CardStack(CARDS);
+		cardStack = new CardStack(CARDS,PLAYERS);
 		stack = cardStack.getStack();
 		size = stack.size();
 	}
@@ -33,9 +34,12 @@ public class CardStackTest {
 		}
 		assertEquals(14, stack.pop().getValue());
 		assertEquals(14, stack.pop().getValue());
-		assertEquals(14, stack.pop().getValue());
 	}
 
+	@Test
+	public void testgetStackSize() {
+		assertEquals(cardStack.getSize(),stack.size());
+	}
 	@Test
 	public void testdealCard() {
 		assertEquals(cardStack.dealCard(RANDOMCARD,RANDOMCARD+1).getValue(),RANDOMCARD+1);
