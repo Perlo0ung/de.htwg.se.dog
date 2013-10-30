@@ -11,7 +11,7 @@ public class Movement {
 		//check if startfield is not empty
 		if(array[startfieldnr].getFigure() != null){
 			//Check if move is valid
-			if(!vaildMove(gamefield, steps, startfieldnr)){
+			if(!validMove(gamefield, steps, startfieldnr)){
 				return false;
 			}
 			int targetfield = getTargetfield(gamefield, steps, startfieldnr);
@@ -24,7 +24,7 @@ public class Movement {
 	}
 	
 	//Returns true if suggested move is valid
-	public boolean vaildMove(GameField gamefield, int steps, int startfieldnr){
+	public boolean validMove(GameField gamefield, int steps, int startfieldnr){
 		if(getTargetfield(gamefield, steps, startfieldnr) >= 0){
 			return true;
 		}

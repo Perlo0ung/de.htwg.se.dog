@@ -5,11 +5,11 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import de.htwg.se.dog.models.Field;
-import de.htwg.se.dog.models.GameField;
-import de.htwg.se.dog.models.Player;
+import de.htwg.se.dog.models.*;
+import de.htwg.se.dog.controller.*;
 
 public class MovementTest {
+	Movement movement;
 	GameField gamefield;
 	Player tp1, tp2;
 	Field[] array;
@@ -19,36 +19,45 @@ public class MovementTest {
 	private final int FIGCOUNT = 2;
 	private final int PLAYERID1 = 1;
 	private final int PLAYERID2 = 2;
+	private final int ONE = 1;
+	private final int TWO = 2;
+	private final int ZERO = 0;
 	
 	@Before
 	public void setUp() throws Exception {
+		movement = new Movement();
 		gamefield = new GameField(FIELDSTILLHOUSE, PLAYERCOUNT, HOUSECOUNT);
 		tp1 = new Player(PLAYERID1, FIGCOUNT);
 		tp2 = new Player(PLAYERID2, FIGCOUNT);
 		array = gamefield.getGamefield();
-		assertFalse(condition);
+
 	}
 
 	@Test
 	public void testMoveFigure() {
-
+		//Move Figure from empty Field
+		assertFalse(movement.moveFigure(gamefield, ONE, ZERO));
+		array[ZERO].putFigure(tp1.removeFigure());
+		Figure tmp = array[ZERO].getFigure();
+		array[ONE].putFigure(tp1.removeFigure());
+		array[ONE].setBlocked(true);
+		array[5].putFigure(tp2.removeFigure());
+		//Move Figure over blocked field
+		assertFalse(movement.moveFigure(gamefield, ONE, ZERO));
+		array[ONE].setBlocked(false);
+		movement.moveFigure(gamefield, 5, 0);
+		//Is startfield empty
+		assertNull(array[0].getFigure());
+		//Is figure moved correctly
+		assertEquals(tmp.getFignr(), array[5].getFigure().getFignr());
 	}
 
 	@Test
 	public void testvalidMove() {
-		array[1].putFigure(tp1.removeFigure());
-		array[1].setBlocked(true);
-		array[1].putFigure(tp1.removeFigure());
-		
-		assert
+		array[ONE].putFigure(tp1.removeFigure());
+		array[ONE].setBlocked(true);
+		array[ZERO].putFigure(tp1.removeFigure());
+		assertFalse(movement.validMove(gamefield, 4, ZERO));
 	}
-	@Test
-	public void testKickPlayer() {
 
-	}
-	
-	@Test
-	public void testGetTargetfield() {
-
-	}
 }
