@@ -11,16 +11,27 @@ public class CardStack {
 	private static final int ZERO = 0;
 
 	private Random gen;
-
+	
+	/* Generate a CardStack with specified size and for a number of players
+	 * @param size
+	 * @param players
+	 * */
 	public CardStack(int size, int players) {
 		cardstack = new Stack<Card>();
 		generateStack(size, players);
 	}
 
+	/* Returns size of the CardStack 
+	 * @return StackSize
+	 * */
 	public int getSize() {
 		return cardstack.size();
 	}
 
+	/* generate a new CardStack for every 4 players the amount of cards gets doubled
+	 * @param size
+	 * @param players
+	 * */
 	public void generateStack(int size, int players) {
 		for (int k = 0; k < (int) Math.ceil(((double) players / CARDS)); k++) {
 			for (int i = ZERO; i <= (CARDS - 1); i++) {
@@ -32,7 +43,10 @@ public class CardStack {
 			cardstack.push(new Card(JOKER));
 		}
 	}
-
+	
+	/*Returns the CardStack 
+	 * @return stack reference
+	 */
 	public Stack<Card> getStack() {
 		return this.cardstack;
 	}

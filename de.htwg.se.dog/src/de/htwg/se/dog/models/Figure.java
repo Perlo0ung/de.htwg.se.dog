@@ -16,9 +16,11 @@ public class Figure {
 		
 	}
 	
+	/*returns the owner of this figure*/
 	public Player getOwner(){
 		return this.owner;
 	}
+	/*returns the figurenum*/
 	public int getFignr(){
 		return this.fignr;
 	}
