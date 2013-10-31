@@ -44,6 +44,8 @@ public class PlayerTest {
     public void testRemoveFigure() {
         temp = p1.removeFigure();
         assertEquals(p1.getFigureList().size(), 3);
+        p1.getFigureList().clear();
+        assertNull(p1.removeFigure());
     }
 
     @Test
@@ -56,4 +58,5 @@ public class PlayerTest {
     public void testGetPlayerId() {
         assertEquals(playerNr, p1.getPlayerID());
     }
+
 }
