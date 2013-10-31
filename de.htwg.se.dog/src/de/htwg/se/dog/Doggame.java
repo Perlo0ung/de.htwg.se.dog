@@ -1,9 +1,8 @@
 package de.htwg.se.dog;
 
-public class Doggame {
+public final class Doggame {
 
-	public static void main(String[] args) {
-		
-		System.out.println("bla");
-	}
+    private Doggame(){}
+    public static void main(String[] args) {
+    }
 }

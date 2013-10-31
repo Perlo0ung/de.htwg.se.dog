@@ -34,10 +34,10 @@ public class CardDealerTest {
 			dealer.newRound();
 			dealer.newRound();
 			dealer.dealCards(p);
-			dealer.stack.getStack().clear();
-			assertEquals(dealer.stack.getSize(), ZERO);
+			dealer.getObject().getStack().clear();
+			assertEquals(dealer.getObject().getSize(), ZERO);
 			dealer.dealCards(p);
-			assertEquals(dealer.stack.getSize(), 54-6);
+			assertEquals(dealer.getObject().getSize(), 54-6);
 		}
 
 		@Test

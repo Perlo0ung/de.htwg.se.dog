@@ -6,7 +6,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import de.htwg.se.dog.models.*;
-import de.htwg.se.dog.controller.*;
 
 public class MovementTest {
 	Movement movement;
@@ -20,7 +19,6 @@ public class MovementTest {
 	private final int PLAYERID1 = 1;
 	private final int PLAYERID2 = 2;
 	private final int ONE = 1;
-	private final int TWO = 2;
 	private final int ZERO = 0;
 	
 	@Before
