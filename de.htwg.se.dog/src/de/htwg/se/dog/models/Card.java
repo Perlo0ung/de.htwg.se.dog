@@ -6,7 +6,7 @@ public class Card {
     private static final int ZERO = 0;
     private static final int FOURTEEN = 14;
     
-    private static final String[] cardnames = {"Ass","Zwei","Dre","Vier","Fuenf"
+    private static final String[] CARDNAMES = {"Ass","Zwei","Dre","Vier","Fuenf"
             ,"Sechs","Sieben","Acht","Neun","Zehn","Bube","Dame","Koenig","Joker"};
 
     
@@ -32,6 +32,6 @@ public class Card {
      * @return the cardname as a string
      */
     public String getCardName(int value) {
-        return cardnames[value-1];
+        return CARDNAMES[value-1];
     }
 }
