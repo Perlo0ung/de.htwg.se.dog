@@ -4,6 +4,9 @@
   <artifactId>dog</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>pom</packaging>
+    <properties>
+        <sonar.phase>generate-sources</sonar.phase>
+  </properties>
     <build>
         <sourceDirectory>src</sourceDirectory>
         <testSourceDirectory>test</testSourceDirectory>
