@@ -36,18 +36,23 @@ public class MovementTest {
 		//Move Figure from empty Field
 		assertFalse(movement.moveFigure(gamefield, ONE, ZERO));
 		array[ZERO].putFigure(tp1.removeFigure());
-		Figure tmp = array[ZERO].getFigure();
+		Figure tmpZERO = array[ZERO].getFigure();
 		array[ONE].putFigure(tp1.removeFigure());
 		array[ONE].setBlocked(true);
 		array[5].putFigure(tp2.removeFigure());
 		//Move Figure over blocked field
 		assertFalse(movement.moveFigure(gamefield, ONE, ZERO));
 		array[ONE].setBlocked(false);
-		movement.moveFigure(gamefield, 5, 0);
+		//Move Figure to occupied field
+		assertTrue(movement.moveFigure(gamefield, 5, 0));
 		//Is startfield empty
 		assertNull(array[0].getFigure());
 		//Is figure moved correctly
-		assertEquals(tmp.getFignr(), array[5].getFigure().getFignr());
+		assertEquals(tmpZERO.getFignr(), array[5].getFigure().getFignr());
+		//Move Figure to empty field
+		Figure tmpONE = array[ONE].getFigure();
+		movement.moveFigure(gamefield, 1, 1);
+		assertEquals(tmpONE.getFignr(), array[2].getFigure().getFignr());
 	}
 
 	@Test
