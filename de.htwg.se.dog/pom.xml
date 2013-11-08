@@ -20,6 +20,11 @@
   </build>
   <dependencies>
     <dependency>
+        <groupId>com.google.inject</groupId>
+        <artifactId>guice</artifactId>
+        <version>3.0</version>
+    </dependency>
+    <dependency>
         <groupId>JUnit</groupId>
         <artifactId>JUnit</artifactId>
         <version>4.11</version>
