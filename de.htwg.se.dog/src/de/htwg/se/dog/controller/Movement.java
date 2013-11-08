@@ -7,28 +7,26 @@ public class Movement {
     // Moves Figure "steps" forward, on sucess it returns true
     // otherwise false
     public boolean moveFigure(GameField gamefield, int steps, int startfieldnr) {
+        boolean valid = false;
         Field[] array = gamefield.getGamefield();
-        // check if startfield is not empty
-        if (array[startfieldnr].getFigure() != null) {
-            // Check if move is valid
-            if (!validMove(gamefield, steps, startfieldnr)) {
-                return false;
-            }
-            int targetfield = getTargetfield(gamefield, steps, startfieldnr);
-            kickPlayer(array, targetfield);
-            // Move Figure from startfield to Targetfield
-            array[targetfield].putFigure(array[startfieldnr].removeFigure());
-            return true;
+        // check if startfield is not empty and the move is valid
+        if (array[startfieldnr].getFigure() != null && validMove(gamefield, steps, startfieldnr)) {
+                int targetfield = getTargetfield(gamefield, steps, startfieldnr);
+                kickPlayer(array, targetfield);
+                // Move Figure from startfield to Targetfield
+                array[targetfield].putFigure(array[startfieldnr].removeFigure());
+                valid = true;
         }
-        return false;
+        return valid;
     }
 
     // Returns true if suggested move is valid
     public boolean validMove(GameField gamefield, int steps, int startfieldnr) {
+        boolean valid = false;
         if (getTargetfield(gamefield, steps, startfieldnr) >= 0) {
-            return true;
+            valid = true;
         }
-        return false;
+        return valid;
     }
 
     // Remove Player From fieldID and return it to Player
@@ -60,13 +58,9 @@ public class Movement {
             // Check if nobody owns next field
             if (currentFieldOwner == 0) {
                 steps--;
-                // Check if next field is own House
-            } else if (currentFieldOwner == playerNr) {
-                steps--;
-                // Check if current field is last in house
-                if (steps > 0 && array[nextfieldID].getOwner() != playerNr) {
-                    steps += gamefield.getHouseCount();
-                }
+                // Check if next field is own House and current field ist last in house
+            } else if (currentFieldOwner == playerNr && steps > 0 && array[nextfieldID].getOwner() != playerNr) {
+                    steps += gamefield.getHouseCount()-1;
             }
             if (steps > 0) {
                 currentfieldID = nextfieldID;
