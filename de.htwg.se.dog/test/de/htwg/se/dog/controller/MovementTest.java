@@ -37,12 +37,7 @@ public class MovementTest {
 		assertFalse(movement.moveFigure(gamefield, ONE, ZERO));
 		array[ZERO].putFigure(tp1.removeFigure());
 		Figure tmpZERO = array[ZERO].getFigure();
-		array[ONE].putFigure(tp1.removeFigure());
-		array[ONE].setBlocked(true);
 		array[5].putFigure(tp2.removeFigure());
-		//Move Figure over blocked field
-		assertFalse(movement.moveFigure(gamefield, ONE, ZERO));
-		array[ONE].setBlocked(false);
 		//Move Figure to occupied field
 		assertTrue(movement.moveFigure(gamefield, 5, 0));
 		//Is startfield empty
@@ -50,7 +45,19 @@ public class MovementTest {
 		//Is figure moved correctly
 		assertEquals(tmpZERO.getFignr(), array[5].getFigure().getFignr());
 	}
-
+	@Test
+	public void testMoveFigurOverBlocked(){
+	   array[ZERO].putFigure(tp1.removeFigure());
+	   array[ONE].putFigure(tp1.removeFigure());
+       array[ONE].setBlocked(true);
+        //Move Figure over blocked field
+	    assertFalse(movement.moveFigure(gamefield, 2, ZERO));
+	}
+	@Test
+	public void testMoveOverOwnHouse(){
+	    array[ZERO].putFigure(tp1.removeFigure());
+	    assertTrue(movement.moveFigure(gamefield, 5, 0));
+	}
 	@Test
 	public void testvalidMove() {
 		array[ONE].putFigure(tp1.removeFigure());
