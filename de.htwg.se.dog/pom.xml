@@ -3,7 +3,7 @@
   <groupId>de.htwg.se</groupId>
   <artifactId>dog</artifactId>
   <version>0.0.1-SNAPSHOT</version>
-  <name>Battleship_Group02</name>
+  <name>dog</name>
   <build>
     <sourceDirectory>src</sourceDirectory>
     <testSourceDirectory>test</testSourceDirectory>
