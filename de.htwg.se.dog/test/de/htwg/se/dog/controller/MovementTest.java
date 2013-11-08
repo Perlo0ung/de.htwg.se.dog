@@ -49,10 +49,6 @@ public class MovementTest {
 		assertNull(array[0].getFigure());
 		//Is figure moved correctly
 		assertEquals(tmpZERO.getFignr(), array[5].getFigure().getFignr());
-		//Move Figure to empty field
-		Figure tmpONE = array[ONE].getFigure();
-		movement.moveFigure(gamefield, 1, 1);
-		assertEquals(tmpONE.getFignr(), array[2].getFigure().getFignr());
 	}
 
 	@Test
