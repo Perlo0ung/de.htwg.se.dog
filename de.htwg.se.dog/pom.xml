@@ -37,11 +37,11 @@
         <version>2.16</version>
         <scope>test</scope>
     </dependency>
-    <dependency>
-      <groupId>JUit</groupId>
-      <artifactId>JUnit</artifactId>
-      <version>4.11</version>
-      <scope>test</scope>
-    </dependency>   
-  </dependencies>
+   <dependency>
+   	<groupId>JUnit</groupId>
+   	<artifactId>JUnit</artifactId>
+   	<version>4.11</version>
+   	<scope>test</scope>
+   </dependency>
+   </dependencies>
 </project>
