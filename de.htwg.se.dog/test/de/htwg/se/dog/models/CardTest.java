@@ -36,9 +36,9 @@ public class CardTest {
 	public void testGetCardName() {
 		assertEquals(card.getCardName(11),"Bube");
 		assertEquals(card.getCardName(12),"Dame");
-		assertEquals(card.getCardName(13),"König");
-		assertEquals(card.getCardName(14),"JOKER");
+		assertEquals(card.getCardName(13),"Koenig");
+		assertEquals(card.getCardName(14),"Joker");
 		assertEquals(card.getCardName(1),"Ass");
-		assertEquals(card.getCardName(2),"2");
+		assertEquals(card.getCardName(2),"Zwei");
 	}
 }
