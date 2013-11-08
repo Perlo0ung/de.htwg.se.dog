@@ -18,12 +18,6 @@
       </plugin>
     </plugins>
   </build>
-  <repositories>
-    <repository>
-      <id>source.db4o</id>
-      <url>http://source.db4o.com/maven</url>
-    </repository>
-  </repositories>
   <dependencies>
     <dependency>
         <groupId>junit</groupId>
