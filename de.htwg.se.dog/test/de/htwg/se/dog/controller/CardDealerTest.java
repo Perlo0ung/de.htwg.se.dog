@@ -11,7 +11,6 @@ import de.htwg.se.dog.models.Player;
 public class CardDealerTest {
 		private static final int NUMCARDS = 6;		
 		private static final int ZERO = 0;
-		private static final int ONE = 1;
 		private static final int PLAYERS = 4;
 		Player p ;
 		CardDealer dealer;
