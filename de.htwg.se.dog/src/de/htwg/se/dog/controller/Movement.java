@@ -4,8 +4,14 @@ import de.htwg.se.dog.models.*;
 
 public class Movement {
 
-    // Moves Figure "steps" forward, on sucess it returns true
-    // otherwise false
+    /**
+     *  Moves Figure "steps" forward, on success it returns true
+     *  otherwise false
+     * @param gamefield
+     * @param steps: number of steps figure wants to take
+     * @param startfieldnr: startfieldnumber from where figure wants to move
+     * @return true if figure could be moved, otherwise false
+     */
     public boolean moveFigure(GameField gamefield, int steps, int startfieldnr) {
         boolean valid = false;
         Field[] array = gamefield.getGamefield();
@@ -20,7 +26,13 @@ public class Movement {
         return valid;
     }
 
-    // Returns true if suggested move is valid
+    /**
+     *  Returns true if suggested move is valid
+     * @param gamefield
+     * @param steps: number of steps figure want to take
+     * @param startfieldnr: startfield number from where figure wants to move 
+     * @return true if move is valid, otherwise false
+     */
     public boolean validMove(GameField gamefield, int steps, int startfieldnr) {
         boolean valid = false;
         if (getTargetfield(gamefield, steps, startfieldnr) >= 0) {
@@ -49,7 +61,11 @@ public class Movement {
         }
         return valid;
     }
-    // Remove Player From fieldID and return it to Player
+    /**
+     *  Remove Player From fieldID and return it to Player
+     * @param array gamefieldarray
+     * @param fieldID fieldnumber where figure should be kick from
+     */
     private void kickPlayer(Field[] array, int fieldID) {
         if (array[fieldID].getFigure() != null) {
             // get Owner of figure
@@ -59,8 +75,14 @@ public class Movement {
         }
     }
 
-    // returns the fieldID of the Target field, if not a vaild move, -1 is
-    // returned
+    /** 
+     * returns the fieldID of the Target field, if not a vaild move, -1 is
+     * returned
+     * @param gamefield
+     * @param stepAns: number of steps figure wants to take
+     * @param startfieldnr: startfield number from where figure wants to move 
+     * @return int: returns number of targetfield
+     */
     private int getTargetfield(GameField gamefield, int stepAns,
             int startfieldnr) {
         Field[] array = gamefield.getGamefield();

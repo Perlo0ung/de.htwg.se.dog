@@ -73,8 +73,9 @@ public class GameField {
         return fieldSize;
     }
 
-    /*
-     * @return the numberofHouseFields for each Player
+    /**
+     * returns number of housefields
+     * @return int: the numberofHouseFields for each Player
      */
     public int getHouseCount() {
         return houseCount;
