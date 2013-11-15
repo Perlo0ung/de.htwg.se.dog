@@ -1,9 +1,7 @@
 package de.htwg.se.dog.controller;
 
 import java.util.ArrayDeque;
-import java.util.Collections;
 import java.util.LinkedList;
-import java.util.List;
 
 import de.htwg.se.dog.models.Player;
 
@@ -11,6 +9,7 @@ public class Turn {
     final LinkedList<Player> players;
     ArrayDeque<Player> turn;
     CardDealer dealer;
+    Player currentPlayer;
     
     /**
      * Standard Konstruktor
@@ -45,10 +44,11 @@ public class Turn {
         turn = new ArrayDeque<Player>(players);
     }
     /**
-     * Remove the current Player from the list    
+     *     
      * @return the current Player
      */
     public Player getCurrentPlayer() {
-        return turn.pollFirst();
+        currentPlayer = turn.pollFirst();
+        return currentPlayer;
     }
 }
