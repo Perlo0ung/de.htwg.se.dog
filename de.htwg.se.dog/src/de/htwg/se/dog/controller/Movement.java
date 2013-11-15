@@ -29,6 +29,26 @@ public class Movement {
         return valid;
     }
 
+    /**
+     * Tauscht 2 figuren aus, falls nicht auf beiden feldern eine Figur steht,
+     * macht sie nichts
+     * @param gamefield Spielfeld auf dem die Figuren sind
+     * @param fromNr Feldnummer von Figur 1 
+     * @param toNr Feldnummer von Figur 2
+     * @return true falls tausch erfolgreich,
+     * andernfalls false
+     */
+    public boolean moveSwitch(GameField gamefield, int fromNr, int toNr){
+        boolean valid = false;
+        Field[] array = gamefield.getGamefield();
+        if(array[fromNr].getFigure() != null && array[toNr].getFigure() != null){
+            Figure tmp = array[fromNr].removeFigure();
+            array[fromNr].putFigure(array[toNr].removeFigure());
+            array[toNr].putFigure(tmp);
+            valid = true;
+        }
+        return valid;
+    }
     // Remove Player From fieldID and return it to Player
     private void kickPlayer(Field[] array, int fieldID) {
         if (array[fieldID].getFigure() != null) {

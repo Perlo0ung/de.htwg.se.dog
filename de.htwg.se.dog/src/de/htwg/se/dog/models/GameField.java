@@ -9,7 +9,7 @@ public class GameField {
     private final int houseCount;
     private final int fieldSize;
 
-    /*
+    /**
      * Setup for a GameField
      * 
      * @param fieldsTillHouse: field until there is a house
@@ -27,7 +27,9 @@ public class GameField {
         generateGamefield();
     }
 
-    /* generate a GameField */
+    /**
+     *  generates a GameField 
+     */
     private void generateGamefield() {
         for (int i = 0; i < playerCount; i++) {
             int startfield = (fieldsTillHouse + houseCount) * i;
@@ -43,26 +45,29 @@ public class GameField {
         }
     }
 
-    /*
-     * generate a GameField
+    /**
+     * returns the owner number of a field
      * 
-     * @param fieldNr
+     * @param fieldNr number of the field
      * 
-     * @return owner of the fieldNr
+     * @return int: ownerNr of the fieldNr,
+     * if it has no owner zero is returned
      */
     public int getOwner(int fieldNr) {
         return this.gamefield[fieldNr].getOwner();
     }
 
-    /*
-     * @return the complete GameField
+    /**
+     * Returns the gamefieldarray
+     * @return Field[]: the complete GameField
      */
     public Field[] getGamefield() {
         return gamefield;
     }
 
-    /*
-     * @return the size of the complete Field
+    /**
+     * returns the gamefieldsize
+     * @return int: the size of the complete Field
      */
     public int getFieldSize() {
         return fieldSize;

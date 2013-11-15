@@ -17,12 +17,18 @@ public class Figure {
 
     }
 
-    /* returns the owner of this figure */
+    /**
+     *  returns the owner of this figure 
+     *  @return reference to the owner of the figure  
+     */
     public Player getOwner() {
         return this.owner;
     }
 
-    /* returns the figurenum */
+    /**
+     *  returns the figurenum
+     *  @return returns the Figurenumber 
+     */
     public int getFignr() {
         return this.fignr;
     }

@@ -18,7 +18,7 @@ public class Field {
         }
     }
 
-    /*
+    /**
      * Puts Figure f on this Field
      * 
      * @param f
@@ -27,7 +27,7 @@ public class Field {
         this.figure = f;
     }
 
-    /*
+    /**
      * removes the figure from this field and returns it
      * 
      * @return return the removed figure
@@ -38,7 +38,7 @@ public class Field {
         return tmp;
     }
 
-    /*
+    /**
      * returns the reference of the figure attached to this field
      * 
      * @return the attached figure
@@ -48,26 +48,32 @@ public class Field {
         return this.figure;
     }
 
-    /*
+    /**
+     * returns the field owner number
      * @return the field owner (for house fields)
      */
     public int getOwner() {
         return this.owner;
     }
 
-    /* block this field for any movement operations */
+    /**
+     *  set blocked status of the field
+     *  @param a status 
+     */
     public void setBlocked(boolean a) {
         this.blocked = a;
     }
 
-    /*
+    /**
+     * returns the blocked state
      * @return true if field is blocked
      */
     public boolean getBlocked() {
         return this.blocked;
     }
 
-    /*
+    /**
+     * returns boolean value if field is a house fied
      * @return true if housefield
      */
     public boolean isHouse() {
