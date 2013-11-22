@@ -12,7 +12,7 @@ public class Movement {
      * @param startfieldnr: startfieldnumber from where figure wants to move
      * @return true if figure could be moved, otherwise false
      */
-    public boolean moveFigure(GameField gamefield, int steps, int startfieldnr) {
+    public static boolean moveFigure(GameField gamefield, int steps, int startfieldnr) {
         boolean valid = false;
         Field[] array = gamefield.getGamefield();
         // check if startfield is not empty and the move is valid
@@ -33,7 +33,7 @@ public class Movement {
      * @param startfieldnr: startfield number from where figure wants to move 
      * @return true if move is valid, otherwise false
      */
-    public boolean validMove(GameField gamefield, int steps, int startfieldnr) {
+    public static boolean validMove(GameField gamefield, int steps, int startfieldnr) {
         boolean valid = false;
         if (getTargetfield(gamefield, steps, startfieldnr) >= 0) {
             valid = true;
@@ -50,7 +50,7 @@ public class Movement {
      * @return true falls tausch erfolgreich,
      * andernfalls false
      */
-    public boolean moveSwitch(GameField gamefield, int fromNr, int toNr){
+    public  static boolean moveSwitch(GameField gamefield, int fromNr, int toNr){
         boolean valid = false;
         Field[] array = gamefield.getGamefield();
         if(array[fromNr].getFigure() != null && array[toNr].getFigure() != null){
@@ -66,7 +66,7 @@ public class Movement {
      * @param array gamefieldarray
      * @param fieldID fieldnumber where figure should be kick from
      */
-    private void kickPlayer(Field[] array, int fieldID) {
+    private static void kickPlayer(Field[] array, int fieldID) {
         if (array[fieldID].getFigure() != null) {
             // get Owner of figure
             Player tempPlayer = array[fieldID].getFigure().getOwner();
@@ -83,7 +83,7 @@ public class Movement {
      * @param startfieldnr: startfield number from where figure wants to move 
      * @return int: returns number of targetfield
      */
-    private int getTargetfield(GameField gamefield, int stepAns,
+    private static int getTargetfield(GameField gamefield, int stepAns,
             int startfieldnr) {
         Field[] array = gamefield.getGamefield();
         int playerNr = array[startfieldnr].getFigure().getOwner().getPlayerID();
