@@ -87,7 +87,7 @@ public class Player {
      * @param feldid: the FieldNumber where the is at
      * @param fignum: the internal figurenumber for this figure
      */
-    public void updateFigurePos(int fieldId, int fignum) {
+    public void updateFigurePos(int fignum, int fieldId) {
         if (fieldId == -1) {
             figureRegister.remove(fignum);
         } else {

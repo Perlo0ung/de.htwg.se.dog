@@ -44,15 +44,7 @@ public class GameTable {
             players.add(new Player(playerCount, figCount));
         }
     }
-
-    /**
-     * Returns reference to gamefield
-     * 
-     * @return
-     */
-    public GameField getGameField() {
-        return this.game;
-    }
+    
 
     public void newRound() {
         for (Player p : players) {

@@ -58,5 +58,11 @@ public class PlayerTest {
     public void testGetPlayerId() {
         assertEquals(playerNr, p1.getPlayerID());
     }
-
+    @Test
+    public void testUpdateFigurePos() {
+        p1.updateFigurePos(1, 2);
+        p1.updateFigurePos(15, 12);
+        p1.updateFigurePos(1, -1);
+        assertEquals((Integer)12,p1.getFigureRegister().getFirst());
+    }
 }
