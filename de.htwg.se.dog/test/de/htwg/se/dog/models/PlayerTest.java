@@ -63,6 +63,6 @@ public class PlayerTest {
         p1.updateFigurePos(1, 2);
         p1.updateFigurePos(15, 12);
         p1.updateFigurePos(1, -1);
-        assertEquals((Integer)12,p1.getFigureRegister().getFirst());
+        assertEquals((Integer)12,p1.getFigureRegister().get(0));
     }
 }

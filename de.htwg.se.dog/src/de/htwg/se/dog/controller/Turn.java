@@ -4,8 +4,7 @@ package de.htwg.se.dog.controller;
 import de.htwg.se.dog.models.Player;
 
 public class Turn {
-    GameTable table;
-    Player currentPlayer;    
+    private GameTable table; 
     /**
      * Standard Konstruktor
      * @param playerCount

@@ -9,7 +9,7 @@ public class Player {
 
     private List<Figure> figure;
     private List<Card> cards;
-    private Map<Integer, Integer> figureRegister; 
+    private Map<Integer, Integer> figureRegister;
     private final int playernum;
 
     public Player(int playerNr, int figcount) {
@@ -22,16 +22,19 @@ public class Player {
         figureRegister = new HashMap<Integer, Integer>();
 
     }
+
     /**
      * returns list of Cards player has
+     * 
      * @return List<Card>: of playercards returned
      */
     public List<Card> getCardList() {
         return this.cards;
     }
-    
+
     /**
      * returns list of figures player has
+     * 
      * @return List<Figure>: of figures player returned
      */
     public List<Figure> getFigureList() {
@@ -40,7 +43,9 @@ public class Player {
 
     /**
      * adds a card to players cardlist
-     * @param c card which should be added
+     * 
+     * @param c
+     *            card which should be added
      */
     public void addCard(Card c) {
         this.cards.add(c);
@@ -48,7 +53,9 @@ public class Player {
 
     /**
      * removes card from players cardlist
-     * @param c card which should be removed
+     * 
+     * @param c
+     *            card which should be removed
      * @return boolean: true if remove was succsessfull, otherwise false
      */
     public boolean removeCard(Card c) {
@@ -57,6 +64,7 @@ public class Player {
 
     /**
      * removes figure from players figurelist
+     * 
      * @return Figure: returns figure which was removed from players figurelist
      */
     public Figure removeFigure() {
@@ -68,7 +76,9 @@ public class Player {
 
     /**
      * adds figure to players figurelist
-     * @param f: Figure which should be added to players figurelist
+     * 
+     * @param f
+     *            : Figure which should be added to players figurelist
      */
     public void addFigure(Figure f) {
         figure.add(f);
@@ -76,16 +86,21 @@ public class Player {
 
     /**
      * returnes player ID
+     * 
      * @return int: returns playernumber
      */
     public int getPlayerID() {
         return playernum;
     }
+
     /**
-     * Update the position where the figure assosiated with fignum it currently at
-     * if fieldId is -1 the figure will be removed from the register
-     * @param feldid: the FieldNumber where the is at
-     * @param fignum: the internal figurenumber for this figure
+     * Update the position where the figure assosiated with fignum it currently
+     * at if fieldId is -1 the figure will be removed from the register
+     * 
+     * @param feldid
+     *            : the FieldNumber where the is at
+     * @param fignum
+     *            : the internal figurenumber for this figure
      */
     public void updateFigurePos(int fignum, int fieldId) {
         if (fieldId == -1) {
@@ -94,11 +109,13 @@ public class Player {
             figureRegister.put(fignum, fieldId);
         }
     }
+
     /**
      * Returns all the places where figures are
+     * 
      * @return List with the figure fieldnumbers
      */
-    public LinkedList<Integer> getFigureRegister() {
+    public List<Integer> getFigureRegister() {
         return new LinkedList<Integer>(figureRegister.values());
     }
 }

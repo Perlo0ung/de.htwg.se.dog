@@ -16,7 +16,7 @@ public class GameTableTest {
     public void setUp() {
         table = new GameTable(2, 1);
         table.newRound();
-        array = table.game.getGamefield();
+        array = table.getGameField().getGamefield();
         first = table.getCurrentPlayer();
     }
     

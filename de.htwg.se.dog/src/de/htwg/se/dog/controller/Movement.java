@@ -1,7 +1,7 @@
 package de.htwg.se.dog.controller;
 
-import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Map;
 import java.util.Map.Entry;
 
 import de.htwg.se.dog.models.*;
@@ -26,7 +26,8 @@ public class Movement {
         boolean valid = false;
         Field[] array = gamefield.getGamefield();
         // check if startfield is not empty and the move is valid
-        if (!fieldEmpty(array[startfieldnr]) && validMove(gamefield, steps, startfieldnr)) {
+        if (!fieldEmpty(array[startfieldnr])
+                && validMove(gamefield, steps, startfieldnr)) {
             int targetfield = getTargetfield(gamefield, steps, startfieldnr);
             kickPlayer(array, targetfield);
             // Move Figure from startfield to Targetfield
@@ -69,7 +70,7 @@ public class Movement {
     public static boolean moveSwitch(GameField gamefield, int fromNr, int toNr) {
         boolean valid = false;
         Field[] array = gamefield.getGamefield();
-        if (!fieldEmpty(array[fromNr]) && !array[fromNr].isHouse() 
+        if (!fieldEmpty(array[fromNr]) && !array[fromNr].isHouse()
                 && !fieldEmpty(array[toNr]) && !array[toNr].isHouse()) {
             Figure tmp = array[fromNr].removeFigure();
             array[fromNr].putFigure(array[toNr].removeFigure());
@@ -78,15 +79,19 @@ public class Movement {
         }
         return valid;
     }
+
     /**
      * checks if figure is on field
-     * @param field which should be checked
+     * 
+     * @param field
+     *            which should be checked
      * @return true if field is not empty, otherwise false;
      */
-    private static boolean fieldEmpty(Field field){
+    private static boolean fieldEmpty(Field field) {
         boolean returnval = false;
-        if(field.getFigure() != null)
+        if (field.getFigure() != null) {
             returnval = true;
+        }
         return returnval;
     }
 
@@ -154,7 +159,7 @@ public class Movement {
      * @param test
      */
     public static boolean sevenMove(GameField gamefield,
-            HashMap<Integer, Integer> test) {
+            Map<Integer, Integer> test) {
         for (Entry<Integer, Integer> entry : test.entrySet()) {
             if (!validMove(gamefield, entry.getValue(), entry.getKey())) {
                 return false;
@@ -178,7 +183,8 @@ public class Movement {
     public boolean possibleSevenMove(GameField gamefield, Player p) {
         int steps = VALUEOFCARD7;
         boolean returnval = true;
-        LinkedList<Integer> figures = p.getFigureRegister();
+        LinkedList<Integer> figures = new LinkedList<Integer>(
+                p.getFigureRegister());
         Integer currentField = figures.pollFirst();
         while (steps > 0) {
             if (!validMove(gamefield, steps, currentField)) {
