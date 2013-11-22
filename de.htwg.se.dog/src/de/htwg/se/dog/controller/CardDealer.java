@@ -11,11 +11,18 @@ public class CardDealer {
     private static final int CARDS = 12;
     private int round = 0;
 
+    /**
+     * 
+     * @param players
+     */
     public CardDealer(int players) {
         this.players = players;
         stackObj = new CardStack(CARDS, players);
     }
-
+    /**
+     * 
+     * @param p
+     */
     public void dealCards(Player p) {
         if (expectedNumOfCards() > stackObj.getSize()) {
             stackObj = new CardStack(CARDS, players);
@@ -24,19 +31,33 @@ public class CardDealer {
             p.addCard(stackObj.dealCard(0, stackObj.getSize()));
         }
     }
-
+    
+    /**
+     * increments the roundcounter between 1-Maxround
+     */
     public void newRound() {
         round = (round + 1) % MAXROUND;
     }
-
+    
+    /**
+     * returns roundNumber
+     * @return int: roundnumber
+     */
     public int getRound() {
         return this.round;
     }
 
+    /**
+     * Returns number of cards used this cards
+     * @return int: 
+     */
     public int expectedNumOfCards() {
         return (MAXCARDS - round) * players;
     }
-
+    /**
+     * 
+     * @return
+     */
     public CardStack getObject() {
         return stackObj;
     }
