@@ -1,5 +1,9 @@
 package de.htwg.se.dog.controller;
 
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.Map.Entry;
+
 import de.htwg.se.dog.models.*;
 
 public class Movement {
@@ -110,5 +114,36 @@ public class Movement {
         }
         return currentfieldID;
     }
-
+    /**
+     * 
+     * @param gamefield
+     * @param test
+     */
+    public void sevenMove(GameField gamefield, HashMap<Integer,Integer> test) {
+        for(Entry<Integer, Integer> entry: test.entrySet()){
+            moveFigure(gamefield, entry.getValue(), entry.getKey());
+        }
+    }
+    /**
+     * Checks if the Player p can do a move with the card 7
+     * @param gamefield the current gamefield played on
+     * @param p the player that wants to move
+     * @return true if the player can move with the card
+     */
+    public boolean validSevenMove(GameField gamefield, Player p) {
+        int steps = 7;
+        LinkedList<Integer> figures = p.getFigureRegister();
+        Integer currentField = figures.pollFirst();
+        while(steps > 0) {
+            if (!validMove(gamefield, steps, currentField)) {
+                steps--;
+            } else {
+                currentField = figures.pollFirst();
+                if(currentField == null) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
 }

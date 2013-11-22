@@ -1,6 +1,5 @@
 package de.htwg.se.dog.models;
 
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -95,7 +94,11 @@ public class Player {
             figureRegister.put(fignum, fieldId);
         }
     }
-    public Collection<Integer> getFigureRegister() {
-        return figureRegister.values();
+    /**
+     * Returns all the places where figures are
+     * @return List with the figure fieldnumbers
+     */
+    public LinkedList<Integer> getFigureRegister() {
+        return new LinkedList<Integer>(figureRegister.values());
     }
 }
