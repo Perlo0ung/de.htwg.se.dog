@@ -11,7 +11,12 @@ public class GameTable {
 
     GameField game;
     Turn turn;
-
+    
+    /**
+     * Consturctor to generates a new gametable
+     * @param playerCount: int number of players
+     * @param figCount: int number of figures per player
+     */
     public GameTable(int playerCount, int figCount) {
         game = new GameField(FIELDSTILLHOUSE, playerCount, HOUSECOUNT);
         turn = new Turn(playerCount, figCount);

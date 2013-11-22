@@ -33,7 +33,7 @@ public class CardDealer {
     }
     
     /**
-     * increments the roundcounter between 1-Maxround
+     * increments the roundcounter between 1 and Maxround
      */
     public void newRound() {
         round = (round + 1) % MAXROUND;
@@ -49,14 +49,14 @@ public class CardDealer {
 
     /**
      * Returns number of cards used this cards
-     * @return int: 
+     * @return int: cards to be dealed this round
      */
     public int expectedNumOfCards() {
         return (MAXCARDS - round) * players;
     }
     /**
-     * 
-     * @return
+     * returns the cardstack-OBJ
+     * @return CardStack: current cardstack
      */
     public CardStack getObject() {
         return stackObj;

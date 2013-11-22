@@ -10,11 +10,9 @@ public class CardStack {
     private static final int JOKER = 14;
     private static final int ZERO = 0;
 
-    /*
+    /**
      * Generate a CardStack with specified size and for a number of players
-     * 
      * @param size
-     * 
      * @param players
      */
     public CardStack(int size, int players) {
@@ -22,21 +20,18 @@ public class CardStack {
         generateStack(size, players);
     }
 
-    /*
+    /**
      * Returns size of the CardStack
-     * 
      * @return StackSize
      */
     public int getSize() {
         return cardstack.size();
     }
 
-    /*
+    /**
      * generate a new CardStack for every 4 players the amount of cards gets
      * doubled
-     * 
      * @param size
-     * 
      * @param players
      */
     private void generateStack(int size, int players) {
@@ -51,18 +46,20 @@ public class CardStack {
         }
     }
 
-    /*
+    /**
      * Returns the CardStack
-     * 
      * @return stack reference
      */
     public Stack<Card> getStack() {
         return this.cardstack;
     }
 
-    /*
+    /**
      * Gets Card from stack between start inc. and range excl. ands removes it
      * from the Stack
+     * @param start: int startpoint
+     * @param range: int range for random generator
+     * @return Card: returns card from stack
      */
     public Card dealCard(int start, int range) {
         Random gen = new Random();

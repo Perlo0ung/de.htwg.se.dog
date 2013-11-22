@@ -9,7 +9,10 @@ public class Card {
     private static final String[] CARDNAMES = {"Ass","Zwei","Dre","Vier","Fuenf"
             ,"Sechs","Sieben","Acht","Neun","Zehn","Bube","Dame","Koenig","Joker"};
 
-    
+    /**
+     * Constructor to create a new card
+     * @param value: int, is the value of the card
+     */
     protected Card(int value) {
         if (value > ZERO && value <= FOURTEEN) {
             this.value = value;
@@ -19,17 +22,18 @@ public class Card {
         }
     }
 
-    /* return value of a card */
+    /**
+     * returns the Value of the card
+     * @return int: value of card between [0,14]
+     */
     public int getValue() {
         return this.value;
     }
 
-    /*
+    /**
      * Return the CardName of a Card
-     * 
-     * @param value
-     * 
-     * @return the cardname as a string
+     * @param value: Int value of the card
+     * @return String: the cardname as a string
      */
     public String getCardName(int value) {
         return CARDNAMES[value-1];
