@@ -2,7 +2,9 @@ package de.htwg.se.dog.controller;
 
 import java.util.ArrayDeque;
 import java.util.LinkedList;
+import java.util.List;
 
+import de.htwg.se.dog.models.Card;
 import de.htwg.se.dog.models.Player;
 
 public class Turn {
@@ -51,4 +53,22 @@ public class Turn {
         currentPlayer = turn.pollFirst();
         return currentPlayer;
     }
+    /**
+     * TODO
+     * @param p
+     * @return
+     */
+    public boolean canPlay(Player p) {
+        boolean returnval = false;
+        List<Card> cards = p.getCardList();
+        if (cards.isEmpty()) {
+            return returnval;
+        }
+        for (Card c: cards) {
+            for (Integer field : p.getFigureRegister()){
+                Movement.validMove();
+            }
+        }
+    }
+    
 }
