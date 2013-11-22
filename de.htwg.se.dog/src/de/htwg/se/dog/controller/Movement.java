@@ -8,36 +8,45 @@ import de.htwg.se.dog.models.*;
 
 public class Movement {
 
+    private static final int VALUEOFCARD7 = 7;
     /**
-     *  Moves Figure "steps" forward, on success it returns true
-     *  otherwise false
+     * Moves Figure "steps" forward, on success it returns true otherwise false
+     * 
      * @param gamefield
-     * @param steps: number of steps figure wants to take
-     * @param startfieldnr: startfieldnumber from where figure wants to move
+     * @param steps
+     *            : number of steps figure wants to take
+     * @param startfieldnr
+     *            : startfieldnumber from where figure wants to move
      * @return true if figure could be moved, otherwise false
      */
-    public static boolean moveFigure(GameField gamefield, int steps, int startfieldnr) {
+    public static boolean moveFigure(GameField gamefield, int steps,
+            int startfieldnr) {
         boolean valid = false;
         Field[] array = gamefield.getGamefield();
         // check if startfield is not empty and the move is valid
-        if (array[startfieldnr].getFigure() != null && validMove(gamefield, steps, startfieldnr)) {
-                int targetfield = getTargetfield(gamefield, steps, startfieldnr);
-                kickPlayer(array, targetfield);
-                // Move Figure from startfield to Targetfield
-                array[targetfield].putFigure(array[startfieldnr].removeFigure());
-                valid = true;
+        if (array[startfieldnr].getFigure() != null
+                && validMove(gamefield, steps, startfieldnr)) {
+            int targetfield = getTargetfield(gamefield, steps, startfieldnr);
+            kickPlayer(array, targetfield);
+            // Move Figure from startfield to Targetfield
+            array[targetfield].putFigure(array[startfieldnr].removeFigure());
+            valid = true;
         }
         return valid;
     }
 
     /**
-     *  Returns true if suggested move is valid
+     * Returns true if suggested move is valid
+     * 
      * @param gamefield
-     * @param steps: number of steps figure want to take
-     * @param startfieldnr: startfield number from where figure wants to move 
+     * @param steps
+     *            : number of steps figure want to take
+     * @param startfieldnr
+     *            : startfield number from where figure wants to move
      * @return true if move is valid, otherwise false
      */
-    public static boolean validMove(GameField gamefield, int steps, int startfieldnr) {
+    public static boolean validMove(GameField gamefield, int steps,
+            int startfieldnr) {
         boolean valid = false;
         if (getTargetfield(gamefield, steps, startfieldnr) >= 0) {
             valid = true;
@@ -48,16 +57,20 @@ public class Movement {
     /**
      * Tauscht 2 figuren aus, falls nicht auf beiden feldern eine Figur steht,
      * macht sie nichts
-     * @param gamefield Spielfeld auf dem die Figuren sind
-     * @param fromNr Feldnummer von Figur 1 
-     * @param toNr Feldnummer von Figur 2
-     * @return true falls tausch erfolgreich,
-     * andernfalls false
+     * 
+     * @param gamefield
+     *            Spielfeld auf dem die Figuren sind
+     * @param fromNr
+     *            Feldnummer von Figur 1
+     * @param toNr
+     *            Feldnummer von Figur 2
+     * @return true falls tausch erfolgreich, andernfalls false
      */
-    public  static boolean moveSwitch(GameField gamefield, int fromNr, int toNr){
+    public static boolean moveSwitch(GameField gamefield, int fromNr, int toNr) {
         boolean valid = false;
         Field[] array = gamefield.getGamefield();
-        if(array[fromNr].getFigure() != null && array[toNr].getFigure() != null){
+        if (array[fromNr].getFigure() != null
+                && array[toNr].getFigure() != null) {
             Figure tmp = array[fromNr].removeFigure();
             array[fromNr].putFigure(array[toNr].removeFigure());
             array[toNr].putFigure(tmp);
@@ -65,10 +78,14 @@ public class Movement {
         }
         return valid;
     }
+
     /**
-     *  Remove Player From fieldID and return it to Player
-     * @param array gamefieldarray
-     * @param fieldID fieldnumber where figure should be kick from
+     * Remove Player From fieldID and return it to Player
+     * 
+     * @param array
+     *            gamefieldarray
+     * @param fieldID
+     *            fieldnumber where figure should be kick from
      */
     private static void kickPlayer(Field[] array, int fieldID) {
         if (array[fieldID].getFigure() != null) {
@@ -79,12 +96,15 @@ public class Movement {
         }
     }
 
-    /** 
+    /**
      * returns the fieldID of the Target field, if not a vaild move, -1 is
      * returned
+     * 
      * @param gamefield
-     * @param stepAns: number of steps figure wants to take
-     * @param startfieldnr: startfield number from where figure wants to move 
+     * @param stepAns
+     *            : number of steps figure wants to take
+     * @param startfieldnr
+     *            : startfield number from where figure wants to move
      * @return int: returns number of targetfield
      */
     private static int getTargetfield(GameField gamefield, int stepAns,
@@ -104,9 +124,11 @@ public class Movement {
             // Check if nobody owns next field
             if (currentFieldOwner == 0) {
                 steps--;
-                // Check if next field is own House and current field ist last in house
-            } else if (currentFieldOwner == playerNr && steps > 0 && array[nextfieldID].getOwner() != playerNr) {
-                    steps += gamefield.getHouseCount()-1;
+                // Check if next field is own House and current field ist last
+                // in house
+            } else if (currentFieldOwner == playerNr && steps > 0
+                    && array[nextfieldID].getOwner() != playerNr) {
+                steps += gamefield.getHouseCount() - 1;
             }
             if (steps > 0) {
                 currentfieldID = nextfieldID;
@@ -114,36 +136,49 @@ public class Movement {
         }
         return currentfieldID;
     }
+
     /**
      * 
      * @param gamefield
      * @param test
      */
-    public void sevenMove(GameField gamefield, HashMap<Integer,Integer> test) {
-        for(Entry<Integer, Integer> entry: test.entrySet()){
+    public static boolean sevenMove(GameField gamefield, HashMap<Integer, Integer> test) {
+        for (Entry<Integer, Integer> entry : test.entrySet()) {
+            if (!validMove(gamefield, entry.getValue(), entry.getKey())) {
+               return false; 
+            }       
+        }
+        for (Entry<Integer, Integer> entry : test.entrySet()) {
             moveFigure(gamefield, entry.getValue(), entry.getKey());
         }
+        return true;
     }
+
     /**
      * Checks if the Player p can do a move with the card 7
-     * @param gamefield the current gamefield played on
-     * @param p the player that wants to move
+     * 
+     * @param gamefield
+     *            the current gamefield played on
+     * @param p
+     *            the player that wants to move
      * @return true if the player can move with the card
      */
-    public boolean validSevenMove(GameField gamefield, Player p) {
-        int steps = 7;
+    public boolean possibleSevenMove(GameField gamefield, Player p) {
+        int steps = VALUEOFCARD7;
+        boolean returnval = true;
         LinkedList<Integer> figures = p.getFigureRegister();
         Integer currentField = figures.pollFirst();
-        while(steps > 0) {
+        while (steps > 0) {
             if (!validMove(gamefield, steps, currentField)) {
                 steps--;
             } else {
                 currentField = figures.pollFirst();
-                if(currentField == null) {
-                    return false;
+                if (currentField == null) {
+                    returnval = false;
+                    break;
                 }
             }
         }
-        return true;
+        return returnval;
     }
 }
