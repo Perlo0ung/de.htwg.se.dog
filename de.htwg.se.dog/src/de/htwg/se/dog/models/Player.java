@@ -1,12 +1,16 @@
 package de.htwg.se.dog.models;
 
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 public class Player {
 
     private List<Figure> figure;
     private List<Card> cards;
+    private Map<Integer, Integer> figureRegister; 
     private final int playernum;
 
     public Player(int playerNr, int figcount) {
@@ -16,6 +20,7 @@ public class Player {
             figure.add(new Figure(this, i + 1));
         }
         cards = new LinkedList<Card>();
+        figureRegister = new HashMap<Integer, Integer>();
 
     }
     /**
@@ -76,5 +81,21 @@ public class Player {
      */
     public int getPlayerID() {
         return playernum;
+    }
+    /**
+     * Update the position where the figure assosiated with fignum it currently at
+     * if fieldId is -1 the figure will be removed from the register
+     * @param feldid: the FieldNumber where the is at
+     * @param fignum: the internal figurenumber for this figure
+     */
+    public void updateFigurePos(int fieldId, int fignum) {
+        if (fieldId == -1) {
+            figureRegister.remove(fignum);
+        } else {
+            figureRegister.put(fignum, fieldId);
+        }
+    }
+    public Collection<Integer> getFigureRegister() {
+        return figureRegister.values();
     }
 }
