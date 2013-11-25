@@ -33,6 +33,11 @@ public class GameTableTest {
     }
     
     @Test
+    public void testPlayerQueueIsEmpty() {
+    	assertFalse(table.playerQueueIsEmpty());
+    }
+    
+    @Test
     public void testcanPlay() {
         assertFalse(table.canPlay(first));
         table.dealCards();

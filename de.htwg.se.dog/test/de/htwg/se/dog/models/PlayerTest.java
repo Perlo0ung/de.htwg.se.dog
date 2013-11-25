@@ -65,4 +65,8 @@ public class PlayerTest {
         p1.updateFigurePos(1, -1);
         assertEquals((Integer)12,p1.getFigureRegister().get(0));
     }
+    @Test 
+    public void testtoString(){
+    	assertEquals("PlayerId: 1", p1.toString());
+    }
 }

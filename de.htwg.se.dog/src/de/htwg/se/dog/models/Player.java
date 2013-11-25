@@ -118,4 +118,11 @@ public class Player {
     public List<Integer> getFigureRegister() {
         return new LinkedList<Integer>(figureRegister.values());
     }
+    /**
+     * toString returns the PlayerId for this Player
+     */
+    @Override
+    public String toString() {
+    	return String.format("PlayerId: %s", this.getPlayerID()); 	
+    }
 }

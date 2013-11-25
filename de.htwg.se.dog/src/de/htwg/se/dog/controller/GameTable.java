@@ -1,9 +1,9 @@
 package de.htwg.se.dog.controller;
 
-import java.util.ArrayDeque;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
 import de.htwg.se.dog.models.Card;
 import de.htwg.se.dog.models.GameField;
@@ -15,8 +15,8 @@ public class GameTable {
 	private static final int HOUSECOUNT = 4;
 
 	private GameField game;
-	private final List<Player> players;
-	private ArrayDeque<Player> turnPlayer;
+	private List<Player> players;
+	private Queue<Player> turnPlayer;
 	private CardDealer dealer;
 
 	/**
@@ -44,6 +44,15 @@ public class GameTable {
 	}
 
 	/**
+	 * Returns weather the playerqueue is empty or not
+	 * 
+	 * @return true if empty otherwise false
+	 */
+	public boolean playerQueueIsEmpty() {
+		return turnPlayer.isEmpty();
+	}
+
+	/**
 	 * Add all Players to playerlist
 	 * 
 	 * @param playerCount
@@ -59,11 +68,11 @@ public class GameTable {
 	 * Refills the Playerqueue and deals cards to every player
 	 */
 	public void dealCards() {
-
+		turnPlayer = new LinkedList<Player>();
 		for (Player p : players) {
 			dealer.dealCards(p);
+			turnPlayer.add(p);
 		}
-		turnPlayer = new ArrayDeque<Player>(players);
 	}
 
 	/**
@@ -77,11 +86,10 @@ public class GameTable {
 	/**
 	 * Returns the player that can play now
 	 * 
-	 * @return
+	 * @return the player that is allowed to play
 	 */
 	public Player getCurrentPlayer() {
-		// IDs start at 1 so we need the position 0 from real player list
-		return players.get(turnPlayer.pollFirst().getPlayerID() - 1);
+		return turnPlayer.poll();
 	}
 
 	/**
