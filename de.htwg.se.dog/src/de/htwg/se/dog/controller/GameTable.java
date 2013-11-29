@@ -32,8 +32,9 @@ public class GameTable {
         game = new GameField(FIELDSTILLHOUSE, playerCount, HOUSECOUNT);
         players = new LinkedList<Player>();
         dealer = new CardDealer(playerCount);
-        addPlayers(playerCount, figCount);
         movement = new Movement();
+        addPlayers(playerCount, figCount);
+
     }
 
     /**
