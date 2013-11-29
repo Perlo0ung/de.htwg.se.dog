@@ -3,7 +3,6 @@ package de.htwg.se.dog.controller;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -27,6 +26,7 @@ public class MovementTest {
     private final int ONE = 1;
     private final int ZERO = 0;
 
+    /* Generate empty gamefield with 2 players */
     @Before
     public void setUp() throws Exception {
         movement = new Movement();
@@ -46,7 +46,7 @@ public class MovementTest {
         array[5].putFigure(tp2.removeFigure());
         // Deprecated Field
         //Move Figure to occupied field
-        assertTrue(Movement.moveFigure(gamefield, 5, 0));
+        assertFalse(Movement.moveFigure(gamefield, 5, 0));
         //Is startfield empty
         assertNull(array[0].getFigure());
         //Is figure moved correctly

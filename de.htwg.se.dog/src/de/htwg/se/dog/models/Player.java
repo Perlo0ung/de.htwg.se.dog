@@ -7,9 +7,9 @@ import java.util.Map;
 
 public class Player {
 
-    private List<Figure> figure;
-    private List<Card> cards;
-    private Map<Integer, Integer> figureRegister;
+    private final List<Figure> figure;
+    private final List<Card> cards;
+    private final Map<Integer, Integer> figureRegister;
     private final int playernum;
 
     public Player(int playerNr, int figcount) {
@@ -95,12 +95,12 @@ public class Player {
 
     /**
      * Update the position where the figure assosiated with fignum it currently
-     * at if fieldId is -1 the figure will be removed from the register
+     * at. If fieldId is -1 the figure will be removed from the register
      * 
-     * @param feldid
-     *            : the FieldNumber where the is at
+     * @param fieldId
+     *            the FieldNumber where the is at
      * @param fignum
-     *            : the internal figurenumber for this figure
+     *            the internal figurenumber for this figure
      */
     public void updateFigurePos(int fignum, int fieldId) {
         if (fieldId == -1) {
@@ -118,11 +118,12 @@ public class Player {
     public List<Integer> getFigureRegister() {
         return new LinkedList<Integer>(figureRegister.values());
     }
+
     /**
      * toString returns the PlayerId for this Player
      */
     @Override
     public String toString() {
-    	return String.format("PlayerId: %s", this.getPlayerID()); 	
+        return String.format("PlayerId: %s", this.getPlayerID());
     }
 }

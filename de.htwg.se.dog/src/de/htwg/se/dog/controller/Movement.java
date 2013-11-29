@@ -1,83 +1,15 @@
 package de.htwg.se.dog.controller;
 
 import java.util.LinkedList;
-import java.util.Map;
-import java.util.Map.Entry;
 
 import de.htwg.se.dog.models.Field;
 import de.htwg.se.dog.models.Figure;
 import de.htwg.se.dog.models.GameField;
 import de.htwg.se.dog.models.Player;
 
-public class Movement {
+public abstract class Movement implements MovementStrategy {
 
     private static final int VALUEOFCARD7 = 7;
-
-    /**
-     * Trys to Moves Figure "steps" forward, on success it returns true
-     * otherwise false
-     * 
-     * @param gamefield
-     * @param steps
-     *            number of steps figure wants to take
-     * @param startfieldnr
-     *            from where figure wants to move
-     * @return true if figure could be moved, otherwise false
-     */
-    public static boolean moveFigure(GameField gamefield, int steps, int startfieldnr) {
-        boolean valid = false;
-        Field[] array = gamefield.getGamefield();
-        // check if startfield is not empty and the move is valid
-        if (!fieldEmpty(array[startfieldnr]) && validMove(gamefield, steps, startfieldnr)) {
-            int targetfield = getTargetfield(gamefield, steps, startfieldnr);
-            kickPlayer(array, targetfield);
-            // Move Figure from startfield to Targetfield
-            array[targetfield].putFigure(array[startfieldnr].removeFigure());
-            valid = true;
-        }
-        return valid;
-    }
-
-    /**
-     * Returns true if suggested move is valid
-     * 
-     * @param gamefield
-     * @param steps
-     *            number of steps figure want to take
-     * @param startfieldnr
-     *            from where figure wants to move
-     * @return true if move is valid, otherwise false
-     */
-    public static boolean validMove(GameField gamefield, int steps, int startfieldnr) {
-        boolean valid = false;
-        if (getTargetfield(gamefield, steps, startfieldnr) >= 0) {
-            valid = true;
-        }
-        return valid;
-    }
-
-    /**
-     * switches 2 figures, if targetfig is on a goal field or not on both fields
-     * is a figure, it does nothing
-     * 
-     * @param gamefield
-     * @param fromNr
-     *            fieldnumber of Figure 1
-     * @param toNr
-     *            fieldnumber of Figure 2
-     * @return true if switch was successful, otherwise false
-     */
-    public static boolean moveSwitch(GameField gamefield, int fromNr, int toNr) {
-        boolean valid = false;
-        Field[] array = gamefield.getGamefield();
-        if (!fieldEmpty(array[fromNr]) && !array[fromNr].isHouse() && !fieldEmpty(array[toNr]) && !array[toNr].isHouse()) {
-            Figure tmp = array[fromNr].removeFigure();
-            array[fromNr].putFigure(array[toNr].removeFigure());
-            array[toNr].putFigure(tmp);
-            valid = true;
-        }
-        return valid;
-    }
 
     /**
      * checks if figure is on field
@@ -86,7 +18,7 @@ public class Movement {
      *            which should be checked
      * @return true if field is not empty, otherwise false;
      */
-    private static boolean fieldEmpty(Field field) {
+    protected boolean fieldEmpty(Field field) {
         boolean returnval = false;
         if (field.getFigure() != null) {
             returnval = true;
@@ -102,12 +34,14 @@ public class Movement {
      * @param fieldID
      *            fieldnumber where figure should be kick from
      */
-    private static void kickPlayer(Field[] array, int fieldID) {
+    protected void kickPlayer(Field[] array, int fieldID) {
         if (!fieldEmpty(array[fieldID])) {
             // get Owner of figure
             Player tempPlayer = array[fieldID].getFigure().getOwner();
+            Figure figure = array[fieldID].removeFigure();
+            tempPlayer.updateFigurePos(figure.getFignr(), -1);
             // remove figure from field and add it to Playerlist
-            tempPlayer.addFigure(array[fieldID].removeFigure());
+            tempPlayer.addFigure(figure);
         }
     }
 
@@ -122,7 +56,7 @@ public class Movement {
      *            : startfield number from where figure wants to move
      * @return int: returns number of targetfield
      */
-    private static int getTargetfield(GameField gamefield, int stepAns, int startfieldnr) {
+    protected int getTargetfield(GameField gamefield, int stepAns, int startfieldnr) {
         Field[] array = gamefield.getGamefield();
         // TODO: getOwner liefert NullPointerException!!!!!!!!!!!!!!!!!!
         //Player bla = array[startfieldnr].getFigure().getOwner();
@@ -155,23 +89,6 @@ public class Movement {
     }
 
     /**
-     * 
-     * @param gamefield
-     * @param test
-     */
-    public static boolean sevenMove(GameField gamefield, Map<Integer, Integer> test) {
-        for (Entry<Integer, Integer> entry : test.entrySet()) {
-            if (!validMove(gamefield, entry.getValue(), entry.getKey())) {
-                return false;
-            }
-        }
-        for (Entry<Integer, Integer> entry : test.entrySet()) {
-            moveFigure(gamefield, entry.getValue(), entry.getKey());
-        }
-        return true;
-    }
-
-    /**
      * Checks if the Player p can do a move with the card 7
      * 
      * @param gamefield
@@ -198,4 +115,5 @@ public class Movement {
         }
         return returnval;
     }
+
 }
