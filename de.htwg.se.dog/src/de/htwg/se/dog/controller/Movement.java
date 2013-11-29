@@ -1,7 +1,9 @@
 package de.htwg.se.dog.controller;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 
+import de.htwg.se.dog.models.Card;
 import de.htwg.se.dog.models.Field;
 import de.htwg.se.dog.models.Figure;
 import de.htwg.se.dog.models.GameField;
@@ -9,7 +11,30 @@ import de.htwg.se.dog.models.Player;
 
 public abstract class Movement implements MovementStrategy {
 
+    private static final int VALUEOFCARD4 = 4;
     private static final int VALUEOFCARD7 = 7;
+    private static final int VALUEOFCARD11 = 11;
+
+    private Movement strategie;
+    HashMap<Integer, Movement> strat;
+
+    protected Movement() {
+        strat = new HashMap<Integer, Movement>();
+        strat.put(VALUEOFCARD4, new MoveFour());
+        strat.put(VALUEOFCARD7, new MoveSeven());
+        strat.put(VALUEOFCARD11, new MoveSwitch());
+    }
+
+    /**
+     * Set move-strategie that is used for a card
+     * 
+     * @param card
+     */
+    public void setMoveStrategie(Card card) {
+        if ((strategie = strat.get(card.getValue())) == null) {
+            strategie = new MoveNormal();
+        }
+    }
 
     /**
      * checks if figure is on field
