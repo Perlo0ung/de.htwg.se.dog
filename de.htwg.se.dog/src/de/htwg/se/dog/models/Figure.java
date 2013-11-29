@@ -11,23 +11,33 @@ public class Figure {
         if (fignr > ZERO && fignr <= FOUR) {
             this.fignr = fignr;
         } else {
-            throw new IllegalArgumentException(
-                    "Failed to create Figrue with Fignr:" + fignr);
+            throw new IllegalArgumentException("Failed to create Figrue with Fignr:" + fignr);
         }
 
     }
 
     /**
-     *  returns the owner of this figure 
-     *  @return reference to the owner of the figure  
+     * returns the owner of this figure
+     * 
+     * @return reference to the owner of the figure
      */
     public Player getOwner() {
         return this.owner;
     }
 
     /**
-     *  returns the figurenum
-     *  @return returns the Figurenumber 
+     * returns the PlayerNr of the owner
+     * 
+     * @return
+     */
+    public int getOwnerNr() {
+        return owner.getPlayerID();
+    }
+
+    /**
+     * returns the figurenum
+     * 
+     * @return returns the Figurenumber
      */
     public int getFignr() {
         return this.fignr;
