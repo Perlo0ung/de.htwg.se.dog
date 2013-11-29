@@ -4,7 +4,10 @@ import java.util.LinkedList;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import de.htwg.se.dog.models.*;
+import de.htwg.se.dog.models.Field;
+import de.htwg.se.dog.models.Figure;
+import de.htwg.se.dog.models.GameField;
+import de.htwg.se.dog.models.Player;
 
 public class Movement {
 
@@ -21,13 +24,11 @@ public class Movement {
      *            from where figure wants to move
      * @return true if figure could be moved, otherwise false
      */
-    public static boolean moveFigure(GameField gamefield, int steps,
-            int startfieldnr) {
+    public static boolean moveFigure(GameField gamefield, int steps, int startfieldnr) {
         boolean valid = false;
         Field[] array = gamefield.getGamefield();
         // check if startfield is not empty and the move is valid
-        if (!fieldEmpty(array[startfieldnr])
-                && validMove(gamefield, steps, startfieldnr)) {
+        if (!fieldEmpty(array[startfieldnr]) && validMove(gamefield, steps, startfieldnr)) {
             int targetfield = getTargetfield(gamefield, steps, startfieldnr);
             kickPlayer(array, targetfield);
             // Move Figure from startfield to Targetfield
@@ -47,8 +48,7 @@ public class Movement {
      *            from where figure wants to move
      * @return true if move is valid, otherwise false
      */
-    public static boolean validMove(GameField gamefield, int steps,
-            int startfieldnr) {
+    public static boolean validMove(GameField gamefield, int steps, int startfieldnr) {
         boolean valid = false;
         if (getTargetfield(gamefield, steps, startfieldnr) >= 0) {
             valid = true;
@@ -70,8 +70,7 @@ public class Movement {
     public static boolean moveSwitch(GameField gamefield, int fromNr, int toNr) {
         boolean valid = false;
         Field[] array = gamefield.getGamefield();
-        if (!fieldEmpty(array[fromNr]) && !array[fromNr].isHouse()
-                && !fieldEmpty(array[toNr]) && !array[toNr].isHouse()) {
+        if (!fieldEmpty(array[fromNr]) && !array[fromNr].isHouse() && !fieldEmpty(array[toNr]) && !array[toNr].isHouse()) {
             Figure tmp = array[fromNr].removeFigure();
             array[fromNr].putFigure(array[toNr].removeFigure());
             array[toNr].putFigure(tmp);
@@ -123,9 +122,12 @@ public class Movement {
      *            : startfield number from where figure wants to move
      * @return int: returns number of targetfield
      */
-    private static int getTargetfield(GameField gamefield, int stepAns,
-            int startfieldnr) {
+    private static int getTargetfield(GameField gamefield, int stepAns, int startfieldnr) {
         Field[] array = gamefield.getGamefield();
+        // TODO: getOwner liefert NullPointerException!!!!!!!!!!!!!!!!!!
+        //Player bla = array[startfieldnr].getFigure().getOwner();
+        if (array[startfieldnr].getFigure() == null)
+            return -1;
         int playerNr = array[startfieldnr].getFigure().getOwner().getPlayerID();
         int currentfieldID = (startfieldnr + 1) % gamefield.getFieldSize();
         int steps = stepAns;
@@ -142,8 +144,7 @@ public class Movement {
                 steps--;
                 // Check if next field is own House and current field ist last
                 // in house
-            } else if (currentFieldOwner == playerNr && steps > 0
-                    && array[nextfieldID].getOwner() != playerNr) {
+            } else if (currentFieldOwner == playerNr && steps > 0 && array[nextfieldID].getOwner() != playerNr) {
                 steps += gamefield.getHouseCount() - 1;
             }
             if (steps > 0) {
@@ -158,8 +159,7 @@ public class Movement {
      * @param gamefield
      * @param test
      */
-    public static boolean sevenMove(GameField gamefield,
-            Map<Integer, Integer> test) {
+    public static boolean sevenMove(GameField gamefield, Map<Integer, Integer> test) {
         for (Entry<Integer, Integer> entry : test.entrySet()) {
             if (!validMove(gamefield, entry.getValue(), entry.getKey())) {
                 return false;
@@ -183,8 +183,7 @@ public class Movement {
     public boolean possibleSevenMove(GameField gamefield, Player p) {
         int steps = VALUEOFCARD7;
         boolean returnval = true;
-        LinkedList<Integer> figures = new LinkedList<Integer>(
-                p.getFigureRegister());
+        LinkedList<Integer> figures = new LinkedList<Integer>(p.getFigureRegister());
         Integer currentField = figures.pollFirst();
         while (steps > 0) {
             if (!validMove(gamefield, steps, currentField)) {
