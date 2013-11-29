@@ -49,7 +49,17 @@ public class Field {
     }
 
     /**
+     * returns the PlayerNr of the FigureOwner
+     * 
+     * @return
+     */
+    public int getFigureOwnerNr() {
+        return figure.getOwnerNr();
+    }
+
+    /**
      * returns the field owner number
+     * 
      * @return the field owner (for house fields)
      */
     public int getOwner() {
@@ -57,8 +67,10 @@ public class Field {
     }
 
     /**
-     *  set blocked status of the field
-     *  @param a status 
+     * set blocked status of the field
+     * 
+     * @param a
+     *        status
      */
     public void setBlocked(boolean a) {
         this.blocked = a;
@@ -66,6 +78,7 @@ public class Field {
 
     /**
      * returns the blocked state
+     * 
      * @return true if field is blocked
      */
     public boolean getBlocked() {
@@ -74,6 +87,7 @@ public class Field {
 
     /**
      * returns boolean value if field is a house fied
+     * 
      * @return true if housefield
      */
     public boolean isHouse() {

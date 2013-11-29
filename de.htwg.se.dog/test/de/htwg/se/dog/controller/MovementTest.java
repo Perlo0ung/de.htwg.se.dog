@@ -40,13 +40,13 @@ public class MovementTest {
     @Test
     public void testMoveFigure() {
         //Move Figure from empty Field
-        assertFalse(Movement.moveFigure(gamefield, ONE, ZERO));
+        assertFalse(movement.move(gamefield, ONE, ZERO));
         array[ZERO].putFigure(tp1.removeFigure());
         Figure tmpZERO = array[ZERO].getFigure();
         array[5].putFigure(tp2.removeFigure());
         // Deprecated Field
         //Move Figure to occupied field
-        assertFalse(Movement.moveFigure(gamefield, 5, 0));
+        assertFalse(movement.move(gamefield, 5, 0));
         //Is startfield empty
         assertNull(array[0].getFigure());
         //Is figure moved correctly
