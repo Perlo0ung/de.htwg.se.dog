@@ -133,14 +133,24 @@ public class Movement implements MovementStrategy {
      */
     public boolean possibleSevenMove(GameField gamefield, Player p) {
         int steps = VALUEOFCARD7;
+        int remaining = 0;
         boolean returnval = true;
         LinkedList<Integer> figures = new LinkedList<Integer>(p.getFigureRegister());
-        Integer currentField = figures.pollFirst();
+        if (figures.isEmpty()) {
+        	steps = 0;
+        	returnval = false;
+        }
+    	Integer currentField = figures.pollFirst();
         while (steps > 0) {
             if (!validMove(gamefield, steps, currentField)) {
                 steps--;
+                remaining++;
             } else {
+            	if (remaining == 0) {
+            		break;
+            	}
                 currentField = figures.pollFirst();
+                steps = remaining;
                 if (currentField == null) {
                     returnval = false;
                     break;
