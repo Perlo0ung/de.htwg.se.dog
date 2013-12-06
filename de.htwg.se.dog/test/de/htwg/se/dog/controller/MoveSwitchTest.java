@@ -45,7 +45,7 @@ public class MoveSwitchTest {
         tp2 = new Player(PLAYERID2, FIGCOUNT);
         array = gamefield.getGamefield();
 
-    }
+    } // Voll Geil
 
     @Test
     public void testMove() {
