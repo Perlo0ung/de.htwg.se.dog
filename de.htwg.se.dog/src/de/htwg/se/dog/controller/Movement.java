@@ -16,14 +16,14 @@ public class Movement implements MovementStrategy {
     private static final int VALUEOFCARD11 = 11;
 
     private Movement strategie;
-    HashMap<Integer, Movement> strat;
-
-    protected Movement() {
+    private static HashMap<Integer, Movement> strat;
+    static {
         strat = new HashMap<Integer, Movement>();
         strat.put(VALUEOFCARD4, new MoveFour());
-        strat.put(VALUEOFCARD7, new MoveSeven());
         strat.put(VALUEOFCARD11, new MoveSwitch());
     }
+
+    protected Movement() {}
 
     @Override
     public boolean move(GameField gamefield, int steps, int fromNr) {
@@ -137,18 +137,18 @@ public class Movement implements MovementStrategy {
         boolean returnval = true;
         LinkedList<Integer> figures = new LinkedList<Integer>(p.getFigureRegister());
         if (figures.isEmpty()) {
-        	steps = 0;
-        	returnval = false;
+            steps = 0;
+            returnval = false;
         }
-    	Integer currentField = figures.pollFirst();
+        Integer currentField = figures.pollFirst();
         while (steps > 0) {
             if (!validMove(gamefield, steps, currentField)) {
                 steps--;
                 remaining++;
             } else {
-            	if (remaining == 0) {
-            		break;
-            	}
+                if (remaining == 0) {
+                    break;
+                }
                 currentField = figures.pollFirst();
                 steps = remaining;
                 if (currentField == null) {

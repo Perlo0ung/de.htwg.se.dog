@@ -19,9 +19,10 @@ public class MoveSwitch extends Movement {
      */
     @Override
     public boolean move(GameField gamefield, int steps, int fromNr) {
-        int toNr = super.getTargetfield(gamefield, steps, fromNr);
+        int toNr = steps;
         boolean valid = false;
         Field[] array = gamefield.getGamefield();
+        /* TODO: Playerregister aktualisieren------------------------------------------*/
         if (!fieldEmpty(array[fromNr]) && !array[fromNr].isHouse() && !fieldEmpty(array[toNr]) && !array[toNr].isHouse()) {
             Figure tmp = array[fromNr].removeFigure();
             array[fromNr].putFigure(array[toNr].removeFigure());

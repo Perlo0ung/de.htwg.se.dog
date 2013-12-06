@@ -3,10 +3,12 @@ package de.htwg.se.dog.controller;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
 import org.junit.Test;
 
+import de.htwg.se.dog.models.Card;
 import de.htwg.se.dog.models.Field;
 import de.htwg.se.dog.models.Figure;
 import de.htwg.se.dog.models.GameField;
@@ -40,6 +42,7 @@ public class MovementTest {
     @Test
     public void testMoveFigure() {
         //Move Figure from empty Field
+        movement.setMoveStrategie(new Card(2));
         assertFalse(movement.move(gamefield, ONE, ZERO));
         array[ZERO].putFigure(tp1.removeFigure());
         Figure tmpZERO = array[ZERO].getFigure();
@@ -59,13 +62,15 @@ public class MovementTest {
         array[ONE].putFigure(tp1.removeFigure());
         array[ONE].setBlocked(true);
         //Move Figure over blocked field
-        assertFalse(Movement.moveFigure(gamefield, 2, ZERO));
+        movement.setMoveStrategie(new Card(2));
+        assertFalse(movement.move(gamefield, 2, ZERO));
     }
 
     @Test
     public void testMoveOverOwnHouse() {
         array[ZERO].putFigure(tp1.removeFigure());
-        assertFalse(Movement.moveFigure(gamefield, 5, 0));
+        movement.setMoveStrategie(new Card(5));
+        assertTrue(movement.move(gamefield, 5, 0));
     }
 
     @Test
@@ -73,7 +78,8 @@ public class MovementTest {
         array[ONE].putFigure(tp1.removeFigure());
         array[ONE].setBlocked(true);
         array[ZERO].putFigure(tp1.removeFigure());
-        assertFalse(Movement.validMove(gamefield, 4, ZERO));
+        movement.setMoveStrategie(new Card(5));
+        assertFalse(movement.validMove(gamefield, 4, ZERO));
     }
 
 }

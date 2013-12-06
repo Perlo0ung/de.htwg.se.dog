@@ -10,9 +10,9 @@ public class MoveNormal extends Movement {
      * 
      * @param gamefield
      * @param steps
-     *            number of steps figure wants to take
+     *        number of steps figure wants to take
      * @param startfieldnr
-     *            from where figure wants to move
+     *        from where figure wants to move
      * @return true if figure could be moved, otherwise false
      */
     @Override
@@ -35,9 +35,9 @@ public class MoveNormal extends Movement {
      * 
      * @param gamefield
      * @param steps
-     *            number of steps figure want to take
+     *        number of steps figure want to take
      * @param startfieldnr
-     *            from where figure wants to move
+     *        from where figure wants to move
      * @return true if move is valid, otherwise false
      */
     @Override
