@@ -44,12 +44,15 @@ public class MovementTest {
         //Move Figure from empty Field
         movement.setMoveStrategie(new Card(2));
         assertFalse(movement.move(gamefield, ONE, ZERO));
+
         array[ZERO].putFigure(tp1.removeFigure());
         Figure tmpZERO = array[ZERO].getFigure();
-        array[5].putFigure(tp2.removeFigure());
-        // Deprecated Field
+        array[4].putFigure(tp2.removeFigure());
+        array[4].setBlocked(true);
         //Move Figure to occupied field
-        assertFalse(movement.move(gamefield, 5, 0));
+        assertFalse(movement.move(gamefield, 4, 0));
+        array[4].setBlocked(false);
+        movement.move(gamefield, 5, 0);
         //Is startfield empty
         assertNull(array[0].getFigure());
         //Is figure moved correctly

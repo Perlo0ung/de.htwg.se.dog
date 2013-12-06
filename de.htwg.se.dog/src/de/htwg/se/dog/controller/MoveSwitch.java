@@ -3,6 +3,7 @@ package de.htwg.se.dog.controller;
 import de.htwg.se.dog.models.Field;
 import de.htwg.se.dog.models.Figure;
 import de.htwg.se.dog.models.GameField;
+import de.htwg.se.dog.models.Player;
 
 public class MoveSwitch extends Movement {
 
@@ -22,11 +23,17 @@ public class MoveSwitch extends Movement {
         int toNr = steps;
         boolean valid = false;
         Field[] array = gamefield.getGamefield();
-        /* TODO: Playerregister aktualisieren------------------------------------------*/
         if (!fieldEmpty(array[fromNr]) && !array[fromNr].isHouse() && !fieldEmpty(array[toNr]) && !array[toNr].isHouse()) {
-            Figure tmp = array[fromNr].removeFigure();
-            array[fromNr].putFigure(array[toNr].removeFigure());
-            array[toNr].putFigure(tmp);
+            /* switch Figures */
+            Figure f1 = array[fromNr].removeFigure();
+            Figure f2 = array[toNr].removeFigure();
+            array[fromNr].putFigure(f2);
+            array[toNr].putFigure(f1);
+            /* update FirgurePositions */
+            Player ownerF1 = f1.getOwner();
+            Player ownerF2 = f2.getOwner();
+            ownerF2.updateFigurePos(f2.getFignr(), fromNr);
+            ownerF1.updateFigurePos(f1.getFignr(), toNr);
             valid = true;
         }
         return valid;
