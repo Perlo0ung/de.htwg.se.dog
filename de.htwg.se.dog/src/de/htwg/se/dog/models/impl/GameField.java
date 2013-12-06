@@ -2,7 +2,7 @@ package de.htwg.se.dog.models.impl;
 
 import de.htwg.se.dog.models.GameFieldInterface;
 
-public class GameField implements GameFieldInterface {
+public class GameField implements GameFieldInterface<Field> {
     private static final int NOOWNER = 0;
 
     private Field[] gamefield;

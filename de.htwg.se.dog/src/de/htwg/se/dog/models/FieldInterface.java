@@ -1,21 +1,19 @@
 package de.htwg.se.dog.models;
 
-import de.htwg.se.dog.models.impl.Figure;
-
-public interface FieldInterface {
+public interface FieldInterface<V> {
     /**
      * /** Puts Figure f on this Field
      * 
      * @param f
      */
-    void putFigure(Figure f);
+    void putFigure(V f);
 
     /**
      * removes the figure from this field and returns it
      * 
      * @return return the removed figure
      */
-    Figure removeFigure();
+    V removeFigure();
 
     /**
      * returns the reference of the figure attached to this field
@@ -23,7 +21,7 @@ public interface FieldInterface {
      * @return the attached figure
      */
 
-    Figure getFigure();
+    V getFigure();
 
     /**
      * returns the PlayerNr of the FigureOwner

@@ -4,7 +4,7 @@ import java.util.Stack;
 
 import de.htwg.se.dog.models.impl.Card;
 
-public interface CardStackInterface {
+public interface CardStackInterface<V> {
     /**
      * Returns size of the CardStack
      * 
@@ -17,7 +17,7 @@ public interface CardStackInterface {
      * 
      * @return stack reference
      */
-    Stack<Card> getStack();
+    Stack<V> getStack();
 
     /**
      * Gets Card from stack between start inc. and range excl. ands removes it
