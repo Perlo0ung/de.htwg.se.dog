@@ -1,11 +1,13 @@
-package de.htwg.se.dog.models;
+package de.htwg.se.dog.models.impl;
 
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-public class Player {
+import de.htwg.se.dog.models.PlayerInterface;
+
+public class Player implements PlayerInterface {
 
     private final List<Figure> figure;
     private final List<Card> cards;
@@ -23,50 +25,27 @@ public class Player {
 
     }
 
-    /**
-     * returns list of Cards player has
-     * 
-     * @return List<Card>: of playercards returned
-     */
+    @Override
     public List<Card> getCardList() {
         return this.cards;
     }
 
-    /**
-     * returns list of figures player has
-     * 
-     * @return List<Figure>: of figures player returned
-     */
+    @Override
     public List<Figure> getFigureList() {
         return this.figure;
     }
 
-    /**
-     * adds a card to players cardlist
-     * 
-     * @param c
-     *            card which should be added
-     */
+    @Override
     public void addCard(Card c) {
         this.cards.add(c);
     }
 
-    /**
-     * removes card from players cardlist
-     * 
-     * @param c
-     *            card which should be removed
-     * @return boolean: true if remove was succsessfull, otherwise false
-     */
+    @Override
     public boolean removeCard(Card c) {
         return cards.remove(c);
     }
 
-    /**
-     * removes figure from players figurelist
-     * 
-     * @return Figure: returns figure which was removed from players figurelist
-     */
+    @Override
     public Figure removeFigure() {
         if (figure.isEmpty()) {
             return null;
@@ -74,34 +53,17 @@ public class Player {
         return figure.remove(0);
     }
 
-    /**
-     * adds figure to players figurelist
-     * 
-     * @param f
-     *            : Figure which should be added to players figurelist
-     */
+    @Override
     public void addFigure(Figure f) {
         figure.add(f);
     }
 
-    /**
-     * returnes player ID
-     * 
-     * @return int: returns playernumber
-     */
+    @Override
     public int getPlayerID() {
         return playernum;
     }
 
-    /**
-     * Update the position where the figure assosiated with fignum it currently
-     * at. If fieldId is -1 the figure will be removed from the register
-     * 
-     * @param fieldId
-     *            the FieldNumber where the is at
-     * @param fignum
-     *            the internal figurenumber for this figure
-     */
+    @Override
     public void updateFigurePos(int fignum, int fieldId) {
         if (fieldId == -1) {
             figureRegister.remove(fignum);
@@ -110,18 +72,11 @@ public class Player {
         }
     }
 
-    /**
-     * Returns all the places where figures are
-     * 
-     * @return List with the figure fieldnumbers
-     */
+    @Override
     public List<Integer> getFigureRegister() {
         return new LinkedList<Integer>(figureRegister.values());
     }
 
-    /**
-     * toString returns the PlayerId for this Player
-     */
     @Override
     public String toString() {
         return String.format("PlayerId: %s", this.getPlayerID());

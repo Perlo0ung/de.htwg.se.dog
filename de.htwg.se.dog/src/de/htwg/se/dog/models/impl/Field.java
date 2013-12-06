@@ -1,6 +1,8 @@
-package de.htwg.se.dog.models;
+package de.htwg.se.dog.models.impl;
 
-public class Field {
+import de.htwg.se.dog.models.FieldInterface;
+
+public class Field implements FieldInterface {
 
     private final int owner;
     private boolean house;
@@ -18,78 +20,44 @@ public class Field {
         }
     }
 
-    /**
-     * Puts Figure f on this Field
-     * 
-     * @param f
-     */
+    @Override
     public void putFigure(Figure f) {
         this.figure = f;
     }
 
-    /**
-     * removes the figure from this field and returns it
-     * 
-     * @return return the removed figure
-     */
+    @Override
     public Figure removeFigure() {
         Figure tmp = this.figure;
         this.figure = null;
         return tmp;
     }
 
-    /**
-     * returns the reference of the figure attached to this field
-     * 
-     * @return the attached figure
-     */
-
+    @Override
     public Figure getFigure() {
         return this.figure;
     }
 
-    /**
-     * returns the PlayerNr of the FigureOwner
-     * 
-     * @return
-     */
+    @Override
     public int getFigureOwnerNr() {
         return figure.getOwnerNr();
     }
 
-    /**
-     * returns the field owner number
-     * 
-     * @return the field owner (for house fields)
-     */
+    @Override
     public int getOwner() {
         return this.owner;
     }
 
-    /**
-     * set blocked status of the field
-     * 
-     * @param a
-     *        status
-     */
+    @Override
     public void setBlocked(boolean a) {
         this.blocked = a;
     }
 
-    /**
-     * returns the blocked state
-     * 
-     * @return true if field is blocked
-     */
+    @Override
     public boolean getBlocked() {
         return this.blocked;
     }
 
-    /**
-     * returns boolean value if field is a house fied
-     * 
-     * @return true if housefield
-     */
+    @Override
     public boolean isHouse() {
         return this.house;
     }

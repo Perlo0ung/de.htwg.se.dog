@@ -1,9 +1,11 @@
-package de.htwg.se.dog.models;
+package de.htwg.se.dog.models.impl;
 
 import java.util.Random;
 import java.util.Stack;
 
-public class CardStack {
+import de.htwg.se.dog.models.CardStackInterface;
+
+public class CardStack implements CardStackInterface {
 
     private Stack<Card> cardstack = null;
     private static final int CARDS = 4;
@@ -12,6 +14,7 @@ public class CardStack {
 
     /**
      * Generate a CardStack with specified size and for a number of players
+     * 
      * @param size
      * @param players
      */
@@ -22,8 +25,10 @@ public class CardStack {
 
     /**
      * Returns size of the CardStack
+     * 
      * @return StackSize
      */
+    @Override
     public int getSize() {
         return cardstack.size();
     }
@@ -31,6 +36,7 @@ public class CardStack {
     /**
      * generate a new CardStack for every 4 players the amount of cards gets
      * doubled
+     * 
      * @param size
      * @param players
      */
@@ -48,8 +54,10 @@ public class CardStack {
 
     /**
      * Returns the CardStack
+     * 
      * @return stack reference
      */
+    @Override
     public Stack<Card> getStack() {
         return this.cardstack;
     }
@@ -57,13 +65,18 @@ public class CardStack {
     /**
      * Gets Card from stack between start inc. and range excl. ands removes it
      * from the Stack
-     * @param start: int startpoint
-     * @param range: int range for random generator
+     * 
+     * @param start
+     *            : int startpoint
+     * @param range
+     *            : int range for random generator
      * @return Card: returns card from stack
      */
+    @Override
     public Card dealCard(int start, int range) {
         Random gen = new Random();
         int index = gen.nextInt(range - start) + start;
         return cardstack.remove(index);
     }
+
 }

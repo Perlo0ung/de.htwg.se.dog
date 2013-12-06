@@ -1,6 +1,8 @@
-package de.htwg.se.dog.models;
+package de.htwg.se.dog.models.impl;
 
-public class GameField {
+import de.htwg.se.dog.models.GameFieldInterface;
+
+public class GameField implements GameFieldInterface {
     private static final int NOOWNER = 0;
 
     private Field[] gamefield;
@@ -12,11 +14,14 @@ public class GameField {
     /**
      * Setup for a GameField
      * 
-     * @param fieldsTillHouse: field until there is a house
+     * @param fieldsTillHouse
+     *            : field until there is a house
      * 
-     * @param houseCount: number of housefields
+     * @param houseCount
+     *            : number of housefields
      * 
-     * @param playerCount: number of players
+     * @param playerCount
+     *            : number of players
      */
     public GameField(int fieldsTillHouse, int playerCount, int houseCount) {
         this.fieldsTillHouse = fieldsTillHouse;
@@ -27,9 +32,6 @@ public class GameField {
         generateGamefield();
     }
 
-    /**
-     *  generates a GameField 
-     */
     private void generateGamefield() {
         for (int i = 0; i < playerCount; i++) {
             int startfield = (fieldsTillHouse + houseCount) * i;
@@ -37,46 +39,29 @@ public class GameField {
                 gamefield[j] = new Field(NOOWNER);
             }
 
-            for (int j = startfield + fieldsTillHouse; j < startfield
-                    + fieldsTillHouse + houseCount; j++) {
+            for (int j = startfield + fieldsTillHouse; j < startfield + fieldsTillHouse + houseCount; j++) {
                 gamefield[j] = new Field(i + 1);
             }
 
         }
     }
 
-    /**
-     * returns the owner number of a field
-     * 
-     * @param fieldNr number of the field
-     * 
-     * @return int: ownerNr of the fieldNr,
-     * if it has no owner zero is returned
-     */
+    @Override
     public int getOwner(int fieldNr) {
         return this.gamefield[fieldNr].getOwner();
     }
 
-    /**
-     * Returns the gamefieldarray
-     * @return Field[]: the complete GameField
-     */
+    @Override
     public Field[] getGamefield() {
         return gamefield;
     }
 
-    /**
-     * returns the gamefieldsize
-     * @return int: the size of the complete Field
-     */
+    @Override
     public int getFieldSize() {
         return fieldSize;
     }
 
-    /**
-     * returns number of housefields
-     * @return int: the numberofHouseFields for each Player
-     */
+    @Override
     public int getHouseCount() {
         return houseCount;
     }

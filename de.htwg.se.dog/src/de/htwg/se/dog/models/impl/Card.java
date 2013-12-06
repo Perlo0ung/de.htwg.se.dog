@@ -1,6 +1,8 @@
-package de.htwg.se.dog.models;
+package de.htwg.se.dog.models.impl;
 
-public class Card {
+import de.htwg.se.dog.models.CardInterface;
+
+public class Card implements CardInterface {
 
     private final int value;
     private static final int ZERO = 0;
@@ -27,6 +29,7 @@ public class Card {
      * 
      * @return int: value of card between [0,14]
      */
+    @Override
     public int getValue() {
         return this.value;
     }
@@ -38,6 +41,7 @@ public class Card {
      *            : Int value of the card
      * @return String: the cardname as a string
      */
+    @Override
     public String getCardName(int value) {
         return CARDNAMES[value - 1];
     }

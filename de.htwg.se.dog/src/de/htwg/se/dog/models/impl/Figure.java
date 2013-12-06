@@ -1,6 +1,8 @@
-package de.htwg.se.dog.models;
+package de.htwg.se.dog.models.impl;
 
-public class Figure {
+import de.htwg.se.dog.models.FigureInterface;
+
+public class Figure implements FigureInterface {
     private static final int ZERO = 0;
     private static final int FOUR = 4;
     private final int fignr;
@@ -16,29 +18,17 @@ public class Figure {
 
     }
 
-    /**
-     * returns the owner of this figure
-     * 
-     * @return reference to the owner of the figure
-     */
+    @Override
     public Player getOwner() {
         return this.owner;
     }
 
-    /**
-     * returns the PlayerNr of the owner
-     * 
-     * @return
-     */
+    @Override
     public int getOwnerNr() {
         return owner.getPlayerID();
     }
 
-    /**
-     * returns the figurenum
-     * 
-     * @return returns the Figurenumber
-     */
+    @Override
     public int getFignr() {
         return this.fignr;
     }
