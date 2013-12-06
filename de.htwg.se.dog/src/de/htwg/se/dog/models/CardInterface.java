@@ -15,5 +15,5 @@ public interface CardInterface {
      *            : Int value of the card
      * @return String: the cardname as a string
      */
-    public String getCardName(int value);
+    public String getCardName();
 }

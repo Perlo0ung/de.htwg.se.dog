@@ -19,7 +19,7 @@ public class CardTest {
 
     @Before
     public void setUp() {
-        card = new de.htwg.se.dog.models.impl.Card(12);
+        card = new Card(12);
     }
 
     @Test
@@ -35,11 +35,18 @@ public class CardTest {
 
     @Test
     public void testGetCardName() {
-        assertEquals(card.getCardName(11), "Bube");
-        assertEquals(card.getCardName(12), "Dame");
-        assertEquals(card.getCardName(13), "Koenig");
-        assertEquals(card.getCardName(14), "Joker");
-        assertEquals(card.getCardName(1), "Ass");
-        assertEquals(card.getCardName(2), "Zwei");
+        card = new Card(11);
+        assertEquals(card.getCardName(), "Bube");
+        card = new Card(12);
+        assertEquals(card.getCardName(), "Dame");
+        card = new Card(13);
+        assertEquals(card.getCardName(), "Koenig");
+        card = new Card(14);
+        assertEquals(card.getCardName(), "Joker");
+        card = new Card(1);
+        assertEquals(card.getCardName(), "Ass");
+        card = new Card(2);
+        assertEquals(card.getCardName(), "Zwei");
+        assertEquals(card.toString(), "2: Zwei");
     }
 }

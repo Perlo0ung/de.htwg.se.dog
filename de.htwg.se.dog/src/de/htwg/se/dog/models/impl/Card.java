@@ -42,7 +42,12 @@ public class Card implements CardInterface {
      * @return String: the cardname as a string
      */
     @Override
-    public String getCardName(int value) {
-        return CARDNAMES[value - 1];
+    public String getCardName() {
+        return CARDNAMES[this.value - 1];
+    }
+
+    @Override
+    public String toString() {
+        return String.format("%s: %s", this.value, getCardName());
     }
 }
