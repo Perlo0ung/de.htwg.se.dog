@@ -2,7 +2,7 @@ package de.htwg.se.dog.models.impl;
 
 import de.htwg.se.dog.models.FieldInterface;
 
-public class Field implements FieldInterface {
+public class Field implements FieldInterface<Figure> {
 
     private final int owner;
     private boolean house;

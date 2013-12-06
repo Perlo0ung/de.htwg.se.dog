@@ -1,8 +1,6 @@
 package de.htwg.se.dog.models;
 
-import de.htwg.se.dog.models.impl.Field;
-
-public interface GameFieldInterface {
+public interface GameFieldInterface<V> {
 
     /**
      * returns the owner number of a field
@@ -19,7 +17,7 @@ public interface GameFieldInterface {
      * 
      * @return Field[]: the complete GameField
      */
-    Field[] getGamefield();
+    V[] getGamefield();
 
     /**
      * returns the gamefieldsize

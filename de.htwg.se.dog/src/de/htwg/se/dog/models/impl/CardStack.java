@@ -5,7 +5,7 @@ import java.util.Stack;
 
 import de.htwg.se.dog.models.CardStackInterface;
 
-public class CardStack implements CardStackInterface {
+public class CardStack implements CardStackInterface<Card> {
 
     private Stack<Card> cardstack = null;
     private static final int CARDS = 4;

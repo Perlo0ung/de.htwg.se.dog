@@ -1,14 +1,12 @@
 package de.htwg.se.dog.models;
 
-import de.htwg.se.dog.models.impl.Player;
-
-public interface FigureInterface {
+public interface FigureInterface<V> {
     /**
      * returns the owner of this figure
      * 
      * @return reference to the owner of the figure
      */
-    Player getOwner();
+    V getOwner();
 
     /**
      * returns the PlayerNr of the owner
