@@ -1,5 +1,6 @@
 package de.htwg.se.dog.controller;
 
+import de.htwg.se.dog.models.impl.Field;
 import de.htwg.se.dog.models.impl.Figure;
 import de.htwg.se.dog.models.impl.GameField;
 import de.htwg.se.dog.models.impl.Player;

@@ -1,6 +1,6 @@
 package de.htwg.se.dog.controller;
 
-import de.htwg.se.dog.models.GameField;
+import de.htwg.se.dog.models.impl.GameField;
 
 public class MoveFour extends Movement {
 

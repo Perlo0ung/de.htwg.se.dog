@@ -7,6 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import de.htwg.se.dog.models.impl.Card;
+import de.htwg.se.dog.models.impl.Field;
 import de.htwg.se.dog.models.impl.GameField;
 import de.htwg.se.dog.models.impl.Player;
 

@@ -1,12 +1,13 @@
 package de.htwg.se.dog.controller;
 
-
-import de.htwg.se.dog.models.Player;
+import de.htwg.se.dog.models.impl.Player;
 
 public class Turn {
-    private GameTable table; 
+    private final GameTable table;
+
     /**
      * Standard Konstruktor
+     * 
      * @param playerCount
      * @param figCount
      */
@@ -20,8 +21,9 @@ public class Turn {
     public void newRound() {
         table.newRound();
     }
+
     /**
-     *     
+     * 
      * @return the current Player
      */
     public Player getCurrentPlayer() {

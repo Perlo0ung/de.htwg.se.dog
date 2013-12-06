@@ -5,28 +5,28 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
-import de.htwg.se.dog.models.Card;
-import de.htwg.se.dog.models.GameField;
-import de.htwg.se.dog.models.Player;
+import de.htwg.se.dog.models.impl.Card;
+import de.htwg.se.dog.models.impl.GameField;
+import de.htwg.se.dog.models.impl.Player;
 
 public class GameTable {
 
     private static final int FIELDSTILLHOUSE = 16;
     private static final int HOUSECOUNT = 4;
 
-    private GameField game;
-    private List<Player> players;
+    private final GameField game;
+    private final List<Player> players;
     private Queue<Player> turnPlayer;
-    private CardDealer dealer;
-    private Movement movement;
+    private final CardDealer dealer;
+    private final Movement movement;
 
     /**
      * Constructor to generate a new gametable
      * 
      * @param playerCount
-     *            number of players
+     *        number of players
      * @param figCount
-     *            number of figures per player
+     *        number of figures per player
      */
     public GameTable(int playerCount, int figCount) {
         game = new GameField(FIELDSTILLHOUSE, playerCount, HOUSECOUNT);
@@ -99,7 +99,7 @@ public class GameTable {
      * Returns true if the Player has a card that can be played
      * 
      * @param p
-     *            the Player that wants to play
+     *        the Player that wants to play
      * @return true if he can play, otherwise false
      */
     public boolean canPlay(Player p) {
@@ -110,7 +110,7 @@ public class GameTable {
      * Returns a list containing the cards that can be played by Player p
      * 
      * @param p
-     *            the player that wants to play
+     *        the player that wants to play
      * @return a list containing the cards that can be played
      */
     public List<Card> possibleCards(Player p) {

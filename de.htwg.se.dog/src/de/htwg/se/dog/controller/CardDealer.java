@@ -1,6 +1,7 @@
 package de.htwg.se.dog.controller;
 
-import de.htwg.se.dog.models.*;
+import de.htwg.se.dog.models.impl.CardStack;
+import de.htwg.se.dog.models.impl.Player;
 
 public class CardDealer {
     private CardStack stackObj;
@@ -19,6 +20,7 @@ public class CardDealer {
         this.players = players;
         stackObj = new CardStack(CARDS, players);
     }
+
     /**
      * 
      * @param p
@@ -31,16 +33,17 @@ public class CardDealer {
             p.addCard(stackObj.dealCard(0, stackObj.getSize()));
         }
     }
-    
+
     /**
      * increments the roundcounter between 1 and Maxround
      */
     public void newRound() {
         round = (round + 1) % MAXROUND;
     }
-    
+
     /**
      * returns roundNumber
+     * 
      * @return int: roundnumber
      */
     public int getRound() {
@@ -49,13 +52,16 @@ public class CardDealer {
 
     /**
      * Returns number of cards used this cards
+     * 
      * @return int: cards to be dealed this round
      */
     public int expectedNumOfCards() {
         return (MAXCARDS - round) * players;
     }
+
     /**
      * returns the cardstack-OBJ
+     * 
      * @return CardStack: current cardstack
      */
     public CardStack getObject() {

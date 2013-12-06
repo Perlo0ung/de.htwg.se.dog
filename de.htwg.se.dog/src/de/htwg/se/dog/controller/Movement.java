@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 
 import de.htwg.se.dog.models.impl.Card;
+import de.htwg.se.dog.models.impl.Field;
 import de.htwg.se.dog.models.impl.Figure;
 import de.htwg.se.dog.models.impl.GameField;
 import de.htwg.se.dog.models.impl.Player;

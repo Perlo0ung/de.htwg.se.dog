@@ -1,7 +1,7 @@
 package de.htwg.se.dog.controller;
 
-import de.htwg.se.dog.models.Field;
-import de.htwg.se.dog.models.GameField;
+import de.htwg.se.dog.models.impl.Field;
+import de.htwg.se.dog.models.impl.GameField;
 
 public class MoveNormal extends Movement {
     /**
