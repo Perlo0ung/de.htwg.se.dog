@@ -1,6 +1,7 @@
 package de.htwg.se.dog.controller;
 
 import de.htwg.se.dog.models.impl.Field;
+import de.htwg.se.dog.models.impl.Figure;
 import de.htwg.se.dog.models.impl.GameField;
 
 public class MoveNormal extends Movement {
@@ -22,11 +23,14 @@ public class MoveNormal extends Movement {
         // check if startfield is not empty and the move is valid
         if (!fieldEmpty(array[startfieldnr]) && validMove(gamefield, steps, startfieldnr)) {
             int targetfield = getTargetfield(gamefield, steps, startfieldnr);
+            Figure temp = array[startfieldnr].removeFigure();
             kickPlayer(array, targetfield);
             // Move Figure from startfield to Targetfield
-            array[targetfield].putFigure(array[startfieldnr].removeFigure());
+            array[targetfield].putFigure(temp);
+            //array[startfieldnr].removeFigure()
             valid = true;
         }
+
         return valid;
     }
 

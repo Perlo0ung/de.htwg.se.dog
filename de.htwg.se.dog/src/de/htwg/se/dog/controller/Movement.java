@@ -19,7 +19,6 @@ public class Movement implements MovementStrategy {
     private static HashMap<Integer, Movement> strat;
     static {
         strat = new HashMap<Integer, Movement>();
-        strat.put(VALUEOFCARD4, new MoveFour());
         strat.put(VALUEOFCARD11, new MoveSwitch());
     }
 
@@ -83,43 +82,65 @@ public class Movement implements MovementStrategy {
 
     /**
      * returns the fieldID of the Target field, if not a vaild move, -1 is
-     * returned
+     * returned.
      * 
      * @param gamefield
      * @param steps
      *        number of steps figure wants to take
      * @param startfieldnr
      *        startfield number from where figure wants to move
-     * @return returns number of targetfield
+     * @return returns number of targetfield, if startfield is empty it returns
+     *         -5 or if field is blocked it returns -6
      */
     protected int getTargetfield(GameField gamefield, int steps, int startfieldnr) {
+        int absSteps = Math.abs(steps);
         Field[] array = gamefield.getGamefield();
-        int currentfieldID = -1;
+        int currentfieldID = -5;
         if (!fieldEmpty(array[startfieldnr])) {
             int playerNr = array[startfieldnr].getFigureOwnerNr();
-            currentfieldID = (startfieldnr + 1) % gamefield.getFieldSize();
+            currentfieldID = nextField(gamefield.getFieldSize(), startfieldnr, steps);
             int nextfieldID = currentfieldID;
             // Loop to move steps
-            while (steps > 0) {
+            while (absSteps > 0) {
                 currentfieldID = nextfieldID;
-                nextfieldID = (currentfieldID + 1) % gamefield.getFieldSize();
+                nextfieldID = nextField(gamefield.getFieldSize(), currentfieldID, steps);
                 int currentFieldOwner = array[currentfieldID].getOwner();
                 // Check if field is Blocked
                 if (array[currentfieldID].getBlocked()) {
-                    currentfieldID = -1;
+                    currentfieldID = -6;
                     break;
                 }
                 // Check if nobody owns next field
-                if (currentFieldOwner == 0) {
-                    steps--;
+                if (currentFieldOwner == 0 || currentFieldOwner == playerNr && steps > 0) {
+                    absSteps--;
                     // Check if next field is own House and current field ist last
                     // in house
-                } else if (currentFieldOwner == playerNr && steps > 0 && array[nextfieldID].getOwner() != playerNr) {
-                    steps += gamefield.getHouseCount() - 1;
+                } else if (currentFieldOwner == playerNr && absSteps > 0 && array[nextfieldID].getOwner() != playerNr && steps > 0) {
+                    absSteps += gamefield.getHouseCount() - 1;
                 }
             }
         }
         return currentfieldID;
+    }
+
+    /**
+     * returns the next field, if direction is >= 0 it returns the next fieldNr
+     * otherwise the previous fieldNr
+     * 
+     * @param fieldSize
+     *        Size of the Gamefield
+     * @param currentfieldID
+     * @param direction
+     * @return
+     */
+    protected int nextField(int fieldSize, int currentfieldID, int direction) {
+        int field;
+        if (direction >= 0) {
+            field = (currentfieldID + 1) % fieldSize;
+        } else {
+            field = ((currentfieldID - 1) + fieldSize) % fieldSize;
+        }
+        return field;
     }
 
     /**

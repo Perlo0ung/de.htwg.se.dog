@@ -19,6 +19,7 @@ public class MoveNormalTest {
     GameField gamefield;
     Player tp1, tp2;
     Field[] array;
+    private final int JACK = 11;
     private final int PLAYERCOUNT = 2;
     private final int FIELDSTILLHOUSE = 2;
     private final int HOUSECOUNT = 2;
@@ -28,7 +29,12 @@ public class MoveNormalTest {
     private final int ONE = 1;
     private final int ZERO = 0;
     private final int TWO = 2;
+    private final int FOUR = 4;
 
+    /* Gamefield from setUp
+     * 0 1 2 3 4 5 6 7
+     * - - 1 1 - - 2 2
+     */
     /* Generate empty gamefield with 2 players */
     @Before
     public void setUp() throws Exception {
@@ -44,15 +50,14 @@ public class MoveNormalTest {
     @Test
     public void testMoveFigure() {
         //Move Figure from empty Field
-
         assertFalse(movement.move(gamefield, ONE, ZERO));
-
         array[ZERO].putFigure(tp1.removeFigure());
         Figure tmpZERO = array[ZERO].getFigure();
         array[4].putFigure(tp2.removeFigure());
         array[4].setBlocked(true);
         //Move Figure to occupied field
         assertFalse(movement.move(gamefield, 4, 0));
+        assertFalse(movement.move(gamefield, 5, 0));
         array[4].setBlocked(false);
         movement.move(gamefield, 5, 0);
         //Is startfield empty
@@ -82,6 +87,15 @@ public class MoveNormalTest {
         array[ONE].setBlocked(true);
         array[ZERO].putFigure(tp1.removeFigure());
         assertFalse(movement.validMove(gamefield, 4, ZERO));
+    }
+
+    @Test
+    public void testMoveFour() {
+        movement.setMoveStrategie(new Card(FOUR));
+        array[FOUR].putFigure(tp1.removeFigure());
+        Figure tempFig = array[FOUR].getFigure();
+        assertTrue(movement.move(gamefield, -4, FOUR));
+        assertEquals(tempFig, array[4].getFigure());
     }
 
 }
