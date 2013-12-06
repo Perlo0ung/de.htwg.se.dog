@@ -15,7 +15,7 @@ public class Movement implements MovementStrategy {
     private static final int VALUEOFCARD7 = 7;
     private static final int VALUEOFCARD11 = 11;
     private static final int EMPTYFIELD = -5;
-    private static final int BLOCKEDFIELD = -5;
+    private static final int BLOCKEDFIELD = -6;
 
     private Movement strategie;
     private static Map<Integer, Movement> strat;
@@ -114,16 +114,21 @@ public class Movement implements MovementStrategy {
                     absSteps = 0;
                 }
                 // Check if nobody owns next field
-                if (currentFieldOwner == 0 || currentFieldOwner == playerNr && steps > 0) {
-                    absSteps--;
-                    // Check if next field is own House and current field ist last
-                    // in house
-                } else if (currentFieldOwner == playerNr && absSteps > 0 && array[nextfieldID].getOwner() != playerNr && steps > 0) {
-                    absSteps += gamefield.getHouseCount() - 1;
-                }
+                absSteps = adjustSteps(gamefield, steps, absSteps, array, playerNr, nextfieldID, currentFieldOwner);
             }
         }
         return currentfieldID;
+    }
+
+    private int adjustSteps(GameField gamefield, int steps, int absSteps, Field[] array, int playerNr, int nextfieldID, int currentFieldOwner) {
+        if (currentFieldOwner == 0 || currentFieldOwner == playerNr && steps > 0) {
+            absSteps--;
+            // Check if next field is own House and current field ist last
+            // in house
+        } else if (currentFieldOwner == playerNr && absSteps > 0 && array[nextfieldID].getOwner() != playerNr && steps > 0) {
+            absSteps += gamefield.getHouseCount() - 1;
+        }
+        return absSteps;
     }
 
     /**
