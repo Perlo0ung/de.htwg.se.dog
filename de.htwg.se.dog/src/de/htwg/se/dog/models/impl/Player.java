@@ -7,7 +7,7 @@ import java.util.Map;
 
 import de.htwg.se.dog.models.PlayerInterface;
 
-public class Player implements PlayerInterface {
+public class Player implements PlayerInterface<Figure, Card> {
 
     private final List<Figure> figure;
     private final List<Card> cards;
