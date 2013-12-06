@@ -22,7 +22,7 @@ public class Movement implements MovementStrategy {
         strat = new HashMap<Integer, Movement>();
         strat.put(VALUEOFCARD4, new MoveFour());
         strat.put(VALUEOFCARD7, new MoveSeven());
-        strat.put(VALUEOFCARD11, new MoveSwitchTest());
+        strat.put(VALUEOFCARD11, new MoveSwitch());
     }
 
     @Override
