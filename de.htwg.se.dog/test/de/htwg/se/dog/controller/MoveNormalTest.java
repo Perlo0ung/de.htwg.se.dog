@@ -19,7 +19,6 @@ public class MoveNormalTest {
     GameField gamefield;
     Player tp1, tp2;
     Field[] array;
-    private final int JACK = 11;
     private final int PLAYERCOUNT = 2;
     private final int FIELDSTILLHOUSE = 2;
     private final int HOUSECOUNT = 2;

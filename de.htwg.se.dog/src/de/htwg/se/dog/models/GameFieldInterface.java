@@ -12,27 +12,27 @@ public interface GameFieldInterface {
      * 
      * @return int: ownerNr of the fieldNr, if it has no owner zero is returned
      */
-    public int getOwner(int fieldNr);
+    int getOwner(int fieldNr);
 
     /**
      * Returns the gamefieldarray
      * 
      * @return Field[]: the complete GameField
      */
-    public Field[] getGamefield();
+    Field[] getGamefield();
 
     /**
      * returns the gamefieldsize
      * 
      * @return int: the size of the complete Field
      */
-    public int getFieldSize();
+    int getFieldSize();
 
     /**
      * returns number of housefields
      * 
      * @return int: the numberofHouseFields for each Player
      */
-    public int getHouseCount();
+    int getHouseCount();
 
 }

@@ -10,14 +10,14 @@ public interface CardStackInterface {
      * 
      * @return StackSize
      */
-    public int getSize();
+    int getSize();
 
     /**
      * Returns the CardStack
      * 
      * @return stack reference
      */
-    public Stack<Card> getStack();
+    Stack<Card> getStack();
 
     /**
      * Gets Card from stack between start inc. and range excl. ands removes it
@@ -29,5 +29,5 @@ public interface CardStackInterface {
      *            : int range for random generator
      * @return Card: returns card from stack
      */
-    public Card dealCard(int start, int range);
+    Card dealCard(int start, int range);
 }

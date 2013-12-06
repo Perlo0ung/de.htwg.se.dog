@@ -13,9 +13,9 @@ public class MoveSwitch extends Movement {
      * 
      * @param gamefield
      * @param steps
-     *        number of steps to field of Figure 2
+     *            number of steps to field of Figure 2
      * @param fromNr
-     *        fieldnumber of Figure 1
+     *            fieldnumber of Figure 1
      * @return true if switch was successful, otherwise false
      */
     @Override
@@ -54,10 +54,12 @@ public class MoveSwitch extends Movement {
      */
     @Override
     public boolean validMove(GameField gamefield, int steps, int fromNr) {
+        boolean ok = false;
         int toNr = steps;
         Field[] array = gamefield.getGamefield();
-        if (figuresOnBothFieldsAndNotHousefields(fromNr, toNr, array))
-            return true;
-        return false;
+        if (figuresOnBothFieldsAndNotHousefields(fromNr, toNr, array)) {
+            ok = true;
+        }
+        return ok;
     }
 }

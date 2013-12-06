@@ -6,7 +6,7 @@ public interface CardInterface {
      * 
      * @return int: value of card between [0,14]
      */
-    public int getValue();
+    int getValue();
 
     /**
      * Return the CardName of a Card
@@ -15,5 +15,5 @@ public interface CardInterface {
      *            : Int value of the card
      * @return String: the cardname as a string
      */
-    public String getCardName();
+    String getCardName();
 }

@@ -8,19 +8,19 @@ public interface FigureInterface {
      * 
      * @return reference to the owner of the figure
      */
-    public Player getOwner();
+    Player getOwner();
 
     /**
      * returns the PlayerNr of the owner
      * 
      * @return
      */
-    public int getOwnerNr();
+    int getOwnerNr();
 
     /**
      * returns the figurenum
      * 
      * @return returns the Figurenumber
      */
-    public int getFignr();
+    int getFignr();
 }

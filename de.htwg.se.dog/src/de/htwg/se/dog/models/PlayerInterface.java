@@ -11,14 +11,14 @@ public interface PlayerInterface {
      * 
      * @return List<Card>: of playercards returned
      */
-    public List<Card> getCardList();
+    List<Card> getCardList();
 
     /**
      * returns list of figures player has
      * 
      * @return List<Figure>: of figures player returned
      */
-    public List<Figure> getFigureList();
+    List<Figure> getFigureList();
 
     /**
      * adds a card to players cardlist
@@ -26,7 +26,7 @@ public interface PlayerInterface {
      * @param c
      *            card which should be added
      */
-    public void addCard(Card c);
+    void addCard(Card c);
 
     /**
      * removes card from players cardlist
@@ -35,14 +35,14 @@ public interface PlayerInterface {
      *            card which should be removed
      * @return boolean: true if remove was succsessfull, otherwise false
      */
-    public boolean removeCard(Card c);
+    boolean removeCard(Card c);
 
     /**
      * removes figure from players figurelist
      * 
      * @return Figure: returns figure which was removed from players figurelist
      */
-    public Figure removeFigure();
+    Figure removeFigure();
 
     /**
      * adds figure to players figurelist
@@ -50,14 +50,14 @@ public interface PlayerInterface {
      * @param f
      *            : Figure which should be added to players figurelist
      */
-    public void addFigure(Figure f);
+    void addFigure(Figure f);
 
     /**
      * returnes player ID
      * 
      * @return int: returns playernumber
      */
-    public int getPlayerID();
+    int getPlayerID();
 
     /**
      * Update the position where the figure assosiated with fignum it currently
@@ -68,13 +68,13 @@ public interface PlayerInterface {
      * @param fignum
      *            the internal figurenumber for this figure
      */
-    public void updateFigurePos(int fignum, int fieldId);
+    void updateFigurePos(int fignum, int fieldId);
 
     /**
      * Returns all the places where figures are
      * 
      * @return List with the figure fieldnumbers
      */
-    public List<Integer> getFigureRegister();
+    List<Integer> getFigureRegister();
 
 }
