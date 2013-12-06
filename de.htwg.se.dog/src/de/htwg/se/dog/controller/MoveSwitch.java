@@ -1,9 +1,8 @@
 package de.htwg.se.dog.controller;
 
-import de.htwg.se.dog.models.Field;
-import de.htwg.se.dog.models.Figure;
-import de.htwg.se.dog.models.GameField;
-import de.htwg.se.dog.models.Player;
+import de.htwg.se.dog.models.impl.Figure;
+import de.htwg.se.dog.models.impl.GameField;
+import de.htwg.se.dog.models.impl.Player;
 
 public class MoveSwitch extends Movement {
 
@@ -23,7 +22,7 @@ public class MoveSwitch extends Movement {
         int toNr = steps;
         boolean valid = false;
         Field[] array = gamefield.getGamefield();
-        if (!fieldEmpty(array[fromNr]) && !array[fromNr].isHouse() && !fieldEmpty(array[toNr]) && !array[toNr].isHouse()) {
+        if (figuresOnBothFieldsAndNotHousefields(fromNr, toNr, array)) {
             /* switch Figures */
             Figure f1 = array[fromNr].removeFigure();
             Figure f2 = array[toNr].removeFigure();
@@ -39,14 +38,24 @@ public class MoveSwitch extends Movement {
         return valid;
     }
 
+    protected boolean figuresOnBothFieldsAndNotHousefields(int fromNr, int toNr, Field[] array) {
+        boolean figureOnAfield = !fieldEmpty(array[fromNr]);
+        boolean figureOnBfield = !fieldEmpty(array[toNr]);
+        boolean figuresOnBothFields = figureOnAfield && figureOnBfield;
+        boolean anotHouseField = !array[fromNr].isHouse();
+        boolean bnotHouseField = !array[toNr].isHouse();
+        boolean bothNotHouseFields = anotHouseField && bnotHouseField;
+        return figuresOnBothFields && bothNotHouseFields;
+    }
+
     /**
      * checks if it is possible to switch 2 figures
      */
     @Override
     public boolean validMove(GameField gamefield, int steps, int fromNr) {
-        int toNr = super.getTargetfield(gamefield, steps, fromNr);
+        int toNr = steps;
         Field[] array = gamefield.getGamefield();
-        if (!super.fieldEmpty(array[fromNr]) && !array[fromNr].isHouse() && !super.fieldEmpty(array[toNr]) && !array[toNr].isHouse())
+        if (figuresOnBothFieldsAndNotHousefields(fromNr, toNr, array))
             return true;
         return false;
     }

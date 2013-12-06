@@ -3,11 +3,10 @@ package de.htwg.se.dog.controller;
 import java.util.HashMap;
 import java.util.LinkedList;
 
-import de.htwg.se.dog.models.Card;
-import de.htwg.se.dog.models.Field;
-import de.htwg.se.dog.models.Figure;
-import de.htwg.se.dog.models.GameField;
-import de.htwg.se.dog.models.Player;
+import de.htwg.se.dog.models.impl.Card;
+import de.htwg.se.dog.models.impl.Figure;
+import de.htwg.se.dog.models.impl.GameField;
+import de.htwg.se.dog.models.impl.Player;
 
 public class Movement implements MovementStrategy {
 

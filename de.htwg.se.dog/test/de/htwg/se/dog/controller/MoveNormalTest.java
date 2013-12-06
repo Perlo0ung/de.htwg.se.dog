@@ -14,7 +14,7 @@ import de.htwg.se.dog.models.Figure;
 import de.htwg.se.dog.models.GameField;
 import de.htwg.se.dog.models.Player;
 
-public class MovementTest {
+public class MoveNormalTest {
     Movement movement;
     GameField gamefield;
     Player tp1, tp2;
@@ -27,11 +27,13 @@ public class MovementTest {
     private final int PLAYERID2 = 2;
     private final int ONE = 1;
     private final int ZERO = 0;
+    private final int TWO = 2;
 
     /* Generate empty gamefield with 2 players */
     @Before
     public void setUp() throws Exception {
         movement = new Movement();
+        movement.setMoveStrategie(new Card(TWO));
         gamefield = new GameField(FIELDSTILLHOUSE, PLAYERCOUNT, HOUSECOUNT);
         tp1 = new Player(PLAYERID1, FIGCOUNT);
         tp2 = new Player(PLAYERID2, FIGCOUNT);
@@ -42,7 +44,7 @@ public class MovementTest {
     @Test
     public void testMoveFigure() {
         //Move Figure from empty Field
-        movement.setMoveStrategie(new Card(2));
+
         assertFalse(movement.move(gamefield, ONE, ZERO));
 
         array[ZERO].putFigure(tp1.removeFigure());
@@ -65,14 +67,12 @@ public class MovementTest {
         array[ONE].putFigure(tp1.removeFigure());
         array[ONE].setBlocked(true);
         //Move Figure over blocked field
-        movement.setMoveStrategie(new Card(2));
         assertFalse(movement.move(gamefield, 2, ZERO));
     }
 
     @Test
     public void testMoveOverOwnHouse() {
         array[ZERO].putFigure(tp1.removeFigure());
-        movement.setMoveStrategie(new Card(5));
         assertTrue(movement.move(gamefield, 5, 0));
     }
 
@@ -81,7 +81,6 @@ public class MovementTest {
         array[ONE].putFigure(tp1.removeFigure());
         array[ONE].setBlocked(true);
         array[ZERO].putFigure(tp1.removeFigure());
-        movement.setMoveStrategie(new Card(5));
         assertFalse(movement.validMove(gamefield, 4, ZERO));
     }
 

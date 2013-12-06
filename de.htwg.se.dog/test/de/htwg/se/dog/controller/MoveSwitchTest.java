@@ -6,10 +6,9 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 
-import de.htwg.se.dog.models.Card;
-import de.htwg.se.dog.models.Field;
-import de.htwg.se.dog.models.GameField;
-import de.htwg.se.dog.models.Player;
+import de.htwg.se.dog.models.impl.Card;
+import de.htwg.se.dog.models.impl.GameField;
+import de.htwg.se.dog.models.impl.Player;
 
 public class MoveSwitchTest {
     Movement movement;
@@ -23,13 +22,16 @@ public class MoveSwitchTest {
     private final int FIGCOUNT = 2;
     private final int PLAYERID1 = 1;
     private final int PLAYERID2 = 2;
-    private final int ONE = 1;
     private final int ZERO = 0;
-    private final int FIVE = 0;
+    private final int ONE = 1;
+    private final int THREE = 3;
+    private final int FOUR = 4;
+    private final int FIVE = 5;
+    private final int SIX = 6;
     private final int TP1HOUSEFIELD = 3;
     private final int TP2HOUSEFIELD = 6;
 
-    /* Gamefield
+    /* Gamefield from setUp
      * 0 1 2 3 4 5 6 7
      * - - 1 1 - - 2 2
      */
@@ -53,6 +55,10 @@ public class MoveSwitchTest {
         array[TP2HOUSEFIELD].putFigure(tp2.removeFigure());
         assertTrue(movement.move(gamefield, FIVE, ZERO));
         assertFalse(movement.move(gamefield, ONE, ZERO));
+        assertFalse(movement.move(gamefield, ZERO, ONE));
+        assertFalse(movement.move(gamefield, TP1HOUSEFIELD, ONE));
+        assertFalse(movement.move(gamefield, ONE, TP1HOUSEFIELD));
+        assertFalse(movement.move(gamefield, THREE, SIX));
     }
 
     @Test
