@@ -8,11 +8,11 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 
-import de.htwg.se.dog.models.Card;
-import de.htwg.se.dog.models.Field;
-import de.htwg.se.dog.models.Figure;
-import de.htwg.se.dog.models.GameField;
-import de.htwg.se.dog.models.Player;
+import de.htwg.se.dog.models.impl.Card;
+import de.htwg.se.dog.models.impl.Field;
+import de.htwg.se.dog.models.impl.Figure;
+import de.htwg.se.dog.models.impl.GameField;
+import de.htwg.se.dog.models.impl.Player;
 
 public class MoveNormalTest {
     Movement movement;

@@ -7,14 +7,13 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 
-import de.htwg.se.dog.models.Field;
-import de.htwg.se.dog.models.Figure;
-import de.htwg.se.dog.models.Player;
+import de.htwg.se.dog.models.impl.Figure;
+import de.htwg.se.dog.models.impl.Player;
 
 public class GameTableTest {
     GameTable table;
-    Player first;
-    Field[] array;
+    de.htwg.se.dog.models.impl.Player first;
+    de.htwg.se.dog.models.impl.Field[] array;
 
     @Before
     public void setUp() {

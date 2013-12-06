@@ -6,6 +6,10 @@ import static org.junit.Assert.assertNull;
 import org.junit.Before;
 import org.junit.Test;
 
+import de.htwg.se.dog.models.impl.Field;
+import de.htwg.se.dog.models.impl.Figure;
+import de.htwg.se.dog.models.impl.Player;
+
 public class FieldTest {
     private final int NOOWNER = 0;
     private final int OWNER = 1;

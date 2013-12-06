@@ -1,13 +1,16 @@
 package de.htwg.se.dog.models;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import de.htwg.se.dog.models.Card;
+import de.htwg.se.dog.models.impl.Card;
+import de.htwg.se.dog.models.impl.Figure;
+import de.htwg.se.dog.models.impl.Player;
 
 public class PlayerTest {
 
@@ -58,15 +61,17 @@ public class PlayerTest {
     public void testGetPlayerId() {
         assertEquals(playerNr, p1.getPlayerID());
     }
+
     @Test
     public void testUpdateFigurePos() {
         p1.updateFigurePos(1, 2);
         p1.updateFigurePos(15, 12);
         p1.updateFigurePos(1, -1);
-        assertEquals((Integer)12,p1.getFigureRegister().get(0));
+        assertEquals((Integer) 12, p1.getFigureRegister().get(0));
     }
-    @Test 
-    public void testtoString(){
-    	assertEquals("PlayerId: 1", p1.toString());
+
+    @Test
+    public void testtoString() {
+        assertEquals("PlayerId: 1", p1.toString());
     }
 }
