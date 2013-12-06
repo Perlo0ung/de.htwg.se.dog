@@ -2,8 +2,6 @@ package de.htwg.se.dog.models;
 
 import java.util.Stack;
 
-import de.htwg.se.dog.models.impl.Card;
-
 public interface CardStackInterface<V> {
     /**
      * Returns size of the CardStack
@@ -29,5 +27,5 @@ public interface CardStackInterface<V> {
      *            : int range for random generator
      * @return Card: returns card from stack
      */
-    Card dealCard(int start, int range);
+    V dealCard(int start, int range);
 }

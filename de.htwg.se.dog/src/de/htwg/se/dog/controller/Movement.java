@@ -53,7 +53,7 @@ public class Movement implements MovementStrategy {
      * checks if figure is on field
      * 
      * @param field
-     *        which should be checked
+     *            which should be checked
      * @return true if field is empty, otherwise false;
      */
     protected boolean fieldEmpty(Field field) {
@@ -68,9 +68,9 @@ public class Movement implements MovementStrategy {
      * Remove Player From fieldID and return it to Player
      * 
      * @param array
-     *        gamefieldarray
+     *            gamefieldarray
      * @param fieldID
-     *        fieldnumber where figure should be kick from
+     *            fieldnumber where figure should be kick from
      */
     protected void kickPlayer(Field[] array, int fieldID) {
         if (!fieldEmpty(array[fieldID])) {
@@ -89,9 +89,9 @@ public class Movement implements MovementStrategy {
      * 
      * @param gamefield
      * @param steps
-     *        number of steps figure wants to take
+     *            number of steps figure wants to take
      * @param startfieldnr
-     *        startfield number from where figure wants to move
+     *            startfield number from where figure wants to move
      * @return returns number of targetfield, if startfield is empty it returns
      *         -5 or if field is blocked it returns -6
      */
@@ -120,7 +120,8 @@ public class Movement implements MovementStrategy {
         return currentfieldID;
     }
 
-    private int adjustSteps(GameField gamefield, int steps, int absSteps, Field[] array, int playerNr, int nextfieldID, int currentFieldOwner) {
+    private int adjustSteps(GameField gamefield, int steps, int psteps, Field[] array, int playerNr, int nextfieldID, int currentFieldOwner) {
+        int absSteps = psteps;
         if (currentFieldOwner == 0 || currentFieldOwner == playerNr && steps > 0) {
             absSteps--;
             // Check if next field is own House and current field ist last
@@ -136,7 +137,7 @@ public class Movement implements MovementStrategy {
      * otherwise the previous fieldNr
      * 
      * @param fieldSize
-     *        Size of the Gamefield
+     *            Size of the Gamefield
      * @param currentfieldID
      * @param direction
      * @return
@@ -155,9 +156,9 @@ public class Movement implements MovementStrategy {
      * Checks if the Player p can do a move with the card 7
      * 
      * @param gamefield
-     *        the current gamefield played on
+     *            the current gamefield played on
      * @param p
-     *        the player that wants to move
+     *            the player that wants to move
      * @return true if the player can move with the card
      */
     public boolean possibleSevenMove(GameField gamefield, Player p) {
