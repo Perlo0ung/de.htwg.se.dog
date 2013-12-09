@@ -35,7 +35,6 @@ public class GameTable {
         dealer = new CardDealer(playerCount);
         movement = new Movement();
         addPlayers(playerCount, figCount);
-
     }
 
     /**
@@ -94,6 +93,13 @@ public class GameTable {
      */
     public PlayerInterface getCurrentPlayer() {
         return turnPlayer.poll();
+    }
+
+    /**
+     * Adds the speciefied Player to the Playerqueue
+     */
+    public void addPlayerToQueue(PlayerInterface p) {
+        turnPlayer.offer(p);
     }
 
     /**
