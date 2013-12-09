@@ -1,14 +1,15 @@
 package de.htwg.se.dog.models.impl;
 
 import de.htwg.se.dog.models.FigureInterface;
+import de.htwg.se.dog.models.PlayerInterface;
 
-public class Figure implements FigureInterface<Player> {
+public class Figure implements FigureInterface {
     private static final int ZERO = 0;
     private static final int FOUR = 4;
     private final int fignr;
-    private final Player owner;
+    private final PlayerInterface owner;
 
-    public Figure(Player owner, int fignr) {
+    public Figure(PlayerInterface owner, int fignr) {
         this.owner = owner;
         if (fignr > ZERO && fignr <= FOUR) {
             this.fignr = fignr;
@@ -19,7 +20,7 @@ public class Figure implements FigureInterface<Player> {
     }
 
     @Override
-    public Player getOwner() {
+    public PlayerInterface getOwner() {
         return this.owner;
     }
 

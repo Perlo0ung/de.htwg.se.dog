@@ -9,16 +9,15 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import de.htwg.se.dog.models.impl.Card;
-import de.htwg.se.dog.models.impl.Figure;
 import de.htwg.se.dog.models.impl.Player;
 
 public class PlayerTest {
 
-    Player p1;
-    Card card2;
+    PlayerInterface p1;
+    CardInterface card2;
     int playerNr = 1;
     int figCount = 4;
-    Figure temp;
+    FigureInterface temp;
 
     @Rule
     public ExpectedException expected = ExpectedException.none();

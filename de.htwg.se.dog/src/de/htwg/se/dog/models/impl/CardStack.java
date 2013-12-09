@@ -3,11 +3,12 @@ package de.htwg.se.dog.models.impl;
 import java.util.Random;
 import java.util.Stack;
 
+import de.htwg.se.dog.models.CardInterface;
 import de.htwg.se.dog.models.CardStackInterface;
 
-public class CardStack implements CardStackInterface<Card> {
+public class CardStack implements CardStackInterface {
 
-    private Stack<Card> cardstack = null;
+    private Stack<CardInterface> cardstack = null;
     private static final int CARDS = 4;
     private static final int JOKER = 14;
     private static final int ZERO = 0;
@@ -19,7 +20,7 @@ public class CardStack implements CardStackInterface<Card> {
      * @param players
      */
     public CardStack(int size, int players) {
-        cardstack = new Stack<Card>();
+        cardstack = new Stack<CardInterface>();
         generateStack(size, players);
     }
 
@@ -58,7 +59,7 @@ public class CardStack implements CardStackInterface<Card> {
      * @return stack reference
      */
     @Override
-    public Stack<Card> getStack() {
+    public Stack<CardInterface> getStack() {
         return this.cardstack;
     }
 
@@ -73,7 +74,7 @@ public class CardStack implements CardStackInterface<Card> {
      * @return Card: returns card from stack
      */
     @Override
-    public Card dealCard(int start, int range) {
+    public CardInterface dealCard(int start, int range) {
         Random gen = new Random();
         int index = gen.nextInt(range - start) + start;
         return cardstack.remove(index);

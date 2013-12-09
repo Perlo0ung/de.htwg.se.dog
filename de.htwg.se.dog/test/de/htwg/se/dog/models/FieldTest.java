@@ -14,9 +14,9 @@ public class FieldTest {
     private final int NOOWNER = 0;
     private final int OWNER = 1;
     private final int FIGNUM = 1;
-    public Field feld1;
-    public Field feld2;
-    Figure f = new Figure(new Player(OWNER, 0), FIGNUM);
+    public FieldInterface feld1;
+    public FieldInterface feld2;
+    FigureInterface f = new Figure(new Player(OWNER, 0), FIGNUM);
 
     @Before
     public void setUp() {
@@ -59,7 +59,7 @@ public class FieldTest {
 
     @Test
     public void testremoveFigure() {
-        Figure tmp = feld2.removeFigure();
+        FigureInterface tmp = feld2.removeFigure();
         assertEquals(f, tmp);
         assertNull(feld2.getFigure());
     }

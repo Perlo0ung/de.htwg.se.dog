@@ -6,16 +6,17 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 
+import de.htwg.se.dog.models.FieldInterface;
+import de.htwg.se.dog.models.PlayerInterface;
 import de.htwg.se.dog.models.impl.Card;
-import de.htwg.se.dog.models.impl.Field;
 import de.htwg.se.dog.models.impl.GameField;
 import de.htwg.se.dog.models.impl.Player;
 
 public class MoveSwitchTest {
     Movement movement;
     GameField gamefield;
-    Player player1, player2;
-    Field[] array;
+    PlayerInterface player1, player2;
+    FieldInterface[] array;
     private final int JACK = 11;
     private final int PLAYERCOUNT = 2;
     private final int FIELDSTILLHOUSE = 2;

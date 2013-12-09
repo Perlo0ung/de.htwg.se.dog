@@ -2,52 +2,52 @@ package de.htwg.se.dog.models;
 
 import java.util.List;
 
-public interface PlayerInterface<V, W> {
+public interface PlayerInterface {
     /**
      * returns list of Cards player has
      * 
      * @return List<Card>: of playercards returned
      */
-    List<W> getCardList();
+    List<CardInterface> getCardList();
 
     /**
      * returns list of figures player has
      * 
      * @return List<Figure>: of figures player returned
      */
-    List<V> getFigureList();
+    List<FigureInterface> getFigureList();
 
     /**
      * adds a card to players cardlist
      * 
      * @param c
-     *        card which should be added
+     *            card which should be added
      */
-    void addCard(W c);
+    void addCard(CardInterface c);
 
     /**
      * removes card from players cardlist
      * 
      * @param c
-     *        card which should be removed
+     *            card which should be removed
      * @return boolean: true if remove was succsessfull, otherwise false
      */
-    boolean removeCard(W c);
+    boolean removeCard(CardInterface c);
 
     /**
      * removes figure from players figurelist
      * 
      * @return Figure: returns figure which was removed from players figurelist
      */
-    V removeFigure();
+    FigureInterface removeFigure();
 
     /**
      * adds figure to players figurelist
      * 
      * @param f
-     *        : Figure which should be added to players figurelist
+     *            : Figure which should be added to players figurelist
      */
-    void addFigure(V f);
+    void addFigure(FigureInterface f);
 
     /**
      * returnes player ID
@@ -61,9 +61,9 @@ public interface PlayerInterface<V, W> {
      * at. If fieldId is -1 the figure will be removed from the register
      * 
      * @param fieldId
-     *        the FieldNumber where the is at
+     *            the FieldNumber where the is at
      * @param fignum
-     *        the internal figurenumber for this figure
+     *            the internal figurenumber for this figure
      */
     void updateFigurePos(int fignum, int fieldId);
 

@@ -15,7 +15,7 @@ public class CardStackTest {
 
     Card wrong;
     CardStack cardStack, cardStackSorted;
-    Stack<Card> stack;
+    Stack<CardInterface> stack;
     final int CARDS = 12;
     final int PLAYERS = 12;
 

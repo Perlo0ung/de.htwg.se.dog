@@ -1,9 +1,9 @@
 package de.htwg.se.dog.controller;
 
-import de.htwg.se.dog.models.impl.Field;
-import de.htwg.se.dog.models.impl.Figure;
-import de.htwg.se.dog.models.impl.GameField;
-import de.htwg.se.dog.models.impl.Player;
+import de.htwg.se.dog.models.FieldInterface;
+import de.htwg.se.dog.models.FigureInterface;
+import de.htwg.se.dog.models.GameFieldInterface;
+import de.htwg.se.dog.models.PlayerInterface;
 
 public class MoveSwitch extends Movement {
 
@@ -19,19 +19,19 @@ public class MoveSwitch extends Movement {
      * @return true if switch was successful, otherwise false
      */
     @Override
-    public boolean move(GameField gamefield, int steps, int fromNr) {
+    public boolean move(GameFieldInterface gamefield, int steps, int fromNr) {
         int toNr = steps;
         boolean valid = false;
-        Field[] array = gamefield.getGamefield();
+        FieldInterface[] array = gamefield.getGamefield();
         if (figuresOnBothFieldsAndNotHousefields(fromNr, toNr, array)) {
             /* switch Figures */
-            Figure f1 = array[fromNr].removeFigure();
-            Figure f2 = array[toNr].removeFigure();
+            FigureInterface f1 = array[fromNr].removeFigure();
+            FigureInterface f2 = array[toNr].removeFigure();
             array[fromNr].putFigure(f2);
             array[toNr].putFigure(f1);
             /* update FirgurePositions */
-            Player ownerF1 = f1.getOwner();
-            Player ownerF2 = f2.getOwner();
+            PlayerInterface ownerF1 = f1.getOwner();
+            PlayerInterface ownerF2 = f2.getOwner();
             ownerF2.updateFigurePos(f2.getFignr(), fromNr);
             ownerF1.updateFigurePos(f1.getFignr(), toNr);
             valid = true;
@@ -39,7 +39,7 @@ public class MoveSwitch extends Movement {
         return valid;
     }
 
-    protected boolean figuresOnBothFieldsAndNotHousefields(int fromNr, int toNr, Field[] array) {
+    protected boolean figuresOnBothFieldsAndNotHousefields(int fromNr, int toNr, FieldInterface[] array) {
         boolean figureOnAfield = !fieldEmpty(array[fromNr]);
         boolean figureOnBfield = !fieldEmpty(array[toNr]);
         boolean figuresOnBothFields = figureOnAfield && figureOnBfield;
@@ -53,10 +53,10 @@ public class MoveSwitch extends Movement {
      * checks if it is possible to switch 2 figures
      */
     @Override
-    public boolean validMove(GameField gamefield, int steps, int fromNr) {
+    public boolean validMove(GameFieldInterface gamefield, int steps, int fromNr) {
         boolean ok = false;
         int toNr = steps;
-        Field[] array = gamefield.getGamefield();
+        FieldInterface[] array = gamefield.getGamefield();
         if (figuresOnBothFieldsAndNotHousefields(fromNr, toNr, array)) {
             ok = true;
         }

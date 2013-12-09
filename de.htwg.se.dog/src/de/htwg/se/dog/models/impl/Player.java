@@ -5,48 +5,50 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import de.htwg.se.dog.models.CardInterface;
+import de.htwg.se.dog.models.FigureInterface;
 import de.htwg.se.dog.models.PlayerInterface;
 
-public class Player implements PlayerInterface<Figure, Card> {
+public class Player implements PlayerInterface {
 
-    private final List<Figure> figure;
-    private final List<Card> cards;
+    private final List<FigureInterface> figure;
+    private final List<CardInterface> cards;
     private final Map<Integer, Integer> figureRegister;
     private final int playernum;
 
     public Player(int playerNr, int figcount) {
         playernum = playerNr;
-        figure = new LinkedList<Figure>();
+        figure = new LinkedList<FigureInterface>();
         for (int i = 0; i < figcount; i++) {
             figure.add(new Figure(this, i + 1));
         }
-        cards = new LinkedList<Card>();
+        cards = new LinkedList<CardInterface>();
         figureRegister = new HashMap<Integer, Integer>();
 
     }
 
     @Override
-    public List<Card> getCardList() {
+    public List<CardInterface> getCardList() {
         return this.cards;
     }
 
     @Override
-    public List<Figure> getFigureList() {
+    public List<FigureInterface> getFigureList() {
         return this.figure;
     }
 
     @Override
-    public void addCard(Card c) {
+    public void addCard(CardInterface c) {
         this.cards.add(c);
     }
 
     @Override
-    public boolean removeCard(Card c) {
+    public boolean removeCard(CardInterface c) {
         return cards.remove(c);
     }
 
     @Override
-    public Figure removeFigure() {
+    public FigureInterface removeFigure() {
         if (figure.isEmpty()) {
             return null;
         }
@@ -54,7 +56,7 @@ public class Player implements PlayerInterface<Figure, Card> {
     }
 
     @Override
-    public void addFigure(Figure f) {
+    public void addFigure(FigureInterface f) {
         figure.add(f);
     }
 

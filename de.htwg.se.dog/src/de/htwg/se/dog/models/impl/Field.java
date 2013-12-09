@@ -1,13 +1,14 @@
 package de.htwg.se.dog.models.impl;
 
 import de.htwg.se.dog.models.FieldInterface;
+import de.htwg.se.dog.models.FigureInterface;
 
-public class Field implements FieldInterface<Figure> {
+public class Field implements FieldInterface {
 
     private final int owner;
     private boolean house;
     private boolean blocked;
-    private Figure figure;
+    private FigureInterface figure;
 
     public Field(int owner) {
         this.blocked = false;
@@ -21,19 +22,19 @@ public class Field implements FieldInterface<Figure> {
     }
 
     @Override
-    public void putFigure(Figure f) {
+    public void putFigure(FigureInterface f) {
         this.figure = f;
     }
 
     @Override
-    public Figure removeFigure() {
-        Figure tmp = this.figure;
+    public FigureInterface removeFigure() {
+        FigureInterface tmp = this.figure;
         this.figure = null;
         return tmp;
     }
 
     @Override
-    public Figure getFigure() {
+    public FigureInterface getFigure() {
         return this.figure;
     }
 

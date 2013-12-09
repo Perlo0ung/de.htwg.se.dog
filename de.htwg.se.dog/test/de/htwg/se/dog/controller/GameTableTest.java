@@ -7,13 +7,14 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 
-import de.htwg.se.dog.models.impl.Figure;
-import de.htwg.se.dog.models.impl.Player;
+import de.htwg.se.dog.models.FieldInterface;
+import de.htwg.se.dog.models.FigureInterface;
+import de.htwg.se.dog.models.PlayerInterface;
 
 public class GameTableTest {
     GameTable table;
-    de.htwg.se.dog.models.impl.Player first;
-    de.htwg.se.dog.models.impl.Field[] array;
+    PlayerInterface first;
+    FieldInterface[] array;
 
     @Before
     public void setUp() {
@@ -25,7 +26,7 @@ public class GameTableTest {
 
     @Test
     public void testCurrentPlayer() {
-        Player second = table.getCurrentPlayer();
+        PlayerInterface second = table.getCurrentPlayer();
         table.newRound();
         assertEquals(first, table.getCurrentPlayer());
         assertEquals(second, table.getCurrentPlayer());
@@ -46,7 +47,7 @@ public class GameTableTest {
         assertFalse(table.canPlay(first));
         table.dealCards();
         first = table.getCurrentPlayer();
-        Figure fig = first.removeFigure();
+        FigureInterface fig = first.removeFigure();
         array[20].putFigure(fig);
         first.updateFigurePos(fig.getFignr(), 20);
         assertTrue(table.canPlay(first));

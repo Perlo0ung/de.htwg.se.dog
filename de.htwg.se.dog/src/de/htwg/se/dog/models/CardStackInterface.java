@@ -2,7 +2,7 @@ package de.htwg.se.dog.models;
 
 import java.util.Stack;
 
-public interface CardStackInterface<V> {
+public interface CardStackInterface {
     /**
      * Returns size of the CardStack
      * 
@@ -15,7 +15,7 @@ public interface CardStackInterface<V> {
      * 
      * @return stack reference
      */
-    Stack<V> getStack();
+    Stack<CardInterface> getStack();
 
     /**
      * Gets Card from stack between start inc. and range excl. ands removes it
@@ -27,5 +27,5 @@ public interface CardStackInterface<V> {
      *            : int range for random generator
      * @return Card: returns card from stack
      */
-    V dealCard(int start, int range);
+    CardInterface dealCard(int start, int range);
 }

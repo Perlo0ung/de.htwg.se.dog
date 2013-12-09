@@ -4,11 +4,11 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
 
-import de.htwg.se.dog.models.impl.Card;
-import de.htwg.se.dog.models.impl.Field;
-import de.htwg.se.dog.models.impl.Figure;
-import de.htwg.se.dog.models.impl.GameField;
-import de.htwg.se.dog.models.impl.Player;
+import de.htwg.se.dog.models.CardInterface;
+import de.htwg.se.dog.models.FieldInterface;
+import de.htwg.se.dog.models.FigureInterface;
+import de.htwg.se.dog.models.GameFieldInterface;
+import de.htwg.se.dog.models.PlayerInterface;
 
 public class Movement implements MovementStrategy {
 
@@ -27,12 +27,12 @@ public class Movement implements MovementStrategy {
     protected Movement() {}
 
     @Override
-    public boolean move(GameField gamefield, int steps, int fromNr) {
+    public boolean move(GameFieldInterface gamefield, int steps, int fromNr) {
         return strategie.move(gamefield, steps, fromNr);
     }
 
     @Override
-    public boolean validMove(GameField gamefield, int steps, int startfieldnr) {
+    public boolean validMove(GameFieldInterface gamefield, int steps, int startfieldnr) {
         return strategie.validMove(gamefield, steps, startfieldnr);
 
     }
@@ -42,7 +42,7 @@ public class Movement implements MovementStrategy {
      * 
      * @param card
      */
-    public void setMoveStrategie(Card card) {
+    public void setMoveStrategie(CardInterface card) {
         strategie = strat.get(card.getValue());
         if (strategie == null) {
             strategie = new MoveNormal();
@@ -53,10 +53,10 @@ public class Movement implements MovementStrategy {
      * checks if figure is on field
      * 
      * @param field
-     *        which should be checked
+     *            which should be checked
      * @return true if field is empty, otherwise false;
      */
-    protected boolean fieldEmpty(Field field) {
+    protected boolean fieldEmpty(FieldInterface field) {
         boolean returnval = false;
         if (field.getFigure() == null) {
             returnval = true;
@@ -68,15 +68,15 @@ public class Movement implements MovementStrategy {
      * Remove Player From fieldID and return it to Player
      * 
      * @param array
-     *        gamefieldarray
+     *            gamefieldarray
      * @param fieldID
-     *        fieldnumber where figure should be kick from
+     *            fieldnumber where figure should be kick from
      */
-    protected void kickPlayer(Field[] array, int fieldID) {
+    protected void kickPlayer(FieldInterface[] array, int fieldID) {
         if (!fieldEmpty(array[fieldID])) {
             // get Owner of figure
-            Player tempPlayer = array[fieldID].getFigure().getOwner();
-            Figure figure = array[fieldID].removeFigure();
+            PlayerInterface tempPlayer = array[fieldID].getFigure().getOwner();
+            FigureInterface figure = array[fieldID].removeFigure();
             tempPlayer.updateFigurePos(figure.getFignr(), -1);
             // remove figure from field and add it to Playerlist
             tempPlayer.addFigure(figure);
@@ -89,15 +89,15 @@ public class Movement implements MovementStrategy {
      * 
      * @param gamefield
      * @param steps
-     *        number of steps figure wants to take
+     *            number of steps figure wants to take
      * @param startfieldnr
-     *        startfield number from where figure wants to move
+     *            startfield number from where figure wants to move
      * @return returns number of targetfield, if startfield is empty it returns
      *         -5 or if field is blocked it returns -6
      */
-    protected int getTargetfield(GameField gamefield, int steps, int startfieldnr) {
+    protected int getTargetfield(GameFieldInterface gamefield, int steps, int startfieldnr) {
         int absSteps = Math.abs(steps);
-        Field[] array = gamefield.getGamefield();
+        FieldInterface[] array = gamefield.getGamefield();
         int currentfieldID = EMPTYFIELD;
         if (!fieldEmpty(array[startfieldnr])) {
             int playerNr = array[startfieldnr].getFigureOwnerNr();
@@ -120,15 +120,14 @@ public class Movement implements MovementStrategy {
         return currentfieldID;
     }
 
-    private int adjustSteps(GameField gamefield, int steps, int psteps, Field[] array, int playerNr, int nextfieldID, int currentFieldOwner) {
+    private int adjustSteps(GameFieldInterface gamefield, int steps, int psteps, FieldInterface[] array, int playerNr, int nextfieldID, int currentFieldOwner) {
         int absSteps = psteps;
         if (currentFieldOwner == 0 || currentFieldOwner == playerNr && steps > 0) {
             absSteps--;
             // Check if next field is own House and current field ist last
             // in house
-        }
-        if (currentFieldOwner == playerNr && absSteps > 0 && array[nextfieldID].getOwner() != playerNr && steps > 0) {
-            absSteps += gamefield.getHouseCount();
+        } else if (currentFieldOwner == playerNr && absSteps > 0 && array[nextfieldID].getOwner() != playerNr && steps > 0) {
+            absSteps += gamefield.getHouseCount() - 1;
         }
         return absSteps;
     }
@@ -138,7 +137,7 @@ public class Movement implements MovementStrategy {
      * otherwise the previous fieldNr
      * 
      * @param fieldSize
-     *        Size of the Gamefield
+     *            Size of the Gamefield
      * @param currentfieldID
      * @param direction
      * @return
@@ -157,12 +156,12 @@ public class Movement implements MovementStrategy {
      * Checks if the Player p can do a move with the card 7
      * 
      * @param gamefield
-     *        the current gamefield played on
+     *            the current gamefield played on
      * @param p
-     *        the player that wants to move
+     *            the player that wants to move
      * @return true if the player can move with the card
      */
-    public boolean possibleSevenMove(GameField gamefield, Player p) {
+    public boolean possibleSevenMove(GameFieldInterface gamefield, PlayerInterface p) {
         int steps = VALUEOFCARD7;
         int remaining = 0;
         boolean returnval = true;

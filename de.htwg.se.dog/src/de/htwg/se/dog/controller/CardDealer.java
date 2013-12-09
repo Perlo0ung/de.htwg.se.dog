@@ -1,7 +1,7 @@
 package de.htwg.se.dog.controller;
 
+import de.htwg.se.dog.models.PlayerInterface;
 import de.htwg.se.dog.models.impl.CardStack;
-import de.htwg.se.dog.models.impl.Player;
 
 public class CardDealer {
     private CardStack stackObj;
@@ -25,7 +25,7 @@ public class CardDealer {
      * 
      * @param p
      */
-    public void dealCards(Player p) {
+    public void dealCards(PlayerInterface p) {
         if (expectedNumOfCards() > stackObj.getSize()) {
             stackObj = new CardStack(CARDS, players);
         }

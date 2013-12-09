@@ -1,11 +1,12 @@
 package de.htwg.se.dog.models.impl;
 
+import de.htwg.se.dog.models.FieldInterface;
 import de.htwg.se.dog.models.GameFieldInterface;
 
-public class GameField implements GameFieldInterface<Field> {
+public class GameField implements GameFieldInterface {
     private static final int NOOWNER = 0;
 
-    private Field[] gamefield;
+    private FieldInterface[] gamefield;
     private final int fieldsTillHouse;
     private final int playerCount;
     private final int houseCount;
@@ -28,7 +29,7 @@ public class GameField implements GameFieldInterface<Field> {
         this.houseCount = houseCount;
         this.playerCount = playerCount;
         this.fieldSize = (houseCount + fieldsTillHouse) * playerCount;
-        gamefield = new Field[fieldSize];
+        gamefield = new FieldInterface[fieldSize];
         generateGamefield();
     }
 
@@ -52,7 +53,7 @@ public class GameField implements GameFieldInterface<Field> {
     }
 
     @Override
-    public Field[] getGamefield() {
+    public FieldInterface[] getGamefield() {
         return gamefield;
     }
 

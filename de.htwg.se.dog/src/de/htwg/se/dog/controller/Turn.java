@@ -1,6 +1,6 @@
 package de.htwg.se.dog.controller;
 
-import de.htwg.se.dog.models.impl.Player;
+import de.htwg.se.dog.models.PlayerInterface;
 
 public class Turn {
     private final GameTable table;
@@ -26,7 +26,7 @@ public class Turn {
      * 
      * @return the current Player
      */
-    public Player getCurrentPlayer() {
+    public PlayerInterface getCurrentPlayer() {
         return table.getCurrentPlayer();
     }
 }
