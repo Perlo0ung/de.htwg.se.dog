@@ -58,11 +58,24 @@ public class MoveNormalTest {
         assertFalse(movement.move(gamefield, 4, 0));
         assertFalse(movement.move(gamefield, 5, 0));
         array[4].setBlocked(false);
-        movement.move(gamefield, 5, 0);
+        movement.move(gamefield, 1, 0);
         //Is startfield empty
         assertNull(array[0].getFigure());
+
         //Is figure moved correctly
-        assertEquals(tmpZERO.getFignr(), array[5].getFigure().getFignr());
+        assertEquals(tmpZERO, array[1].getFigure());
+        //move figure over house
+        assertTrue(movement.move(gamefield, 3, 1));
+        assertEquals(tmpZERO, array[0].getFigure());
+    }
+
+    @Test
+    public void testKickfigure() {
+        array[4].putFigure(tp1.removeFigure());
+        FigureInterface tmpZERO = array[4].getFigure();
+        array[5].putFigure(tp2.removeFigure());
+        assertTrue(movement.move(gamefield, 1, 4));
+        assertEquals(tmpZERO, array[5].getFigure());
     }
 
     @Test
