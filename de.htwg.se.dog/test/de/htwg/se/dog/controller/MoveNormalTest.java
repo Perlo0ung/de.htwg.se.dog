@@ -58,13 +58,15 @@ public class MoveNormalTest {
         assertFalse(movement.move(gamefield, 4, 0));
         assertFalse(movement.move(gamefield, 5, 0));
         array[4].setBlocked(false);
-        movement.move(gamefield, 3, 0);
+        movement.move(gamefield, 1, 0);
         //Is startfield empty
         assertNull(array[0].getFigure());
+
         //Is figure moved correctly
-        assertEquals(tmpZERO, array[5].getFigure());
-        assertTrue(movement.move(gamefield, 4, 5));
-        assertEquals(tmpZERO, array[5].getFigure());
+        assertEquals(tmpZERO, array[1].getFigure());
+        //move figure over house
+        assertTrue(movement.move(gamefield, 3, 1));
+        assertEquals(tmpZERO, array[0].getFigure());
     }
 
     @Test
@@ -89,14 +91,14 @@ public class MoveNormalTest {
         array[ZERO].putFigure(tp1.removeFigure());
         assertFalse(movement.validMove(gamefield, 4, ZERO));
     }
-    /*
-        @Test
-        public void testMoveFour() {
-            movement.setMoveStrategie(new Card(FOUR));
-            array[FOUR].putFigure(tp1.removeFigure());
-            Figure tempFig = array[FOUR].getFigure();
-            assertTrue(movement.move(gamefield, 4, FOUR));
-            assertEquals(tempFig, array[4].getFigure());
-        }
-        */
+
+    @Test
+    public void testMoveFour() {
+        movement.setMoveStrategie(new Card(FOUR));
+        array[FOUR].putFigure(tp1.removeFigure());
+        Figure tempFig = array[FOUR].getFigure();
+        assertTrue(movement.move(gamefield, -4, FOUR));
+        assertEquals(tempFig, array[4].getFigure());
+    }
+
 }
