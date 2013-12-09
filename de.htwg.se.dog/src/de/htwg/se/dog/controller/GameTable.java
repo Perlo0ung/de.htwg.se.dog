@@ -25,9 +25,9 @@ public class GameTable {
      * Constructor to generate a new gametable
      * 
      * @param playerCount
-     *            number of players
+     *        number of players
      * @param figCount
-     *            number of figures per player
+     *        number of figures per player
      */
     public GameTable(int playerCount, int figCount) {
         game = new GameField(FIELDSTILLHOUSE, playerCount, HOUSECOUNT);
@@ -92,7 +92,7 @@ public class GameTable {
      * 
      * @return the player that is allowed to play
      */
-    public PlayerInterface getCurrentPlayer() {
+    public PlayerInterface getNextPlayer() {
         return turnPlayer.poll();
     }
 
@@ -100,7 +100,7 @@ public class GameTable {
      * Returns true if the Player has a card that can be played
      * 
      * @param p
-     *            the Player that wants to play
+     *        the Player that wants to play
      * @return true if he can play, otherwise false
      */
     public boolean canPlay(PlayerInterface p) {
@@ -111,7 +111,7 @@ public class GameTable {
      * Returns a list containing the cards that can be played by Player p
      * 
      * @param p
-     *            the player that wants to play
+     *        the player that wants to play
      * @return a list containing the cards that can be played
      */
     public List<CardInterface> possibleCards(PlayerInterface p) {

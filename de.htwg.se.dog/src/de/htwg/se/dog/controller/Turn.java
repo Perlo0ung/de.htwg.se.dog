@@ -26,7 +26,7 @@ public class Turn {
      * 
      * @return the current Player
      */
-    public PlayerInterface getCurrentPlayer() {
-        return table.getCurrentPlayer();
+    public PlayerInterface getNextPlayer() {
+        return table.getNextPlayer();
     }
 }

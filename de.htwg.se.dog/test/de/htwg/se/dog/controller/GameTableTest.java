@@ -21,15 +21,15 @@ public class GameTableTest {
         table = new GameTable(2, 1);
         table.newRound();
         array = table.getGameField().getGamefield();
-        first = table.getCurrentPlayer();
+        first = table.getNextPlayer();
     }
 
     @Test
     public void testCurrentPlayer() {
-        PlayerInterface second = table.getCurrentPlayer();
+        PlayerInterface second = table.getNextPlayer();
         table.newRound();
-        assertEquals(first, table.getCurrentPlayer());
-        assertEquals(second, table.getCurrentPlayer());
+        assertEquals(first, table.getNextPlayer());
+        assertEquals(second, table.getNextPlayer());
     }
 
     @Test
@@ -46,7 +46,7 @@ public class GameTableTest {
     public void testcanPlay() {
         assertFalse(table.canPlay(first));
         table.dealCards();
-        first = table.getCurrentPlayer();
+        first = table.getNextPlayer();
         FigureInterface fig = first.removeFigure();
         array[20].putFigure(fig);
         first.updateFigurePos(fig.getFignr(), 20);

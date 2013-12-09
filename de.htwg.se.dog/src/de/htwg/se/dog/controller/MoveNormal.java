@@ -3,6 +3,7 @@ package de.htwg.se.dog.controller;
 import de.htwg.se.dog.models.FieldInterface;
 import de.htwg.se.dog.models.FigureInterface;
 import de.htwg.se.dog.models.GameFieldInterface;
+import de.htwg.se.dog.models.PlayerInterface;
 
 public class MoveNormal extends Movement {
     /**
@@ -11,9 +12,9 @@ public class MoveNormal extends Movement {
      * 
      * @param gamefield
      * @param steps
-     *            number of steps figure wants to take
+     *        number of steps figure wants to take
      * @param startfieldnr
-     *            from where figure wants to move
+     *        from where figure wants to move
      * @return true if figure could be moved, otherwise false
      */
     @Override
@@ -27,7 +28,8 @@ public class MoveNormal extends Movement {
             kickPlayer(array, targetfield);
             // Move Figure from startfield to Targetfield
             array[targetfield].putFigure(temp);
-            //array[startfieldnr].removeFigure()
+            PlayerInterface ownerF1 = temp.getOwner();
+            ownerF1.updateFigurePos(temp.getFignr(), targetfield);
             valid = true;
         }
 
@@ -39,9 +41,9 @@ public class MoveNormal extends Movement {
      * 
      * @param gamefield
      * @param steps
-     *            number of steps figure want to take
+     *        number of steps figure want to take
      * @param startfieldnr
-     *            from where figure wants to move
+     *        from where figure wants to move
      * @return true if move is valid, otherwise false
      */
     @Override
