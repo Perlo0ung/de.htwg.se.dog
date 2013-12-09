@@ -1,5 +1,6 @@
 package de.htwg.se.dog.controller;
 
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -70,11 +71,15 @@ public class GameTable {
     /**
      * Refills the Playerqueue and deals cards to every player
      */
-    public void dealCards() {
+    public void dealCards() {            
+    	//rotate player list clockwise
+		Collections.rotate(players, -1);
+		//now put all players into the queue
         turnPlayer = new LinkedList<PlayerInterface>();
         for (PlayerInterface p : players) {
             dealer.dealCards(p);
             turnPlayer.add(p);
+
         }
     }
 
