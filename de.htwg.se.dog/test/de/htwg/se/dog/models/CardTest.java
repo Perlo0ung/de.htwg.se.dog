@@ -31,7 +31,7 @@ public class CardTest {
     public void testExpectedException() {
         wrong = new Card(200);
         assertNotNull(wrong);
-        wrong = new Card(0);
+        wrong = new Card(-5);
         assertNotNull(wrong);
     }
 

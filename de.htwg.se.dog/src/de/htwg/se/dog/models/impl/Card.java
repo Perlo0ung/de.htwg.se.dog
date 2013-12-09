@@ -5,7 +5,7 @@ import de.htwg.se.dog.models.CardInterface;
 public class Card implements CardInterface {
 
     private final int value;
-    private static final int ZERO = 0;
+    private static final int ONE = 1;
     private static final int FOURTEEN = 14;
 
     private static final String[] CARDNAMES = { "Ass", "Zwei", "Dre", "Vier", "Fuenf", "Sechs", "Sieben", "Acht", "Neun", "Zehn", "Bube", "Dame", "Koenig", "Joker" };
@@ -17,10 +17,10 @@ public class Card implements CardInterface {
      *            : int, is the value of the card
      */
     public Card(int value) {
-        if (value > ZERO && value <= FOURTEEN) {
-            this.value = value;
-        } else {
+        if (value < ONE || value > FOURTEEN) {
             throw new IllegalArgumentException("Failed to create card with value:" + value);
+        } else {
+            this.value = value;
         }
     }
 
