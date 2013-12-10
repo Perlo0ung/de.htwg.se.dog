@@ -26,9 +26,9 @@ public class GameTable {
      * Constructor to generate a new gametable
      * 
      * @param playerCount
-     *        number of players
+     *            number of players
      * @param figCount
-     *        number of figures per player
+     *            number of figures per player
      */
     public GameTable(int playerCount, int figCount) {
         game = new GameField(FIELDSTILLHOUSE, playerCount, HOUSECOUNT);
@@ -69,12 +69,21 @@ public class GameTable {
     }
 
     /**
+     * Sets the player that can play first
+     * 
+     * @param playernum
+     */
+    public void setStartingPlayer(int playernum) {
+        Collections.rotate(players, -playernum);
+    }
+
+    /**
      * Refills the Playerqueue and deals cards to every player
      */
-    public void dealCards() {            
-    	//rotate player list clockwise
-		Collections.rotate(players, -1);
-		//now put all players into the queue
+    public void dealCards() {
+        //rotate player list clockwise
+        Collections.rotate(players, -1);
+        //now put all players into the queue
         turnPlayer = new LinkedList<PlayerInterface>();
         for (PlayerInterface p : players) {
             dealer.dealCards(p);
@@ -111,7 +120,7 @@ public class GameTable {
      * Returns true if the Player has a card that can be played
      * 
      * @param p
-     *        the Player that wants to play
+     *            the Player that wants to play
      * @return true if he can play, otherwise false
      */
     public boolean canPlay(PlayerInterface p) {
@@ -122,7 +131,7 @@ public class GameTable {
      * Returns a list containing the cards that can be played by Player p
      * 
      * @param p
-     *        the player that wants to play
+     *            the player that wants to play
      * @return a list containing the cards that can be played
      */
     public List<CardInterface> possibleCards(PlayerInterface p) {
