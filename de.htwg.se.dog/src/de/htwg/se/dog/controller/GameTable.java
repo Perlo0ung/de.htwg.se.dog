@@ -30,12 +30,12 @@ public class GameTable {
      * @param figCount
      *            number of figures per player
      */
-    public GameTable(int playerCount, int figCount) {
+    public GameTable(int playerCount) {
         game = new GameField(FIELDSTILLHOUSE, playerCount, HOUSECOUNT);
         players = new LinkedList<PlayerInterface>();
         dealer = new CardDealer(playerCount);
         movement = new Movement();
-        addPlayers(playerCount, figCount);
+        addPlayers(playerCount, HOUSECOUNT);
     }
 
     /**
@@ -64,7 +64,7 @@ public class GameTable {
      */
     private void addPlayers(int playerCount, int figCount) {
         for (int i = 1; i <= playerCount; i++) {
-            players.add(new Player(playerCount, figCount));
+            players.add(new Player(i, figCount));
         }
     }
 
@@ -74,15 +74,14 @@ public class GameTable {
      * @param playernum
      */
     public void setStartingPlayer(int playernum) {
-        Collections.rotate(players, -playernum);
+        Collections.rotate(players, -playernum + 1);
     }
 
     /**
      * Refills the Playerqueue and deals cards to every player
      */
     public void dealCards() {
-        //rotate player list clockwise
-        Collections.rotate(players, -1);
+
         //now put all players into the queue
         turnPlayer = new LinkedList<PlayerInterface>();
         for (PlayerInterface p : players) {
@@ -90,6 +89,8 @@ public class GameTable {
             turnPlayer.add(p);
 
         }
+        //rotate player list clockwise
+        Collections.rotate(players, -1);
     }
 
     /**

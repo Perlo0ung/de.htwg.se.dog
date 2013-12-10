@@ -10,6 +10,7 @@ import org.junit.Test;
 import de.htwg.se.dog.models.FieldInterface;
 import de.htwg.se.dog.models.FigureInterface;
 import de.htwg.se.dog.models.PlayerInterface;
+import de.htwg.se.dog.models.impl.Player;
 
 public class GameTableTest {
     GameTable table;
@@ -18,7 +19,7 @@ public class GameTableTest {
 
     @Before
     public void setUp() {
-        table = new GameTable(2, 1);
+        table = new GameTable(2);
         table.newRound();
         array = table.getGameField().getGamefield();
         first = table.getNextPlayer();
@@ -28,8 +29,15 @@ public class GameTableTest {
     public void testCurrentPlayer() {
         PlayerInterface second = table.getNextPlayer();
         table.newRound();
-        assertEquals(first, table.getNextPlayer());
         assertEquals(second, table.getNextPlayer());
+        assertEquals(first, table.getNextPlayer());
+    }
+
+    @Test
+    public void testAddPlayerToQueue() {
+        table.addPlayerToQueue(new Player(5, 1));
+        table.getNextPlayer();
+        assertEquals(5, table.getNextPlayer().getPlayerID());
     }
 
     @Test
@@ -51,6 +59,14 @@ public class GameTableTest {
         array[20].putFigure(fig);
         first.updateFigurePos(fig.getFignr(), 20);
         assertTrue(table.canPlay(first));
+    }
+
+    @Test
+    public void testSetStartingPlayer() {
+        GameTable here = new GameTable(10);
+        here.setStartingPlayer(8);
+        here.newRound();
+        assertEquals(8, here.getNextPlayer().getPlayerID());
     }
 
 }

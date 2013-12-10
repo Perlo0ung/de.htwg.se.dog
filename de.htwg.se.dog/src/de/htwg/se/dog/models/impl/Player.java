@@ -16,10 +16,10 @@ public class Player implements PlayerInterface {
     private final Map<Integer, Integer> figureRegister;
     private final int playernum;
 
-    public Player(int playerNr, int figcount) {
+    public Player(int playerNr, int houseFields) {
         playernum = playerNr;
         figure = new LinkedList<FigureInterface>();
-        for (int i = 0; i < figcount; i++) {
+        for (int i = 0; i < houseFields; i++) {
             figure.add(new Figure(this, i + 1));
         }
         cards = new LinkedList<CardInterface>();

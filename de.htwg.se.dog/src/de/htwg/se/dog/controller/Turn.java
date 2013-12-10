@@ -11,8 +11,8 @@ public class Turn {
      * @param playerCount
      * @param figCount
      */
-    public Turn(int playerCount, int figCount) {
-        table = new GameTable(playerCount, figCount);
+    public Turn(int playerCount) {
+        table = new GameTable(playerCount);
     }
 
     /**

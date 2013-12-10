@@ -1,7 +1,6 @@
 package de.htwg.se.dog.models;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -37,9 +36,4 @@ public class FigureTest {
         assertEquals(fignr, f.getFignr());
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void testExpectedExceptionWrongFigNr() {
-        fwrong = new Figure(player, wrongFignr);
-        assertNotNull(fwrong);
-    }
 }
