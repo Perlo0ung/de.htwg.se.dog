@@ -1,7 +1,6 @@
 package de.htwg.se.dog.controller;
 
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.Map;
 
 import de.htwg.se.dog.models.CardInterface;
@@ -12,7 +11,6 @@ import de.htwg.se.dog.models.PlayerInterface;
 
 public class Movement implements MovementStrategy {
 
-    private static final int VALUEOFCARD7 = 7;
     private static final int VALUEOFCARD11 = 11;
     private static final int EMPTYFIELD = -5;
     private static final int BLOCKEDFIELD = -6;
@@ -151,44 +149,6 @@ public class Movement implements MovementStrategy {
             field = ((currentfieldID - 1) + fieldSize) % fieldSize;
         }
         return field;
-    }
-
-    /**
-     * Checks if the Player p can do a move with the card 7
-     * 
-     * @param gamefield
-     *        the current gamefield played on
-     * @param p
-     *        the player that wants to move
-     * @return true if the player can move with the card
-     */
-    public boolean possibleSevenMove(GameFieldInterface gamefield, PlayerInterface p) {
-        int steps = VALUEOFCARD7;
-        int remaining = 0;
-        boolean returnval = true;
-        LinkedList<Integer> figures = new LinkedList<Integer>(p.getFigureRegister());
-        if (figures.isEmpty()) {
-            steps = 0;
-            returnval = false;
-        }
-        Integer currentField = figures.pollFirst();
-        while (steps > 0) {
-            if (!validMove(gamefield, steps, currentField)) {
-                steps--;
-                remaining++;
-            } else {
-                if (remaining == 0) {
-                    break;
-                }
-                currentField = figures.pollFirst();
-                steps = remaining;
-                if (currentField == null) {
-                    returnval = false;
-                    break;
-                }
-            }
-        }
-        return returnval;
     }
 
 }
