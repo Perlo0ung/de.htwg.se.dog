@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Queue;
 
 import de.htwg.se.dog.models.CardInterface;
+import de.htwg.se.dog.models.FieldInterface;
+import de.htwg.se.dog.models.GameFieldInterface;
 import de.htwg.se.dog.models.PlayerInterface;
 import de.htwg.se.dog.models.impl.GameField;
 import de.htwg.se.dog.models.impl.Player;
@@ -135,6 +137,7 @@ public class GameTable {
      *        the player that wants to play
      * @return a list containing the cards that can be played
      */
+    // TODO: implement moveStart as possible playable Card
     public List<CardInterface> possibleCards(PlayerInterface p) {
         boolean returnval = false;
 
@@ -153,5 +156,17 @@ public class GameTable {
             }
         }
         return cards;
+    }
+
+    public boolean playerHaswon(GameFieldInterface gamefield, PlayerInterface player) {
+        FieldInterface[] array = gamefield.getGamefield();
+        if (player.getFigureList().isEmpty()) {
+            for (Integer fieldID : player.getFigureRegister()) {
+                if (!array[fieldID].isHouse()) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 }

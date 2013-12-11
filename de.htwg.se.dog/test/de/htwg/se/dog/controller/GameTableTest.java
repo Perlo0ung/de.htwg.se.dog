@@ -10,10 +10,14 @@ import org.junit.Test;
 import de.htwg.se.dog.models.FieldInterface;
 import de.htwg.se.dog.models.FigureInterface;
 import de.htwg.se.dog.models.PlayerInterface;
+import de.htwg.se.dog.models.impl.GameField;
 import de.htwg.se.dog.models.impl.Player;
 
 public class GameTableTest {
+    private final int TWO = 2;
+    Movement movement;
     GameTable table;
+    GameField gamefield;
     PlayerInterface first;
     FieldInterface[] array;
 
@@ -23,6 +27,7 @@ public class GameTableTest {
         table.newRound();
         array = table.getGameField().getGamefield();
         first = table.getNextPlayer();
+        gamefield = table.getGameField();
     }
 
     @Test
@@ -67,6 +72,28 @@ public class GameTableTest {
         here.setStartingPlayer(8);
         here.newRound();
         assertEquals(8, here.getNextPlayer().getPlayerID());
+    }
+
+    @Test
+    public void testWin() {
+        movement = new Movement();
+        movement.setMoveStrategie(TWO);
+        int firsthouse = gamefield.getFieldsTillHouse();
+
+        assertTrue(array[firsthouse].isHouse());
+        assertTrue(array[firsthouse + 1].isHouse());
+        assertTrue(array[firsthouse + 2].isHouse());
+        assertTrue(array[firsthouse + 3].isHouse());
+
+        array[firsthouse - 1].putFigure(first.removeFigure(), firsthouse - 1);
+        array[firsthouse + 1].putFigure(first.removeFigure(), firsthouse + 1);
+        array[firsthouse + 2].putFigure(first.removeFigure(), firsthouse + 2);
+        array[firsthouse + 3].putFigure(first.removeFigure(), firsthouse + 3);
+        //not every figure is in house
+        assertFalse(table.playerHaswon(gamefield, first));
+        movement.move(gamefield, 1, firsthouse - 1);
+        //every figure is in house
+        assertTrue(table.playerHaswon(gamefield, first));
     }
 
 }
