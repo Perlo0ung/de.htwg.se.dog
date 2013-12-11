@@ -43,7 +43,7 @@ public class MoveSwitchTest {
         gamefield = new GameField(FIELDSTILLHOUSE, PLAYERCOUNT, HOUSECOUNT);
         player1 = new Player(PLAYERID1, FIGCOUNT);
         player2 = new Player(PLAYERID2, FIGCOUNT);
-        array = gamefield.getGamefield();
+        array = gamefield.getField();
 
     } // Voll Geil
 

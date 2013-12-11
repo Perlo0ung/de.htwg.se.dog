@@ -17,7 +17,7 @@ public interface GameFieldInterface {
      * 
      * @return Field[]: the complete GameField
      */
-    FieldInterface[] getGamefield();
+    FieldInterface[] getField();
 
     /**
      * returns the gamefieldsize

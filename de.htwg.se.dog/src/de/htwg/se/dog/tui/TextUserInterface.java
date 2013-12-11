@@ -22,7 +22,7 @@ public class TextUserInterface {
         for (CardInterface c : p.getCardList()) {
             sb.append(String.format("%s ", c.toString()));
         }
-        out(sb.toString());
+        out(String.format("Player %d:  %s", p.getPlayerID(),sb.toString()));
     }
 
     public void printGameField(GameField game) {
@@ -31,7 +31,7 @@ public class TextUserInterface {
         int normalFields = game.getFieldsTillHouse();
         int playercount = game.getPlayerCount();
         int range = houseFields + normalFields;
-        FieldInterface[] array = game.getGamefield();
+        FieldInterface[] array = game.getField();
 
         for (int p = 0; p < playercount; p++) {
             StringBuilder lower = new StringBuilder();

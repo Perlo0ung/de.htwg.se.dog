@@ -25,7 +25,7 @@ public class GameTableTest {
     public void setUp() {
         table = new GameTable(2);
         table.newRound();
-        array = table.getGameField().getGamefield();
+        array = table.getGameField().getField();
         first = table.getNextPlayer();
         gamefield = table.getGameField();
     }

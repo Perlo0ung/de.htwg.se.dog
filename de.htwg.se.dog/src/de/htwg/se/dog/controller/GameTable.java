@@ -159,7 +159,7 @@ public class GameTable {
     }
 
     public boolean playerHaswon(GameFieldInterface gamefield, PlayerInterface player) {
-        FieldInterface[] array = gamefield.getGamefield();
+        FieldInterface[] array = gamefield.getField();
         if (player.getFigureList().isEmpty()) {
             for (Integer fieldID : player.getFigureRegister()) {
                 if (!array[fieldID].isHouse()) {
