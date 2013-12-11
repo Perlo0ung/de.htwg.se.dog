@@ -6,6 +6,7 @@ import de.htwg.se.dog.models.GameFieldInterface;
 import de.htwg.se.dog.models.PlayerInterface;
 
 public class MoveNormal extends Movement {
+
     /**
      * Trys to Moves Figure "steps" forward, on success it returns true
      * otherwise false
