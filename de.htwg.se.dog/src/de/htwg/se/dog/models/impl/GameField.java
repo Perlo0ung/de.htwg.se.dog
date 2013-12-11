@@ -6,7 +6,7 @@ import de.htwg.se.dog.models.GameFieldInterface;
 public class GameField implements GameFieldInterface {
     private static final int NOOWNER = 0;
 
-    private FieldInterface[] gamefield;
+    private final FieldInterface[] gamefield;
     private final int fieldsTillHouse;
     private final int playerCount;
     private final int houseCount;
@@ -16,13 +16,13 @@ public class GameField implements GameFieldInterface {
      * Setup for a GameField
      * 
      * @param fieldsTillHouse
-     *            : field until there is a house
+     *        : field until there is a house
      * 
      * @param houseCount
-     *            : number of housefields
+     *        : number of housefields
      * 
      * @param playerCount
-     *            : number of players
+     *        : number of players
      */
     public GameField(int fieldsTillHouse, int playerCount, int houseCount) {
         this.fieldsTillHouse = fieldsTillHouse;
@@ -65,5 +65,10 @@ public class GameField implements GameFieldInterface {
     @Override
     public int getHouseCount() {
         return houseCount;
+    }
+
+    @Override
+    public int getFieldsTillHouse() {
+        return fieldsTillHouse;
     }
 }

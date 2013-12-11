@@ -27,10 +27,6 @@ public class MoveSevenTest {
     private final int FIGCOUNT = 2;
     private final int PLAYERID1 = 1;
     private final int PLAYERID2 = 2;
-    private final int ONE = 1;
-    private final int ZERO = 0;
-    private final int TWO = 2;
-    private final int FOUR = 4;
     private final int SEVEN = 7;
 
     /* Gamefield from setUp
@@ -76,7 +72,6 @@ public class MoveSevenTest {
         assertFalse(movement.AnyValidMove(gamefield, tp2));
         //One Figure moves 7
         array[0].putFigure(tp1.removeFigure(), 0);
-        FigureInterface tempFig1 = array[0].getFigure();
         assertTrue(movement.AnyValidMove(gamefield, tp1));
         //two figures move
         array[1].putFigure(tp1.removeFigure(), 7);

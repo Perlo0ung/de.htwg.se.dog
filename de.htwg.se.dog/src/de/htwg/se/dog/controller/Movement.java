@@ -65,7 +65,8 @@ public class Movement implements MovementStrategy {
     }
 
     /**
-     * Remove Player From fieldID and return it to Player
+     * Remove Player From fieldID and return it to Player if field at fieldID is
+     * empty, it does nothing
      * 
      * @param array
      *        gamefieldarray
@@ -154,9 +155,23 @@ public class Movement implements MovementStrategy {
         return field;
     }
 
-    /* --------------------------------------------------------- */
+    public boolean moveStart(GameFieldInterface gamefield, PlayerInterface player) {
+        boolean retval = false;
+        int playerID = player.getPlayerID();
+        int startFieldNr = (gamefield.getHouseCount() + gamefield.getFieldsTillHouse()) * (playerID - 1);
+        FieldInterface[] array = gamefield.getGamefield();
+        if (!array[startFieldNr].getBlocked() && !player.getFigureList().isEmpty()) {
+            kickPlayer(array, startFieldNr);
+            array[startFieldNr].putFigure(player.removeFigure(), startFieldNr);
+            array[startFieldNr].setBlocked(true);
+            retval = true;
+        }
+        return retval;
+    }
+
+    /* ------------------------------------------------------------------------- */
     /* Move Seven Methodes */
-    /* --------------------------------------------------------- */
+    /* ------------------------------------------------------------------------- */
 
     /**
      * Move-Method which executes every move given in "moves" or non if one move

@@ -36,7 +36,7 @@ public class GamefiledTest {
 
     @Test
     public void testGetFieldSize() {
-        assertEquals(temp.getFieldSize(), f.getFieldSize());
+        assertEquals(((fieldsTillHouse + houseCount) * playerCount), f.getFieldSize());
     }
 
     @Test
@@ -46,6 +46,11 @@ public class GamefiledTest {
 
     @Test
     public void testGetHouseCount() {
-        assertEquals(temp.getHouseCount(), f.getHouseCount());
+        assertEquals(houseCount, f.getHouseCount());
+    }
+
+    @Test
+    public void testGetFieldsTillHouse() {
+        assertEquals(fieldsTillHouse, f.getFieldsTillHouse());
     }
 }
