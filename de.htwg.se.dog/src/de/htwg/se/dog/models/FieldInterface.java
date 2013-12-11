@@ -2,7 +2,15 @@ package de.htwg.se.dog.models;
 
 public interface FieldInterface {
     /**
-     * /** Puts Figure f on this Field
+     * Puts Figure f on this Field and updates Figurregister of the Owner
+     * 
+     * @param f
+     * @param fieldnr
+     */
+    void putFigure(FigureInterface f, int fieldnr);
+
+    /**
+     * Puts Figure f on this Field
      * 
      * @param f
      */
@@ -41,7 +49,7 @@ public interface FieldInterface {
      * set blocked status of the field
      * 
      * @param a
-     *            status
+     *        status
      */
     void setBlocked(boolean a);
 

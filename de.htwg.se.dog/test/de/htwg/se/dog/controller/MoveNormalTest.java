@@ -10,7 +10,6 @@ import org.junit.Test;
 
 import de.htwg.se.dog.models.FieldInterface;
 import de.htwg.se.dog.models.FigureInterface;
-import de.htwg.se.dog.models.impl.Card;
 import de.htwg.se.dog.models.impl.GameField;
 import de.htwg.se.dog.models.impl.Player;
 
@@ -38,7 +37,7 @@ public class MoveNormalTest {
     @Before
     public void setUp() throws Exception {
         movement = new Movement();
-        movement.setMoveStrategie(new Card(TWO));
+        movement.setMoveStrategie(TWO);
         gamefield = new GameField(FIELDSTILLHOUSE, PLAYERCOUNT, HOUSECOUNT);
         tp1 = new Player(PLAYERID1, FIGCOUNT);
         tp2 = new Player(PLAYERID2, FIGCOUNT);
@@ -67,6 +66,19 @@ public class MoveNormalTest {
         //move figure over house
         assertTrue(movement.move(gamefield, 3, 1));
         assertEquals(tmpZERO, array[0].getFigure());
+    }
+
+    @Test
+    public void testMoveFromBlockField() {
+        array[0].putFigure(tp1.removeFigure());
+        FigureInterface tempFig = array[0].getFigure();
+        array[0].setBlocked(true);
+        assertTrue(array[0].getBlocked());
+        movement.move(gamefield, 2, 0);
+        assertFalse(array[0].getBlocked());
+        assertNull(array[0].getFigure());
+        assertEquals(tempFig, array[2].getFigure());
+        assertTrue(array[2].getBlocked());
     }
 
     @Test
@@ -103,7 +115,7 @@ public class MoveNormalTest {
 
     @Test
     public void testMoveFour() {
-        movement.setMoveStrategie(new Card(FOUR));
+        movement.setMoveStrategie(FOUR);
         array[FOUR].putFigure(tp1.removeFigure());
         FigureInterface tempFig = array[FOUR].getFigure();
         assertTrue(movement.move(gamefield, -4, FOUR));

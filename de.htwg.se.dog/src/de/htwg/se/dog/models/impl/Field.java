@@ -22,6 +22,12 @@ public class Field implements FieldInterface {
     }
 
     @Override
+    public void putFigure(FigureInterface f, int fieldnr) {
+        f.getOwner().updateFigurePos(f.getFignr(), fieldnr);
+        this.figure = f;
+    }
+
+    @Override
     public void putFigure(FigureInterface f) {
         this.figure = f;
     }

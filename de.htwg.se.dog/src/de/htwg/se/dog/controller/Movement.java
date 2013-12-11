@@ -1,9 +1,10 @@
 package de.htwg.se.dog.controller;
 
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Map;
+import java.util.Map.Entry;
 
-import de.htwg.se.dog.models.CardInterface;
 import de.htwg.se.dog.models.FieldInterface;
 import de.htwg.se.dog.models.FigureInterface;
 import de.htwg.se.dog.models.GameFieldInterface;
@@ -12,6 +13,7 @@ import de.htwg.se.dog.models.PlayerInterface;
 public class Movement implements MovementStrategy {
 
     private static final int VALUEOFCARD11 = 11;
+    private static final int VALUEOFCARD7 = 7;
     private static final int EMPTYFIELD = -5;
     private static final int BLOCKEDFIELD = -6;
 
@@ -40,8 +42,8 @@ public class Movement implements MovementStrategy {
      * 
      * @param card
      */
-    public void setMoveStrategie(CardInterface card) {
-        strategie = strat.get(card.getValue());
+    public void setMoveStrategie(int StrategieNr) {
+        strategie = strat.get(StrategieNr);
         if (strategie == null) {
             strategie = new MoveNormal();
         }
@@ -97,6 +99,7 @@ public class Movement implements MovementStrategy {
         int absSteps = Math.abs(steps);
         FieldInterface[] array = gamefield.getGamefield();
         int currentfieldID = EMPTYFIELD;
+        //TODO Monitor whether if-Statment is necessary or not
         if (!fieldEmpty(array[startfieldnr])) {
             int playerNr = array[startfieldnr].getFigureOwnerNr();
             currentfieldID = nextField(gamefield.getFieldSize(), startfieldnr, steps);
@@ -149,6 +152,79 @@ public class Movement implements MovementStrategy {
             field = ((currentfieldID - 1) + fieldSize) % fieldSize;
         }
         return field;
+    }
+
+    /* --------------------------------------------------------- */
+    /* Move Seven Methodes */
+    /* --------------------------------------------------------- */
+
+    /**
+     * Move-Method which executes every move given in "moves" or non if one move
+     * is not possible
+     * 
+     * @param gamefield
+     * @param moves
+     *        Map of moves you want to execute, while the key is the
+     *        startfieldnr and the value is the number of steps from this
+     *        startfieldnr
+     * @return true if all moves could be executed, otherwise false
+     */
+    public boolean move(GameFieldInterface gamefield, Map<Integer, Integer> moves) {
+        boolean retval = true;
+        this.setMoveStrategie(VALUEOFCARD7);
+        /* Check if all moves are possible */
+        for (Entry<Integer, Integer> field : moves.entrySet()) {
+            if (!this.move(gamefield, field.getValue(), field.getKey())) {
+                retval = false;
+                break;
+            }
+        }
+        /* Move --------------*/
+        for (Entry<Integer, Integer> field : moves.entrySet()) {
+            for (int i = 0; i <= field.getValue(); i++) {
+                this.move(gamefield, 1, field.getKey());
+            }
+        }
+        return retval;
+    }
+
+    /**
+     * Checks if the Player p can do a move with the card 7
+     * 
+     * @param gamefield
+     *        the current gamefield played on
+     * @param p
+     *        the player that wants to move
+     * @return true if the player can move with the card
+     */
+    public boolean AnyValidMove(GameFieldInterface gamefield, PlayerInterface p) {
+        int steps = VALUEOFCARD7;
+        int remaining = 0;
+        boolean returnval = true;
+        LinkedList<Integer> figures = new LinkedList<Integer>(p.getFigureRegister());
+        if (figures.isEmpty()) {
+            steps = 0;
+            returnval = false;
+        }
+        Integer currentField = figures.pollFirst();
+        while (steps > 0) {
+            this.setMoveStrategie(VALUEOFCARD7);
+            if (!this.validMove(gamefield, steps, currentField)) {
+                steps--;
+                remaining++;
+            } else {
+                if (remaining == 0) {
+                    break;
+                }
+                currentField = figures.pollFirst();
+                steps = remaining;
+                if (currentField == null) {
+                    returnval = false;
+                    break;
+                }
+            }
+        }
+        return returnval;
     }
 
 }

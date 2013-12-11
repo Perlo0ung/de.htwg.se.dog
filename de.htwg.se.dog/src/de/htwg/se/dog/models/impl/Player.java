@@ -16,6 +16,7 @@ public class Player implements PlayerInterface {
     private final Map<Integer, Integer> figureRegister;
     private final int playernum;
 
+    //TODO: Remove housefields-Parameter
     public Player(int playerNr, int houseFields) {
         playernum = playerNr;
         figure = new LinkedList<FigureInterface>();
@@ -24,7 +25,6 @@ public class Player implements PlayerInterface {
         }
         cards = new LinkedList<CardInterface>();
         figureRegister = new HashMap<Integer, Integer>();
-
     }
 
     @Override

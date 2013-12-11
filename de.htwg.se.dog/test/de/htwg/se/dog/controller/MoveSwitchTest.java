@@ -8,7 +8,6 @@ import org.junit.Test;
 
 import de.htwg.se.dog.models.FieldInterface;
 import de.htwg.se.dog.models.PlayerInterface;
-import de.htwg.se.dog.models.impl.Card;
 import de.htwg.se.dog.models.impl.GameField;
 import de.htwg.se.dog.models.impl.Player;
 
@@ -40,7 +39,7 @@ public class MoveSwitchTest {
     @Before
     public void setUp() throws Exception {
         movement = new Movement();
-        movement.setMoveStrategie(new Card(JACK));
+        movement.setMoveStrategie(JACK);
         gamefield = new GameField(FIELDSTILLHOUSE, PLAYERCOUNT, HOUSECOUNT);
         player1 = new Player(PLAYERID1, FIGCOUNT);
         player2 = new Player(PLAYERID2, FIGCOUNT);
