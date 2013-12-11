@@ -8,7 +8,7 @@ public class Card implements CardInterface {
     private static final int ONE = 1;
     private static final int FOURTEEN = 14;
 
-    private static final String[] CARDNAMES = { "Ass", "Zwei", "Dre", "Vier", "Fuenf", "Sechs", "Sieben", "Acht", "Neun", "Zehn", "Bube", "Dame", "Koenig", "Joker" };
+    private static final String[] CARDNAMES = { "Ass", "Zwei", "Drei", "Vier", "Fuenf", "Sechs", "Sieben", "Acht", "Neun", "Zehn", "Bube", "Dame", "Koenig", "Joker" };
 
     /**
      * Constructor to create a new card
@@ -48,6 +48,11 @@ public class Card implements CardInterface {
 
     @Override
     public String toString() {
-        return String.format("%s: %s", this.value, getCardName());
+        return String.format("%2d: %-6s", this.value, getCardName());
+    }
+
+    @Override
+    public int compareTo(CardInterface o) {
+        return ((Integer) this.value).compareTo(o.getValue());
     }
 }

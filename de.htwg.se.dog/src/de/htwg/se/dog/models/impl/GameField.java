@@ -16,13 +16,13 @@ public class GameField implements GameFieldInterface {
      * Setup for a GameField
      * 
      * @param fieldsTillHouse
-     *        : field until there is a house
+     *            : field until there is a house
      * 
      * @param houseCount
-     *        : number of housefields
+     *            : number of housefields
      * 
      * @param playerCount
-     *        : number of players
+     *            : number of players
      */
     public GameField(int fieldsTillHouse, int playerCount, int houseCount) {
         this.fieldsTillHouse = fieldsTillHouse;
@@ -70,5 +70,10 @@ public class GameField implements GameFieldInterface {
     @Override
     public int getFieldsTillHouse() {
         return fieldsTillHouse;
+    }
+
+    @Override
+    public int getPlayerCount() {
+        return this.playerCount;
     }
 }

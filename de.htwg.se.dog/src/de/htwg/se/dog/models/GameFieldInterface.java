@@ -6,7 +6,7 @@ public interface GameFieldInterface {
      * returns the owner number of a field
      * 
      * @param fieldNr
-     *        number of the field
+     *            number of the field
      * 
      * @return int: ownerNr of the fieldNr, if it has no owner zero is returned
      */
@@ -40,4 +40,10 @@ public interface GameFieldInterface {
      */
     int getFieldsTillHouse();
 
+    /**
+     * returns the number of players playing
+     * 
+     * @return
+     */
+    int getPlayerCount();
 }

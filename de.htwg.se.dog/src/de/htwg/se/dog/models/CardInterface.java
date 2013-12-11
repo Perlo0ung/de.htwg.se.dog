@@ -1,6 +1,6 @@
 package de.htwg.se.dog.models;
 
-public interface CardInterface {
+public interface CardInterface extends Comparable<CardInterface> {
     /**
      * returns the Value of the card
      * 
@@ -16,4 +16,12 @@ public interface CardInterface {
      * @return String: the cardname as a string
      */
     String getCardName();
+
+    /**
+     * compares 2 cards by value
+     * 
+     * @param c
+     *            the card to compare
+     * @return
+     */
 }

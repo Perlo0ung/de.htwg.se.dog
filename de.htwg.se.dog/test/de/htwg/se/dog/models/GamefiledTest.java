@@ -53,4 +53,9 @@ public class GamefiledTest {
     public void testGetFieldsTillHouse() {
         assertEquals(fieldsTillHouse, f.getFieldsTillHouse());
     }
+
+    @Test
+    public void testGetPlayerCount() {
+        assertEquals(3, f.getPlayerCount());
+    }
 }
