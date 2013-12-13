@@ -117,4 +117,6 @@ public interface GameTableInterface extends IObservable {
     void playCard(int steps, int fieldNr);
 
     boolean fieldIsEmpty(int fieldnr);
+
+    int getFigureOwnerID(int fieldnr);
 }

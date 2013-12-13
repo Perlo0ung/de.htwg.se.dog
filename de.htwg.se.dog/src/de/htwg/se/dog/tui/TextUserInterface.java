@@ -42,7 +42,7 @@ public class TextUserInterface implements IObserver {
         return false;
     }
 
-    public int processCardInput() {
+    private int processCardInput() {
         int card = 0;
         printTui();
         while (true) {
@@ -58,17 +58,19 @@ public class TextUserInterface implements IObserver {
                     out(String.format("Spieler %d kann diese Karte nicht benutzen!", controller.getCurrentPlayer().getPlayerID()));
                     continue;
                 }
+                card = zahl;
             } catch (NumberFormatException e) {
                 if (input.equalsIgnoreCase("q")) {
                     card = -1;
                 }
             }
+
             break;
         }
         return card;
     }
 
-    public int processFigureInput() {
+    private int processFigureInput() {
         int fieldnr = 0;
         while (true) {
             out("Bitte Feldnummer der zu laufenden Figur auswählen: ");
@@ -76,15 +78,19 @@ public class TextUserInterface implements IObserver {
             try {
                 Integer zahl = Integer.valueOf(input);
                 if (!controller.fieldIsEmpty(zahl)) {
-                    out(String.format("Spieler %d hat keine solche Karte!", controller.getCurrentPlayer().getPlayerID()));
+                    out(String.format("Feld %d ist leer!", zahl));
                     continue;
                 }
+                if (controller.getFigureOwnerID(zahl) != controller.getCurrentPlayer().getPlayerID()) {
+                    out(String.format("Die Figure auf dem Feld %d gehört Spieler %d", zahl, controller.getFigureOwnerID(zahl)));
+                    continue;
+                }
+                fieldnr = zahl;
             } catch (NumberFormatException e) {
                 if (input.equalsIgnoreCase("q")) {
                     fieldnr = -1;
                 }
             }
-
             break;
         }
         return fieldnr;

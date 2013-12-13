@@ -124,6 +124,12 @@ public class GameField implements GameFieldInterface {
         return super.clone();
     }
 
+    /**
+     * returns the field at fieldnr
+     * 
+     * @param fieldnr
+     * @return
+     */
     public FieldInterface getField(int fieldnr) {
         return gamefield[fieldnr];
     }

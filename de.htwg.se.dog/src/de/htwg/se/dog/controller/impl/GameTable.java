@@ -198,6 +198,12 @@ public class GameTable extends Observable implements GameTableInterface {
         return retval;
     }
 
+    @Override
+    public int getFigureOwnerID(int fieldnr) {
+        return game.getField(fieldnr).getFigureOwnerNr();
+    }
+
+    @Override
     public boolean fieldIsEmpty(int fieldnr) {
         return movement.fieldEmpty(game.getField(fieldnr));
     }
