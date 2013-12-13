@@ -12,7 +12,7 @@ public class TextUserInterface implements IObserver {
     private static final Logger LOG = LogManager.getLogger("UI");
     private GameTableInterface controller;
 
-    public TextUserInterface(GameTableInterface contoller) {
+    public TextUserInterface(GameTableInterface controller) {
         this.controller = controller;
         controller.addObserver(this);
     }
@@ -21,7 +21,7 @@ public class TextUserInterface implements IObserver {
         LOG.info(str);
     }
 
-    private void printTui() {
+    public void printTui() {
         out(controller.getGameFieldString());
         out(controller.getPlayerHandString());
     }

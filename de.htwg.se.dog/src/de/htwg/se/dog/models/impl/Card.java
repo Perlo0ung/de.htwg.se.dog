@@ -48,7 +48,7 @@ public class Card implements CardInterface {
 
     @Override
     public String toString() {
-        return String.format("%2d: %-6s", this.value, getCardName());
+        return String.format("%6s(%d)", getCardName(), this.value);
     }
 
     @Override

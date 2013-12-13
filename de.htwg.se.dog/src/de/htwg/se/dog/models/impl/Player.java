@@ -93,7 +93,7 @@ public class Player implements PlayerInterface {
         for (CardInterface c : this.getCardList()) {
             sb.append(String.format("%s ", c.toString()));
         }
-        return String.format("%s  Cards: %s", this.toString(), sb.toString());
+        return String.format("%s\nCards: %s", this.toString(), sb.toString());
     }
 
 }

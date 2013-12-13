@@ -2,6 +2,7 @@ package de.htwg.se.dog.controller;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
@@ -34,10 +35,8 @@ public class GameTableTest {
 
     @Test
     public void testCurrentPlayer() {
-        table.nextPlayer();
-        PlayerInterface second = table.getCurrentPlayer();
         table.newRound();
-        assertEquals(second, table.getCurrentPlayer());
+        table.nextPlayer();
         table.nextPlayer();
         assertEquals(first, table.getCurrentPlayer());
     }
@@ -45,7 +44,7 @@ public class GameTableTest {
     @Test
     public void testAddPlayerToQueue() {
         table.getCurrentPlayer();
-        assertEquals(5, table.getCurrentPlayer().getPlayerID());
+        assertEquals(1, table.getCurrentPlayer().getPlayerID());
     }
 
     @Test
@@ -74,6 +73,7 @@ public class GameTableTest {
         GameTable here = new GameTable(10);
         here.setStartingPlayer(8);
         here.newRound();
+        here.nextPlayer();
         assertEquals(8, here.getCurrentPlayer().getPlayerID());
     }
 
@@ -102,7 +102,16 @@ public class GameTableTest {
         GameTable branch = new GameTable(5);
         branch.newRound();
         gamefield = branch.getGameField();
+        branch.nextPlayer();
         first = branch.getCurrentPlayer();
         assertFalse(branch.playerHaswon(gamefield, first));
+    }
+
+    @Test
+    public void testToStrings() {
+        array[5].putFigure(first.removeFigure(), 5);
+        assertNotNull(table.getGameFieldString());
+        assertNotNull(table.getPlayerHandString());
+        assertNotNull(table.getPlayerString());
     }
 }
