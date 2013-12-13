@@ -169,15 +169,17 @@ public class GameTable extends Observable implements GameTableInterface {
         Iterator<CardInterface> it = cards.iterator();
         while (it.hasNext()) {
             CardInterface c = it.next();
+            //Put Figure on field
+            if (!game.getField()[movement.getPlayerStart(p)].getBlocked() && p.getCardList().isEmpty() && (c.getValue() == 1 || c.getValue() == 14 || c.getValue() == 13))
+                continue;
+            //move figure on field
             for (Integer field : p.getFigureRegister()) {
                 movement.setMoveStrategie(c.getValue());
                 if (movement.validMove(game, c.getValue(), field)) {
-                    returnval = true;
+                    continue;
                 }
             }
-            if (!returnval) {
-                it.remove();
-            }
+            it.remove();
         }
         return cards;
     }
