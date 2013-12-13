@@ -29,12 +29,12 @@ public class Movement implements MovementStrategy {
 
     @Override
     public boolean move(int steps, int fromNr) {
-        return strategie.move(gameField, steps, fromNr);
+        return strategie.move(steps, fromNr);
     }
 
     @Override
-    public boolean validMove(GameFieldInterface gamefield, int steps, int startfieldnr) {
-        return strategie.validMove(gamefield, steps, startfieldnr);
+    public boolean validMove(int steps, int startfieldnr) {
+        return strategie.validMove(steps, startfieldnr);
 
     }
 
@@ -98,19 +98,19 @@ public class Movement implements MovementStrategy {
      * @return returns number of targetfield, if startfield is empty it returns
      *         -5 or if field is blocked it returns -6
      */
-    protected int getTargetfield(GameFieldInterface gamefield, int steps, int startfieldnr) {
+    protected int getTargetfield(int steps, int startfieldnr) {
         int absSteps = Math.abs(steps);
-        FieldInterface[] array = gamefield.getField();
+        FieldInterface[] array = gameField.getField();
         int currentfieldID = EMPTYFIELD;
         //TODO Monitor whether if-Statment is necessary or not
         if (!fieldEmpty(array[startfieldnr])) {
             int playerNr = array[startfieldnr].getFigureOwnerNr();
-            currentfieldID = nextField(gamefield.getFieldSize(), startfieldnr, steps);
+            currentfieldID = nextField(startfieldnr, steps);
             int nextfieldID = currentfieldID;
             // Loop to move steps
             while (absSteps > 0) {
                 currentfieldID = nextfieldID;
-                nextfieldID = nextField(gamefield.getFieldSize(), currentfieldID, steps);
+                nextfieldID = nextField(currentfieldID, steps);
                 int currentFieldOwner = array[currentfieldID].getOwner();
                 // Check if field is Blocked
                 if (array[currentfieldID].getBlocked()) {
@@ -118,13 +118,13 @@ public class Movement implements MovementStrategy {
                     absSteps = 0;
                 }
                 // Check if nobody owns next field
-                absSteps = adjustSteps(gamefield, steps, absSteps, array, playerNr, nextfieldID, currentFieldOwner);
+                absSteps = adjustSteps(steps, absSteps, array, playerNr, nextfieldID, currentFieldOwner);
             }
         }
         return currentfieldID;
     }
 
-    private int adjustSteps(GameFieldInterface gamefield, int steps, int psteps, FieldInterface[] array, int playerNr, int nextfieldID, int currentFieldOwner) {
+    private int adjustSteps(int steps, int psteps, FieldInterface[] array, int playerNr, int nextfieldID, int currentFieldOwner) {
         int absSteps = psteps;
         if (currentFieldOwner == 0 || currentFieldOwner == playerNr && steps > 0) {
             absSteps--;
@@ -132,7 +132,7 @@ public class Movement implements MovementStrategy {
             // in house
         }
         if (currentFieldOwner == playerNr && absSteps > 0 && array[nextfieldID].getOwner() != playerNr && steps > 0) {
-            absSteps += gamefield.getHouseCount();
+            absSteps += gameField.getHouseCount();
         }
         return absSteps;
     }
@@ -147,7 +147,8 @@ public class Movement implements MovementStrategy {
      * @param direction
      * @return
      */
-    protected int nextField(int fieldSize, int currentfieldID, int direction) {
+    protected int nextField(int currentfieldID, int direction) {
+        int fieldSize = gameField.getFieldSize();
         int field;
         if (direction >= 0) {
             field = (currentfieldID + 1) % fieldSize;
@@ -157,14 +158,14 @@ public class Movement implements MovementStrategy {
         return field;
     }
 
-    public int getPlayerStart(GameFieldInterface gamefield, PlayerInterface p) {
-        return (gamefield.getHouseCount() + gamefield.getFieldsTillHouse()) * (p.getPlayerID() - 1);
+    public int getPlayerStart(PlayerInterface p) {
+        return (gameField.getHouseCount() + gameField.getFieldsTillHouse()) * (p.getPlayerID() - 1);
     }
 
-    public boolean moveStart(GameFieldInterface gamefield, PlayerInterface player) {
+    public boolean moveStart(PlayerInterface player) {
         boolean retval = false;
-        int startFieldNr = getPlayerStart(gamefield, player);
-        FieldInterface[] array = gamefield.getField();
+        int startFieldNr = getPlayerStart(player);
+        FieldInterface[] array = gameField.getField();
         if (possibleMoveStart(array, startFieldNr, player)) {
             kickPlayer(array, startFieldNr);
             array[startFieldNr].putFigure(player.removeFigure(), startFieldNr);
@@ -193,12 +194,12 @@ public class Movement implements MovementStrategy {
      *            startfieldnr
      * @return true if all moves could be executed, otherwise false
      */
-    public boolean move(GameFieldInterface gamefield, Map<Integer, Integer> moves) {
+    public boolean move(Map<Integer, Integer> moves) {
         boolean retval = true;
         this.setMoveStrategie(VALUEOFCARD7);
         /* Check if all moves are possible */
         for (Entry<Integer, Integer> field : moves.entrySet()) {
-            if (!this.move(gamefield, field.getValue(), field.getKey())) {
+            if (!this.move(field.getValue(), field.getKey())) {
                 retval = false;
                 break;
             }
@@ -206,7 +207,7 @@ public class Movement implements MovementStrategy {
         /* Move --------------*/
         for (Entry<Integer, Integer> field : moves.entrySet()) {
             for (int i = 0; i <= field.getValue(); i++) {
-                this.move(gamefield, 1, field.getKey());
+                this.move(1, field.getKey());
             }
         }
         return retval;
@@ -221,7 +222,7 @@ public class Movement implements MovementStrategy {
      *            the player that wants to move
      * @return true if the player can move with the card
      */
-    public boolean AnyValidMove12312(GameFieldInterface gamefield, PlayerInterface p) {
+    public boolean AnyValidMove12312(PlayerInterface p) {
         int steps = VALUEOFCARD7;
         int remaining = 0;
         boolean returnval = true;
@@ -234,7 +235,7 @@ public class Movement implements MovementStrategy {
         Integer currentField = figures.pollFirst();
         while (steps > 0) {
             this.setMoveStrategie(VALUEOFCARD7);
-            if (!this.validMove(gamefield, steps, currentField)) {
+            if (!this.validMove(steps, currentField)) {
                 steps--;
                 remaining++;
             } else {
@@ -252,8 +253,10 @@ public class Movement implements MovementStrategy {
         return returnval;
     }
 
-    public boolean AnyValidMove(GameFieldInterface gamefield, PlayerInterface p) throws CloneNotSupportedException {
-        GameFieldInterface copy = (GameFieldInterface) gamefield.clone();
+    public boolean AnyValidMove(PlayerInterface p) throws CloneNotSupportedException {
+
+        GameFieldInterface copy = (GameFieldInterface) gameField.clone();
+        Movement here = new Movement(copy);
         LinkedList<Integer> figures = new LinkedList<Integer>(p.getFigureRegister());
         Collections.sort(figures, Collections.reverseOrder());
         FieldInterface array[] = copy.getField();
@@ -268,11 +271,11 @@ public class Movement implements MovementStrategy {
         Integer currentField = figures.pollFirst();
         while (steps > 0) {
             this.setMoveStrategie(VALUEOFCARD7);
-            if (!this.validMove(copy, steps, currentField)) {
+            if (!here.validMove(steps, currentField)) {
                 steps--;
                 remaining++;
             } else {
-                int target = getTargetfield(copy, remaining, currentField);
+                int target = here.getTargetfield(remaining, currentField);
                 array[target].putFigure(array[currentField].removeFigure());
                 if (remaining == 0) {
                     break;
