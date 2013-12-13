@@ -97,7 +97,7 @@ public class GameField implements GameFieldInterface {
                     lower.append(String.format("( %s )", getPlayerOnField(array, f)));
                 } else {
                     upper.append(String.format("| %2d |", f));
-                    lower.append(String.format("| %s |", getPlayerOnField(array, f)));
+                    lower.append(String.format("| %2s |", getPlayerOnField(array, f)));
                 }
 
             }
@@ -114,7 +114,11 @@ public class GameField implements GameFieldInterface {
         if (fig == null) {
             s = "  ";
         } else {
-            s = String.format("%2d", fig.getOwnerNr());
+        	int owner = fig.getOwnerNr();
+            if(array[fieldnum].getBlocked()) {
+            	owner = -owner;
+            }
+            s = String.format("%2d", owner);
         }
         return s;
     }

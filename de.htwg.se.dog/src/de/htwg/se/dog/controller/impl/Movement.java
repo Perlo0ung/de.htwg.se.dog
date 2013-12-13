@@ -1,6 +1,7 @@
 package de.htwg.se.dog.controller.impl;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -258,15 +259,17 @@ public class Movement implements MovementStrategy {
         Movement here = new Movement(copy);
         here.setMoveStrategie(VALUEOFCARD7);
         LinkedList<Integer> figures = new LinkedList<Integer>(p.getFigureRegister());
+        HashMap<FigureInterface, Integer> save = new HashMap<FigureInterface, Integer>();
+        LinkedList<Integer> del = new LinkedList<Integer>();
         Collections.reverse(figures);
-        FieldInterface array[] = copy.getField();
+        
+        FieldInterface array[] = copy.getField().clone();
         int steps = VALUEOFCARD7;
         int remaining = 0;
-        boolean returnval = true;
+        boolean returnval = false;
 
         if (figures.isEmpty()) {
             steps = 0;
-            returnval = false;
         }
         Integer currentField = figures.pollFirst();
         while (steps > 0) {
@@ -276,8 +279,13 @@ public class Movement implements MovementStrategy {
             } else {
 
                 int target = here.getTargetfield(steps, currentField);
-                array[target].putFigure(array[currentField].removeFigure(), target);
+                FigureInterface fig = array[currentField].removeFigure();
+                save.put(fig,currentField);
+                del.add(target);
+                
+                array[target].putFigure(fig);
                 if (remaining == 0) {
+                	returnval = true;
                     break;
                 }
                 currentField = figures.pollFirst();
@@ -285,11 +293,17 @@ public class Movement implements MovementStrategy {
                 steps = remaining;
                 remaining = 0;
                 if (currentField == null) {
-                    returnval = false;
                     break;
                 }
             }
         }
+        for(Entry<FigureInterface, Integer> e : save.entrySet()){
+        	array[e.getValue()].putFigure(e.getKey(),e.getValue());        	
+        }
+        for(Integer e : del){
+        	array[e].removeFigure();        	
+        }
         return returnval;
     }
+
 }
