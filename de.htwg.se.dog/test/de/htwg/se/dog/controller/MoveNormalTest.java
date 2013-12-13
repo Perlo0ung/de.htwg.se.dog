@@ -49,23 +49,23 @@ public class MoveNormalTest {
     @Test
     public void testMoveFigure() {
         //Move Figure from empty Field
-        assertFalse(movement.move(gamefield, ONE, ZERO));
+        assertFalse(movement.move(ONE, ZERO));
         array[ZERO].putFigure(tp1.removeFigure());
         FigureInterface tmpZERO = array[ZERO].getFigure();
         array[4].putFigure(tp2.removeFigure());
         array[4].setBlocked(true);
         //Move Figure to occupied field
-        assertFalse(movement.move(gamefield, 4, 0));
-        assertFalse(movement.move(gamefield, 5, 0));
+        assertFalse(movement.move(4, 0));
+        assertFalse(movement.move(5, 0));
         array[4].setBlocked(false);
-        movement.move(gamefield, 1, 0);
+        movement.move(1, 0);
         //Is startfield empty
         assertNull(array[0].getFigure());
 
         //Is figure moved correctly
         assertEquals(tmpZERO, array[1].getFigure());
         //move figure over house
-        assertTrue(movement.move(gamefield, 3, 1));
+        assertTrue(movement.move(3, 1));
         assertEquals(tmpZERO, array[0].getFigure());
     }
 
@@ -75,7 +75,7 @@ public class MoveNormalTest {
         FigureInterface tempFig = array[0].getFigure();
         array[0].setBlocked(true);
         assertTrue(array[0].getBlocked());
-        movement.move(gamefield, 2, 0);
+        movement.move(2, 0);
         assertFalse(array[0].getBlocked());
         assertNull(array[0].getFigure());
         assertEquals(tempFig, array[2].getFigure());
@@ -87,7 +87,7 @@ public class MoveNormalTest {
         array[4].putFigure(tp1.removeFigure());
         FigureInterface tmpZERO = array[4].getFigure();
         array[5].putFigure(tp2.removeFigure());
-        assertTrue(movement.move(gamefield, 1, 4));
+        assertTrue(movement.move(1, 4));
         assertEquals(tmpZERO, array[5].getFigure());
     }
 
@@ -97,13 +97,13 @@ public class MoveNormalTest {
         array[ONE].putFigure(tp1.removeFigure());
         array[ONE].setBlocked(true);
         //Move Figure over blocked field
-        assertFalse(movement.move(gamefield, 2, ZERO));
+        assertFalse(movement.move(2, ZERO));
     }
 
     @Test
     public void testMoveOverOwnHouse() {
         array[ZERO].putFigure(tp1.removeFigure());
-        assertTrue(movement.move(gamefield, 5, 0));
+        assertTrue(movement.move(5, 0));
     }
 
     @Test
@@ -111,7 +111,7 @@ public class MoveNormalTest {
         array[ONE].putFigure(tp1.removeFigure());
         array[ONE].setBlocked(true);
         array[ZERO].putFigure(tp1.removeFigure());
-        assertFalse(movement.validMove(gamefield, 4, ZERO));
+        assertFalse(movement.validMove(4, ZERO));
     }
 
     @Test
@@ -119,7 +119,7 @@ public class MoveNormalTest {
         movement.setMoveStrategie(FOUR);
         array[FOUR].putFigure(tp1.removeFigure());
         FigureInterface tempFig = array[FOUR].getFigure();
-        assertTrue(movement.move(gamefield, -4, FOUR));
+        assertTrue(movement.move(-4, FOUR));
         assertEquals(tempFig, array[4].getFigure());
     }
 

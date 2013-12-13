@@ -54,12 +54,12 @@ public class MoveSwitchTest {
         array[FIVE].putFigure(player2.removeFigure());
         array[PLAYER1HOUSEFIELD].putFigure(player1.removeFigure());
         array[PLAYER2HOUSEFIELD].putFigure(player2.removeFigure());
-        assertTrue(movement.move(gamefield, FIVE, ZERO));
-        assertFalse(movement.move(gamefield, ONE, ZERO));
-        assertFalse(movement.move(gamefield, ZERO, ONE));
-        assertFalse(movement.move(gamefield, PLAYER1HOUSEFIELD, ONE));
-        assertFalse(movement.move(gamefield, ONE, PLAYER1HOUSEFIELD));
-        assertFalse(movement.move(gamefield, THREE, SIX));
+        assertTrue(movement.move(FIVE, ZERO));
+        assertFalse(movement.move(ONE, ZERO));
+        assertFalse(movement.move(ZERO, ONE));
+        assertFalse(movement.move(PLAYER1HOUSEFIELD, ONE));
+        assertFalse(movement.move(ONE, PLAYER1HOUSEFIELD));
+        assertFalse(movement.move(THREE, SIX));
     }
 
     @Test
@@ -68,8 +68,8 @@ public class MoveSwitchTest {
         array[FIVE].putFigure(player2.removeFigure());
         array[PLAYER1HOUSEFIELD].putFigure(player1.removeFigure());
         array[PLAYER2HOUSEFIELD].putFigure(player2.removeFigure());
-        assertTrue(movement.validMove(gamefield, FIVE, ZERO));
-        assertFalse(movement.validMove(gamefield, ONE, ZERO));
+        assertTrue(movement.validMove(FIVE, ZERO));
+        assertFalse(movement.validMove(ONE, ZERO));
     }
 
 }

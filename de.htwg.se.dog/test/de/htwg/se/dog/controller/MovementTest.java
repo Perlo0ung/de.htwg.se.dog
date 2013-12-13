@@ -44,15 +44,15 @@ public class MovementTest {
     @Test
     public void testMoveStart() {
         //MoveStart was successful
-        assertTrue(movement.moveStart(gamefield, tp1));
+        assertTrue(movement.moveStart(tp1));
         //Startfield is blocked
-        assertFalse(movement.moveStart(gamefield, tp1));
+        assertFalse(movement.moveStart(tp1));
         //Startfield is blocked and no figures left
         array[4].putFigure(tp1.removeFigure());
-        assertFalse(movement.moveStart(gamefield, tp1));
+        assertFalse(movement.moveStart(tp1));
         //Player has no figures left
         movement.move(gamefield, 1, 0);
-        assertFalse(movement.moveStart(gamefield, tp1));
+        assertFalse(movement.moveStart(tp1));
     }
 
 }

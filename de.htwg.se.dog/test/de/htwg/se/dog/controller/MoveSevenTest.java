@@ -53,7 +53,7 @@ public class MoveSevenTest {
         FigureInterface tempFig = array[2].getFigure();
         Map<Integer, Integer> moves = new HashMap<Integer, Integer>();
         moves.put(2, 2);
-        movement.move(gamefield, moves);
+        movement.move(moves);
         //Startfield is empty
         assertNull(array[2].getFigure());
         //Figure on targetfield == Figure which moved
@@ -64,23 +64,23 @@ public class MoveSevenTest {
         moves = new HashMap<Integer, Integer>();
         moves.put(1, 2);
         //Move over Blocked field is not possible
-        assertFalse(movement.move(gamefield, moves));
+        assertFalse(movement.move(moves));
     }
 
     @Test
     public void testAnyValidMove() throws CloneNotSupportedException {
         //Search AnyValidMove of Player without Figures on Field
-        assertFalse(movement.AnyValidMove(gamefield, tp2));
+        assertFalse(movement.AnyValidMove(tp2));
         //One Figure moves 7
         array[0].putFigure(tp1.removeFigure(), 0);
-        assertTrue(movement.AnyValidMove(gamefield, tp1));
+        assertTrue(movement.AnyValidMove(tp1));
         //two figures move
         array[1].putFigure(tp1.removeFigure(), 7);
         array[9].putFigure(tp2.removeFigure(), 9);
         array[9].setBlocked(true);
-        assertTrue(movement.AnyValidMove(gamefield, tp1));
+        assertTrue(movement.AnyValidMove(tp1));
         //No Move possible
         array[0].setBlocked(true);
-        assertFalse(movement.AnyValidMove(gamefield, tp2));
+        assertFalse(movement.AnyValidMove(tp2));
     }
 }
