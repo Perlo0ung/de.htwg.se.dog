@@ -32,7 +32,13 @@ public class TextUserInterface implements IObserver {
 
     public boolean processTurn() {
         int card = processCardInput();
+        if (card == -1) {
+            return false;
+        }
         int fieldnr = processFigureInput();
+        if (fieldnr == -1) {
+            return false;
+        }
         return false;
     }
 
@@ -63,7 +69,25 @@ public class TextUserInterface implements IObserver {
     }
 
     public int processFigureInput() {
-        return -1;
+        int fieldnr = 0;
+        while (true) {
+            out("Bitte Feldnummer der zu laufenden Figur auswählen: ");
+            String input = scanner.next();
+            try {
+                Integer zahl = Integer.valueOf(input);
+                if (!controller.) {
+                    out(String.format("Spieler %d hat keine solche Karte!", controller.getCurrentPlayer().getPlayerID()));
+                    continue;
+                }
+            } catch (NumberFormatException e) {
+                if (input.equalsIgnoreCase("q")) {
+                    fieldnr = -1;
+                }
+            }
+
+            break;
+        }
+        return fieldnr;
     }
 
     @Override
