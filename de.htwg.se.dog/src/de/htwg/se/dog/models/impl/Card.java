@@ -14,7 +14,7 @@ public class Card implements CardInterface {
      * Constructor to create a new card
      * 
      * @param value
-     *            : int, is the value of the card
+     *        : int, is the value of the card
      */
     public Card(int value) {
         if (value < ONE || value > FOURTEEN) {
@@ -38,7 +38,7 @@ public class Card implements CardInterface {
      * Return the CardName of a Card
      * 
      * @param value
-     *            : Int value of the card
+     *        : Int value of the card
      * @return String: the cardname as a string
      */
     @Override
@@ -54,5 +54,11 @@ public class Card implements CardInterface {
     @Override
     public int compareTo(CardInterface o) {
         return ((Integer) this.value).compareTo(o.getValue());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        CardInterface card = (CardInterface) o;
+        return (this.value) == (card.getValue());
     }
 }

@@ -6,6 +6,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import de.htwg.se.dog.controller.GameTableInterface;
+import de.htwg.se.dog.models.impl.Card;
 import de.htwg.se.dog.util.Event;
 import de.htwg.se.dog.util.IObserver;
 
@@ -13,7 +14,7 @@ public class TextUserInterface implements IObserver {
 
     private static final Logger LOG = LogManager.getLogger("UI");
     private final GameTableInterface controller;
-    private static Scanner scanner;
+    private static Scanner scanner = new Scanner(System.in);
 
     public TextUserInterface(GameTableInterface controller) {
         this.controller = controller;
@@ -29,56 +30,64 @@ public class TextUserInterface implements IObserver {
         out(controller.getPlayerHandString());
     }
 
-    public boolean processCardInput() {
-        boolean continu = true;
-        scanner = new Scanner(System.in);
-        boolean okay = false;
-        printTui();
-        while (!okay) {
-            out("Bitte zu spielende Kartennummer auswählen:");
-            String input = scanner.next();
-            try {
-                Integer zahl = Integer.valueOf(input);
-                switch (zahl) {
-                case (2):
-                case (3):
-                case (4):
-                case (5):
-                case (6):
-                case (8):
-                case (9):
-                case (11):
-                case (12):
-                case (13):
-                    if (!controller.playerHasCard(zahl)) {
-                        out(String.format("Spieler %d hat keine solche Karte!", controller.getCurrentPlayer().getPlayerID()));
-                        continue;
-                    }
-                    break;
-                case (10):
-                    break;
-                case (1):
-                    //1 oder 11 laufen
-
-                    break;
-                case (7):
-                    break;
-                case (14):
-                default:
-
-                }
-            } catch (NumberFormatException e) {
-                if (input.equalsIgnoreCase("q")) {
-                    continu = false;
-                }
-            }
-            okay = true;
+    public boolean processTurn() {
+        int card = processCardInput();
+        if (card == -1) {
+            return false;
+        }
+        int fieldnr = processFigureInput();
+        if (fieldnr == -1) {
+            return false;
         }
         return false;
     }
 
-    public boolean processFigureInput(String line) {
-        return false;
+    public int processCardInput() {
+        int card = 0;
+        printTui();
+        while (true) {
+            out("Bitte zu spielende Kartennummer auswählen:");
+            String input = scanner.next();
+            try {
+                Integer zahl = Integer.valueOf(input);
+                if (!controller.playerHasCard(zahl)) {
+                    out(String.format("Spieler %d hat keine solche Karte!", controller.getCurrentPlayer().getPlayerID()));
+                    continue;
+                }
+                if (!controller.possibleCards(controller.getCurrentPlayer()).contains(new Card(zahl))) {
+                    out(String.format("Spieler %d kann diese Karte nicht benutzen!", controller.getCurrentPlayer().getPlayerID()));
+                    continue;
+                }
+            } catch (NumberFormatException e) {
+                if (input.equalsIgnoreCase("q")) {
+                    card = -1;
+                }
+            }
+            break;
+        }
+        return card;
+    }
+
+    public int processFigureInput() {
+        int fieldnr = 0;
+        while (true) {
+            out("Bitte Feldnummer der zu laufenden Figur auswählen: ");
+            String input = scanner.next();
+            try {
+                Integer zahl = Integer.valueOf(input);
+                if (!controller.) {
+                    out(String.format("Spieler %d hat keine solche Karte!", controller.getCurrentPlayer().getPlayerID()));
+                    continue;
+                }
+            } catch (NumberFormatException e) {
+                if (input.equalsIgnoreCase("q")) {
+                    fieldnr = -1;
+                }
+            }
+
+            break;
+        }
+        return fieldnr;
     }
 
     @Override
