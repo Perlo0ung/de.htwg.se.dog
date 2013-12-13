@@ -110,8 +110,19 @@ public class GameTable extends Observable implements GameTableInterface {
 
     @Override
     public void nextPlayer() {
-        currentPlayer = turnPlayer.poll();
+        PlayerInterface temp;
+        do {
+            if (turnPlayer.isEmpty()) {
+                //TODO update neue runde print
+                newRound();
+            }
 
+            temp = turnPlayer.poll();
+            if (!canPlay(temp)) {
+                temp = null;
+            }
+            currentPlayer = temp;
+        } while (currentPlayer == null);
     }
 
     /**
@@ -125,8 +136,18 @@ public class GameTable extends Observable implements GameTableInterface {
     public boolean canPlay(PlayerInterface p) {
         boolean retval = false;
         if (!possibleCards(p).isEmpty()) {
-            turnPlayer.offer(currentPlayer);
             retval = true;
+            turnPlayer.offer(currentPlayer);
+        }
+        return retval;
+    }
+
+    public boolean PlayerHasCard(int cardval) {
+        boolean retval = false;
+        for (CardInterface c : possibleCards(currentPlayer)) {
+            if (c.getValue() == cardval) {
+                retval = true;
+            }
         }
         return retval;
     }

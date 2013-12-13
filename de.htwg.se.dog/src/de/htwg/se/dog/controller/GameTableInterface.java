@@ -99,4 +99,12 @@ public interface GameTableInterface extends IObservable {
      * @return
      */
     String getPlayerString();
+
+    /**
+     * Tells if the Player has a Card with speciefied value
+     * 
+     * @param cardval
+     * @return true if he has the card
+     */
+    public boolean PlayerHasCard(int cardval);
 }
