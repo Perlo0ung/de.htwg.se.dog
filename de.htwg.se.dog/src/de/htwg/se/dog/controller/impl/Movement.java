@@ -214,7 +214,7 @@ public class Movement implements MovementStrategy {
      *            the player that wants to move
      * @return true if the player can move with the card
      */
-    public boolean AnyValidMove(GameFieldInterface gamefield, PlayerInterface p) {
+    public boolean AnyValidMove12312(GameFieldInterface gamefield, PlayerInterface p) {
         int steps = VALUEOFCARD7;
         int remaining = 0;
         boolean returnval = true;
@@ -245,12 +245,11 @@ public class Movement implements MovementStrategy {
         return returnval;
     }
 
-    //TODOOOO
-    public boolean AnyValidMoveTODO(GameFieldInterface gamefield, PlayerInterface p) throws CloneNotSupportedException {
+    public boolean AnyValidMove(GameFieldInterface gamefield, PlayerInterface p) throws CloneNotSupportedException {
         GameFieldInterface copy = (GameFieldInterface) gamefield.clone();
         LinkedList<Integer> figures = new LinkedList<Integer>(p.getFigureRegister());
         Collections.sort(figures, Collections.reverseOrder());
-
+        FieldInterface array[] = copy.getField();
         int steps = VALUEOFCARD7;
         int remaining = 0;
         boolean returnval = true;
@@ -266,6 +265,8 @@ public class Movement implements MovementStrategy {
                 steps--;
                 remaining++;
             } else {
+                int target = getTargetfield(copy, remaining, currentField);
+                array[target].putFigure(array[currentField].removeFigure());
                 if (remaining == 0) {
                     break;
                 }

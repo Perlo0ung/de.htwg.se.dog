@@ -68,7 +68,7 @@ public class MoveSevenTest {
     }
 
     @Test
-    public void testAnyValidMove() {
+    public void testAnyValidMove() throws CloneNotSupportedException {
         //Search AnyValidMove of Player without Figures on Field
         assertFalse(movement.AnyValidMove(gamefield, tp2));
         //One Figure moves 7
