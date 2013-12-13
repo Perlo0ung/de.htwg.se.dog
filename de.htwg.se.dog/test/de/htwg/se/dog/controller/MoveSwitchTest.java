@@ -39,9 +39,10 @@ public class MoveSwitchTest {
     /* Generate empty gamefield with 2 players */
     @Before
     public void setUp() throws Exception {
-        movement = new Movement();
-        movement.setMoveStrategie(JACK);
+
         gamefield = new GameField(FIELDSTILLHOUSE, PLAYERCOUNT, HOUSECOUNT);
+        movement = new Movement(gamefield);
+        movement.setMoveStrategie(JACK);
         player1 = new Player(PLAYERID1, FIGCOUNT);
         player2 = new Player(PLAYERID2, FIGCOUNT);
         array = gamefield.getField();

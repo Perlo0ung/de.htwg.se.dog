@@ -37,9 +37,10 @@ public class MoveSevenTest {
     /* Generate empty gamefield with 2 players */
     @Before
     public void setUp() throws Exception {
-        movement = new Movement();
-        movement.setMoveStrategie(SEVEN);
+
         gamefield = new GameField(FIELDSTILLHOUSE, PLAYERCOUNT, HOUSECOUNT);
+        movement = new Movement(gamefield);
+        movement.setMoveStrategie(SEVEN);
         tp1 = new Player(PLAYERID1, FIGCOUNT);
         tp2 = new Player(PLAYERID2, FIGCOUNT);
         array = gamefield.getField();
