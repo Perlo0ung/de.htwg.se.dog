@@ -162,13 +162,17 @@ public class Movement implements MovementStrategy {
         int playerID = player.getPlayerID();
         int startFieldNr = (gamefield.getHouseCount() + gamefield.getFieldsTillHouse()) * (playerID - 1);
         FieldInterface[] array = gamefield.getField();
-        if (!array[startFieldNr].getBlocked() && !player.getFigureList().isEmpty()) {
+        if (possibleMoveStart(array, startFieldNr, player)) {
             kickPlayer(array, startFieldNr);
             array[startFieldNr].putFigure(player.removeFigure(), startFieldNr);
             array[startFieldNr].setBlocked(true);
             retval = true;
         }
         return retval;
+    }
+
+    private boolean possibleMoveStart(FieldInterface[] array, int startFieldNr, PlayerInterface player) {
+        return !array[startFieldNr].getBlocked() && !player.getFigureList().isEmpty();
     }
 
     /* ------------------------------------------------------------------------- */
