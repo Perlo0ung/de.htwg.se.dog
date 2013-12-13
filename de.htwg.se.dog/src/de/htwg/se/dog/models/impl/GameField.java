@@ -53,7 +53,7 @@ public class GameField implements GameFieldInterface {
     }
 
     @Override
-    public FieldInterface[] getGamefield() {
+    public FieldInterface[] getField() {
         return gamefield;
     }
 

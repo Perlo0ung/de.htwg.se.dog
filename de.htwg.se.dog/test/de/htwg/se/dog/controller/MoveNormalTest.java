@@ -41,7 +41,7 @@ public class MoveNormalTest {
         gamefield = new GameField(FIELDSTILLHOUSE, PLAYERCOUNT, HOUSECOUNT);
         tp1 = new Player(PLAYERID1, FIGCOUNT);
         tp2 = new Player(PLAYERID2, FIGCOUNT);
-        array = gamefield.getGamefield();
+        array = gamefield.getField();
 
     }
 

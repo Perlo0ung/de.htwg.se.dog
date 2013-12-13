@@ -10,7 +10,7 @@ import org.junit.rules.ExpectedException;
 
 import de.htwg.se.dog.models.impl.GameField;
 
-public class GamefiledTest {
+public class GamefieldTest {
     GameField f;
     GameField temp;
     int playerCount = 3;
@@ -41,7 +41,7 @@ public class GamefiledTest {
 
     @Test
     public void testGetGameField() {
-        assertNotNull(f.getGamefield());
+        assertNotNull(f.getField());
     }
 
     @Test

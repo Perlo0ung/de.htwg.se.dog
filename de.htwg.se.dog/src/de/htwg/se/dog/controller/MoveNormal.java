@@ -21,7 +21,7 @@ public class MoveNormal extends Movement {
     @Override
     public boolean move(GameFieldInterface gamefield, int steps, int startfieldnr) {
         boolean valid = false;
-        FieldInterface[] array = gamefield.getGamefield();
+        FieldInterface[] array = gamefield.getField();
         // check if startfield is not empty and the move is valid
         if (!fieldEmpty(array[startfieldnr]) && validMove(gamefield, steps, startfieldnr)) {
             int targetfield = getTargetfield(gamefield, steps, startfieldnr);

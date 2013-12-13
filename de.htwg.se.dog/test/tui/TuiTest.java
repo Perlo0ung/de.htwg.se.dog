@@ -22,7 +22,7 @@ public class TuiTest {
         table = new GameTable(PLAYERCOUNT);
         table.newRound();
         field = table.getGameField();
-        array = field.getGamefield();
+        array = field.getField();
 
     }
 

@@ -98,7 +98,7 @@ public class Movement implements MovementStrategy {
      */
     protected int getTargetfield(GameFieldInterface gamefield, int steps, int startfieldnr) {
         int absSteps = Math.abs(steps);
-        FieldInterface[] array = gamefield.getGamefield();
+        FieldInterface[] array = gamefield.getField();
         int currentfieldID = EMPTYFIELD;
         //TODO Monitor whether if-Statment is necessary or not
         if (!fieldEmpty(array[startfieldnr])) {
@@ -159,7 +159,7 @@ public class Movement implements MovementStrategy {
         boolean retval = false;
         int playerID = player.getPlayerID();
         int startFieldNr = (gamefield.getHouseCount() + gamefield.getFieldsTillHouse()) * (playerID - 1);
-        FieldInterface[] array = gamefield.getGamefield();
+        FieldInterface[] array = gamefield.getField();
         if (!array[startFieldNr].getBlocked() && !player.getFigureList().isEmpty()) {
             kickPlayer(array, startFieldNr);
             array[startFieldNr].putFigure(player.removeFigure(), startFieldNr);

@@ -22,7 +22,7 @@ public class MoveSwitch extends Movement {
     public boolean move(GameFieldInterface gamefield, int steps, int fromNr) {
         int toNr = steps;
         boolean valid = false;
-        FieldInterface[] array = gamefield.getGamefield();
+        FieldInterface[] array = gamefield.getField();
         if (figuresOnBothFieldsAndNotHousefields(fromNr, toNr, array)) {
             /* switch Figures */
             FigureInterface f1 = array[fromNr].removeFigure();
@@ -56,7 +56,7 @@ public class MoveSwitch extends Movement {
     public boolean validMove(GameFieldInterface gamefield, int steps, int fromNr) {
         boolean ok = false;
         int toNr = steps;
-        FieldInterface[] array = gamefield.getGamefield();
+        FieldInterface[] array = gamefield.getField();
         if (figuresOnBothFieldsAndNotHousefields(fromNr, toNr, array)) {
             ok = true;
         }

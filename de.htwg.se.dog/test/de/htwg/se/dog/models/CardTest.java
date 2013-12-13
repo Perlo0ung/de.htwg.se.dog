@@ -49,6 +49,6 @@ public class CardTest {
         assertEquals(card.getCardName(), "Ass");
         card = new Card(2);
         assertEquals(card.getCardName(), "Zwei");
-        assertEquals(card.toString(), "2: Zwei");
+        assertEquals(card.toString(), new Card(2).toString());
     }
 }
