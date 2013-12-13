@@ -55,7 +55,7 @@ public class Movement implements MovementStrategy {
      * checks if figure is on field
      * 
      * @param field
-     *        which should be checked
+     *            which should be checked
      * @return true if field is empty, otherwise false;
      */
     public boolean fieldEmpty(FieldInterface field) {
@@ -71,9 +71,9 @@ public class Movement implements MovementStrategy {
      * empty, it does nothing
      * 
      * @param array
-     *        gamefieldarray
+     *            gamefieldarray
      * @param fieldID
-     *        fieldnumber where figure should be kick from
+     *            fieldnumber where figure should be kick from
      */
     protected void kickPlayer(FieldInterface[] array, int fieldID) {
         if (!fieldEmpty(array[fieldID])) {
@@ -92,9 +92,9 @@ public class Movement implements MovementStrategy {
      * 
      * @param gamefield
      * @param steps
-     *        number of steps figure wants to take
+     *            number of steps figure wants to take
      * @param startfieldnr
-     *        startfield number from where figure wants to move
+     *            startfield number from where figure wants to move
      * @return returns number of targetfield, if startfield is empty it returns
      *         -5 or if field is blocked it returns -6
      */
@@ -142,7 +142,7 @@ public class Movement implements MovementStrategy {
      * otherwise the previous fieldNr
      * 
      * @param fieldSize
-     *        Size of the Gamefield
+     *            Size of the Gamefield
      * @param currentfieldID
      * @param direction
      * @return
@@ -181,9 +181,9 @@ public class Movement implements MovementStrategy {
      * 
      * @param gamefield
      * @param moves
-     *        Map of moves you want to execute, while the key is the
-     *        startfieldnr and the value is the number of steps from this
-     *        startfieldnr
+     *            Map of moves you want to execute, while the key is the
+     *            startfieldnr and the value is the number of steps from this
+     *            startfieldnr
      * @return true if all moves could be executed, otherwise false
      */
     public boolean move(GameFieldInterface gamefield, Map<Integer, Integer> moves) {
@@ -209,9 +209,9 @@ public class Movement implements MovementStrategy {
      * Checks if the Player p can do a move with the card 7
      * 
      * @param gamefield
-     *        the current gamefield played on
+     *            the current gamefield played on
      * @param p
-     *        the player that wants to move
+     *            the player that wants to move
      * @return true if the player can move with the card
      */
     public boolean AnyValidMove(GameFieldInterface gamefield, PlayerInterface p) {
@@ -219,7 +219,7 @@ public class Movement implements MovementStrategy {
         int remaining = 0;
         boolean returnval = true;
         LinkedList<Integer> figures = new LinkedList<Integer>(p.getFigureRegister());
-        Collections.System.out.println(figures);
+
         if (figures.isEmpty()) {
             steps = 0;
             returnval = false;
@@ -245,16 +245,16 @@ public class Movement implements MovementStrategy {
         return returnval;
     }
 
-    public boolean AnyValidMove1(GameFieldInterface gamefield, PlayerInterface p) throws CloneNotSupportedException {
+    //TODOOOO
+    public boolean AnyValidMoveTODO(GameFieldInterface gamefield, PlayerInterface p) throws CloneNotSupportedException {
         GameFieldInterface copy = (GameFieldInterface) gamefield.clone();
         LinkedList<Integer> figures = new LinkedList<Integer>(p.getFigureRegister());
+        Collections.sort(figures, Collections.reverseOrder());
 
         int steps = VALUEOFCARD7;
         int remaining = 0;
         boolean returnval = true;
 
-        Collections.sort(list);
-        LinkedList<Integer> figures = new LinkedList<Integer>(p.getFigureRegister());
         if (figures.isEmpty()) {
             steps = 0;
             returnval = false;
@@ -262,7 +262,7 @@ public class Movement implements MovementStrategy {
         Integer currentField = figures.pollFirst();
         while (steps > 0) {
             this.setMoveStrategie(VALUEOFCARD7);
-            if (!this.validMove(gamefield, steps, currentField)) {
+            if (!this.validMove(copy, steps, currentField)) {
                 steps--;
                 remaining++;
             } else {
