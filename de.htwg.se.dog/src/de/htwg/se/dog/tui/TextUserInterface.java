@@ -6,6 +6,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import de.htwg.se.dog.controller.GameTableInterface;
+import de.htwg.se.dog.models.impl.Card;
 import de.htwg.se.dog.util.Event;
 import de.htwg.se.dog.util.IObserver;
 
@@ -13,7 +14,7 @@ public class TextUserInterface implements IObserver {
 
     private static final Logger LOG = LogManager.getLogger("UI");
     private final GameTableInterface controller;
-    private static Scanner scanner;
+    private static Scanner scanner = new Scanner(System.in);
 
     public TextUserInterface(GameTableInterface controller) {
         this.controller = controller;
@@ -29,56 +30,40 @@ public class TextUserInterface implements IObserver {
         out(controller.getPlayerHandString());
     }
 
-    public boolean processCardInput() {
-        boolean continu = true;
-        scanner = new Scanner(System.in);
-        boolean okay = false;
+    public boolean processTurn() {
+        int card = processCardInput();
+        int fieldnr = processFigureInput();
+        return false;
+    }
+
+    public int processCardInput() {
+        int card = 0;
         printTui();
-        while (!okay) {
+        while (true) {
             out("Bitte zu spielende Kartennummer auswählen:");
             String input = scanner.next();
             try {
                 Integer zahl = Integer.valueOf(input);
-                switch (zahl) {
-                case (2):
-                case (3):
-                case (4):
-                case (5):
-                case (6):
-                case (8):
-                case (9):
-                case (11):
-                case (12):
-                case (13):
-                    if (!controller.playerHasCard(zahl)) {
-                        out(String.format("Spieler %d hat keine solche Karte!", controller.getCurrentPlayer().getPlayerID()));
-                        continue;
-                    }
-                    break;
-                case (10):
-                    break;
-                case (1):
-                    //1 oder 11 laufen
-
-                    break;
-                case (7):
-                    break;
-                case (14):
-                default:
-
+                if (!controller.playerHasCard(zahl)) {
+                    out(String.format("Spieler %d hat keine solche Karte!", controller.getCurrentPlayer().getPlayerID()));
+                    continue;
+                }
+                if (!controller.possibleCards(controller.getCurrentPlayer()).contains(new Card(zahl))) {
+                    out(String.format("Spieler %d kann diese Karte nicht benutzen!", controller.getCurrentPlayer().getPlayerID()));
+                    continue;
                 }
             } catch (NumberFormatException e) {
                 if (input.equalsIgnoreCase("q")) {
-                    continu = false;
+                    card = -1;
                 }
             }
-            okay = true;
+            break;
         }
-        return false;
+        return card;
     }
 
-    public boolean processFigureInput(String line) {
-        return false;
+    public int processFigureInput() {
+        return -1;
     }
 
     @Override
