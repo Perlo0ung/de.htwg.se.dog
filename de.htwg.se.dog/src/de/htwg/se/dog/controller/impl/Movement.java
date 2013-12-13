@@ -258,7 +258,7 @@ public class Movement implements MovementStrategy {
         Movement here = new Movement(copy);
         here.setMoveStrategie(VALUEOFCARD7);
         LinkedList<Integer> figures = new LinkedList<Integer>(p.getFigureRegister());
-        Collections.sort(figures);
+        Collections.reverse(figures);
         FieldInterface array[] = copy.getField();
         int steps = VALUEOFCARD7;
         int remaining = 0;
@@ -274,14 +274,14 @@ public class Movement implements MovementStrategy {
                 steps--;
                 remaining++;
             } else {
-                System.out.println(steps);
+
                 int target = here.getTargetfield(steps, currentField);
-                System.out.println(p.toString() + " " + target);
-                array[target].putFigure(array[currentField].removeFigure());
+                array[target].putFigure(array[currentField].removeFigure(), target);
                 if (remaining == 0) {
                     break;
                 }
                 currentField = figures.pollFirst();
+
                 steps = remaining;
                 remaining = 0;
                 if (currentField == null) {

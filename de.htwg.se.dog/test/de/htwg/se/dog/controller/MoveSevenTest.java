@@ -68,6 +68,7 @@ public class MoveSevenTest {
         assertFalse(movement.move(moves));
     }
 
+    //TODO test überdenken
     @Test
     public void testAnyValidMove() throws CloneNotSupportedException {
         //Search AnyValidMove of Player without Figures on Field
@@ -76,20 +77,18 @@ public class MoveSevenTest {
         array[0].putFigure(tp1.removeFigure(), 0);
         assertTrue(movement.AnyValidMove(tp1));
         //two figures move
-        array[1].putFigure(tp1.removeFigure(), 1);
-        array[9].putFigure(tp2.removeFigure(), 9);
+        array[7].putFigure(tp1.removeFigure(), 7);
+        array[6].putFigure(tp2.removeFigure(), 6);
+        array[6].setBlocked(true);
+        assertTrue(movement.AnyValidMove(tp1));
+        //No Move possible
         array[8].setBlocked(true);
         assertTrue(movement.AnyValidMove(tp1));
-        System.out.println(tp1.getFigureRegister());
-        System.out.println(tp2.getFigureRegister());
-        System.err.println("ab hier");
-        //No Move possible
-        array[0].setBlocked(true);
-        assertTrue(movement.AnyValidMove(tp1));
+
     }
 }
 /* Gamefield from setUp
  * 0 1 2 3 4 5 6 7 8 9 10 11
  * - - - - 1 1 - - - - 2  2
- * 1! 1              2!
+ * 1          !2 1  
  */
