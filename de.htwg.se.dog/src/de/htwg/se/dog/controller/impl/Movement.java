@@ -171,7 +171,7 @@ public class Movement implements MovementStrategy {
         return retval;
     }
 
-    private boolean possibleMoveStart(FieldInterface[] array, int startFieldNr, PlayerInterface player) {
+    public boolean possibleMoveStart(FieldInterface[] array, int startFieldNr, PlayerInterface player) {
         return !array[startFieldNr].getBlocked() && !player.getFigureList().isEmpty();
     }
 
