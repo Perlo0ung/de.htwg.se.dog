@@ -157,10 +157,13 @@ public class Movement implements MovementStrategy {
         return field;
     }
 
+    public int getPlayerStart(GameFieldInterface gamefield, PlayerInterface p) {
+        return (gamefield.getHouseCount() + gamefield.getFieldsTillHouse()) * (p.getPlayerID() - 1);
+    }
+
     public boolean moveStart(GameFieldInterface gamefield, PlayerInterface player) {
         boolean retval = false;
-        int playerID = player.getPlayerID();
-        int startFieldNr = (gamefield.getHouseCount() + gamefield.getFieldsTillHouse()) * (playerID - 1);
+        int startFieldNr = getPlayerStart(gamefield, player);
         FieldInterface[] array = gamefield.getField();
         if (possibleMoveStart(array, startFieldNr, player)) {
             kickPlayer(array, startFieldNr);
