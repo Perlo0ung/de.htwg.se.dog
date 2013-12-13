@@ -124,15 +124,8 @@ public class GameField implements GameFieldInterface {
     }
 
     @Override
-    public Object clone(){
-        Object o = null;
-    	try {
-			 o = super.clone();
-		} catch (CloneNotSupportedException e) {
-			e.printStackTrace();
-			System.exit(1);
-		}
-		return o;
+    public Object clone() throws CloneNotSupportedException{
+		return super.clone();
     }
 
     /**

@@ -59,5 +59,5 @@ public interface GameFieldInterface extends Cloneable {
      * Clone a GameField
      * @return
      */
-    Object clone();
+    Object clone() throws CloneNotSupportedException;
 }
