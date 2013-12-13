@@ -27,8 +27,8 @@ public class MoveNormal extends Movement {
         boolean valid = false;
         FieldInterface[] array = gameField.getField();
         // check if startfield is not empty and the move is valid
-        if (!fieldEmpty(array[startfieldnr]) && validMove(gameField, steps, startfieldnr)) {
-            int targetfield = getTargetfield(gameField, steps, startfieldnr);
+        if (!fieldEmpty(array[startfieldnr]) && validMove(steps, startfieldnr)) {
+            int targetfield = getTargetfield(steps, startfieldnr);
             FigureInterface temp = array[startfieldnr].removeFigure();
             kickPlayer(array, targetfield);
             // Move Figure from startfield to Targetfield
@@ -57,7 +57,7 @@ public class MoveNormal extends Movement {
     @Override
     public boolean validMove(int steps, int startfieldnr) {
         boolean valid = false;
-        if (getTargetfield(gameField, steps, startfieldnr) >= 0) {
+        if (getTargetfield(steps, startfieldnr) >= 0) {
             valid = true;
         }
         return valid;

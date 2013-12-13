@@ -13,7 +13,6 @@ import de.htwg.se.dog.models.PlayerInterface;
 
 public class Movement implements MovementStrategy {
 
-    private static final int VALUEOFCARD11 = 11;
     private static final int VALUEOFCARD7 = 7;
     private static final int EMPTYFIELD = -5;
     private static final int BLOCKEDFIELD = -6;

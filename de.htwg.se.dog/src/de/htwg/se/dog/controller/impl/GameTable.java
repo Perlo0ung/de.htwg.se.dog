@@ -163,19 +163,18 @@ public class GameTable extends Observable implements GameTableInterface {
     // TODO: implement moveStart as possible playable Card
     @Override
     public List<CardInterface> possibleCards(PlayerInterface p) {
-        boolean returnval = false;
-
         List<CardInterface> cards = new LinkedList<CardInterface>(p.getCardList());
         Iterator<CardInterface> it = cards.iterator();
         while (it.hasNext()) {
             CardInterface c = it.next();
             //Put Figure on field
-            if (!game.getField()[movement.getPlayerStart(game, p)].getBlocked() && p.getCardList().isEmpty() && (c.getValue() == 1 || c.getValue() == 14 || c.getValue() == 13))
+            if (!game.getField()[movement.getPlayerStart(p)].getBlocked() && p.getCardList().isEmpty() && (c.getValue() == 1 || c.getValue() == 14 || c.getValue() == 13)) {
                 continue;
+            }
             //move figure on field
             for (Integer field : p.getFigureRegister()) {
                 movement.setMoveStrategie(c.getValue());
-                if (movement.validMove(game, c.getValue(), field)) {
+                if (movement.validMove(c.getValue(), field)) {
                     continue;
                 }
             }
