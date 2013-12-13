@@ -75,7 +75,7 @@ public class TextUserInterface implements IObserver {
             String input = scanner.next();
             try {
                 Integer zahl = Integer.valueOf(input);
-                if (!controller.) {
+                if (!controller.fieldIsEmpty(zahl)) {
                     out(String.format("Spieler %d hat keine solche Karte!", controller.getCurrentPlayer().getPlayerID()));
                     continue;
                 }

@@ -17,13 +17,13 @@ public class GameField implements GameFieldInterface {
      * Setup for a GameField
      * 
      * @param fieldsTillHouse
-     *            : field until there is a house
+     *        : field until there is a house
      * 
      * @param houseCount
-     *            : number of housefields
+     *        : number of housefields
      * 
      * @param playerCount
-     *            : number of players
+     *        : number of players
      */
     public GameField(int fieldsTillHouse, int playerCount, int houseCount) {
         this.fieldsTillHouse = fieldsTillHouse;
@@ -122,5 +122,9 @@ public class GameField implements GameFieldInterface {
     @Override
     public Object clone() throws CloneNotSupportedException {
         return super.clone();
+    }
+
+    public FieldInterface getField(int fieldnr) {
+        return gamefield[fieldnr];
     }
 }
