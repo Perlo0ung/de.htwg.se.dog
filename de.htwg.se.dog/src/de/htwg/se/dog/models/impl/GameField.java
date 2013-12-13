@@ -115,7 +115,7 @@ public class GameField implements GameFieldInterface {
             s = "  ";
         } else {
         	String owner = String.valueOf(fig.getOwnerNr());
-            if(array[fieldnum].getBlocked()) {
+            if(array[fieldnum].isBlocked()) {
             	owner = String.format("%s%s","!",owner);
             }
             s = String.format("%s", owner);

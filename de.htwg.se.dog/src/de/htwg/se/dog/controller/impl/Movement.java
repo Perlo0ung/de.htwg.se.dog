@@ -113,7 +113,7 @@ public class Movement implements MovementStrategy {
                 nextfieldID = nextField(currentfieldID, steps);
                 int currentFieldOwner = array[currentfieldID].getOwner();
                 // Check if field is Blocked
-                if (array[currentfieldID].getBlocked()) {
+                if (array[currentfieldID].isBlocked()) {
                     currentfieldID = BLOCKEDFIELD;
                     absSteps = 0;
                 }
@@ -176,7 +176,7 @@ public class Movement implements MovementStrategy {
     }
 
     public boolean possibleMoveStart(FieldInterface[] array, int startFieldNr, PlayerInterface player) {
-        return !array[startFieldNr].getBlocked() && !player.getFigureList().isEmpty();
+        return !array[startFieldNr].isBlocked() && !player.getFigureList().isEmpty();
     }
 
     /* ------------------------------------------------------------------------- */

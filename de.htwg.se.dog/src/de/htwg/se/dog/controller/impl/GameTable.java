@@ -31,9 +31,9 @@ public class GameTable extends Observable implements GameTableInterface {
      * Constructor to generate a new gametable
      * 
      * @param playerCount
-     *            number of players
+     *        number of players
      * @param figCount
-     *            number of figures per player
+     *        number of figures per player
      */
     public GameTable(int playerCount) {
         game = new GameField(FIELDSTILLHOUSE, playerCount, HOUSECOUNT);
@@ -129,7 +129,7 @@ public class GameTable extends Observable implements GameTableInterface {
      * Returns true if the Player has a card that can be played
      * 
      * @param p
-     *            the Player that wants to play
+     *        the Player that wants to play
      * @return true if he can play, otherwise false
      */
     @Override
@@ -157,7 +157,7 @@ public class GameTable extends Observable implements GameTableInterface {
      * Returns a list containing the cards that can be played by Player p
      * 
      * @param p
-     *            the player that wants to play
+     *        the player that wants to play
      * @return a list containing the cards that can be played
      */
     // TODO: implement moveStart as possible playable Card
@@ -167,8 +167,9 @@ public class GameTable extends Observable implements GameTableInterface {
         Iterator<CardInterface> it = cards.iterator();
         while (it.hasNext()) {
             CardInterface c = it.next();
-            //Put Figure on field
-            if (!game.getField()[movement.getPlayerStart(p)].getBlocked() && p.getCardList().isEmpty() && (c.getValue() == 1 || c.getValue() == 14 || c.getValue() == 13)) {
+            //Put new Figure on field
+
+            if (!game.getField()[movement.getPlayerStart(p)].isBlocked() && p.getCardList().isEmpty() && (c.getValue() == 1 || c.getValue() == 14 || c.getValue() == 13)) {
                 continue;
             }
             //move figure on field

@@ -60,7 +60,7 @@ public class Field implements FieldInterface {
     }
 
     @Override
-    public boolean getBlocked() {
+    public boolean isBlocked() {
         return this.blocked;
     }
 
