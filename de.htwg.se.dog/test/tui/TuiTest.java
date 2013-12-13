@@ -11,7 +11,7 @@ import de.htwg.se.dog.models.PlayerInterface;
 import de.htwg.se.dog.tui.TextUserInterface;
 
 public class TuiTest {
-    private final static int PLAYERCOUNT = 10;
+    private final static int PLAYERCOUNT = 4;
     GameTableInterface table;
     GameFieldInterface field;
     FieldInterface[] array;
