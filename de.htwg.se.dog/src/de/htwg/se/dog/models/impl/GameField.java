@@ -93,11 +93,11 @@ public class GameField implements GameFieldInterface {
             int endFieldNr = startFieldNr + range;
             for (int f = startFieldNr; f < endFieldNr; f++) {
                 if (array[f].isHouse()) {
-                    upper.append(String.format("( %2d )", f));
-                    lower.append(String.format("( %s )", getPlayerOnField(array, f)));
+                    upper.append(String.format("( %3d )", f));
+                    lower.append(String.format("( %3s )", getPlayerOnField(array, f)));
                 } else {
-                    upper.append(String.format("| %2d |", f));
-                    lower.append(String.format("| %2s |", getPlayerOnField(array, f)));
+                    upper.append(String.format("| %3d |", f));
+                    lower.append(String.format("| %3s |", getPlayerOnField(array, f)));
                 }
 
             }
@@ -114,11 +114,11 @@ public class GameField implements GameFieldInterface {
         if (fig == null) {
             s = "  ";
         } else {
-        	int owner = fig.getOwnerNr();
+        	String owner = String.valueOf(fig.getOwnerNr());
             if(array[fieldnum].getBlocked()) {
-            	owner = -owner;
+            	owner = String.format("%s%s","!",owner);
             }
-            s = String.format("%2d", owner);
+            s = String.format("%s", owner);
         }
         return s;
     }

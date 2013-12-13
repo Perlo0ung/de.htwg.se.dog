@@ -71,10 +71,7 @@ public class MoveSevenTest {
     //TODO test überdenken
     @Test
     public void testAnyValidMove() throws CloneNotSupportedException {
-        //Search AnyValidMove of Player without Figures on Field
-        System.err.println(tp1.getFigureRegister());
-        System.err.println(tp2.getFigureRegister());
-        
+        //Search AnyValidMove of Player without Figures on Field        
         assertFalse(movement.AnyValidMove(tp2));
         //One Figure moves 7
         array[0].putFigure(tp1.removeFigure(), 0);
