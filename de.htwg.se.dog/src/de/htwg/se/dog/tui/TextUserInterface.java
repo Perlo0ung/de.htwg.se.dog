@@ -9,8 +9,8 @@ import org.apache.logging.log4j.Logger;
 import de.htwg.se.dog.models.CardInterface;
 import de.htwg.se.dog.models.FieldInterface;
 import de.htwg.se.dog.models.FigureInterface;
+import de.htwg.se.dog.models.GameFieldInterface;
 import de.htwg.se.dog.models.PlayerInterface;
-import de.htwg.se.dog.models.impl.GameField;
 
 public class TextUserInterface {
 
@@ -26,13 +26,13 @@ public class TextUserInterface {
         out(String.format("Player %d:  %s", p.getPlayerID(), sb.toString()));
     }
 
-    public void printGameField(GameField game) {
+    public void printGameField(GameFieldInterface gameFieldInterface) {
         StringBuilder upper = new StringBuilder();
-        int houseFields = game.getHouseCount();
-        int normalFields = game.getFieldsTillHouse();
-        int playercount = game.getPlayerCount();
+        int houseFields = gameFieldInterface.getHouseCount();
+        int normalFields = gameFieldInterface.getFieldsTillHouse();
+        int playercount = gameFieldInterface.getPlayerCount();
         int range = houseFields + normalFields;
-        FieldInterface[] array = game.getField();
+        FieldInterface[] array = gameFieldInterface.getField();
 
         for (int p = 0; p < playercount; p++) {
             StringBuilder lower = new StringBuilder();

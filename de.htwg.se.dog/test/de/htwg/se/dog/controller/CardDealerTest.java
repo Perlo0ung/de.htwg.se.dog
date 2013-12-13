@@ -5,6 +5,7 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
 
+import de.htwg.se.dog.controller.impl.CardDealer;
 import de.htwg.se.dog.models.impl.Player;
 
 public class CardDealerTest {

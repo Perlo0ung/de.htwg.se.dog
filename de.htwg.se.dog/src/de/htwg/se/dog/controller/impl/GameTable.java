@@ -1,4 +1,4 @@
-package de.htwg.se.dog.controller;
+package de.htwg.se.dog.controller.impl;
 
 import java.util.Collections;
 import java.util.Iterator;
@@ -6,6 +6,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
+import de.htwg.se.dog.controller.GameTableInterface;
+import de.htwg.se.dog.controller.Movement;
 import de.htwg.se.dog.models.CardInterface;
 import de.htwg.se.dog.models.FieldInterface;
 import de.htwg.se.dog.models.GameFieldInterface;
@@ -13,7 +15,7 @@ import de.htwg.se.dog.models.PlayerInterface;
 import de.htwg.se.dog.models.impl.GameField;
 import de.htwg.se.dog.models.impl.Player;
 
-public class GameTable {
+public class GameTable implements GameTableInterface {
 
     private static final int FIELDSTILLHOUSE = 16;
     private static final int HOUSECOUNT = 4;
@@ -28,9 +30,9 @@ public class GameTable {
      * Constructor to generate a new gametable
      * 
      * @param playerCount
-     *        number of players
+     *            number of players
      * @param figCount
-     *        number of figures per player
+     *            number of figures per player
      */
     public GameTable(int playerCount) {
         game = new GameField(FIELDSTILLHOUSE, playerCount, HOUSECOUNT);
@@ -45,7 +47,8 @@ public class GameTable {
      * 
      * @return
      */
-    public GameField getGameField() {
+    @Override
+    public GameFieldInterface getGameField() {
         return this.game;
     }
 
@@ -54,6 +57,7 @@ public class GameTable {
      * 
      * @return true if empty otherwise false
      */
+    @Override
     public boolean playerQueueIsEmpty() {
         return turnPlayer.isEmpty();
     }
@@ -75,6 +79,7 @@ public class GameTable {
      * 
      * @param playernum
      */
+    @Override
     public void setStartingPlayer(int playernum) {
         Collections.rotate(players, -playernum + 1);
     }
@@ -82,6 +87,7 @@ public class GameTable {
     /**
      * Refills the Playerqueue and deals cards to every player
      */
+    @Override
     public void dealCards() {
 
         //now put all players into the queue
@@ -98,6 +104,7 @@ public class GameTable {
     /**
      * Starts a new round
      */
+    @Override
     public void newRound() {
         dealCards();
         dealer.newRound();
@@ -108,6 +115,7 @@ public class GameTable {
      * 
      * @return the player that is allowed to play
      */
+    @Override
     public PlayerInterface getNextPlayer() {
         return turnPlayer.poll();
     }
@@ -115,6 +123,7 @@ public class GameTable {
     /**
      * Adds the speciefied Player to the Playerqueue
      */
+    @Override
     public void addPlayerToQueue(PlayerInterface p) {
         turnPlayer.offer(p);
     }
@@ -123,9 +132,10 @@ public class GameTable {
      * Returns true if the Player has a card that can be played
      * 
      * @param p
-     *        the Player that wants to play
+     *            the Player that wants to play
      * @return true if he can play, otherwise false
      */
+    @Override
     public boolean canPlay(PlayerInterface p) {
         return !possibleCards(p).isEmpty();
     }
@@ -134,10 +144,11 @@ public class GameTable {
      * Returns a list containing the cards that can be played by Player p
      * 
      * @param p
-     *        the player that wants to play
+     *            the player that wants to play
      * @return a list containing the cards that can be played
      */
     // TODO: implement moveStart as possible playable Card
+    @Override
     public List<CardInterface> possibleCards(PlayerInterface p) {
         boolean returnval = false;
 
@@ -158,6 +169,7 @@ public class GameTable {
         return cards;
     }
 
+    @Override
     public boolean playerHaswon(GameFieldInterface gamefield, PlayerInterface player) {
         boolean retval = false;
         FieldInterface[] array = gamefield.getField();
