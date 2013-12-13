@@ -1,4 +1,3 @@
-/*
 package de.htwg.se.dog.controller;
 
 import static org.junit.Assert.assertEquals;
@@ -60,13 +59,17 @@ public class GameTableTest {
     }
 
     @Test
+    public void testPlayerHasCard() {
+
+    }
+
+    @Test
     public void testcanPlay() {
         assertFalse(table.canPlay(first));
         table.dealCards();
         first = table.getCurrentPlayer();
         FigureInterface fig = first.removeFigure();
-        array[20].putFigure(fig);
-        first.updateFigurePos(fig.getFignr(), 20);
+        array[1].putFigure(fig, 20);
         assertTrue(table.canPlay(first));
     }
 
@@ -117,4 +120,3 @@ public class GameTableTest {
         assertNotNull(table.getPlayerString());
     }
 }
-*/
