@@ -1,10 +1,11 @@
-package de.htwg.se.dog.controller;
+package de.htwg.se.dog.controller.impl;
 
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import de.htwg.se.dog.controller.MovementStrategy;
 import de.htwg.se.dog.models.FieldInterface;
 import de.htwg.se.dog.models.FigureInterface;
 import de.htwg.se.dog.models.GameFieldInterface;

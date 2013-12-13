@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Queue;
 
 import de.htwg.se.dog.controller.GameTableInterface;
-import de.htwg.se.dog.controller.Movement;
 import de.htwg.se.dog.models.CardInterface;
 import de.htwg.se.dog.models.FieldInterface;
 import de.htwg.se.dog.models.GameFieldInterface;

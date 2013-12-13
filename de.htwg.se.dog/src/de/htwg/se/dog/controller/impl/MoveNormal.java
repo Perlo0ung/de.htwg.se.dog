@@ -1,4 +1,4 @@
-package de.htwg.se.dog.controller;
+package de.htwg.se.dog.controller.impl;
 
 import de.htwg.se.dog.models.FieldInterface;
 import de.htwg.se.dog.models.FigureInterface;
