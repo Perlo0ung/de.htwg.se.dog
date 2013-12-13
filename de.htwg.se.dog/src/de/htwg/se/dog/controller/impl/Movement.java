@@ -1,7 +1,6 @@
 package de.htwg.se.dog.controller.impl;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -20,17 +19,17 @@ public class Movement implements MovementStrategy {
     private static final int BLOCKEDFIELD = -6;
 
     private Movement strategie;
-    private static Map<Integer, Movement> strat;
-    static {
-        strat = new HashMap<Integer, Movement>();
-        strat.put(VALUEOFCARD11, new MoveSwitch());
-    }
+    protected GameFieldInterface gameField;
 
     public Movement() {}
 
+    public Movement(GameFieldInterface gameField) {
+        this.gameField = gameField;
+    }
+
     @Override
-    public boolean move(GameFieldInterface gamefield, int steps, int fromNr) {
-        return strategie.move(gamefield, steps, fromNr);
+    public boolean move(int steps, int fromNr) {
+        return strategie.move(gameField, steps, fromNr);
     }
 
     @Override
@@ -45,9 +44,10 @@ public class Movement implements MovementStrategy {
      * @param card
      */
     public void setMoveStrategie(int StrategieNr) {
-        strategie = strat.get(StrategieNr);
-        if (strategie == null) {
-            strategie = new MoveNormal();
+        if (StrategieNr != 11) {
+            strategie = new MoveNormal(gameField);
+        } else {
+            strategie = new MoveSwitch(gameField);
         }
     }
 
