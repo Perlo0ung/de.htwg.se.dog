@@ -170,7 +170,7 @@ public class GameTable extends Observable implements GameTableInterface {
         while (it.hasNext()) {
             CardInterface c = it.next();
             //Put Figure on field
-            if (!game.getField()[movement.getPlayerStart(p)].getBlocked() && p.getCardList().isEmpty() && (c.getValue() == 1 || c.getValue() == 14 || c.getValue() == 13))
+            if (!game.getField()[movement.getPlayerStart(game, p)].getBlocked() && p.getCardList().isEmpty() && (c.getValue() == 1 || c.getValue() == 14 || c.getValue() == 13))
                 continue;
             //move figure on field
             for (Integer field : p.getFigureRegister()) {
