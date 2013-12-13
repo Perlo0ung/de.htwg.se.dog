@@ -1,6 +1,5 @@
 package de.htwg.se.dog.controller;
 
-import de.htwg.se.dog.models.GameFieldInterface;
 
 public interface MovementStrategy {
     /**
@@ -23,7 +22,7 @@ public interface MovementStrategy {
      *            from where figure wants to move
      * @return true if move was successfull, otherwise false
      */
-    boolean move(GameFieldInterface gamefield, int steps, int startfieldnr);
+    boolean move(int steps, int startfieldnr);
 
     /**
      * Returns true if suggested move is valid
@@ -35,5 +34,5 @@ public interface MovementStrategy {
      *            from where figure wants to move
      * @return true if move is valid, otherwise false
      */
-    boolean validMove(GameFieldInterface gamefield, int steps, int startfieldnr);
+    boolean validMove(int steps, int startfieldnr);
 }

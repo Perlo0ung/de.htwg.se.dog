@@ -7,6 +7,10 @@ import de.htwg.se.dog.models.PlayerInterface;
 
 public class MoveSwitch extends Movement {
 
+    public MoveSwitch(GameFieldInterface gameField) {
+        this.gameField = gameField;
+    }
+
     /**
      * switches 2 figures, if targetfig is on a housefield or not on both fields
      * is a figure, it does nothing
@@ -19,10 +23,10 @@ public class MoveSwitch extends Movement {
      * @return true if switch was successful, otherwise false
      */
     @Override
-    public boolean move(GameFieldInterface gamefield, int steps, int fromNr) {
+    public boolean move(int steps, int fromNr) {
         int toNr = steps;
         boolean valid = false;
-        FieldInterface[] array = gamefield.getField();
+        FieldInterface[] array = gameField.getField();
         if (figuresOnBothFieldsAndNotHousefields(fromNr, toNr, array)) {
             /* switch Figures */
             FigureInterface f1 = array[fromNr].removeFigure();
@@ -53,10 +57,10 @@ public class MoveSwitch extends Movement {
      * checks if it is possible to switch 2 figures
      */
     @Override
-    public boolean validMove(GameFieldInterface gamefield, int steps, int fromNr) {
+    public boolean validMove(int steps, int fromNr) {
         boolean ok = false;
         int toNr = steps;
-        FieldInterface[] array = gamefield.getField();
+        FieldInterface[] array = gameField.getField();
         if (figuresOnBothFieldsAndNotHousefields(fromNr, toNr, array)) {
             ok = true;
         }
