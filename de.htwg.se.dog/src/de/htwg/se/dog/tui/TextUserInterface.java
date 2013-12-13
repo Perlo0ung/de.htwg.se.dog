@@ -39,6 +39,8 @@ public class TextUserInterface implements IObserver {
         if (fieldnr == -1) {
             return false;
         }
+        //TODO sonderfälle (sieben, rauskommen, tauschen)
+        //TODO zug ausführen
         return false;
     }
 
