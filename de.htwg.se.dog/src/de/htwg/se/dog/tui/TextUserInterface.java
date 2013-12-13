@@ -22,7 +22,7 @@ public class TextUserInterface {
         for (CardInterface c : p.getCardList()) {
             sb.append(String.format("%s ", c.toString()));
         }
-        out(String.format("Player %d:  %s", p.getPlayerID(),sb.toString()));
+        out(String.format("Player %d:  %s", p.getPlayerID(), sb.toString()));
     }
 
     public void printGameField(GameField game) {

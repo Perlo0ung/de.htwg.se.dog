@@ -159,17 +159,17 @@ public class GameTable {
     }
 
     public boolean playerHaswon(GameFieldInterface gamefield, PlayerInterface player) {
-    	boolean retval = false;
+        boolean retval = false;
         FieldInterface[] array = gamefield.getField();
-    	if (player.getFigureRegister().size() == gamefield.getHouseCount()) {
-	        for (Integer fieldID : player.getFigureRegister()) {
-	            if (!array[fieldID].isHouse()) {
-	                retval = false;
-	                break;
-	            }
-	            retval = true;
-	        }
-    	}
-    	return retval;
+        if (player.getFigureRegister().size() == gamefield.getHouseCount()) {
+            for (Integer fieldID : player.getFigureRegister()) {
+                if (!array[fieldID].isHouse()) {
+                    retval = false;
+                    break;
+                }
+                retval = true;
+            }
+        }
+        return retval;
     }
 }
