@@ -1,6 +1,6 @@
 package de.htwg.se.dog.models;
 
-public interface GameFieldInterface {
+public interface GameFieldInterface extends Cloneable {
 
     /**
      * returns the owner number of a field
@@ -54,4 +54,6 @@ public interface GameFieldInterface {
      */
     @Override
     String toString();
+
+    Object clone() throws CloneNotSupportedException;
 }

@@ -1,5 +1,6 @@
 package de.htwg.se.dog.controller.impl;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
@@ -57,7 +58,7 @@ public class Movement implements MovementStrategy {
      *            which should be checked
      * @return true if field is empty, otherwise false;
      */
-    protected boolean fieldEmpty(FieldInterface field) {
+    public boolean fieldEmpty(FieldInterface field) {
         boolean returnval = false;
         if (field.getFigure() == null) {
             returnval = true;
@@ -218,6 +219,7 @@ public class Movement implements MovementStrategy {
         int remaining = 0;
         boolean returnval = true;
         LinkedList<Integer> figures = new LinkedList<Integer>(p.getFigureRegister());
+        Collections.System.out.println(figures);
         if (figures.isEmpty()) {
             steps = 0;
             returnval = false;
@@ -243,4 +245,38 @@ public class Movement implements MovementStrategy {
         return returnval;
     }
 
+    public boolean AnyValidMove1(GameFieldInterface gamefield, PlayerInterface p) throws CloneNotSupportedException {
+        GameFieldInterface copy = (GameFieldInterface) gamefield.clone();
+        LinkedList<Integer> figures = new LinkedList<Integer>(p.getFigureRegister());
+
+        int steps = VALUEOFCARD7;
+        int remaining = 0;
+        boolean returnval = true;
+
+        Collections.sort(list);
+        LinkedList<Integer> figures = new LinkedList<Integer>(p.getFigureRegister());
+        if (figures.isEmpty()) {
+            steps = 0;
+            returnval = false;
+        }
+        Integer currentField = figures.pollFirst();
+        while (steps > 0) {
+            this.setMoveStrategie(VALUEOFCARD7);
+            if (!this.validMove(gamefield, steps, currentField)) {
+                steps--;
+                remaining++;
+            } else {
+                if (remaining == 0) {
+                    break;
+                }
+                currentField = figures.pollFirst();
+                steps = remaining;
+                if (currentField == null) {
+                    returnval = false;
+                    break;
+                }
+            }
+        }
+        return returnval;
+    }
 }

@@ -118,4 +118,9 @@ public class GameField implements GameFieldInterface {
         }
         return s;
     }
+
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
 }

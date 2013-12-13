@@ -56,7 +56,7 @@ public interface GameTableInterface extends IObservable {
      * Returns true if the Player has a card that can be played
      * 
      * @param p
-     *        the Player that wants to play
+     *            the Player that wants to play
      * @return true if he can play, otherwise false
      */
     boolean canPlay(PlayerInterface p);
@@ -65,7 +65,7 @@ public interface GameTableInterface extends IObservable {
      * Returns a list containing the cards that can be played by Player p
      * 
      * @param p
-     *        the player that wants to play
+     *            the player that wants to play
      * @return a list containing the cards that can be played
      */
     List<CardInterface> possibleCards(PlayerInterface p);
@@ -107,4 +107,12 @@ public interface GameTableInterface extends IObservable {
      * @return true if he has the card
      */
     boolean playerHasCard(int cardval);
+
+    /**
+     * Wraps the Movement
+     * 
+     * @param steps
+     * @param fieldNr
+     */
+    void playCard(int steps, int fieldNr);
 }
