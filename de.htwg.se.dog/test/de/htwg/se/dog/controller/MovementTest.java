@@ -51,7 +51,7 @@ public class MovementTest {
         array[4].putFigure(tp1.removeFigure());
         assertFalse(movement.moveStart(tp1));
         //Player has no figures left
-        movement.move(gamefield, 1, 0);
+        movement.move(1, 0);
         assertFalse(movement.moveStart(tp1));
     }
 

@@ -94,10 +94,10 @@ public class GameTableTest {
         array[firsthouse + 2].putFigure(first.removeFigure(), firsthouse + 2);
         array[firsthouse + 3].putFigure(first.removeFigure(), firsthouse + 3);
         // not every figure is in house
-        assertFalse(table.playerHaswon(first));
+        assertFalse(table.playerHaswon(gamefield, first));
         movement.move(1, firsthouse - 1);
         // every figure is in house
-        assertTrue(table.playerHaswon(first));
+        assertTrue(table.playerHaswon(gamefield, first));
 
         //branch coverage
         GameTable branch = new GameTable(5);
@@ -105,7 +105,7 @@ public class GameTableTest {
         gamefield = branch.getGameField();
         branch.nextPlayer();
         first = branch.getCurrentPlayer();
-        assertFalse(branch.playerHaswon(first));
+        assertFalse(branch.playerHaswon(gamefield, first));
     }
 
     @Test
