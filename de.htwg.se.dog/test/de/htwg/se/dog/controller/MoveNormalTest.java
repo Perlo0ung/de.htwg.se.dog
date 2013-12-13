@@ -75,12 +75,12 @@ public class MoveNormalTest {
         array[0].putFigure(tp1.removeFigure());
         FigureInterface tempFig = array[0].getFigure();
         array[0].setBlocked(true);
-        assertTrue(array[0].getBlocked());
+        assertTrue(array[0].isBlocked());
         movement.move(2, 0);
-        assertFalse(array[0].getBlocked());
+        assertFalse(array[0].isBlocked());
         assertNull(array[0].getFigure());
         assertEquals(tempFig, array[2].getFigure());
-        assertTrue(array[2].getBlocked());
+        assertTrue(array[2].isBlocked());
     }
 
     @Test

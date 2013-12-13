@@ -58,7 +58,7 @@ public interface FieldInterface {
      * 
      * @return true if field is blocked
      */
-    boolean getBlocked();
+    boolean isBlocked();
 
     /**
      * returns boolean value if field is a house fied

@@ -24,7 +24,7 @@ public class FieldTest {
         feld2 = new Field(OWNER);
         feld2.putFigure(f);
         feld2.setBlocked(true);
-        feld2.getBlocked();
+        feld2.isBlocked();
     }
 
     @Test
@@ -49,7 +49,7 @@ public class FieldTest {
 
     @Test
     public void setBlocked() {
-        assertEquals(feld2.getBlocked(), true);
+        assertEquals(feld2.isBlocked(), true);
     }
 
     @Test
