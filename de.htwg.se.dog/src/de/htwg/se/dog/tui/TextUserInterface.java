@@ -13,6 +13,7 @@ import de.htwg.se.dog.models.PlayerInterface;
 import de.htwg.se.dog.models.impl.GameField;
 
 public class TextUserInterface {
+
     private static final Logger LOG = LogManager.getLogger("UI");
 
     public void printCardsOnHand(PlayerInterface p) {

@@ -11,9 +11,6 @@
 		<resources>
 			<resource>
 				<directory>src/resources</directory>
-				<includes>
-					<include>log4j.xml</include>
-				</includes>
 			</resource>
 		</resources>
 		<plugins>
