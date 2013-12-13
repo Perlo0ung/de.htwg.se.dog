@@ -256,14 +256,15 @@ public class Movement implements MovementStrategy {
     public boolean AnyValidMove(PlayerInterface p)  {
 
         GameFieldInterface copy = (GameFieldInterface) gameField.clone();
+        FieldInterface array[] = copy.getField().clone();
         Movement here = new Movement(copy);
         here.setMoveStrategie(VALUEOFCARD7);
+        
         LinkedList<Integer> figures = new LinkedList<Integer>(p.getFigureRegister());
         HashMap<FigureInterface, Integer> save = new HashMap<FigureInterface, Integer>();
         LinkedList<Integer> del = new LinkedList<Integer>();
         Collections.reverse(figures);
         
-        FieldInterface array[] = copy.getField().clone();
         int steps = VALUEOFCARD7;
         int remaining = 0;
         boolean returnval = false;
@@ -279,11 +280,9 @@ public class Movement implements MovementStrategy {
             } else {
 
                 int target = here.getTargetfield(steps, currentField);
-                FigureInterface fig = array[currentField].removeFigure();
-                save.put(fig,currentField);
-                del.add(target);
-                
+                FigureInterface fig = array[currentField].removeFigure();                
                 array[target].putFigure(fig);
+                
                 if (remaining == 0) {
                 	returnval = true;
                     break;
@@ -296,12 +295,6 @@ public class Movement implements MovementStrategy {
                     break;
                 }
             }
-        }
-        for(Entry<FigureInterface, Integer> e : save.entrySet()){
-        	array[e.getValue()].putFigure(e.getKey());        	
-        }
-        for(Integer e : del){
-        	array[e].removeFigure();        	
         }
         return returnval;
     }
