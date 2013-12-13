@@ -74,4 +74,11 @@ public interface PlayerInterface {
      */
     List<Integer> getFigureRegister();
 
+    /**
+     * Returns a String with all cards the player has output is sorted y the
+     * cards value
+     * 
+     * @return String repreentation of the players cards
+     */
+    String printCardsOnHand();
 }

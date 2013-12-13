@@ -5,8 +5,9 @@ import java.util.List;
 import de.htwg.se.dog.models.CardInterface;
 import de.htwg.se.dog.models.GameFieldInterface;
 import de.htwg.se.dog.models.PlayerInterface;
+import de.htwg.se.dog.util.IObservable;
 
-public interface GameTableInterface {
+public interface GameTableInterface extends IObservable {
 
     /**
      * Returns the Gamefield currently playing on
@@ -40,16 +41,16 @@ public interface GameTableInterface {
     void newRound();
 
     /**
-     * Returns the player that can play now
-     * 
-     * @return the player that is allowed to play
+     * Choose the next Player
      */
-    PlayerInterface getNextPlayer();
+    void nextPlayer();
 
     /**
-     * Adds the speciefied Player to the Playerqueue
+     * returns the current playing Player
+     * 
+     * @returns the currentPlayer
      */
-    void addPlayerToQueue(PlayerInterface p);
+    PlayerInterface getCurrentPlayer();
 
     /**
      * Returns true if the Player has a card that can be played
@@ -69,5 +70,33 @@ public interface GameTableInterface {
      */
     List<CardInterface> possibleCards(PlayerInterface p);
 
+    /**
+     * Tells if the specified Player has won the game
+     * 
+     * @param gamefield
+     * @param player
+     * @return true if player has won otherwise false
+     */
     boolean playerHaswon(GameFieldInterface gamefield, PlayerInterface player);
+
+    /**
+     * returns the GameField as a string
+     * 
+     * @return
+     */
+    String getGameFieldString();
+
+    /**
+     * returns the Players cardlist as a String
+     * 
+     * @return
+     */
+    String getPlayerHandString();
+
+    /**
+     * returns the Players as a String
+     * 
+     * @return
+     */
+    String getPlayerString();
 }

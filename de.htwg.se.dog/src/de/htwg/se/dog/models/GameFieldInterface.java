@@ -46,4 +46,12 @@ public interface GameFieldInterface {
      * @return
      */
     int getPlayerCount();
+
+    /**
+     * Creates a String representation of the Gamefield
+     * 
+     * @return the gamfield as String
+     */
+    @Override
+    String toString();
 }

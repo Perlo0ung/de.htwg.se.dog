@@ -1,5 +1,6 @@
 package de.htwg.se.dog.models.impl;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -83,4 +84,16 @@ public class Player implements PlayerInterface {
     public String toString() {
         return String.format("PlayerId: %s", this.getPlayerID());
     }
+
+    @Override
+    public String printCardsOnHand() {
+        StringBuilder sb = new StringBuilder();
+        List<CardInterface> cards = this.getCardList();
+        Collections.sort(cards);
+        for (CardInterface c : this.getCardList()) {
+            sb.append(String.format("%s ", c.toString()));
+        }
+        return String.format("%s  Cards: %s", this.toString(), sb.toString());
+    }
+
 }

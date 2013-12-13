@@ -12,7 +12,6 @@ import de.htwg.se.dog.models.FieldInterface;
 import de.htwg.se.dog.models.FigureInterface;
 import de.htwg.se.dog.models.GameFieldInterface;
 import de.htwg.se.dog.models.PlayerInterface;
-import de.htwg.se.dog.models.impl.Player;
 
 public class GameTableTest {
     private final int TWO = 2;
@@ -27,24 +26,26 @@ public class GameTableTest {
     public void setUp() {
         table = new GameTable(2);
         table.newRound();
+        table.nextPlayer();
         array = table.getGameField().getField();
-        first = table.getNextPlayer();
+        first = table.getCurrentPlayer();
         gamefield = table.getGameField();
     }
 
     @Test
     public void testCurrentPlayer() {
-        PlayerInterface second = table.getNextPlayer();
+        table.nextPlayer();
+        PlayerInterface second = table.getCurrentPlayer();
         table.newRound();
-        assertEquals(second, table.getNextPlayer());
-        assertEquals(first, table.getNextPlayer());
+        assertEquals(second, table.getCurrentPlayer());
+        table.nextPlayer();
+        assertEquals(first, table.getCurrentPlayer());
     }
 
     @Test
     public void testAddPlayerToQueue() {
-        table.addPlayerToQueue(new Player(5, 1));
-        table.getNextPlayer();
-        assertEquals(5, table.getNextPlayer().getPlayerID());
+        table.getCurrentPlayer();
+        assertEquals(5, table.getCurrentPlayer().getPlayerID());
     }
 
     @Test
@@ -61,7 +62,7 @@ public class GameTableTest {
     public void testcanPlay() {
         assertFalse(table.canPlay(first));
         table.dealCards();
-        first = table.getNextPlayer();
+        first = table.getCurrentPlayer();
         FigureInterface fig = first.removeFigure();
         array[20].putFigure(fig);
         first.updateFigurePos(fig.getFignr(), 20);
@@ -73,7 +74,7 @@ public class GameTableTest {
         GameTable here = new GameTable(10);
         here.setStartingPlayer(8);
         here.newRound();
-        assertEquals(8, here.getNextPlayer().getPlayerID());
+        assertEquals(8, here.getCurrentPlayer().getPlayerID());
     }
 
     @Test
@@ -101,8 +102,7 @@ public class GameTableTest {
         GameTable branch = new GameTable(5);
         branch.newRound();
         gamefield = branch.getGameField();
-        first = branch.getNextPlayer();
+        first = branch.getCurrentPlayer();
         assertFalse(branch.playerHaswon(gamefield, first));
     }
-
 }

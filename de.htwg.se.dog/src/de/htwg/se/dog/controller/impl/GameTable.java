@@ -14,8 +14,9 @@ import de.htwg.se.dog.models.GameFieldInterface;
 import de.htwg.se.dog.models.PlayerInterface;
 import de.htwg.se.dog.models.impl.GameField;
 import de.htwg.se.dog.models.impl.Player;
+import de.htwg.se.dog.util.Observable;
 
-public class GameTable implements GameTableInterface {
+public class GameTable extends Observable implements GameTableInterface {
 
     private static final int FIELDSTILLHOUSE = 16;
     private static final int HOUSECOUNT = 4;
@@ -25,6 +26,7 @@ public class GameTable implements GameTableInterface {
     private Queue<PlayerInterface> turnPlayer;
     private final CardDealer dealer;
     private final Movement movement;
+    private PlayerInterface currentPlayer;
 
     /**
      * Constructor to generate a new gametable
@@ -101,31 +103,16 @@ public class GameTable implements GameTableInterface {
         Collections.rotate(players, -1);
     }
 
-    /**
-     * Starts a new round
-     */
     @Override
     public void newRound() {
         dealCards();
         dealer.newRound();
     }
 
-    /**
-     * Returns the player that can play now
-     * 
-     * @return the player that is allowed to play
-     */
     @Override
-    public PlayerInterface getNextPlayer() {
-        return turnPlayer.poll();
-    }
+    public void nextPlayer() {
+        currentPlayer = turnPlayer.poll();
 
-    /**
-     * Adds the speciefied Player to the Playerqueue
-     */
-    @Override
-    public void addPlayerToQueue(PlayerInterface p) {
-        turnPlayer.offer(p);
     }
 
     /**
@@ -137,7 +124,12 @@ public class GameTable implements GameTableInterface {
      */
     @Override
     public boolean canPlay(PlayerInterface p) {
-        return !possibleCards(p).isEmpty();
+        boolean retval = false;
+        if (!possibleCards(p).isEmpty()) {
+            turnPlayer.offer(currentPlayer);
+            retval = true;
+        }
+        return retval;
     }
 
     /**
@@ -184,4 +176,25 @@ public class GameTable implements GameTableInterface {
         }
         return retval;
     }
+
+    @Override
+    public PlayerInterface getCurrentPlayer() {
+        return currentPlayer;
+    }
+
+    @Override
+    public String getGameFieldString() {
+        return game.toString();
+    }
+
+    @Override
+    public String getPlayerString() {
+        return currentPlayer.toString();
+    }
+
+    @Override
+    public String getPlayerHandString() {
+        return currentPlayer.printCardsOnHand();
+    }
+
 }

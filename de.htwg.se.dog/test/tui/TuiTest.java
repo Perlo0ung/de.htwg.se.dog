@@ -1,7 +1,6 @@
 package tui;
 
 import org.junit.Before;
-import org.junit.Test;
 
 import de.htwg.se.dog.controller.GameTableInterface;
 import de.htwg.se.dog.controller.impl.GameTable;
@@ -15,7 +14,7 @@ public class TuiTest {
     GameTableInterface table;
     GameFieldInterface field;
     FieldInterface[] array;
-    TextUserInterface tui = new TextUserInterface();
+    TextUserInterface tui = new TextUserInterface(table);
     PlayerInterface p1;
 
     @Before
@@ -25,28 +24,5 @@ public class TuiTest {
         field = table.getGameField();
         array = field.getField();
 
-    }
-
-    @Test
-    public void testGenerateGameField() {
-
-        for (int i = 0; i < PLAYERCOUNT; i++) {
-            p1 = table.getNextPlayer();
-            for (int j = 0; j < 4; j++) {
-                int rand = (int) (Math.random() * field.getFieldSize());
-                array[rand].putFigure(p1.removeFigure(), rand);
-
-            }
-        }
-
-        tui.printGameField(table.getGameField());
-    }
-
-    @Test
-    public void testPrintCardsOnhand() {
-        for (int i = 0; i < PLAYERCOUNT; i++) {
-            p1 = table.getNextPlayer();
-            tui.printCardsOnHand(p1);
-        }
     }
 }

@@ -1,6 +1,7 @@
 package de.htwg.se.dog.models.impl;
 
 import de.htwg.se.dog.models.FieldInterface;
+import de.htwg.se.dog.models.FigureInterface;
 import de.htwg.se.dog.models.GameFieldInterface;
 
 public class GameField implements GameFieldInterface {
@@ -75,5 +76,46 @@ public class GameField implements GameFieldInterface {
     @Override
     public int getPlayerCount() {
         return this.playerCount;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder upper = new StringBuilder();
+        int houseFields = this.getHouseCount();
+        int normalFields = this.getFieldsTillHouse();
+        int playercount = this.getPlayerCount();
+        int range = houseFields + normalFields;
+        FieldInterface[] array = this.getField();
+
+        for (int p = 0; p < playercount; p++) {
+            StringBuilder lower = new StringBuilder();
+            int startFieldNr = range * p;
+            int endFieldNr = startFieldNr + range;
+            for (int f = startFieldNr; f < endFieldNr; f++) {
+                if (array[f].isHouse()) {
+                    upper.append(String.format("( %2d )", f));
+                    lower.append(String.format("( %s )", getPlayerOnField(array, f)));
+                } else {
+                    upper.append(String.format("| %2d |", f));
+                    lower.append(String.format("| %s |", getPlayerOnField(array, f)));
+                }
+
+            }
+            upper.append('\n');
+            lower.append('\n');
+            upper.append(lower).append('\n');
+        }
+        return upper.toString();
+    }
+
+    private String getPlayerOnField(FieldInterface[] array, int fieldnum) {
+        FigureInterface fig = array[fieldnum].getFigure();
+        String s;
+        if (fig == null) {
+            s = "  ";
+        } else {
+            s = String.format("%2d", fig.getOwnerNr());
+        }
+        return s;
     }
 }
