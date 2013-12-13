@@ -168,10 +168,13 @@ public class GameTable extends Observable implements GameTableInterface {
         while (it.hasNext()) {
             CardInterface c = it.next();
             //Put new Figure on field
-
-            if (!game.getField()[movement.getPlayerStart(p)].isBlocked() && p.getCardList().isEmpty() && (c.getValue() == 1 || c.getValue() == 14 || c.getValue() == 13)) {
+            boolean validMoveStartCard = (c.getValue() == 1 || c.getValue() == 14 || c.getValue() == 13);
+            if (!game.getField()[movement.getPlayerStart(p)].isBlocked()
+                    && !p.getFigureList().isEmpty()
+                    && validMoveStartCard) {
                 continue;
             }
+
             //move figure on field
             for (Integer field : p.getFigureRegister()) {
                 movement.setMoveStrategie(c.getValue());
