@@ -65,11 +65,15 @@ public class GameTableTest {
 
     @Test
     public void testcanPlay() {
-        assertFalse(table.canPlay(first));
+        System.out.println(first.getFigureRegister());
+        System.out.println(first.printCardsOnHand());
+        assertTrue(table.canPlay(first));
         table.dealCards();
         first = table.getCurrentPlayer();
-        FigureInterface fig = first.removeFigure();
-        array[1].putFigure(fig, 20);
+        array[1].putFigure(first.removeFigure(), 1);
+        array[2].putFigure(first.removeFigure(), 2);
+        array[3].putFigure(first.removeFigure(), 3);
+        System.out.println(first.getFigureRegister());
         assertTrue(table.canPlay(first));
     }
 
