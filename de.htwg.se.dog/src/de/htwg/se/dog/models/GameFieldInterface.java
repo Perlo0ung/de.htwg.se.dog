@@ -55,5 +55,9 @@ public interface GameFieldInterface extends Cloneable {
     @Override
     String toString();
 
-    Object clone() throws CloneNotSupportedException;
+    /**
+     * Clone a GameField
+     * @return
+     */
+    Object clone();
 }

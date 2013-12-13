@@ -253,7 +253,7 @@ public class Movement implements MovementStrategy {
         return returnval;
     }
 
-    public boolean AnyValidMove(PlayerInterface p) throws CloneNotSupportedException {
+    public boolean AnyValidMove(PlayerInterface p)  {
 
         GameFieldInterface copy = (GameFieldInterface) gameField.clone();
         Movement here = new Movement(copy);
@@ -298,7 +298,7 @@ public class Movement implements MovementStrategy {
             }
         }
         for(Entry<FigureInterface, Integer> e : save.entrySet()){
-        	array[e.getValue()].putFigure(e.getKey(),e.getValue());        	
+        	array[e.getValue()].putFigure(e.getKey());        	
         }
         for(Integer e : del){
         	array[e].removeFigure();        	
