@@ -10,7 +10,7 @@ import de.htwg.se.dog.util.IObserver;
 public class TextUserInterface implements IObserver {
 
     private static final Logger LOG = LogManager.getLogger("UI");
-    private GameTableInterface controller;
+    private final GameTableInterface controller;
 
     public TextUserInterface(GameTableInterface controller) {
         this.controller = controller;
