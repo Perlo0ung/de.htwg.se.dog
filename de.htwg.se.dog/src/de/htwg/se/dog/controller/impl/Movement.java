@@ -228,37 +228,6 @@ public class Movement implements MovementStrategy {
      *            the player that wants to move
      * @return true if the player can move with the card
      */
-    public boolean AnyValidMove12312(PlayerInterface p) {
-        int steps = VALUEOFCARD7;
-        int remaining = 0;
-        boolean returnval = true;
-        LinkedList<Integer> figures = new LinkedList<Integer>(p.getFigureRegister());
-
-        if (figures.isEmpty()) {
-            steps = 0;
-            returnval = false;
-        }
-        Integer currentField = figures.pollFirst();
-        while (steps > 0) {
-            this.setMoveStrategie(VALUEOFCARD7);
-            if (!this.validMove(steps, currentField)) {
-                steps--;
-                remaining++;
-            } else {
-                if (remaining == 0) {
-                    break;
-                }
-                currentField = figures.pollFirst();
-                steps = remaining;
-                if (currentField == null) {
-                    returnval = false;
-                    break;
-                }
-            }
-        }
-        return returnval;
-    }
-
     public boolean AnyValidMove(PlayerInterface p) {
 
     	FieldInterface[] array = gameField.copyField();
@@ -274,7 +243,6 @@ public class Movement implements MovementStrategy {
         
          Integer currentField = figures.pollFirst();
         while (steps > 0) {
-        	System.err.println(currentField);
             if (getTargetfield(array, steps, currentField) <= 0) {
             	steps--;
                 remaining++;

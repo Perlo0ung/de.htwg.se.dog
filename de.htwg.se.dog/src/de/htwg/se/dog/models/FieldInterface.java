@@ -72,5 +72,12 @@ public interface FieldInterface {
      * @param f
      * @return
      */
-    public FieldInterface copy(FieldInterface f);
+    FieldInterface copy(FieldInterface f);
+    
+    /**
+     * string representation of a field
+     * @return field as a string
+     */
+    String toString(); 
+    
 }
