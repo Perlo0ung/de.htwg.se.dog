@@ -67,4 +67,10 @@ public interface FieldInterface {
      * @return true if housefield
      */
     boolean isHouse();
+    /** 
+     * returns a copy if the specified field
+     * @param f
+     * @return
+     */
+    public FieldInterface copy(FieldInterface f);
 }

@@ -68,6 +68,12 @@ public class Field implements FieldInterface {
     public boolean isHouse() {
         return this.house;
     }
-
+    @Override
+    public FieldInterface copy(FieldInterface f) {
+    	FieldInterface tmp = new Field(f.getOwner());
+    	tmp.putFigure(f.getFigure());
+    	tmp.setBlocked(f.isBlocked());
+    	return tmp;
+    }
 
 }

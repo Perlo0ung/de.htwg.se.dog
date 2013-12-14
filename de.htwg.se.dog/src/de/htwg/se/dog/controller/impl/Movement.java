@@ -1,7 +1,5 @@
 package de.htwg.se.dog.controller.impl;
 
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -98,9 +96,8 @@ public class Movement implements MovementStrategy {
      * @return returns number of targetfield, if startfield is empty it returns
      *         -5 or if field is blocked it returns -6
      */
-    protected int getTargetfield(int steps, int startfieldnr) {
-        int absSteps = Math.abs(steps);
-        FieldInterface[] array = gameField.getField();
+    protected int getTargetfield(FieldInterface[] array ,int steps, int startfieldnr) {
+    	int absSteps = Math.abs(steps);
         int currentfieldID = EMPTYFIELD;
         //TODO Monitor whether if-Statment is necessary or not
         if (!fieldEmpty(array[startfieldnr])) {
@@ -122,6 +119,15 @@ public class Movement implements MovementStrategy {
             }
         }
         return currentfieldID;
+    }
+    /**
+     * wrapper methode
+     * @param steps
+     * @param startfieldnr
+     * @return
+     */
+    protected int getTargetfield(int steps, int startfieldnr) {
+       return getTargetfield(gameField.getField(), steps, startfieldnr);
     }
 
     private int adjustSteps(int steps, int psteps, FieldInterface[] array, int playerNr, int nextfieldID, int currentFieldOwner) {
@@ -253,37 +259,37 @@ public class Movement implements MovementStrategy {
         return returnval;
     }
 
-    public boolean AnyValidMove(PlayerInterface p) throws CloneNotSupportedException  {
+    public boolean AnyValidMove(PlayerInterface p) {
 
-    	FieldInterface[] array = gameField.getField();
-        setMoveStrategie(VALUEOFCARD7);
-        
-        LinkedList<Integer> figures = new LinkedList<Integer>(p.getFigureRegister());
-        HashMap<FigureInterface, Integer> save = new HashMap<FigureInterface, Integer>();
-        LinkedList<Integer> del = new LinkedList<Integer>();
-        Collections.reverse(figures);
-        
+    	FieldInterface[] array = gameField.copyField();
+        setMoveStrategie(VALUEOFCARD7);        
+        LinkedList<Integer> figures = new LinkedList<Integer>(p.getFigureRegister());        
         int steps = VALUEOFCARD7;
         int remaining = 0;
         boolean returnval = false;
 
         if (figures.isEmpty()) {
             steps = 0;
-        }
-        Integer currentField = figures.pollFirst();
+        } 
+        
+         Integer currentField = figures.pollFirst();
         while (steps > 0) {
-            if (!validMove(steps, currentField)) {
-                steps--;
+        	System.err.println(currentField);
+            if (getTargetfield(array, steps, currentField) <= 0) {
+            	steps--;
                 remaining++;
             } else {
-
-                int target = getTargetfield(steps, currentField);
+            	
+                int target = getTargetfield(array, steps, currentField);
+                //eigene figure gekillt evtl aus register löschen
+                if(array[target].getFigure() != null) {
+                	figures.removeFirstOccurrence(target);
+                }
                 FigureInterface fig = array[currentField].removeFigure();
-                save.put(fig,currentField);
-                del.add(target);
-
-                
+                array[currentField].setBlocked(false);
+                array[target].setBlocked(true);
                 array[target].putFigure(fig);
+                
                 if (remaining == 0) {
                 	returnval = true;
                     break;
@@ -296,12 +302,6 @@ public class Movement implements MovementStrategy {
                     break;
                 }
             }
-        }
-        for(Entry<FigureInterface, Integer> e : save.entrySet()){
-        	array[e.getValue()].putFigure(e.getKey());        	
-        }
-        for(Integer e : del){
-        	array[e].removeFigure();        	
         }
         return returnval;
     }

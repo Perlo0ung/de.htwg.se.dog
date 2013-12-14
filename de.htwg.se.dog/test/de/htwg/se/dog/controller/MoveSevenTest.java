@@ -70,29 +70,51 @@ public class MoveSevenTest {
 
     //TODO test überdenken
     @Test
-    public void testAnyValidMove() throws CloneNotSupportedException {
+    public void testAnyValidMove()  {
         //Search AnyValidMove of Player without Figures on Field        
         assertFalse(movement.AnyValidMove(tp2));
-        //One Figure moves 7
+        //One Figure moves 7       
         array[0].putFigure(tp1.removeFigure(), 0);
-        System.err.println(tp1.getFigureRegister());
         assertTrue(movement.AnyValidMove(tp1));
         //two figures move
         array[7].putFigure(tp1.removeFigure(), 7);
         array[6].putFigure(tp2.removeFigure(), 6);
         array[8].putFigure(tp2.removeFigure(),8);        
-        System.err.println(tp1.getFigureRegister());
-        System.err.println(tp2.getFigureRegister());
         array[6].setBlocked(true);
         assertTrue(movement.AnyValidMove(tp1));
         //No Move possible    
         array[8].setBlocked(true);      
-        System.out.println(gamefield.toString());
 
         assertFalse(movement.AnyValidMove(tp1));
+
+    }
+    @Test
+    public void testAnyValidMove2()  {
+    	
+        //eigene fig killen
+        array[9].putFigure(tp1.removeFigure(), 9);
+        array[3].putFigure(tp1.removeFigure(), 3);
+        array[6].putFigure(tp2.removeFigure(), 6);
+        array[2].putFigure(tp2.removeFigure(), 2);
+        array[6].setBlocked(true);
+        array[2].setBlocked(true);
         System.out.println(gamefield.toString());
-        System.err.println(tp1.getFigureRegister());
-        System.err.println(tp2.getFigureRegister());
+        assertFalse(movement.AnyValidMove(tp1));
+
+    }
+    @Test
+    public void testAnyValidMove3()  {
+    	
+        //eigene fig killen
+        array[9].putFigure(tp1.removeFigure(), 9);
+        array[1].putFigure(tp1.removeFigure(), 1);
+        array[6].putFigure(tp2.removeFigure(), 6);
+        array[2].putFigure(tp2.removeFigure(), 2);
+        array[6].setBlocked(true);
+        array[2].setBlocked(true);
+        System.out.println(gamefield.toString());
+        assertFalse(movement.AnyValidMove(tp1));
+
     }
 }
 /* Gamefield from setUp

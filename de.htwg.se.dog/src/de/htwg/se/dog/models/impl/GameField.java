@@ -31,18 +31,18 @@ public class GameField implements GameFieldInterface {
         this.playerCount = playerCount;
         this.fieldSize = (houseCount + fieldsTillHouse) * playerCount;
         gamefield = new FieldInterface[fieldSize];
-        generateGamefield();
+        generateGamefield(gamefield);
     }
 
-    private void generateGamefield() {
+    private void generateGamefield(FieldInterface[] field) {
         for (int i = 0; i < playerCount; i++) {
             int startfield = (fieldsTillHouse + houseCount) * i;
             for (int j = startfield; j < (startfield + fieldsTillHouse); j++) {
-                gamefield[j] = new Field(NOOWNER);
+                field[j] = new Field(NOOWNER);
             }
 
             for (int j = startfield + fieldsTillHouse; j < startfield + fieldsTillHouse + houseCount; j++) {
-                gamefield[j] = new Field(i + 1);
+                field[j] = new Field(i + 1);
             }
 
         }
@@ -85,7 +85,7 @@ public class GameField implements GameFieldInterface {
         int normalFields = this.getFieldsTillHouse();
         int playercount = this.getPlayerCount();
         int range = houseFields + normalFields;
-        FieldInterface[] array = this.getField();
+        FieldInterface[] array = gamefield;
 
         for (int p = 0; p < playercount; p++) {
             StringBuilder lower = new StringBuilder();
@@ -123,17 +123,14 @@ public class GameField implements GameFieldInterface {
         return s;
     }
 
-    @Override
-    public Object clone() throws CloneNotSupportedException{
-		return super.clone();
-    }
+    public FieldInterface[] copyField(){
+    	FieldInterface[] copy = new FieldInterface[fieldSize];
+    	for (int i = 0; i < copy.length; i++) {
+			copy[i] = gamefield[i].copy(gamefield[i]);
+		}
+    	return copy;
+      }
 
-    /**
-     * returns the field at fieldnr
-     * 
-     * @param fieldnr
-     * @return
-     */
     public FieldInterface getField(int fieldnr) {
         return gamefield[fieldnr];
     }

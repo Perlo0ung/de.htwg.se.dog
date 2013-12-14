@@ -48,16 +48,16 @@ public interface GameFieldInterface extends Cloneable {
     int getPlayerCount();
 
     /**
-     * Creates a String representation of the Gamefield
+     * creates a string representation of the gamefield
      * 
-     * @return the gamfield as String
+     * @return the gamefield as a string
      */
     @Override
     String toString();
 
     /**
-     * Clone a GameField
-     * @return
+     * creates a copy of the gamefield
+     * @return the copy
      */
-    Object clone() throws CloneNotSupportedException;
+    public FieldInterface[] copyField();
 }
