@@ -75,18 +75,20 @@ public class MoveSevenTest {
         assertFalse(movement.AnyValidMove(tp2));
         //One Figure moves 7
         array[0].putFigure(tp1.removeFigure(), 0);
+        System.err.println(tp1.getFigureRegister());
         assertTrue(movement.AnyValidMove(tp1));
         //two figures move
         array[7].putFigure(tp1.removeFigure(), 7);
         array[6].putFigure(tp2.removeFigure(), 6);
-        array[8].putFigure(tp2.removeFigure(),8);
+        array[8].putFigure(tp2.removeFigure(),8);        
+        System.err.println(tp1.getFigureRegister());
+        System.err.println(tp2.getFigureRegister());
         array[6].setBlocked(true);
         assertTrue(movement.AnyValidMove(tp1));
         //No Move possible    
         array[8].setBlocked(true);      
         System.out.println(gamefield.toString());
-        System.err.println(tp1.getFigureRegister());
-        System.err.println(tp2.getFigureRegister());
+
         assertFalse(movement.AnyValidMove(tp1));
         System.out.println(gamefield.toString());
         System.err.println(tp1.getFigureRegister());

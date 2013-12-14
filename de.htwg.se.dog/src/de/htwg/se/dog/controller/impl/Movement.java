@@ -255,10 +255,8 @@ public class Movement implements MovementStrategy {
 
     public boolean AnyValidMove(PlayerInterface p) throws CloneNotSupportedException  {
 
-        GameFieldInterface copy = (GameFieldInterface) gameField.clone();
-        FieldInterface array[] = copy.getField().clone();
-        Movement here = new Movement(copy);
-        here.setMoveStrategie(VALUEOFCARD7);
+    	FieldInterface[] array = gameField.getField();
+        setMoveStrategie(VALUEOFCARD7);
         
         LinkedList<Integer> figures = new LinkedList<Integer>(p.getFigureRegister());
         HashMap<FigureInterface, Integer> save = new HashMap<FigureInterface, Integer>();
@@ -274,15 +272,16 @@ public class Movement implements MovementStrategy {
         }
         Integer currentField = figures.pollFirst();
         while (steps > 0) {
-            if (!here.validMove(steps, currentField)) {
+            if (!validMove(steps, currentField)) {
                 steps--;
                 remaining++;
             } else {
 
-                int target = here.getTargetfield(steps, currentField);
+                int target = getTargetfield(steps, currentField);
                 FigureInterface fig = array[currentField].removeFigure();
                 save.put(fig,currentField);
                 del.add(target);
+
                 
                 array[target].putFigure(fig);
                 if (remaining == 0) {

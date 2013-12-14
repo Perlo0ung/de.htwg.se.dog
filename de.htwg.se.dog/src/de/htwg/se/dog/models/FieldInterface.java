@@ -1,5 +1,6 @@
 package de.htwg.se.dog.models;
 
+
 public interface FieldInterface {
     /**
      * Puts Figure f on this Field and updates Figurregister of the Owner
