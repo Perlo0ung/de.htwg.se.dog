@@ -96,7 +96,7 @@ public class Movement implements MovementStrategy {
      * @return returns number of targetfield, if startfield is empty it returns
      *         -5 or if field is blocked it returns -6
      */
-    protected int getTargetfield(FieldInterface[] array ,int steps, int startfieldnr) {
+    private int getTargetfield(FieldInterface[] array ,int steps, int startfieldnr) {
     	int absSteps = Math.abs(steps);
         int currentfieldID = EMPTYFIELD;
         //TODO Monitor whether if-Statment is necessary or not
