@@ -94,10 +94,10 @@ public class GameField implements GameFieldInterface {
 			for (int f = startFieldNr; f < endFieldNr; f++) {
 				if (array[f].isHouse()) {
 					upper.append(String.format("( %3d )", f));
-					lower.append(String.format("( %3s )", array[f].toString()));
+					lower.append(String.format("( %3s )", array[f]));
 				} else {
 					upper.append(String.format("| %3d |", f));
-					lower.append(String.format("| %3s |", array[f].toString()));
+					lower.append(String.format("| %3s |", array[f]));
 				}
 
 			}
