@@ -58,4 +58,9 @@ public class GamefieldTest {
     public void testGetPlayerCount() {
         assertEquals(3, f.getPlayerCount());
     }
+
+    @Test
+    public void testGetField(int fieldnr) {
+        assertNotNull(f.getFieldForNum(3));
+    }
 }
