@@ -40,7 +40,10 @@ public class GameTable extends Observable implements GameTableInterface {
         players = new LinkedList<PlayerInterface>();
         dealer = new CardDealer(playerCount);
         movement = new Movement(game);
-        addPlayers(playerCount, HOUSECOUNT);
+        //add players
+        for (int i = 1; i <= playerCount; i++) {
+            players.add(new Player(i, HOUSECOUNT));
+        }
     }
 
     /**
@@ -61,18 +64,6 @@ public class GameTable extends Observable implements GameTableInterface {
     @Override
     public boolean playerQueueIsEmpty() {
         return turnPlayer.isEmpty();
-    }
-
-    /**
-     * Add all Players to playerlist
-     * 
-     * @param playerCount
-     * @param figCount
-     */
-    private void addPlayers(int playerCount, int figCount) {
-        for (int i = 1; i <= playerCount; i++) {
-            players.add(new Player(i, figCount));
-        }
     }
 
     /**
