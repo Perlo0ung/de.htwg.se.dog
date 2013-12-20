@@ -11,6 +11,7 @@ public class MoveNormal extends Movement {
         this.gameField = gameField;
     }
 
+
     /**
      * Trys to Moves Figure "steps" forward, on success it returns true
      * otherwise false
