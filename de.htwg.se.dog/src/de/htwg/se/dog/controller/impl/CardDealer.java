@@ -1,5 +1,7 @@
 package de.htwg.se.dog.controller.impl;
 
+import com.google.inject.Inject;
+
 import de.htwg.se.dog.controller.CardDealerInterface;
 import de.htwg.se.dog.models.CardStackInterface;
 import de.htwg.se.dog.models.PlayerInterface;
@@ -18,6 +20,7 @@ public class CardDealer implements CardDealerInterface {
      * 
      * @param players
      */
+    @Inject
     public CardDealer(int players) {
         this.players = players;
         stackObj = new CardStack(CARDS, players);

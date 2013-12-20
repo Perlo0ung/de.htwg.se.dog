@@ -6,6 +6,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
+import com.google.inject.Inject;
+
 import de.htwg.se.dog.controller.CardDealerInterface;
 import de.htwg.se.dog.controller.GameTableInterface;
 import de.htwg.se.dog.models.CardInterface;
@@ -36,6 +38,7 @@ public class GameTable extends Observable implements GameTableInterface {
      * @param figCount
      *            number of figures per player
      */
+    @Inject
     public GameTable(int playerCount) {
         game = new GameField(FIELDSTILLHOUSE, playerCount, HOUSECOUNT);
         players = new LinkedList<PlayerInterface>();
