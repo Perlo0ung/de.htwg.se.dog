@@ -6,6 +6,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
+import de.htwg.se.dog.controller.CardDealerInterface;
 import de.htwg.se.dog.controller.GameTableInterface;
 import de.htwg.se.dog.models.CardInterface;
 import de.htwg.se.dog.models.FieldInterface;
@@ -23,7 +24,7 @@ public class GameTable extends Observable implements GameTableInterface {
     private final GameField game;
     private final List<PlayerInterface> players;
     private Queue<PlayerInterface> turnPlayer;
-    private final CardDealer dealer;
+    private final CardDealerInterface dealer;
     private final Movement movement;
     private PlayerInterface currentPlayer;
 
