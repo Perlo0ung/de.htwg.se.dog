@@ -14,7 +14,6 @@ public class TextUserInterface implements IObserver {
 
     private static final Logger LOG = LogManager.getLogger("UI");
     private final GameTableInterface controller;
-    private static Scanner scanner = new Scanner(System.in);
 
     public TextUserInterface(GameTableInterface controller) {
         this.controller = controller;
@@ -30,21 +29,29 @@ public class TextUserInterface implements IObserver {
         out(controller.getPlayerHandString());
     }
 
-    public boolean processTurn() {
-        int card = processCardInput();
-        if (card == -1) {
-            return false;
+    public boolean processTurn(Scanner scanner) {
+        while (controller.playerQueueIsEmpty()) {
+            controller.newRound();
         }
-        int fieldnr = processFigureInput();
-        if (fieldnr == -1) {
+        controller.nextPlayer();
+        int card = processCardInput(scanner);
+        if (card == -1)
             return false;
+        if (card == 13 || card == 1 || card == 14) {
+            controller.moveFigureToStart();
+            printTui();
+        } else {
+            int fieldnr = processFigureInput(scanner);
+            if (fieldnr == -1)
+                return false;
         }
         //TODO sonderfälle (sieben, rauskommen, tauschen)
         //TODO zug ausführen
-        return false;
+        System.out.println("mache Zug :)\n\n\n\n\n\n");
+        return true;
     }
 
-    private int processCardInput() {
+    private int processCardInput(Scanner scanner) {
         int card = 0;
         printTui();
         while (true) {
@@ -72,7 +79,7 @@ public class TextUserInterface implements IObserver {
         return card;
     }
 
-    private int processFigureInput() {
+    private int processFigureInput(Scanner scanner) {
         int fieldnr = 0;
         while (true) {
             out("Bitte Feldnummer der zu laufenden Figur auswählen: ");
