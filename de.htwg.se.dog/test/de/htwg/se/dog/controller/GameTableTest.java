@@ -88,7 +88,7 @@ public class GameTableTest {
 
     @Test
     public void testWin() {
-        movement = new Movement();
+        movement = new Movement(gamefield);
         movement.setMoveStrategie(TWO);
         int firsthouse = gamefield.getFieldsTillHouse();
 
@@ -104,7 +104,7 @@ public class GameTableTest {
         // not every figure is in house
         assertFalse(table.playerHaswon(gamefield, first));
         movement.move(1, firsthouse - 1);
-        // every figure is in house
+        // every figure is in house;
         assertTrue(table.playerHaswon(gamefield, first));
 
         //branch coverage

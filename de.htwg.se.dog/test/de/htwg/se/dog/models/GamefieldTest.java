@@ -60,7 +60,7 @@ public class GamefieldTest {
     }
 
     @Test
-    public void testGetField(int fieldnr) {
+    public void testGetField() {
         assertNotNull(f.getFieldForNum(3));
     }
 }
