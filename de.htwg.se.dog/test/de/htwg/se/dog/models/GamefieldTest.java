@@ -16,7 +16,7 @@ public class GamefieldTest {
     int playerCount = 3;
     int fieldsTillHouse = 2;
     int houseCount = 3;
-    int owner = 1;
+    int owner = 3;
     int noowner = 0;
 
     @Rule
@@ -27,12 +27,12 @@ public class GamefieldTest {
         f = new GameField(fieldsTillHouse, playerCount, houseCount);
         temp = new GameField(fieldsTillHouse, playerCount, houseCount);
     }
-
     @Test
     public void testGenerateGameField() {
         assertEquals(noowner, f.getOwner(fieldsTillHouse + houseCount));
         assertEquals(owner, f.getOwner(fieldsTillHouse));
     }
+
 
     @Test
     public void testGetFieldSize() {

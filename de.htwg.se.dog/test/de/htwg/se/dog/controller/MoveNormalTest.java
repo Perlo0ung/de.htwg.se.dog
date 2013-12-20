@@ -66,8 +66,9 @@ public class MoveNormalTest {
         //Is figure moved correctly
         assertEquals(tmpZERO, array[1].getFigure());
         //move figure over house
-        assertTrue(movement.move(3, 1));
-        assertEquals(tmpZERO, array[0].getFigure());
+        assertTrue(movement.move(4, 1));
+        assertEquals(tmpZERO, array[7].getFigure());
+        
     }
 
     @Test
@@ -76,11 +77,11 @@ public class MoveNormalTest {
         FigureInterface tempFig = array[0].getFigure();
         array[0].setBlocked(true);
         assertTrue(array[0].isBlocked());
-        movement.move(2, 0);
+        movement.move(4, 0);
         assertFalse(array[0].isBlocked());
         assertNull(array[0].getFigure());
-        assertEquals(tempFig, array[2].getFigure());
-        assertTrue(array[2].isBlocked());
+        assertEquals(tempFig, array[6].getFigure());
+        assertTrue(array[6].isBlocked());
     }
 
     @Test

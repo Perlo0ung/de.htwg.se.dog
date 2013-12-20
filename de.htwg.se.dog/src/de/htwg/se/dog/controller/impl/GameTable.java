@@ -249,5 +249,4 @@ public class GameTable extends Observable implements GameTableInterface {
         }
         return retval;
     }
-
 }
