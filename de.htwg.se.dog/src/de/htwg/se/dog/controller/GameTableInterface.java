@@ -119,4 +119,6 @@ public interface GameTableInterface extends IObservable {
     boolean fieldIsEmpty(int fieldnr);
 
     int getFigureOwnerID(int fieldnr);
+
+    boolean moveFigureToStart();
 }

@@ -239,4 +239,12 @@ public class GameTable extends Observable implements GameTableInterface {
 
     }
 
+    public boolean moveFigureToStart() {
+        boolean retval = false;
+        if (movement.moveStart(currentPlayer)) {
+            retval = true;
+        }
+        return retval;
+    }
+
 }
