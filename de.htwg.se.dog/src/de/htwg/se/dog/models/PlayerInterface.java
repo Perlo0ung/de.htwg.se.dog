@@ -82,4 +82,8 @@ public interface PlayerInterface {
      */
     String printCardsOnHand();
 
+    /**
+     * removes all cards from specified players hand
+     */
+    void clearCardList();
 }

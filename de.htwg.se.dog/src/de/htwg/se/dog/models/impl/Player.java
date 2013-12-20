@@ -96,4 +96,8 @@ public class Player implements PlayerInterface {
         return String.format("%s\nCards: %s", this.toString(), sb.toString());
     }
 
+    @Override
+    public void clearCardList() {
+        this.cards.clear();
+    }
 }
