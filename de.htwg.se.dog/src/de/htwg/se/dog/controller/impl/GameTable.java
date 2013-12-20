@@ -119,7 +119,6 @@ public class GameTable extends Observable implements GameTableInterface {
             System.out.println("turnPlayerSize: " + turnPlayer.size());
             System.out.println("Liste: " + turnPlayer);
             temp = turnPlayer.poll();
-            System.out.println(temp);
             if (!canPlay(temp)) {
                 temp = null;
             }
