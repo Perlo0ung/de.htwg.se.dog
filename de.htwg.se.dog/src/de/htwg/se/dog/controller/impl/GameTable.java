@@ -34,9 +34,9 @@ public class GameTable extends Observable implements GameTableInterface {
      * Constructor to generate a new gametable
      * 
      * @param playerCount
-     *            number of players
+     *        number of players
      * @param figCount
-     *            number of figures per player
+     *        number of figures per player
      */
     @Inject
     public GameTable(int playerCount) {
@@ -126,7 +126,7 @@ public class GameTable extends Observable implements GameTableInterface {
      * Returns true if the Player has a card that can be played
      * 
      * @param p
-     *            the Player that wants to play
+     *        the Player that wants to play
      * @return true if he can play, otherwise false
      */
     @Override
@@ -156,15 +156,16 @@ public class GameTable extends Observable implements GameTableInterface {
      * Returns a list containing the cards that can be played by Player p
      * 
      * @param p
-     *            the player that wants to play
+     *        the player that wants to play
      * @return a list containing the cards that can be played
      */
     // TODO: implement moveStart as possible playable Card
     @Override
     public List<CardInterface> possibleCards(PlayerInterface p) {
+        System.out.println(p.getCardList());
         List<CardInterface> cards = new LinkedList<CardInterface>(p.getCardList());
         Iterator<CardInterface> it = cards.iterator();
-        while (it.hasNext()) {
+        gotolable: while (it.hasNext()) {
             CardInterface c = it.next();
             //Put new Figure on field
             boolean validMoveStartCard = (c.getValue() == 1 || c.getValue() == 14 || c.getValue() == 13);
@@ -176,7 +177,7 @@ public class GameTable extends Observable implements GameTableInterface {
             for (Integer field : p.getFigureRegister()) {
                 movement.setMoveStrategie(c.getValue());
                 if (movement.validMove(c.getValue(), field)) {
-                    continue;
+                    continue gotolable;
                 }
             }
             it.remove();
