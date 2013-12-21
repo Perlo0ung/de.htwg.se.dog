@@ -8,6 +8,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import de.htwg.se.dog.controller.GameTableInterface;
+import de.htwg.se.dog.models.FieldInterface;
 import de.htwg.se.dog.models.PlayerInterface;
 import de.htwg.se.dog.models.impl.Card;
 import de.htwg.se.dog.util.Event;
@@ -69,7 +70,7 @@ public class TextUserInterface implements IObserver {
         System.out.println("mache Zug :)\n\n\n\n\n\n");
         controller.playCard(card, moves);
         if (controller.currentPlayerHaswon()) {
-            out(String.format("Spieler %d hat Gewonnen!", controller.getCurrentPlayer().getPlayerID()));
+            out(String.format("/n/n/n/n/n/n/n/n/n/n/n/nSpieler %d hat Gewonnen!", controller.getCurrentPlayer().getPlayerID()));
             return false;
         }
         return true;
@@ -111,8 +112,32 @@ public class TextUserInterface implements IObserver {
             out("7 ist noch nicht implementiert!");
             break;
         case 11:
-            //TODO switch einbauen
-            out("tauschen ist noch nicht implementiert.");
+            int targetFieldNr = -1;
+            while (true) {
+                String input;
+                try {
+                    out("Bitte Feldnummer der mit ihrer zu tauschenden Figur eingeben:");
+                    input = scanner.next();
+                    targetFieldNr = Integer.valueOf(input);
+                } catch (NumberFormatException e) {
+                    out("Bitte nur Zahlen eingeben.");
+                }
+                //check if targetfield is on gamefield
+                if (targetFieldNr < 0 && targetFieldNr >= controller.getGameField().getFieldSize()) {
+                    out("Eingegebenes Feld gibt es nicht auf dem Spielbrett.");
+                    continue;
+                }
+                //check if on targetfield is a switchable figure
+                //TODO remove possibility to switch with own figure
+                FieldInterface targetField = controller.getGameField().getGameArray()[targetFieldNr];
+                if (targetField.getFigure() != null && !targetField.isBlocked()) {
+                    steps = targetFieldNr;
+                    break;
+                } else {
+                    out("Auf dem Feld steht keine Figur oder sie ist blocked");
+                }
+
+            }
             break;
         case 2:
         case 3:

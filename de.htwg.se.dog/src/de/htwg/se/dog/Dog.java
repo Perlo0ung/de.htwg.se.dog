@@ -16,7 +16,7 @@ public class Dog {
 
     @Inject
     public Dog() {
-        controller = new GameTable(1);
+        controller = new GameTable(2);
         controller.newRound();
         tui = new TextUserInterface(controller);
 

@@ -1,6 +1,5 @@
 package de.htwg.se.dog.models;
 
-
 public interface FieldInterface {
     /**
      * Puts Figure f on this Field and updates Figurregister of the Owner
@@ -27,7 +26,7 @@ public interface FieldInterface {
     /**
      * returns the reference of the figure attached to this field
      * 
-     * @return the attached figure
+     * @return the attached figure, if there is none, null is returned
      */
 
     FigureInterface getFigure();
@@ -35,7 +34,7 @@ public interface FieldInterface {
     /**
      * returns the PlayerNr of the FigureOwner
      * 
-     * @return
+     * @return number of the FigureOwner, if field is empty -1 is returned
      */
     int getFigureOwnerNr();
 
@@ -67,17 +66,21 @@ public interface FieldInterface {
      * @return true if housefield
      */
     boolean isHouse();
-    /** 
+
+    /**
      * returns a copy if the specified field
+     * 
      * @param f
      * @return
      */
     FieldInterface copy(FieldInterface f);
-    
+
     /**
      * string representation of a field
+     * 
      * @return field as a string
      */
-    String toString(); 
-    
+    @Override
+    String toString();
+
 }

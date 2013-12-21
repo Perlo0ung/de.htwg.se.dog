@@ -160,7 +160,7 @@ public class GameTable extends Observable implements GameTableInterface {
     public List<CardInterface> possibleCards(PlayerInterface p) {
         List<CardInterface> cards = new LinkedList<CardInterface>(p.getCardList());
         Iterator<CardInterface> it = cards.iterator();
-        gotolable: while (it.hasNext()) {
+        cardIsPossible: while (it.hasNext()) {
             CardInterface c = it.next();
             //Put new Figure on field
             boolean validMoveStartCard = (c.getValue() == 1 || c.getValue() == 14 || c.getValue() == 13);
@@ -171,11 +171,13 @@ public class GameTable extends Observable implements GameTableInterface {
             //move figure on field
             for (Integer field : p.getFigureRegister()) {
                 movement.setMoveStrategie(c.getValue());
-                if (c.getValue() != 10 && movement.validMove(c.getValue(), field)) {
-                    continue gotolable;
+                //Normal-Move possible?
+                if (c.getValue() != 11 && movement.validMove(c.getValue(), field)) {
+                    continue cardIsPossible;
                 }
-                if (c.getValue() == 10 && movement.AnySwitchMove(field)) {
-
+                //Switch-Move possible?
+                if (c.getValue() == 11 && movement.AnySwitchMove(field)) {
+                    continue cardIsPossible;
                 }
             }
             it.remove();
