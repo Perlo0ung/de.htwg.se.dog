@@ -47,7 +47,7 @@ public class GameTable extends Observable implements GameTableInterface {
         movement = new Movement(game);
         //add players
         for (int i = 1; i <= playerCount; i++) {
-            players.add(new Player(i, HOUSECOUNT));
+            players.add(new Player(i, HOUSECOUNT, game.calculatePlayerStart(i)));
         }
     }
 
@@ -109,7 +109,6 @@ public class GameTable extends Observable implements GameTableInterface {
         PlayerInterface temp;
         do {
             if (turnPlayer.isEmpty()) {
-                //TODO update neue runde print
                 newRound();
             }
             temp = turnPlayer.poll();
@@ -160,14 +159,13 @@ public class GameTable extends Observable implements GameTableInterface {
     // TODO: implement moveStart as possible playable Card
     @Override
     public List<CardInterface> possibleCards(PlayerInterface p) {
-        System.out.println(p.getCardList());
         List<CardInterface> cards = new LinkedList<CardInterface>(p.getCardList());
         Iterator<CardInterface> it = cards.iterator();
         gotolable: while (it.hasNext()) {
             CardInterface c = it.next();
             //Put new Figure on field
             boolean validMoveStartCard = (c.getValue() == 1 || c.getValue() == 14 || c.getValue() == 13);
-            if (!game.getField()[movement.getPlayerStart(p)].isBlocked() && !p.getFigureList().isEmpty() && validMoveStartCard) {
+            if (!game.getField()[game.calculatePlayerStart(p.getPlayerID())].isBlocked() && !p.getFigureList().isEmpty() && validMoveStartCard) {
                 continue;
             }
 
@@ -247,6 +245,15 @@ public class GameTable extends Observable implements GameTableInterface {
             currentPlayer.removeCard(currentPlayer.getCardfromCardNr(cardNr));
         }
         return retval;
+    }
+
+    public int getPlayerStartfieldNr(PlayerInterface player) {
+        return player.getStartFieldNr();
+    }
+
+    public boolean playerStartfieldBlocked(PlayerInterface player) {
+        int startFieldNr = player.getStartFieldNr();
+        return game.getField()[startFieldNr].isBlocked();
     }
 
     @Override

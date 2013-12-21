@@ -6,7 +6,7 @@ public interface GameFieldInterface extends Cloneable {
      * returns the owner number of a field
      * 
      * @param fieldNr
-     *            number of the field
+     *        number of the field
      * 
      * @return int: ownerNr of the fieldNr, if it has no owner zero is returned
      */
@@ -57,7 +57,10 @@ public interface GameFieldInterface extends Cloneable {
 
     /**
      * creates a copy of the gamefield
+     * 
      * @return the copy
      */
     public FieldInterface[] copyField();
+
+    int calculatePlayerStart(int playerID);
 }

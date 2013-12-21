@@ -17,7 +17,7 @@ public class CardDealerTest {
 
     @Before
     public void setUp() {
-        p = new Player(0, 0);
+        p = new Player(0, 0, 0);
         dealer = new CardDealer(PLAYERS);
     }
 

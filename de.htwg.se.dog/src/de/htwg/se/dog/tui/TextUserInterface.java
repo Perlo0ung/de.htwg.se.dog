@@ -34,6 +34,7 @@ public class TextUserInterface implements IObserver {
 
     public boolean processTurn(Scanner scanner) {
         while (controller.playerQueueIsEmpty()) {
+            out("Kein Spieler hat mehr Karten, beginne neue Runde.");
             controller.newRound();
         }
         controller.nextPlayer();
@@ -44,7 +45,8 @@ public class TextUserInterface implements IObserver {
         Map<Integer, Integer> moves = new HashMap<Integer, Integer>();
         if (card == -1)
             return false;
-        if (card == 13 || card == 1 || card == 14) {
+        //TODO Check && if startfield blocked
+        if ((card == 13 || card == 1 || card == 14)) {
             out("Möchtest du eine neue Figure aufs Spielfeld setzten?(J/N):");
             char input = scanner.next().charAt(0);
             if ((input == 'J' || input == 'j') && controller.moveFigureToStart()) {
@@ -52,6 +54,8 @@ public class TextUserInterface implements IObserver {
                 PlayerInterface currentPlayer = controller.getCurrentPlayer();
                 currentPlayer.removeCard(currentPlayer.getCardfromCardNr(card));
                 return true;
+            } else {
+                out("Mache normalen Zug.");
             }
         }
         fieldnr = processFigureInput(scanner);

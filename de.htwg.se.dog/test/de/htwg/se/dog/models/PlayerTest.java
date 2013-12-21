@@ -25,7 +25,7 @@ public class PlayerTest {
     @Before
     public void setUp() {
         card2 = new Card(2);
-        p1 = new Player(playerNr, figCount);
+        p1 = new Player(playerNr, figCount, 0);
     }
 
     @Test

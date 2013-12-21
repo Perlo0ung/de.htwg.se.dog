@@ -16,7 +16,7 @@ public class FieldTest {
     private final int FIGNUM = 1;
     public FieldInterface feld1;
     public FieldInterface feld2;
-    FigureInterface f = new Figure(new Player(OWNER, 0), FIGNUM);
+    FigureInterface f = new Figure(new Player(OWNER, 0, 0), FIGNUM);
 
     @Before
     public void setUp() {

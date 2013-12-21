@@ -88,4 +88,6 @@ public interface PlayerInterface {
     void clearCardList();
 
     CardInterface getCardfromCardNr(int cardNr);
+
+    int getStartFieldNr();
 }
