@@ -15,17 +15,22 @@ public class Dog {
     private static TextUserInterface tui;
 
     @Inject
-    public Dog() {
-        controller = new GameTable(2);
+    public Dog(int playernumber) {
+        controller = new GameTable(playernumber);
         controller.newRound();
         tui = new TextUserInterface(controller);
 
     }
 
     public static void main(String[] args) {
-        instance = new Dog();
-        boolean continu = true;
         scanner = new Scanner(System.in);
+        //TODO change input of playernumber
+        //TODO errorhandling playernumberinput
+        System.out.println("Bitte geben sie die Spieler anzahl ein:");
+        int playernumber = scanner.nextInt();
+        instance = new Dog(playernumber);
+        boolean continu = true;
+
         while (continu) {
             continu = tui.processTurn(scanner);
         }

@@ -43,30 +43,40 @@ public class TextUserInterface implements IObserver {
         printTui();
         int fieldnr = -1;
         int steps = 0;
-        int card = processCardInput(scanner);
-        Map<Integer, Integer> moves = new HashMap<Integer, Integer>();
-        if (card == -1)
-            return false;
-        //spieler setzt aus
-        if (card == -2)
-            return true;
-        if ((card == 13 || card == 1 || card == 14) && !controller.isPlayerStartfieldBlocked(controller.getCurrentPlayer())) {
-            out("Möchtest du eine neue Figure aufs Spielfeld setzten?(J/N):");
-            char input = scanner.next().charAt(0);
-            if ((input == 'J' || input == 'j') && controller.moveFigureToStart()) {
-                out("Moving Figure to Start-Field");
-                PlayerInterface currentPlayer = controller.getCurrentPlayer();
-                currentPlayer.removeCard(currentPlayer.getCardfromCardNr(card));
+        Map<Integer, Integer> moves = null;
+        int card = NOTINITIALIZED;
+        while (true) {
+            card = processCardInput(scanner);
+            moves = new HashMap<Integer, Integer>();
+            if (card == -1)
+                return false;
+            //spieler setzt aus
+            if (card == -2)
                 return true;
-            } else {
-                out("Mache normalen Zug.");
+            if ((card == 13 || card == 1 || card == 14) && !controller.isPlayerStartfieldBlocked(controller.getCurrentPlayer())) {
+                out("Möchtest du eine neue Figure aufs Spielfeld setzten?(J/N):");
+                char input = scanner.next().charAt(0);
+                if ((input == 'J' || input == 'j') && controller.moveFigureToStart()) {
+                    out("Moving Figure to Start-Field");
+                    PlayerInterface currentPlayer = controller.getCurrentPlayer();
+                    currentPlayer.removeCard(currentPlayer.getCardfromCardNr(card));
+                    return true;
+                } else {
+                    out("Mache normalen Zug.");
+                }
             }
+            fieldnr = processFigureInput(scanner);
+            if (fieldnr == -1)
+                return false;
+            steps = processSteps(scanner, card);
+            moves.put(fieldnr, steps);
+            //check if valid move, if not, redo turn decision
+            if (!controller.isValidMove(card, moves)) {
+                out("Das ist kein gültiger Zug, wiederhole Zugauswahl.");
+                continue;
+            }
+            break;
         }
-        fieldnr = processFigureInput(scanner);
-        if (fieldnr == -1)
-            return false;
-        steps = processSteps(scanner, card);
-        moves.put(fieldnr, steps);
         System.out.println("mache Zug :)\n\n\n\n\n\n");
         controller.playCard(card, moves);
         if (controller.currentPlayerHaswon()) {

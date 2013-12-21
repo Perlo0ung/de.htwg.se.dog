@@ -122,4 +122,6 @@ public interface GameTableInterface extends IObservable {
     boolean moveFigureToStart();
 
     boolean isPlayerStartfieldBlocked(PlayerInterface player);
+
+    public boolean isValidMove(int cardNr, Map<Integer, Integer> moves);
 }
