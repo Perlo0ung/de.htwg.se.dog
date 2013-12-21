@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Queue;
 
 import com.google.inject.Inject;
@@ -111,15 +112,12 @@ public class GameTable extends Observable implements GameTableInterface {
                 //TODO update neue runde print
                 newRound();
             }
-            System.out.println("turnPlayerSize: " + turnPlayer.size());
-            System.out.println("Liste: " + turnPlayer);
             temp = turnPlayer.poll();
             if (!canPlay(temp)) {
                 temp = null;
             }
             currentPlayer = temp;
         } while (currentPlayer == null);
-        System.out.println("ListeNachPoll: " + turnPlayer);
     }
 
     /**
@@ -232,9 +230,23 @@ public class GameTable extends Observable implements GameTableInterface {
     }
 
     @Override
-    public void playCard(int steps, int fieldNr) {
-        // TODO Auto-generated method stub
+    public boolean playCard(int cardNr, Map<Integer, Integer> moves) {
+        boolean retval = false;
 
+        if (moves.size() == 1) {
+            movement.setMoveStrategie(cardNr);
+            //TODO For-Schleife wegmachen
+            for (Integer fieldNr : moves.keySet()) {
+                retval = movement.move(moves.get(fieldNr), fieldNr);
+            }
+        } else
+        {
+            retval = movement.move(moves);
+        }
+        if (retval) {
+            currentPlayer.removeCard(currentPlayer.getCardfromCardNr(cardNr));
+        }
+        return retval;
     }
 
     @Override

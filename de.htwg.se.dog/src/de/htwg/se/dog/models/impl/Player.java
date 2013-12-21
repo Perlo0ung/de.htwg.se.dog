@@ -48,11 +48,21 @@ public class Player implements PlayerInterface {
         return cards.remove(c);
     }
 
+    public CardInterface getCardfromCardNr(int cardNr) {
+        CardInterface card = null;
+        for (CardInterface entry : cards) {
+            if (entry.getValue() == cardNr) {
+                card = entry;
+                break;
+            }
+        }
+        return card;
+    }
+
     @Override
     public FigureInterface removeFigure() {
-        if (figure.isEmpty()) {
+        if (figure.isEmpty())
             return null;
-        }
         return figure.remove(0);
     }
 

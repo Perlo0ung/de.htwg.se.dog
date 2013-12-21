@@ -21,7 +21,7 @@ public interface PlayerInterface {
      * adds a card to players cardlist
      * 
      * @param c
-     *            card which should be added
+     *        card which should be added
      */
     void addCard(CardInterface c);
 
@@ -29,7 +29,7 @@ public interface PlayerInterface {
      * removes card from players cardlist
      * 
      * @param c
-     *            card which should be removed
+     *        card which should be removed
      * @return boolean: true if remove was succsessfull, otherwise false
      */
     boolean removeCard(CardInterface c);
@@ -45,7 +45,7 @@ public interface PlayerInterface {
      * adds figure to players figurelist
      * 
      * @param f
-     *            : Figure which should be added to players figurelist
+     *        : Figure which should be added to players figurelist
      */
     void addFigure(FigureInterface f);
 
@@ -61,9 +61,9 @@ public interface PlayerInterface {
      * at. If fieldId is -1 the figure will be removed from the register
      * 
      * @param fieldId
-     *            the FieldNumber where the is at
+     *        the FieldNumber where the is at
      * @param fignum
-     *            the internal figurenumber for this figure
+     *        the internal figurenumber for this figure
      */
     void updateFigurePos(int fignum, int fieldId);
 
@@ -86,4 +86,6 @@ public interface PlayerInterface {
      * removes all cards from specified players hand
      */
     void clearCardList();
+
+    CardInterface getCardfromCardNr(int cardNr);
 }
