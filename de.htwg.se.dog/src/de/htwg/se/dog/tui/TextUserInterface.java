@@ -15,6 +15,7 @@ import de.htwg.se.dog.util.IObserver;
 
 public class TextUserInterface implements IObserver {
 
+    private static final int NOTINITIALIZED = -99;
     private static final Logger LOG = LogManager.getLogger("UI");
     private final GameTableInterface controller;
 
@@ -45,8 +46,10 @@ public class TextUserInterface implements IObserver {
         Map<Integer, Integer> moves = new HashMap<Integer, Integer>();
         if (card == -1)
             return false;
-        //TODO Check && if startfield blocked
-        if ((card == 13 || card == 1 || card == 14) && controller.isPlayerStartfieldBlocked(controller.getCurrentPlayer())) {
+        //spieler setzt aus
+        if (card == -2)
+            return true;
+        if ((card == 13 || card == 1 || card == 14) && !controller.isPlayerStartfieldBlocked(controller.getCurrentPlayer())) {
             out("Möchtest du eine neue Figure aufs Spielfeld setzten?(J/N):");
             char input = scanner.next().charAt(0);
             if ((input == 'J' || input == 'j') && controller.moveFigureToStart()) {
@@ -65,6 +68,10 @@ public class TextUserInterface implements IObserver {
         moves.put(fieldnr, steps);
         System.out.println("mache Zug :)\n\n\n\n\n\n");
         controller.playCard(card, moves);
+        if (controller.currentPlayerHaswon()) {
+            out(String.format("Spieler %d hat Gewonnen!", controller.getCurrentPlayer().getPlayerID()));
+            return false;
+        }
         return true;
     }
 
@@ -101,11 +108,11 @@ public class TextUserInterface implements IObserver {
             break;
         case 7:
             //TODO 7 aufteilen
-            System.out.println("7 ist noch nicht implementiert!");
+            out("7 ist noch nicht implementiert!");
             break;
         case 11:
             //TODO switch einbauen
-            System.out.println("tauschen ist noch nicht implementiert.");
+            out("tauschen ist noch nicht implementiert.");
             break;
         case 2:
         case 3:
@@ -123,7 +130,7 @@ public class TextUserInterface implements IObserver {
     }
 
     private int processCardInput(Scanner scanner) {
-        int card = 0;
+        int card = NOTINITIALIZED;
         while (true) {
             out("Bitte zu spielende Kartennummer auswählen:");
             String input = scanner.next();
@@ -139,19 +146,31 @@ public class TextUserInterface implements IObserver {
                 }
                 card = zahl;
             } catch (NumberFormatException e) {
-                if (input.equalsIgnoreCase("q")) {
-                    out("Spiel Beendet!");
-                    card = -1;
-                }
+                card = stringEingabe(input);
             }
-
-            break;
+            if (card > NOTINITIALIZED) {
+                break;
+            }
         }
         return card;
     }
 
+    private int stringEingabe(String input) {
+        int retval = NOTINITIALIZED;
+        if (input.equalsIgnoreCase("q")) {
+            out("Spiel Beendet!");
+            retval = -1;
+        }
+        if (input.equalsIgnoreCase("skip")) {
+            out(String.format("Spieler %d wirft seine Karten weg und setzt bis zu nächsten Runde aus.", controller.getCurrentPlayer().getPlayerID()));
+            controller.getCurrentPlayer().clearCardList();
+            retval = -2;
+        }
+        return retval;
+    }
+
     private int processFigureInput(Scanner scanner) {
-        int fieldnr = 0;
+        int fieldnr = NOTINITIALIZED;
         while (true) {
             out("Bitte Feldnummer der zu laufenden Figur auswählen: ");
             String input = scanner.next();
@@ -167,12 +186,11 @@ public class TextUserInterface implements IObserver {
                 }
                 fieldnr = zahl;
             } catch (NumberFormatException e) {
-                if (input.equalsIgnoreCase("q")) {
-                    out("Spiel Beendet!");
-                    fieldnr = -1;
-                }
+                fieldnr = stringEingabe(input);
             }
-            break;
+            if (fieldnr > NOTINITIALIZED) {
+                break;
+            }
         }
         return fieldnr;
     }

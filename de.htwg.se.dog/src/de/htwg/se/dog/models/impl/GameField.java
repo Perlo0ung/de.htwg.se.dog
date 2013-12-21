@@ -119,10 +119,22 @@ public class GameField implements GameFieldInterface {
         return copy;
     }
 
+    /**
+     * returns the field-OBJ on pos fieldnr
+     * 
+     * @param fieldnr
+     * @return returns FieldInterface-OBJ, if fieldnr is out-of-bounce it
+     *         returns null
+     */
     public FieldInterface getFieldForNum(int fieldnr) {
-        return gamefield[fieldnr];
+        FieldInterface field = null;
+        if (gamefield.length > fieldnr) {
+            field = gamefield[fieldnr];
+        }
+        return field;
     }
 
+    @Override
     public int calculatePlayerStart(int playerID) {
         return (getHouseCount() + getFieldsTillHouse())
                 * (playerID - 1);

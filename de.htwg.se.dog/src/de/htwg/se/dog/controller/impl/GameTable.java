@@ -141,7 +141,7 @@ public class GameTable extends Observable implements GameTableInterface {
     @Override
     public boolean playerHasCard(int cardval) {
         boolean retval = false;
-        for (CardInterface c : possibleCards(currentPlayer)) {
+        for (CardInterface c : currentPlayer.getCardList()) {
             if (c.getValue() == cardval) {
                 retval = true;
             }
@@ -182,11 +182,11 @@ public class GameTable extends Observable implements GameTableInterface {
     }
 
     @Override
-    public boolean playerHaswon(GameFieldInterface gamefield, PlayerInterface player) {
+    public boolean currentPlayerHaswon() {
         boolean retval = false;
-        FieldInterface[] array = gamefield.getField();
-        if (player.getFigureRegister().size() == gamefield.getHouseCount()) {
-            for (Integer fieldID : player.getFigureRegister()) {
+        FieldInterface[] array = game.getField();
+        if (currentPlayer.getFigureRegister().size() == game.getHouseCount()) {
+            for (Integer fieldID : currentPlayer.getFigureRegister()) {
                 if (!array[fieldID].isHouse()) {
                     retval = false;
                     break;
@@ -251,6 +251,7 @@ public class GameTable extends Observable implements GameTableInterface {
         return player.getStartFieldNr();
     }
 
+    @Override
     public boolean isPlayerStartfieldBlocked(PlayerInterface player) {
         int startFieldNr = player.getStartFieldNr();
         return game.getField()[startFieldNr].isBlocked();

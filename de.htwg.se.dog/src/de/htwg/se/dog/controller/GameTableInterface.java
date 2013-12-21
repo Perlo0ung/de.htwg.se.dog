@@ -78,7 +78,7 @@ public interface GameTableInterface extends IObservable {
      * @param player
      * @return true if player has won otherwise false
      */
-    boolean playerHaswon(GameFieldInterface gamefield, PlayerInterface player);
+    boolean currentPlayerHaswon();
 
     /**
      * returns the GameField as a string
