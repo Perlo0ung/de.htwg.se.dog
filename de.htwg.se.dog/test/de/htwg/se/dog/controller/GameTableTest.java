@@ -33,7 +33,7 @@ public class GameTableTest {
             table.newRound();
             table.nextPlayer();
         }
-        array = table.getGameField().getField();
+        array = table.getGameField().getGameArray();
         first = table.getCurrentPlayer();
         gamefield = table.getGameField();
     }

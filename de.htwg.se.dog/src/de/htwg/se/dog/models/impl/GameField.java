@@ -56,7 +56,7 @@ public class GameField implements GameFieldInterface {
     }
 
     @Override
-    public FieldInterface[] getField() {
+    public FieldInterface[] getGameArray() {
         return gamefield;
     }
 

@@ -38,7 +38,7 @@ public class MovementTest {
         movement.setMoveStrategie(TWO);
         tp1 = new Player(PLAYERID1, FIGCOUNT, gamefield.calculatePlayerStart(PLAYERID1));
         tp2 = new Player(PLAYERID2, FIGCOUNT, gamefield.calculatePlayerStart(PLAYERID2));
-        array = gamefield.getField();
+        array = gamefield.getGameArray();
 
     }
 

@@ -45,7 +45,7 @@ public class MoveSwitchTest {
         movement.setMoveStrategie(JACK);
         player1 = new Player(PLAYERID1, FIGCOUNT, gamefield.calculatePlayerStart(PLAYERID1));
         player2 = new Player(PLAYERID2, FIGCOUNT, gamefield.calculatePlayerStart(PLAYERID1));
-        array = gamefield.getField();
+        array = gamefield.getGameArray();
 
     } // Voll Geil
 

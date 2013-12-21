@@ -156,7 +156,6 @@ public class GameTable extends Observable implements GameTableInterface {
      *        the player that wants to play
      * @return a list containing the cards that can be played
      */
-    // TODO: implement moveStart as possible playable Card
     @Override
     public List<CardInterface> possibleCards(PlayerInterface p) {
         List<CardInterface> cards = new LinkedList<CardInterface>(p.getCardList());
@@ -165,15 +164,18 @@ public class GameTable extends Observable implements GameTableInterface {
             CardInterface c = it.next();
             //Put new Figure on field
             boolean validMoveStartCard = (c.getValue() == 1 || c.getValue() == 14 || c.getValue() == 13);
-            if (!game.getField()[game.calculatePlayerStart(p.getPlayerID())].isBlocked() && !p.getFigureList().isEmpty() && validMoveStartCard) {
+            if (!game.getGameArray()[game.calculatePlayerStart(p.getPlayerID())].isBlocked() && !p.getFigureList().isEmpty() && validMoveStartCard) {
                 continue;
             }
 
             //move figure on field
             for (Integer field : p.getFigureRegister()) {
                 movement.setMoveStrategie(c.getValue());
-                if (movement.validMove(c.getValue(), field)) {
+                if (c.getValue() != 10 && movement.validMove(c.getValue(), field)) {
                     continue gotolable;
+                }
+                if (c.getValue() == 10 && movement.AnySwitchMove(field)) {
+
                 }
             }
             it.remove();
@@ -184,7 +186,7 @@ public class GameTable extends Observable implements GameTableInterface {
     @Override
     public boolean currentPlayerHaswon() {
         boolean retval = false;
-        FieldInterface[] array = game.getField();
+        FieldInterface[] array = game.getGameArray();
         if (currentPlayer.getFigureRegister().size() == game.getHouseCount()) {
             for (Integer fieldID : currentPlayer.getFigureRegister()) {
                 if (!array[fieldID].isHouse()) {
@@ -254,7 +256,7 @@ public class GameTable extends Observable implements GameTableInterface {
     @Override
     public boolean isPlayerStartfieldBlocked(PlayerInterface player) {
         int startFieldNr = player.getStartFieldNr();
-        return game.getField()[startFieldNr].isBlocked();
+        return game.getGameArray()[startFieldNr].isBlocked();
     }
 
     @Override

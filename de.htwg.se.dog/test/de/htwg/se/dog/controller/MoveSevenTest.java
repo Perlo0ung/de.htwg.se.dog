@@ -42,7 +42,7 @@ public class MoveSevenTest {
         movement.setMoveStrategie(SEVEN);
         tp1 = new Player(PLAYERID1, FIGCOUNT, gamefield.calculatePlayerStart(PLAYERID1));
         tp2 = new Player(PLAYERID2, FIGCOUNT, gamefield.calculatePlayerStart(PLAYERID1));
-        array = gamefield.getField();
+        array = gamefield.getGameArray();
 
     }
 

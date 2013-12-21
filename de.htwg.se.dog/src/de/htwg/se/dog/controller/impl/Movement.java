@@ -132,7 +132,7 @@ public class Movement implements MovementStrategy {
      * @return
      */
     protected int getTargetfield(int steps, int startfieldnr) {
-        return getTargetfield(gameField.getField(), steps, startfieldnr);
+        return getTargetfield(gameField.getGameArray(), steps, startfieldnr);
     }
 
     private int adjustSteps(int steps, int psteps, FieldInterface[] array,
@@ -175,7 +175,7 @@ public class Movement implements MovementStrategy {
     public boolean moveStart(PlayerInterface player) {
         boolean retval = false;
         int startFieldNr = gameField.calculatePlayerStart(player.getPlayerID());
-        FieldInterface[] array = gameField.getField();
+        FieldInterface[] array = gameField.getGameArray();
         if (possibleMoveStart(array, startFieldNr, player)) {
             kickPlayer(array, startFieldNr);
             array[startFieldNr].putFigure(player.removeFigure(), startFieldNr);
@@ -189,6 +189,19 @@ public class Movement implements MovementStrategy {
             PlayerInterface player) {
         return !array[startFieldNr].isBlocked()
                 && !player.getFigureList().isEmpty();
+    }
+
+    /**
+     * checks if it is possible to switch the figure on fieldnr with any other
+     * enemy figure
+     * 
+     * @param fieldnr
+     *        fieldnumber where figure to check stands
+     * @return true if possible figure is found, otherwise false
+     */
+    public boolean AnySwitchMove(int fieldnr) {
+        boolean retval = false;
+        return retval;
     }
 
     /* ------------------------------------------------------------------------- */

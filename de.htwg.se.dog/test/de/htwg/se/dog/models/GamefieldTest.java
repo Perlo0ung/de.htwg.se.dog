@@ -41,7 +41,7 @@ public class GamefieldTest {
 
     @Test
     public void testGetGameField() {
-        assertNotNull(f.getField());
+        assertNotNull(f.getGameArray());
     }
 
     @Test

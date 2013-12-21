@@ -17,7 +17,7 @@ public interface GameFieldInterface extends Cloneable {
      * 
      * @return Field[]: the complete GameField
      */
-    FieldInterface[] getField();
+    FieldInterface[] getGameArray();
 
     /**
      * returns the gamefieldsize
