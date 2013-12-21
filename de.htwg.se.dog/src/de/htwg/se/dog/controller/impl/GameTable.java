@@ -251,7 +251,7 @@ public class GameTable extends Observable implements GameTableInterface {
         return player.getStartFieldNr();
     }
 
-    public boolean playerStartfieldBlocked(PlayerInterface player) {
+    public boolean isPlayerStartfieldBlocked(PlayerInterface player) {
         int startFieldNr = player.getStartFieldNr();
         return game.getField()[startFieldNr].isBlocked();
     }

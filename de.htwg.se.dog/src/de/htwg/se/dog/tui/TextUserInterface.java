@@ -46,7 +46,7 @@ public class TextUserInterface implements IObserver {
         if (card == -1)
             return false;
         //TODO Check && if startfield blocked
-        if ((card == 13 || card == 1 || card == 14)) {
+        if ((card == 13 || card == 1 || card == 14) && controller.isPlayerStartfieldBlocked(controller.getCurrentPlayer())) {
             out("Möchtest du eine neue Figure aufs Spielfeld setzten?(J/N):");
             char input = scanner.next().charAt(0);
             if ((input == 'J' || input == 'j') && controller.moveFigureToStart()) {

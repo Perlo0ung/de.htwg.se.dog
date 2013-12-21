@@ -120,4 +120,6 @@ public interface GameTableInterface extends IObservable {
     int getFigureOwnerID(int fieldnr);
 
     boolean moveFigureToStart();
+
+    boolean isPlayerStartfieldBlocked(PlayerInterface player);
 }
