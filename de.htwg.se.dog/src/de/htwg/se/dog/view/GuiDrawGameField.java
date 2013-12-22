@@ -9,10 +9,15 @@ import java.awt.RenderingHints;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.geom.Arc2D;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import javax.annotation.Resources;
+import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -43,7 +48,10 @@ public class GuiDrawGameField extends JPanel implements MouseListener {
 
 		Graphics2D g2d = (Graphics2D) g;
 		super.paintComponent(g);
-
+		System.out.println(getClass().getResourceAsStream("/resources/dog.jpg"));
+				//BufferedImage img = ImageIO.read(new File(this.getClass().getResource("dog.jpg").getPath()));
+		//g2d.drawImage(img, img.getWidth(), img.getHeight(), null);
+		
 		RenderingHints renderHints = new RenderingHints(
 				RenderingHints.KEY_ANTIALIASING,
 				RenderingHints.VALUE_ANTIALIAS_ON);
@@ -120,6 +128,7 @@ public class GuiDrawGameField extends JPanel implements MouseListener {
 		}
 	}
 
+	
 	private void drawString(Graphics2D g2d, String s, double r2, double x,
 			double y) {
 		g2d.setColor(Color.BLACK);
