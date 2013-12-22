@@ -1,15 +1,10 @@
 package de.htwg.se.dog.tui;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-
 import de.htwg.se.dog.controller.GameTableInterface;
-
-import javax.swing.JButton;
 import javax.swing.border.TitledBorder;
 import javax.swing.UIManager;
 
