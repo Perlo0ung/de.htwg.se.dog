@@ -1,4 +1,4 @@
-package de.htwg.se.dog.tui;
+package de.htwg.se.dog.view;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -40,7 +40,7 @@ public class TextUserInterface implements IObserver {
             controller.newRound();
         }
         controller.nextPlayer();
-        printTui();
+        controller.notifyObservers();
         int fieldnr = -1;
         int steps = 0;
         Map<Integer, Integer> moves = null;

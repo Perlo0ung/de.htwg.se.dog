@@ -8,7 +8,7 @@ import de.htwg.se.dog.controller.impl.GameTable;
 import de.htwg.se.dog.models.FieldInterface;
 import de.htwg.se.dog.models.GameFieldInterface;
 import de.htwg.se.dog.models.PlayerInterface;
-import de.htwg.se.dog.tui.TextUserInterface;
+import de.htwg.se.dog.view.TextUserInterface;
 
 public class TuiTest {
     private final static int PLAYERCOUNT = 4;

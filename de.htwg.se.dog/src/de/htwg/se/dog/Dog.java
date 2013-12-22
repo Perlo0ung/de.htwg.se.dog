@@ -6,8 +6,8 @@ import com.google.inject.Inject;
 
 import de.htwg.se.dog.controller.GameTableInterface;
 import de.htwg.se.dog.controller.impl.GameTable;
-import de.htwg.se.dog.tui.GuiTest;
-import de.htwg.se.dog.tui.TextUserInterface;
+import de.htwg.se.dog.view.GuiTest;
+import de.htwg.se.dog.view.TextUserInterface;
 
 public class Dog {
     private static Scanner scanner;
