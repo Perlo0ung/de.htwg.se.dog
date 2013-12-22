@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.geom.Arc2D;
@@ -38,12 +39,19 @@ public class GuiDrawGameField extends JPanel implements MouseListener {
 
 	@Override
 	protected void paintComponent(Graphics g) {
-		this.removeAll();
 		gMap.clear();
-
-		super.paintComponent(g);
-
+		
 		Graphics2D g2d = (Graphics2D) g;
+		super.paintComponent(g);
+		
+		
+		RenderingHints renderHints = new RenderingHints(
+				RenderingHints.KEY_ANTIALIASING,
+				RenderingHints.VALUE_ANTIALIAS_ON);
+		renderHints.put(RenderingHints.KEY_RENDERING,
+				RenderingHints.VALUE_RENDER_QUALITY);
+		g2d.setRenderingHints(renderHints);
+		
 		GameFieldInterface game = controller.getGameField();
 		FieldInterface[] array = game.getGameArray();
 		int house = game.getHouseCount() * game.getPlayerCount();
@@ -59,7 +67,8 @@ public class GuiDrawGameField extends JPanel implements MouseListener {
 		double x, y;
 		Arc2D gArc;
 		g2d.setStroke(new BasicStroke(RADIUS / HUNDRED));
-		g2d.setFont(new Font("Courier New", Font.BOLD, (int)Math.round(r2 * 0.5)));
+		g2d.setFont(new Font("Courier New", Font.BOLD, (int) Math
+				.round(r2 * 0.5)));
 
 		for (int i = 0; i < size; i++) {
 			if (array[i].isHouse()) {
