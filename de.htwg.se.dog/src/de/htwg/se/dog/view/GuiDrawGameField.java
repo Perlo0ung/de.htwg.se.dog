@@ -40,18 +40,17 @@ public class GuiDrawGameField extends JPanel implements MouseListener {
 	@Override
 	protected void paintComponent(Graphics g) {
 		gMap.clear();
-		
+
 		Graphics2D g2d = (Graphics2D) g;
 		super.paintComponent(g);
-		
-		
+
 		RenderingHints renderHints = new RenderingHints(
 				RenderingHints.KEY_ANTIALIASING,
 				RenderingHints.VALUE_ANTIALIAS_ON);
 		renderHints.put(RenderingHints.KEY_RENDERING,
 				RenderingHints.VALUE_RENDER_QUALITY);
 		g2d.setRenderingHints(renderHints);
-		
+
 		GameFieldInterface game = controller.getGameField();
 		FieldInterface[] array = game.getGameArray();
 		int house = game.getHouseCount() * game.getPlayerCount();
@@ -72,17 +71,19 @@ public class GuiDrawGameField extends JPanel implements MouseListener {
 
 		for (int i = 0; i < size; i++) {
 			if (array[i].isHouse()) {
-				g2d.setColor(col.getColor(array[i].getOwner()));
+
 				x = a + (RADIUS + dif) * Math.cos(t);
 				y = b + (RADIUS + dif) * Math.sin(t);
 				gArc = new Arc2D.Double(x - r2, y - r2, r2, r2, 0, CIRCLE,
 						Arc2D.OPEN);
-				g2d.draw(gArc);
-				g2d.setColor(Color.BLACK);
-				g2d.drawString(String.valueOf(counterhouse + 1),
-						Float.parseFloat(String.valueOf(x - r2 * 0.6)),
-						Float.parseFloat(String.valueOf(y - r2 * 0.4)));
 				dif -= (r2 * 1.2);
+				g2d.setColor(col.getColor(array[i].getOwner()));
+				if (array[i].getFigureOwnerNr() != -1) {
+					g2d.fill(gArc);
+				} else {
+					g2d.draw(gArc);
+				}
+				drawString(g2d, String.valueOf(counterhouse + 1), r2, x, y);
 
 				if (counterhouse == game.getHouseCount()) {
 					counter++;
@@ -102,21 +103,28 @@ public class GuiDrawGameField extends JPanel implements MouseListener {
 				y = b + RADIUS * Math.sin(t);
 				gArc = new Arc2D.Double(x - r2, y - r2, r2, r2, 0, CIRCLE,
 						Arc2D.OPEN);
-				if (i % start == 0) {
+				if (i % start == 0 && !array[i].isBlocked()) {
 					g2d.draw(gArc);
-					g2d.setColor(Color.BLACK);
-					g2d.drawString("S",
-							Float.parseFloat(String.valueOf(x - r2 * 0.64)),
-							Float.parseFloat(String.valueOf(y - r2 * 0.4)));
+					drawString(g2d, "S", r2, x, y);
 				} else {
 					g2d.fill(gArc);
 				}
-
+				if (array[i].isBlocked()) {
+					g2d.setColor(Color.BLACK);
+					drawString(g2d, "B", r2, x, y);
+				}
 				counter++;
 			}
 
 			gMap.put(i, gArc);
 		}
+	}
+
+	private void drawString(Graphics2D g2d, String s, double r2, double x,
+			double y) {
+		g2d.setColor(Color.BLACK);
+		g2d.drawString(s, Float.parseFloat(String.valueOf(x - r2 * 0.64)),
+				Float.parseFloat(String.valueOf(y - r2 * 0.4)));
 	}
 
 	@Override
