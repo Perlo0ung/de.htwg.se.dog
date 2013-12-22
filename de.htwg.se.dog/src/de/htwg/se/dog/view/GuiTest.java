@@ -44,8 +44,8 @@ public class GuiTest extends JFrame implements IObserver {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JPanel gameField = new JPanel();
-		//JPanel gameField = new GuiDrawGameField(controller);
+		//JPanel gameField = new JPanel();
+		JPanel gameField = new GuiDrawGameField(controller);
 		gameField.setBackground(Color.WHITE);
 		gameField.setBounds(0, 0, 1480, 878);
 		contentPane.add(gameField);

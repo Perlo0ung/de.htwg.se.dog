@@ -19,34 +19,36 @@ import de.htwg.se.dog.controller.GameTableInterface;
 import de.htwg.se.dog.models.FieldInterface;
 import de.htwg.se.dog.models.GameFieldInterface;
 
-
-public class GuiDrawGameField extends JPanel implements MouseListener{
-
+public class GuiDrawGameField extends JPanel implements MouseListener {
 
 	private static final long serialVersionUID = 1L;
 	private static final int RADIUS = 380;
 	private static final int HUNDRED = 100;
 	private static final int CIRCLE = 360;
 	private GameTableInterface controller;
-	private static Map<Integer,Arc2D> gMap;
-	private static ColorMap col; 
-	
+	private static Map<Integer, Arc2D> gMap;
+	private static ColorMap col = new ColorMap();
+
 	public GuiDrawGameField(GameTableInterface controller) {
 		this.controller = controller;
 		this.setBackground(Color.WHITE);
 		gMap = new HashMap<Integer, Arc2D>();
 		this.addMouseListener(this);
-		col = new ColorMap();
 	}
 
 	@Override
 	protected void paintComponent(Graphics g) {
+		this.removeAll();
+		gMap.clear();
+
 		super.paintComponent(g);
+
 		Graphics2D g2d = (Graphics2D) g;
 		GameFieldInterface game = controller.getGameField();
 		FieldInterface[] array = game.getGameArray();
 		int house = game.getHouseCount() * game.getPlayerCount();
 		int size = game.getFieldSize();
+		int start = game.getFieldsTillHouse() + game.getHouseCount();
 		double a = getWidth() / 2;
 		double b = getHeight() / 2;
 		double r2 = 2 * Math.PI * RADIUS / size;
@@ -56,20 +58,21 @@ public class GuiDrawGameField extends JPanel implements MouseListener{
 		double dif = -(r2 * 1.2);
 		double x, y;
 		Arc2D gArc;
+		g2d.setStroke(new BasicStroke(RADIUS / HUNDRED));
+		g2d.setFont(new Font("Courier New", Font.BOLD, (int)Math.round(r2 * 0.5)));
 
 		for (int i = 0; i < size; i++) {
-
 			if (array[i].isHouse()) {
 				g2d.setColor(col.getColor(array[i].getOwner()));
-				g2d.setStroke(new BasicStroke(RADIUS / HUNDRED));
 				x = a + (RADIUS + dif) * Math.cos(t);
 				y = b + (RADIUS + dif) * Math.sin(t);
 				gArc = new Arc2D.Double(x - r2, y - r2, r2, r2, 0, CIRCLE,
 						Arc2D.OPEN);
 				g2d.draw(gArc);
 				g2d.setColor(Color.BLACK);
-				g2d.setFont(new Font("Courier New", Font.BOLD, (int) Math.round(r2/2)));
-				g2d.drawString(String.valueOf(counterhouse+1), Float.parseFloat(String.valueOf(x-r2*0.6)),Float.parseFloat(String.valueOf(y-r2*0.4)));
+				g2d.drawString(String.valueOf(counterhouse + 1),
+						Float.parseFloat(String.valueOf(x - r2 * 0.6)),
+						Float.parseFloat(String.valueOf(y - r2 * 0.4)));
 				dif -= (r2 * 1.2);
 
 				if (counterhouse == game.getHouseCount()) {
@@ -81,7 +84,7 @@ public class GuiDrawGameField extends JPanel implements MouseListener{
 				dif = -(r2 * 1.2);
 				counterhouse = 0;
 				if (array[i].getFigureOwnerNr() != -1) {
-					g2d.setColor(col.getColor(array[i].getOwner()));
+					g2d.setColor(col.getColor(array[i].getFigureOwnerNr()));
 				} else {
 					g2d.setColor(Color.GRAY);
 				}
@@ -90,47 +93,57 @@ public class GuiDrawGameField extends JPanel implements MouseListener{
 				y = b + RADIUS * Math.sin(t);
 				gArc = new Arc2D.Double(x - r2, y - r2, r2, r2, 0, CIRCLE,
 						Arc2D.OPEN);
-				g2d.fill(gArc);
+				if (i % start == 0) {
+					g2d.draw(gArc);
+					g2d.setColor(Color.BLACK);
+					g2d.drawString("S",
+							Float.parseFloat(String.valueOf(x - r2 * 0.64)),
+							Float.parseFloat(String.valueOf(y - r2 * 0.4)));
+				} else {
+					g2d.fill(gArc);
+				}
+
 				counter++;
 			}
+
 			gMap.put(i, gArc);
 		}
 	}
-	
 
 	@Override
 	public void mouseClicked(MouseEvent arg0) {
-		   if (arg0.getButton() == 1) {
-			   for (Entry<Integer,Arc2D> a: gMap.entrySet()) {
-				   if (a.getValue().contains(arg0.getX(), arg0.getY())) {
-					   JOptionPane.showMessageDialog(null,"Spielfeld nr: " +a.getKey()+ " gedrückt");
-				   }
-			   }
+		if (arg0.getButton() == 1) {
+			for (Entry<Integer, Arc2D> a : gMap.entrySet()) {
+				if (a.getValue().contains(arg0.getX(), arg0.getY())) {
+					JOptionPane.showMessageDialog(null,
+							"Spielfeld nr: " + a.getKey() + " gedrückt");
+				}
 			}
+		}
 	}
 
 	@Override
 	public void mouseEntered(MouseEvent arg0) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void mouseExited(MouseEvent arg0) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void mousePressed(MouseEvent arg0) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent arg0) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }
