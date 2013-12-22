@@ -126,7 +126,7 @@ public class GuiDrawGameField extends JPanel implements MouseListener{
 		   if (arg0.getButton() == 1) {
 			   for (Entry<Integer,Arc2D> a: gMap.entrySet()) {
 				   if (a.getValue().contains(arg0.getX(), arg0.getY())) {
-					   JOptionPane.showMessageDialog(null,"Spielfeld nr: " +a.getKey()+ "gedrückt");
+					   JOptionPane.showMessageDialog(null,"Spielfeld nr: " +a.getKey()+ " gedrückt");
 				   }
 			   }
 			}
