@@ -16,14 +16,26 @@ public class Player implements PlayerInterface {
     private final List<CardInterface> cards;
     private final Map<Integer, Integer> figureRegister;
     private final int playernum;
+    private final int startFieldNr;
 
     //TODO: Remove housefields-Parameter
-    public Player(int playerNr, int houseFields) {
+    /**
+     * Constructor to create new Player-OBJ
+     * 
+     * @param playerNr
+     *        number of player
+     * @param houseFields
+     *        creates number of houseFields many figures
+     * @param startFieldNr
+     *        saves this number as players startFieldNr
+     */
+    public Player(int playerNr, int houseFields, int startFieldNr) {
         playernum = playerNr;
         figure = new LinkedList<FigureInterface>();
         for (int i = 0; i < houseFields; i++) {
             figure.add(new Figure(this, i + 1));
         }
+        this.startFieldNr = startFieldNr;
         cards = new LinkedList<CardInterface>();
         figureRegister = new HashMap<Integer, Integer>();
     }
@@ -49,10 +61,21 @@ public class Player implements PlayerInterface {
     }
 
     @Override
-    public FigureInterface removeFigure() {
-        if (figure.isEmpty()) {
-            return null;
+    public CardInterface getCardfromCardNr(int cardNr) {
+        CardInterface card = null;
+        for (CardInterface entry : cards) {
+            if (entry.getValue() == cardNr) {
+                card = entry;
+                break;
+            }
         }
+        return card;
+    }
+
+    @Override
+    public FigureInterface removeFigure() {
+        if (figure.isEmpty())
+            return null;
         return figure.remove(0);
     }
 
@@ -99,5 +122,10 @@ public class Player implements PlayerInterface {
     @Override
     public void clearCardList() {
         this.cards.clear();
+    }
+
+    @Override
+    public int getStartFieldNr() {
+        return startFieldNr;
     }
 }

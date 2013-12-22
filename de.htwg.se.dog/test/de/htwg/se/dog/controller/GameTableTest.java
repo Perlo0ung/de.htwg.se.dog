@@ -30,10 +30,10 @@ public class GameTableTest {
         table.newRound();
         table.nextPlayer();
         while (table.getCurrentPlayer().getPlayerID() != 1) {
-        	table.newRound();
-        	table.nextPlayer();
+            table.newRound();
+            table.nextPlayer();
         }
-        array = table.getGameField().getField();
+        array = table.getGameField().getGameArray();
         first = table.getCurrentPlayer();
         gamefield = table.getGameField();
     }
@@ -96,7 +96,7 @@ public class GameTableTest {
 
         movement = new Movement(gamefield);
         movement.setMoveStrategie(TWO);
-        int firsthouse = gamefield.getFieldSize()-4;
+        int firsthouse = gamefield.getFieldSize() - 4;
         assertTrue(array[firsthouse].isHouse());
         assertTrue(array[firsthouse + 1].isHouse());
         assertTrue(array[firsthouse + 2].isHouse());
@@ -107,12 +107,12 @@ public class GameTableTest {
         array[firsthouse + 2].putFigure(first.removeFigure(), firsthouse + 2);
         array[firsthouse + 3].putFigure(first.removeFigure(), firsthouse + 3);
         // not every figure is in house
-        assertFalse(table.playerHaswon(gamefield, first));
-        
+        assertFalse(table.currentPlayerHaswon());
+
         movement.move(1, firsthouse - 1);
         System.out.println(gamefield);
         // every figure is in house;
-        assertTrue(table.playerHaswon(gamefield, first));
+        assertTrue(table.currentPlayerHaswon());
 
         //branch coverage
         GameTable branch = new GameTable(5);
@@ -120,7 +120,7 @@ public class GameTableTest {
         gamefield = branch.getGameField();
         branch.nextPlayer();
         first = branch.getCurrentPlayer();
-        assertFalse(branch.playerHaswon(gamefield, first));
+        assertFalse(branch.currentPlayerHaswon());
     }
 
     @Test

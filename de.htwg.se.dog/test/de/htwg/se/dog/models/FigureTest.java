@@ -17,7 +17,7 @@ public class FigureTest {
     int fignr = 4;
     int wrongPlayernr = -1;
     int wrongFignr = 34;
-    Player player = new Player(playernr, 0);
+    Player player = new Player(playernr, 0, 0);
     @Rule
     public ExpectedException expected = ExpectedException.none();
 

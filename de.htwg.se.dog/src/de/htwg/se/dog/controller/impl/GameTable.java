@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Queue;
 
 import com.google.inject.Inject;
@@ -46,7 +47,7 @@ public class GameTable extends Observable implements GameTableInterface {
         movement = new Movement(game);
         //add players
         for (int i = 1; i <= playerCount; i++) {
-            players.add(new Player(i, HOUSECOUNT));
+            players.add(new Player(i, HOUSECOUNT, game.calculatePlayerStart(i)));
         }
     }
 
@@ -108,18 +109,14 @@ public class GameTable extends Observable implements GameTableInterface {
         PlayerInterface temp;
         do {
             if (turnPlayer.isEmpty()) {
-                //TODO update neue runde print
                 newRound();
             }
-            System.out.println("turnPlayerSize: " + turnPlayer.size());
-            System.out.println("Liste: " + turnPlayer);
             temp = turnPlayer.poll();
             if (!canPlay(temp)) {
                 temp = null;
             }
             currentPlayer = temp;
         } while (currentPlayer == null);
-        System.out.println("ListeNachPoll: " + turnPlayer);
     }
 
     /**
@@ -144,7 +141,7 @@ public class GameTable extends Observable implements GameTableInterface {
     @Override
     public boolean playerHasCard(int cardval) {
         boolean retval = false;
-        for (CardInterface c : possibleCards(currentPlayer)) {
+        for (CardInterface c : currentPlayer.getCardList()) {
             if (c.getValue() == cardval) {
                 retval = true;
             }
@@ -159,25 +156,28 @@ public class GameTable extends Observable implements GameTableInterface {
      *        the player that wants to play
      * @return a list containing the cards that can be played
      */
-    // TODO: implement moveStart as possible playable Card
     @Override
     public List<CardInterface> possibleCards(PlayerInterface p) {
-        System.out.println(p.getCardList());
         List<CardInterface> cards = new LinkedList<CardInterface>(p.getCardList());
         Iterator<CardInterface> it = cards.iterator();
-        gotolable: while (it.hasNext()) {
+        cardIsPossible: while (it.hasNext()) {
             CardInterface c = it.next();
             //Put new Figure on field
             boolean validMoveStartCard = (c.getValue() == 1 || c.getValue() == 14 || c.getValue() == 13);
-            if (!game.getField()[movement.getPlayerStart(p)].isBlocked() && !p.getFigureList().isEmpty() && validMoveStartCard) {
+            if (!game.getGameArray()[game.calculatePlayerStart(p.getPlayerID())].isBlocked() && !p.getFigureList().isEmpty() && validMoveStartCard) {
                 continue;
             }
 
             //move figure on field
             for (Integer field : p.getFigureRegister()) {
                 movement.setMoveStrategie(c.getValue());
-                if (movement.validMove(c.getValue(), field)) {
-                    continue gotolable;
+                //Normal-Move possible?
+                if (c.getValue() != 11 && movement.validMove(c.getValue(), field)) {
+                    continue cardIsPossible;
+                }
+                //Switch-Move possible?
+                if (c.getValue() == 11 && movement.AnySwitchMove(field)) {
+                    continue cardIsPossible;
                 }
             }
             it.remove();
@@ -186,11 +186,11 @@ public class GameTable extends Observable implements GameTableInterface {
     }
 
     @Override
-    public boolean playerHaswon(GameFieldInterface gamefield, PlayerInterface player) {
+    public boolean currentPlayerHaswon() {
         boolean retval = false;
-        FieldInterface[] array = gamefield.getField();
-        if (player.getFigureRegister().size() == gamefield.getHouseCount()) {
-            for (Integer fieldID : player.getFigureRegister()) {
+        FieldInterface[] array = game.getGameArray();
+        if (currentPlayer.getFigureRegister().size() == game.getHouseCount()) {
+            for (Integer fieldID : currentPlayer.getFigureRegister()) {
                 if (!array[fieldID].isHouse()) {
                     retval = false;
                     break;
@@ -232,9 +232,50 @@ public class GameTable extends Observable implements GameTableInterface {
     }
 
     @Override
-    public void playCard(int steps, int fieldNr) {
-        // TODO Auto-generated method stub
+    public boolean playCard(int cardNr, Map<Integer, Integer> moves) {
+        boolean retval = false;
 
+        if (moves.size() == 1) {
+            movement.setMoveStrategie(cardNr);
+            //TODO For-Schleife wegmachen
+            for (Integer fieldNr : moves.keySet()) {
+                retval = movement.move(moves.get(fieldNr), fieldNr);
+            }
+        } else
+        {
+            retval = movement.move(moves);
+        }
+        if (retval) {
+            currentPlayer.removeCard(currentPlayer.getCardfromCardNr(cardNr));
+        }
+        return retval;
+    }
+
+    @Override
+    public boolean isValidMove(int cardNr, Map<Integer, Integer> moves) {
+        boolean retval = false;
+
+        if (moves.size() == 1) {
+            movement.setMoveStrategie(cardNr);
+            //TODO For-Schleife wegmachen
+            for (Integer fieldNr : moves.keySet()) {
+                retval = movement.validMove(moves.get(fieldNr), fieldNr);
+            }
+        } else
+        {
+            //TODO implement check if sevenmove is possible
+        }
+        return retval;
+    }
+
+    public int getPlayerStartfieldNr(PlayerInterface player) {
+        return player.getStartFieldNr();
+    }
+
+    @Override
+    public boolean isPlayerStartfieldBlocked(PlayerInterface player) {
+        int startFieldNr = player.getStartFieldNr();
+        return game.getGameArray()[startFieldNr].isBlocked();
     }
 
     @Override

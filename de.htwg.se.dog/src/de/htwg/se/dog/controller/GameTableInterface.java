@@ -1,6 +1,7 @@
 package de.htwg.se.dog.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import de.htwg.se.dog.models.CardInterface;
 import de.htwg.se.dog.models.GameFieldInterface;
@@ -77,7 +78,7 @@ public interface GameTableInterface extends IObservable {
      * @param player
      * @return true if player has won otherwise false
      */
-    boolean playerHaswon(GameFieldInterface gamefield, PlayerInterface player);
+    boolean currentPlayerHaswon();
 
     /**
      * returns the GameField as a string
@@ -111,14 +112,16 @@ public interface GameTableInterface extends IObservable {
     /**
      * Wraps the Movement
      * 
-     * @param steps
-     * @param fieldNr
      */
-    void playCard(int steps, int fieldNr);
+    boolean playCard(int cardNr, Map<Integer, Integer> moves);
 
     boolean fieldIsEmpty(int fieldnr);
 
     int getFigureOwnerID(int fieldnr);
 
     boolean moveFigureToStart();
+
+    boolean isPlayerStartfieldBlocked(PlayerInterface player);
+
+    public boolean isValidMove(int cardNr, Map<Integer, Integer> moves);
 }

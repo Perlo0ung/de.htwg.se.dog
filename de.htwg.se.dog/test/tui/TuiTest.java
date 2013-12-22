@@ -25,7 +25,7 @@ public class TuiTest {
         table.newRound();
         table.nextPlayer();
         field = table.getGameField();
-        array = field.getField();
+        array = field.getGameArray();
     }
 
     @Test
