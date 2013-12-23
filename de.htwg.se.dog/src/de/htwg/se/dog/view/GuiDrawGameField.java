@@ -12,9 +12,9 @@ import java.awt.geom.Arc2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Map.Entry;
+import java.util.SortedMap;
+import java.util.TreeMap;
 
 import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
@@ -31,8 +31,8 @@ public class GuiDrawGameField extends JPanel implements MouseListener {
 	private static final int HUNDRED = 100;
 	private static final int CIRCLE = 360;
 	private GameTableInterface controller;
-	private static Map<Integer, Arc2D.Double> gMap;
-	private static Map<Integer, Arc2D.Double> gHigh;
+	private static SortedMap<Integer, Arc2D.Double> gMap;
+	private static SortedMap<Integer, Arc2D.Double> gHigh;
 	private static ColorMap col = new ColorMap();
 	private static GameFieldInterface game;
 	private static FieldInterface[] array;
@@ -40,8 +40,8 @@ public class GuiDrawGameField extends JPanel implements MouseListener {
 	public GuiDrawGameField(GameTableInterface controller) {
 		this.controller = controller;
 		this.setBackground(Color.WHITE);
-		gMap = new HashMap<Integer, Arc2D.Double>();
-		gHigh = new HashMap<Integer, Arc2D.Double>();
+		gMap = new TreeMap<Integer, Arc2D.Double>();
+		gHigh = new TreeMap<Integer, Arc2D.Double>();
 		this.addMouseListener(this);
 		game = controller.getGameField();
 		array = game.getGameArray();
@@ -139,13 +139,11 @@ public class GuiDrawGameField extends JPanel implements MouseListener {
 			gMap.put(i, gArc);
 
 		}
-		char[] c = {'F','T'};
-		int cCount = 0;
-		for (Arc2D.Double arc : gHigh.values()) {
+		for (Entry<Integer, Arc2D.Double> arc : gHigh.entrySet()) {
 			g2d.setColor(col.getColor(controller.getCurrentPlayer()
 					.getPlayerID()));
-		    g2d.fill(arc);
-		    drawString(g2d, String.valueOf(c[cCount++]), r2, arc.x+r2, arc.y+r2);
+		    g2d.fill(arc.getValue());
+		    drawString(g2d, String.valueOf(arc.getKey()), r2, arc.getValue().x+r2, arc.getValue().y+r2);
 		}
 	}
 
