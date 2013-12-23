@@ -16,7 +16,7 @@ public class GamefieldTest {
     int playerCount = 3;
     int fieldsTillHouse = 2;
     int houseCount = 3;
-    int owner = 3;
+    int owner = 2;
     int noowner = 0;
 
     @Rule

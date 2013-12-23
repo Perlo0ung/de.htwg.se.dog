@@ -73,4 +73,13 @@ public class PlayerTest {
     public void testtoString() {
         assertEquals("PlayerId: 1", p1.toString());
     }
+    @Test
+    public void testgetStartFieldNr() {
+        assertEquals(0, p1.getStartFieldNr());
+    }
+    @Test
+    public void testgetCardfromCardNr() {
+    	p1.addCard(card2);
+    	assertEquals(card2, p1.getCardfromCardNr(2));
+    }
 }

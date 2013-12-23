@@ -26,7 +26,13 @@ import javax.swing.JFormattedTextField;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
+
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 
 public class GuiTest extends JFrame implements IObserver {
@@ -47,7 +53,16 @@ public class GuiTest extends JFrame implements IObserver {
 		this.setVisible(true);
 		this.controller = controller;
 		this.setTitle("DogGame");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+        this.addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent e){
+            	int quit = JOptionPane.showConfirmDialog(contentPane,"Wirklich beenden?","Beenden",JOptionPane.YES_NO_OPTION);
+                    if(quit == JOptionPane.YES_OPTION ){
+                        System.exit(0);
+                    }
+            }
+        });
+        
 		setBounds(100, 100, 1280, 800);
 		
 		JMenuBar menuBar = new JMenuBar();
@@ -56,21 +71,30 @@ public class GuiTest extends JFrame implements IObserver {
 		JMenu mnGame = new JMenu("Game");
 		menuBar.add(mnGame);
 		
-		JMenuItem mnExit = new JMenuItem("exit");
-		mnGame.add(mnExit);
-		mnGame.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F4,
+		JMenuItem mnExit = new JMenuItem("Dog beenden?");		
+		mnExit.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if (JOptionPane.showConfirmDialog(contentPane, "Wirklich beenden?",
+						"Beenden", JOptionPane.YES_NO_OPTION) == 0) {
+					System.exit(0);
+				}
+			}
+		});
+		mnExit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F4,
 				Event.ALT_MASK));
-		mnGame.setIcon(new ImageIcon(this.getClass()
+		mnExit.setIcon(new ImageIcon(this.getClass()
 				.getResource("/off.png").getPath()));
-
+		mnGame.addSeparator();
+		mnGame.add(mnExit);
+		
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		//JPanel gameField = new GuiDrawGameField(controller);
-		JPanel gameField = new JPanel();
+		JPanel gameField = new GuiDrawGameField(controller);
+		//JPanel gameField = new JPanel();
 		gameField.setBounds(0, 0, 1274, 668);
 		contentPane.add(gameField);
 		gameField.setBackground(Color.WHITE);
@@ -85,34 +109,33 @@ public class GuiTest extends JFrame implements IObserver {
 		tFieldCurrentPlayer.setFont(tFieldCurrentPlayer.getFont().deriveFont(tFieldCurrentPlayer.getFont().getStyle() | Font.BOLD, tFieldCurrentPlayer.getFont().getSize() + 4f));
 		tFieldCurrentPlayer.setBorder(new LineBorder(tFieldCurrentPlayer.getBackground()));
 		tFieldCurrentPlayer.setBackground(Color.WHITE);
-		tFieldCurrentPlayer.setBounds(12, 23, 116, 22);
+		tFieldCurrentPlayer.setBounds(93, 28, 116, 22);
 		panel.add(tFieldCurrentPlayer);
 		tFieldCurrentPlayer.setColumns(10);
 		
 		JLabel lbCurrentPlayer = new JLabel("CurrentPlayer");
 		lbCurrentPlayer.setFont(new Font("Tahoma", Font.BOLD, 13));
-		lbCurrentPlayer.setBounds(12, 8, 101, 16);
+		lbCurrentPlayer.setBounds(93, 13, 101, 16);
 		panel.add(lbCurrentPlayer);
 		
 		cbCards = new JComboBox<Object>();
-		cbCards.setEditable(true);
 		cbCards.setBackground(Color.WHITE);
-		cbCards.setBounds(151, 23, 138, 22);
+		cbCards.setBounds(232, 28, 138, 22);
 		panel.add(cbCards);
 		
 		JLabel lblPlayCard = new JLabel("Cardlist");
 		lblPlayCard.setFont(new Font("Tahoma", Font.BOLD, 13));
-		lblPlayCard.setBounds(151, 8, 56, 16);
+		lblPlayCard.setBounds(232, 13, 56, 16);
 		panel.add(lblPlayCard);
 		
 		JButton btnPlayIt = new JButton("play");
 		btnPlayIt.setBackground(Color.WHITE);
-		btnPlayIt.setBounds(290, 23, 97, 22);
+		btnPlayIt.setBounds(371, 28, 97, 22);
 		panel.add(btnPlayIt);
 		
-		//JPanel figures = new GuiDrawFigures(controller);
-		JPanel figures = new JPanel();
-		figures.setBounds(399, 3, 72, 72);
+		JPanel figures = new GuiDrawFigures(controller);
+		//JPanel figures = new JPanel();
+		figures.setBounds(18, -3, 72, 60);
 		panel.add(figures);
 		figures.setBackground(Color.WHITE);
 	}

@@ -34,13 +34,17 @@ public class GuiDrawGameField extends JPanel implements MouseListener {
 	private static Map<Integer, Arc2D.Double> gMap;
 	private static Map<Integer, Arc2D.Double> gHigh;
 	private static ColorMap col = new ColorMap();
-
+	private static GameFieldInterface game;
+	private static FieldInterface[] array;
+	
 	public GuiDrawGameField(GameTableInterface controller) {
 		this.controller = controller;
 		this.setBackground(Color.WHITE);
 		gMap = new HashMap<Integer, Arc2D.Double>();
 		gHigh = new HashMap<Integer, Arc2D.Double>();
 		this.addMouseListener(this);
+		game = controller.getGameField();
+		array = game.getGameArray();
 	}
 
 	@Override
@@ -57,8 +61,6 @@ public class GuiDrawGameField extends JPanel implements MouseListener {
 				RenderingHints.VALUE_RENDER_QUALITY);
 		g2d.setRenderingHints(renderHints);
 
-		GameFieldInterface game = controller.getGameField();
-		FieldInterface[] array = game.getGameArray();
 		int house = game.getHouseCount() * game.getPlayerCount();
 		int size = game.getFieldSize();
 		int start = game.getFieldsTillHouse() + game.getHouseCount();
@@ -82,7 +84,7 @@ public class GuiDrawGameField extends JPanel implements MouseListener {
 		double x, y;
 		Arc2D.Double gArc;
 		g2d.setStroke(new BasicStroke(RADIUS / HUNDRED));
-		g2d.setFont(new Font("Courier New", Font.BOLD, (int) Math
+		g2d.setFont(new Font("Tahoma", Font.BOLD, (int) Math
 				.round(r2 * 0.5)));
 
 		for (int i = 0; i < size; i++) {
@@ -137,18 +139,21 @@ public class GuiDrawGameField extends JPanel implements MouseListener {
 			gMap.put(i, gArc);
 
 		}
+		char[] c = {'F','T'};
+		int cCount = 0;
 		for (Arc2D.Double arc : gHigh.values()) {
 			g2d.setColor(col.getColor(controller.getCurrentPlayer()
 					.getPlayerID()));
 		    g2d.fill(arc);
+		    drawString(g2d, String.valueOf(c[cCount++]), r2, arc.x+r2, arc.y+r2);
 		}
 	}
 
 	private void drawString(Graphics2D g2d, String s, double r2, double x,
 			double y) {
 		g2d.setColor(Color.BLACK);
-		g2d.drawString(s, Float.parseFloat(String.valueOf(x - r2 * 0.64)),
-				Float.parseFloat(String.valueOf(y - r2 * 0.4)));
+		g2d.drawString(String.format("%2s", s), Float.parseFloat(String.valueOf(x - r2 * 0.78)),
+				Float.parseFloat(String.valueOf(y - r2 * 0.35)));
 	}
 
 	@Override
@@ -166,8 +171,13 @@ public class GuiDrawGameField extends JPanel implements MouseListener {
 						if (gHigh.size() == 2) {
 							gHigh.clear();
 						}
-						gHigh.put(a.getKey(), newArc);
-
+						if(array[a.getKey()].isHouse()) {
+							if(array[a.getKey()].getOwner() == controller.getCurrentPlayer().getPlayerID()) {
+								gHigh.put(a.getKey(), newArc);
+							}	
+						} else {
+							gHigh.put(a.getKey(), newArc);
+						}
 						repaint();						
 						if (gHigh.size() == 2) {
 							Object[] str = gHigh.keySet().toArray();
