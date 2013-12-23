@@ -15,8 +15,6 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
-
-import javax.annotation.Resources;
 import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -48,10 +46,7 @@ public class GuiDrawGameField extends JPanel implements MouseListener {
 
 		Graphics2D g2d = (Graphics2D) g;
 		super.paintComponent(g);
-		System.out.println(getClass().getResourceAsStream("/resources/dog.jpg"));
-				//BufferedImage img = ImageIO.read(new File(this.getClass().getResource("dog.jpg").getPath()));
-		//g2d.drawImage(img, img.getWidth(), img.getHeight(), null);
-		
+
 		RenderingHints renderHints = new RenderingHints(
 				RenderingHints.KEY_ANTIALIASING,
 				RenderingHints.VALUE_ANTIALIAS_ON);
@@ -64,8 +59,18 @@ public class GuiDrawGameField extends JPanel implements MouseListener {
 		int house = game.getHouseCount() * game.getPlayerCount();
 		int size = game.getFieldSize();
 		int start = game.getFieldsTillHouse() + game.getHouseCount();
-		double a = getWidth() / 2;
-		double b = getHeight() / 2;
+		int a = getWidth() / 2;
+		int b = getHeight() / 2;
+
+		try {
+			BufferedImage img = ImageIO.read(new File(this.getClass()
+					.getResource("/dog.jpg").getPath()));
+			g2d.drawImage(img, (getWidth() - img.getWidth()) / 2,
+					(getHeight() - img.getHeight()) / 2, null);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		double r2 = 2 * Math.PI * RADIUS / size;
 		double t = 0;
 		int counter = 1;
@@ -79,7 +84,6 @@ public class GuiDrawGameField extends JPanel implements MouseListener {
 
 		for (int i = 0; i < size; i++) {
 			if (array[i].isHouse()) {
-
 				x = a + (RADIUS + dif) * Math.cos(t);
 				y = b + (RADIUS + dif) * Math.sin(t);
 				gArc = new Arc2D.Double(x - r2, y - r2, r2, r2, 0, CIRCLE,
@@ -112,7 +116,11 @@ public class GuiDrawGameField extends JPanel implements MouseListener {
 				gArc = new Arc2D.Double(x - r2, y - r2, r2, r2, 0, CIRCLE,
 						Arc2D.OPEN);
 				if (i % start == 0 && !array[i].isBlocked()) {
-					g2d.draw(gArc);
+					if (array[i].getFigure() == null) {
+						g2d.draw(gArc);
+					} else {
+						g2d.fill(gArc);
+					}
 					drawString(g2d, "S", r2, x, y);
 				} else {
 					g2d.fill(gArc);
@@ -123,12 +131,10 @@ public class GuiDrawGameField extends JPanel implements MouseListener {
 				}
 				counter++;
 			}
-
 			gMap.put(i, gArc);
 		}
 	}
 
-	
 	private void drawString(Graphics2D g2d, String s, double r2, double x,
 			double y) {
 		g2d.setColor(Color.BLACK);
