@@ -89,6 +89,7 @@ public class GuiDrawGameField extends JPanel implements MouseListener {
 
 		for (int i = 0; i < size; i++) {
 			if (array[i].isHouse()) {
+				
 				x = a + (RADIUS + dif) * Math.cos(t);
 				y = b + (RADIUS + dif) * Math.sin(t);
 				gArc = new Arc2D.Double(x - r2, y - r2, r2, r2, 0, CIRCLE,
@@ -171,12 +172,13 @@ public class GuiDrawGameField extends JPanel implements MouseListener {
 						}
 						if(array[a.getKey()].isHouse()) {
 							if(array[a.getKey()].getOwner() == controller.getCurrentPlayer().getPlayerID()) {
-								gHigh.put(a.getKey(), newArc);
+								gHigh.put(a.getKey(), newArc);			
 							}	
 						} else {
 							gHigh.put(a.getKey(), newArc);
+							repaint();
 						}
-						repaint();						
+												
 						if (gHigh.size() == 2) {
 							Object[] str = gHigh.keySet().toArray();
 							JOptionPane.showMessageDialog(null, String.format("von %s nach %s", str[0],str[1]));
