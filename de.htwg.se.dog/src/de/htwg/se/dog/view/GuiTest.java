@@ -37,22 +37,22 @@ public class GuiTest extends JFrame implements IObserver {
 		this.controller = controller;
 		this.setTitle("DogGame");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1400, 1007);
+		setBounds(100, 100, 1280, 800);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		//JPanel gameField = new JPanel();
 		JPanel gameField = new GuiDrawGameField(controller);
-		gameField.setBackground(Color.WHITE);
-		gameField.setBounds(0, 0, 1480, 878);
+		//JPanel gameField = new JPanel();
+		gameField.setBounds(0, 0, 1274, 668);
 		contentPane.add(gameField);
+		gameField.setBackground(Color.WHITE);
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(Color.WHITE);
-		panel.setBounds(0, 876, 1394, 96);
+		panel.setBounds(0, 668, 1274, 96);
 		contentPane.add(panel);
 		panel.setLayout(null);
 		

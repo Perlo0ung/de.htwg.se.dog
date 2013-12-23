@@ -6,8 +6,10 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
+import java.awt.Shape;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.geom.AffineTransform;
 import java.awt.geom.Arc2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -15,6 +17,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
+
 import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -26,24 +29,26 @@ import de.htwg.se.dog.models.GameFieldInterface;
 public class GuiDrawGameField extends JPanel implements MouseListener {
 
 	private static final long serialVersionUID = 1L;
-	private static final int RADIUS = 380;
+	private static int RADIUS;
 	private static final int HUNDRED = 100;
 	private static final int CIRCLE = 360;
 	private GameTableInterface controller;
-	private static Map<Integer, Arc2D> gMap;
+	private static Map<Integer, Arc2D.Double> gMap;
+	private static Map<Integer, Arc2D.Double> gHigh;
 	private static ColorMap col = new ColorMap();
 
 	public GuiDrawGameField(GameTableInterface controller) {
 		this.controller = controller;
 		this.setBackground(Color.WHITE);
-		gMap = new HashMap<Integer, Arc2D>();
+		gMap = new HashMap<Integer, Arc2D.Double>();
+		gHigh = new HashMap<Integer, Arc2D.Double>();
 		this.addMouseListener(this);
 	}
 
 	@Override
 	protected void paintComponent(Graphics g) {
+		RADIUS = (int)(this.getHeight()/2.3);
 		gMap.clear();
-
 		Graphics2D g2d = (Graphics2D) g;
 		super.paintComponent(g);
 
@@ -77,7 +82,7 @@ public class GuiDrawGameField extends JPanel implements MouseListener {
 		int counterhouse = 1;
 		double dif = -(r2 * 1.2);
 		double x, y;
-		Arc2D gArc;
+		Arc2D.Double gArc;
 		g2d.setStroke(new BasicStroke(RADIUS / HUNDRED));
 		g2d.setFont(new Font("Courier New", Font.BOLD, (int) Math
 				.round(r2 * 0.5)));
@@ -132,6 +137,12 @@ public class GuiDrawGameField extends JPanel implements MouseListener {
 				counter++;
 			}
 			gMap.put(i, gArc);
+
+		}
+		for (Arc2D.Double arc : gHigh.values()) {
+			g2d.setColor(col.getColor(controller.getCurrentPlayer()
+					.getPlayerID()));
+		    g2d.fill(arc);
 		}
 	}
 
@@ -145,10 +156,27 @@ public class GuiDrawGameField extends JPanel implements MouseListener {
 	@Override
 	public void mouseClicked(MouseEvent arg0) {
 		if (arg0.getButton() == 1) {
-			for (Entry<Integer, Arc2D> a : gMap.entrySet()) {
+			for (Entry<Integer, Arc2D.Double> a : gMap.entrySet()) {
 				if (a.getValue().contains(arg0.getX(), arg0.getY())) {
-					JOptionPane.showMessageDialog(null,
-							"Spielfeld nr: " + a.getKey() + " gedrückt");
+					Arc2D.Double arc = a.getValue();
+					Arc2D.Double newArc = new Arc2D.Double(arc.x, arc.y,
+							arc.width, arc.height, 0,CIRCLE , Arc2D.OPEN);
+					if (gHigh.containsKey(a.getKey())) {						
+						gHigh.remove(a.getKey());
+						repaint();
+					} else {
+						if (gHigh.size() == 2) {
+							gHigh.clear();
+						}
+						gHigh.put(a.getKey(), newArc);
+
+						repaint();						
+						if (gHigh.size() == 2) {
+							Object[] str = gHigh.keySet().toArray();
+							JOptionPane.showMessageDialog(null, String.format("von %s nach %s", str[0],str[1]));
+						}
+					}
+					break;
 				}
 			}
 		}
@@ -156,14 +184,10 @@ public class GuiDrawGameField extends JPanel implements MouseListener {
 
 	@Override
 	public void mouseEntered(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void mouseExited(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
