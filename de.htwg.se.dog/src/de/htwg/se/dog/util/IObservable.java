@@ -10,5 +10,5 @@ public interface IObservable {
 
     void notifyObservers();
 
-    void notifyObservers(Event e);
+    void notifyObservers(IOEvent e);
 }

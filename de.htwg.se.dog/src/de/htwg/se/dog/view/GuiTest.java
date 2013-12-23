@@ -1,21 +1,32 @@
 package de.htwg.se.dog.view;
 
 import java.awt.Color;
+import java.awt.Event;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
+
 import de.htwg.se.dog.controller.GameTableInterface;
 import de.htwg.se.dog.models.PlayerInterface;
-import de.htwg.se.dog.util.Event;
+import de.htwg.se.dog.util.IOEvent;
 import de.htwg.se.dog.util.IObserver;
+
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JLabel;
+
 import java.awt.Font;
+import java.awt.event.KeyEvent;
+
+import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JButton;
 import javax.swing.JFormattedTextField;
+import javax.swing.JMenuBar;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
+import javax.swing.KeyStroke;
 
 
 public class GuiTest extends JFrame implements IObserver {
@@ -38,14 +49,28 @@ public class GuiTest extends JFrame implements IObserver {
 		this.setTitle("DogGame");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1280, 800);
+		
+		JMenuBar menuBar = new JMenuBar();
+		setJMenuBar(menuBar);
+		
+		JMenu mnGame = new JMenu("Game");
+		menuBar.add(mnGame);
+		
+		JMenuItem mnExit = new JMenuItem("exit");
+		mnGame.add(mnExit);
+		mnGame.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F4,
+				Event.ALT_MASK));
+		mnGame.setIcon(new ImageIcon(this.getClass()
+				.getResource("/off.png").getPath()));
+
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JPanel gameField = new GuiDrawGameField(controller);
-		//JPanel gameField = new JPanel();
+		//JPanel gameField = new GuiDrawGameField(controller);
+		JPanel gameField = new JPanel();
 		gameField.setBounds(0, 0, 1274, 668);
 		contentPane.add(gameField);
 		gameField.setBackground(Color.WHITE);
@@ -85,15 +110,15 @@ public class GuiTest extends JFrame implements IObserver {
 		btnPlayIt.setBounds(290, 23, 97, 22);
 		panel.add(btnPlayIt);
 		
-		JPanel figures = new GuiDrawFigures(controller);
-		//JPanel figures = new JPanel();
+		//JPanel figures = new GuiDrawFigures(controller);
+		JPanel figures = new JPanel();
 		figures.setBounds(399, 3, 72, 72);
 		panel.add(figures);
 		figures.setBackground(Color.WHITE);
 	}
 	
 	@Override
-	public void update(Event e) {
+	public void update(IOEvent e) {
 		PlayerInterface current = controller.getCurrentPlayer();
 		tFieldCurrentPlayer.setForeground(col.getColor(current.getPlayerID()));
 		tFieldCurrentPlayer.setText(current.toString());

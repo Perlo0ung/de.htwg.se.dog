@@ -27,7 +27,7 @@ public class Observable implements IObservable {
     }
 
     @Override
-    public void notifyObservers(Event e) {
+    public void notifyObservers(IOEvent e) {
         for (IObserver o : observers) {
             o.update(e);
         }
