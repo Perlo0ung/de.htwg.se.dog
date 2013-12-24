@@ -30,6 +30,7 @@ public class GuiDrawGameField extends JPanel implements MouseListener {
 	private static int RADIUS;
 	private static final int HUNDRED = 100;
 	private static final int CIRCLE = 360;
+	private static final int NORM = 35;
 	private GameTableInterface controller;
 	private static SortedMap<Integer, Arc2D.Double> gMap;
 	private static SortedMap<Integer, Arc2D.Double> gHigh;
@@ -49,7 +50,7 @@ public class GuiDrawGameField extends JPanel implements MouseListener {
 
 	@Override
 	protected void paintComponent(Graphics g) {
-		RADIUS = (int)(this.getHeight()/2.3);
+		RADIUS = (int)((this.getHeight()/2.3)-NORM);
 		gMap.clear();
 		Graphics2D g2d = (Graphics2D) g;
 		super.paintComponent(g);
@@ -165,20 +166,19 @@ public class GuiDrawGameField extends JPanel implements MouseListener {
 							arc.width, arc.height, 0,CIRCLE , Arc2D.OPEN);
 					if (gHigh.containsKey(a.getKey())) {						
 						gHigh.remove(a.getKey());
-						repaint();
 					} else {
 						if (gHigh.size() == 2) {
 							gHigh.clear();
 						}
 						if(array[a.getKey()].isHouse()) {
 							if(array[a.getKey()].getOwner() == controller.getCurrentPlayer().getPlayerID()) {
-								gHigh.put(a.getKey(), newArc);			
+								gHigh.put(a.getKey(), newArc);	
+								repaint();
 							}	
 						} else {
 							gHigh.put(a.getKey(), newArc);
 							repaint();
-						}
-												
+						}												
 						if (gHigh.size() == 2) {
 							Object[] str = gHigh.keySet().toArray();
 							JOptionPane.showMessageDialog(null, String.format("von %s nach %s", str[0],str[1]));
