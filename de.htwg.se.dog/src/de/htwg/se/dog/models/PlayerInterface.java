@@ -6,14 +6,14 @@ public interface PlayerInterface {
 	/**
 	 * returns list of Cards player has
 	 * 
-	 * @return List<Card>: of playercards returned
+	 * @return List of cards the player has on his hand 
 	 */
 	List<CardInterface> getCardList();
 
 	/**
 	 * returns list of figures player has
 	 * 
-	 * @return List<Figure>: of figures player returned
+	 * @return List of figures player has
 	 */
 	List<FigureInterface> getFigureList();
 

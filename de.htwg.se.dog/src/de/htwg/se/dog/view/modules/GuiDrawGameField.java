@@ -38,6 +38,7 @@ public class GuiDrawGameField extends JPanel implements MouseListener {
 	private static final int CIRCLE = 360;
 	private static final int MAXRADIUS = 90;
 	private static final int NORM = 35;
+	private static final int HEIGHTNORM = 25;
 	private static final double TWOTHREE = 2.3;
 	private static final double ONETWO = 1.2;
 	private static final double STRINGX = 0.78;
@@ -88,16 +89,15 @@ public class GuiDrawGameField extends JPanel implements MouseListener {
 		super.paintComponent(g);
 
 		setRendering(g2d);
-		radius = (int) ((this.getHeight() / TWOTHREE) - NORM);
+		radius = (int) ((this.getHeight() / TWOTHREE)-NORM);
 		int house = game.getHouseCount() * game.getPlayerCount();
 		int size = game.getFieldSize();
 		int start = game.getFieldsTillHouse() + game.getHouseCount();
 		int a = getWidth() / 2;
-		int b = getHeight() / 2;
-
+		int b = getHeight() / 2 +HEIGHTNORM;
 		drawImageMiddle(g2d);
 		// PREVENT too big fields e.g when playing with 1:1 fields
-		double r2 = 2 * Math.PI * radius / size;
+		double r2 = 2 * Math.PI * radius / size ;
 		if (r2 > MAXRADIUS) {
 			r2 = MAXRADIUS;
 		}
@@ -180,7 +180,7 @@ public class GuiDrawGameField extends JPanel implements MouseListener {
 			BufferedImage img = ImageIO.read(new File(this.getClass()
 					.getResource("/dog.jpg").getPath()));
 			g2d.drawImage(img, (getWidth() - img.getWidth()) / 2,
-					(getHeight() - img.getHeight()) / 2, null);
+					(getHeight()+NORM - img.getHeight()) / 2, null);
 		} catch (IOException e) {
 			System.exit(1);
 		}

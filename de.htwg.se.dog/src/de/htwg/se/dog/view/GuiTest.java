@@ -55,37 +55,38 @@ public class GuiTest extends JFrame implements IObserver {
 	private JLabel[] cards;
 	private OverlapLayout layout;
 	private Component up;
-	// statics for findbugs
-	private static final int WINDOWX = 1280;
-	private static final int WINDOWY = 800;
-	private static final int HUNDRET = 100; 
-	private static final int FIVE = 5;
-	private static final int TEN = 10;
-	private static final int SIXTEEN = 16;
-	private static final int SIXHUNDRETEIGHTEEN = 618;
+	private GuiDrawFigures figures;
+	// statics for findbugs		
 	private static final float FONTBOLD = 4f;
-	private static final int TWENTYTWO = 22;
-	private static final int NINETYSEVEN = 97;
-	private static final int TEXTFIELDY = 633;
-	private static final int GAMEFIELDY = 750;
-	private static final int GAMEFIELDX = 1270;
+	private static final int FIVE = 5;
+	private static final int SIX = 6;
+	private static final int TEN = 10;
 	private static final int TWELVE = 12;
 	private static final int THIRTEEEN = 13;
-	private static final int EIGHTEEN = 18;
-	private static final int SIXHUNDRETFIFTY = 650;
-	private static final int SEVENTY = 70;
-	private static final int SIXTY = 60;
-	private static final int SIX = 6;
-	private static final int HUNDRETTHIRTY = 130;
-	private static final int TWOHUNDRETTEN = 210;
-	private static final int SIXHUNDRET = 600;
-	private static final int HUNDRETTWENTY = 120;
+	private static final int SIXTEEN = 16;	
 	private static final int TWENTY = 20;
+	private static final int TWENTYTWO = 22;
 	private static final int TWENTYFIVE = 25;
-	private static final int HUNDRETTEN = 110;
+	private static final int THIRTY = 30;
+	private static final int FOURTYFIVE = 45;	
+	private static final int SEVENTYFIVE = 75;
 	private static final int EIGHTY = 80;
 	private static final int NINETYFIVE = 95;
-	private static final int SEVENTYFIVE = 75;
+	private static final int NINETYSEVEN = 97;
+	private static final int HUNDRET = 100;
+	private static final int HUNDRETTEN = 110;
+	private static final int HUNDRETTWENTY = 120;
+	private static final int HUNDRETTHIRTY = 130;	
+	private static final int TWOHUNDRETTEN = 210;
+	private static final int SIXHUNDRET = 600;
+	private static final int SIXHUNDRETEIGHTEEN = 618;
+	private static final int TEXTFIELDY = 633;
+	private static final int SIXHUNDRETSIXTY = 660;	
+	private static final int GAMEFIELDY = 750;
+	private static final int WINDOWY = 800;
+	private static final int GAMEFIELDX = 1270;
+	private static final int WINDOWX = 1280;	
+
 	/**
 	 * Create the frame.
 	 */
@@ -138,15 +139,15 @@ public class GuiTest extends JFrame implements IObserver {
 		contentPane.setLayout(null);
 
 		JPanel gameField = new GuiDrawGameField(controller);
-		//JPanel gameField = new JPanel();
+		// JPanel gameField = new JPanel();
 		gameField.setBounds(0, 0, GAMEFIELDX, GAMEFIELDY);
 		contentPane.add(gameField);
 		gameField.setBackground(Color.WHITE);
 		gameField.setLayout(null);
 
-
 		tFieldCurrentPlayer = new JFormattedTextField();
-		tFieldCurrentPlayer.setBounds(TWELVE, TEXTFIELDY, NINETYSEVEN, GuiTest.TWENTYTWO);
+		tFieldCurrentPlayer.setBounds(TWELVE, TEXTFIELDY, NINETYSEVEN,
+				GuiTest.TWENTYTWO);
 		gameField.add(tFieldCurrentPlayer);
 		tFieldCurrentPlayer.setFont(tFieldCurrentPlayer.getFont().deriveFont(
 				tFieldCurrentPlayer.getFont().getStyle() | Font.BOLD,
@@ -157,14 +158,16 @@ public class GuiTest extends JFrame implements IObserver {
 		tFieldCurrentPlayer.setColumns(TEN);
 
 		JLabel lbCurrentPlayer = new JLabel("CurrentPlayer");
-		lbCurrentPlayer.setBounds(TWELVE, GuiTest.SIXHUNDRETEIGHTEEN, HUNDRET, SIXTEEN);
+		lbCurrentPlayer.setBounds(TWELVE, GuiTest.SIXHUNDRETEIGHTEEN, HUNDRET,
+				SIXTEEN);
 		gameField.add(lbCurrentPlayer);
 		lbCurrentPlayer.setFont(new Font("Tahoma", Font.BOLD, THIRTEEEN));
 
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setEnabled(false);
 		scrollPane.setBorder(null);
-		scrollPane.setBounds(HUNDRETTWENTY, SIXHUNDRET, TWOHUNDRETTEN, HUNDRETTHIRTY);
+		scrollPane.setBounds(HUNDRETTWENTY, SIXHUNDRET, TWOHUNDRETTEN,
+				HUNDRETTHIRTY);
 		gameField.add(scrollPane);
 
 		layout = new OverlapLayout(new Point(TWENTYFIVE, 0), true);
@@ -186,18 +189,32 @@ public class GuiTest extends JFrame implements IObserver {
 			});
 			cardHand.add(cards[i]);
 		}
-		JPanel figures = new GuiDrawFigures(controller);
-		//JPanel figures = new JPanel();
-		figures.setBounds(EIGHTEEN, SIXHUNDRETFIFTY, SEVENTY, SIXTY);
+		figures = new GuiDrawFigures();
+		figures.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent arg0) {
+				int quit = JOptionPane.showConfirmDialog(contentPane,
+						"Spielfigur aufs Spielfeld setzen?", "Rausgehen?",
+						JOptionPane.YES_NO_OPTION);
+				if (quit == JOptionPane.YES_OPTION) {
+					//TODO
+				}
+			}
+		});
+		// JPanel figures = new JPanel();
+		figures.setBounds(THIRTY, SIXHUNDRETSIXTY, FOURTYFIVE,FOURTYFIVE);
 		gameField.add(figures);
 		figures.setBackground(Color.WHITE);
+		figures.setLayout(null);
 	}
 
 	@Override
 	public void update(IOEvent e) {
 		PlayerInterface current = controller.getCurrentPlayer();
-		tFieldCurrentPlayer.setForeground(col.getColor(current.getPlayerID()));
+		int playerID = current.getPlayerID();
+		tFieldCurrentPlayer.setForeground(col.getColor(playerID));
 		tFieldCurrentPlayer.setText(current.toString());
+		figures.changePlayer(playerID, current.getFigureList().size());
 		int count = 0;
 		for (CardInterface c : current.getCardList()) {
 			cards[count++].setIcon(new ImageIcon(getClass().getResource(
@@ -209,10 +226,12 @@ public class GuiTest extends JFrame implements IObserver {
 
 	private void cardOut(Component c) {
 		Boolean constraint = layout.getConstraints(c);
-		/*get item at pos i from cardlist
-		System.out.println(controller.getCurrentPlayer().getCardList().get(Integer.parseInt(c.getName())));
+		/*
+		 * get item at pos i from cardlist
+		 * System.out.println(controller.getCurrentPlayer
+		 * ().getCardList().get(Integer.parseInt(c.getName())));
 		 */
-		if (up != null) { 
+		if (up != null) {
 			layout.addLayoutComponent(up, OverlapLayout.POPDOWN);
 		}
 		if (constraint == null || constraint == OverlapLayout.POPDOWN) {

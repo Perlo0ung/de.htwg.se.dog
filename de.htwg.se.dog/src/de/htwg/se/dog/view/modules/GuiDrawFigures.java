@@ -6,10 +6,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.geom.Arc2D;
-
 import javax.swing.JPanel;
-
-import de.htwg.se.dog.controller.GameTableInterface;
 /**
  * Draws a circle with the number of figures a player has on his hands
  * @author Michael
@@ -18,21 +15,20 @@ import de.htwg.se.dog.controller.GameTableInterface;
 public class GuiDrawFigures extends JPanel {
 
 	private static final long serialVersionUID = 1L;
-	private GameTableInterface controller;
 	private static final int CIRCLE = 360;
-	private static final int FIFTEEN = 15;
+	private static final int FIVE= 5;
 	private static final int TWENTY = 20;
-	private static final int FONTX = 22;
-	private static final int FONTY = 41;
+	private static final int FONTX = 8;
+	private static final int FONTY = 32;
 	private static final int FOURTY = 40;
-	private static ColorMap col = new ColorMap();
-
+	private ColorMap colorM = new ColorMap();
+	private Color col = Color.BLACK;
+	private String fig = "";
 	/**
 	 * initializes the panel and sets the controller this panel is working with
 	 * @param controller the gamecontroller
 	 */
-	public GuiDrawFigures(GameTableInterface controller) {
-		this.controller = controller;
+	public GuiDrawFigures() {
 		this.setBackground(Color.WHITE);
 	}
 
@@ -49,12 +45,17 @@ public class GuiDrawFigures extends JPanel {
 		renderHints.put(RenderingHints.KEY_RENDERING,
 				RenderingHints.VALUE_RENDER_QUALITY);
 		g2d.setRenderingHints(renderHints);
-		int fignum = controller.getCurrentPlayer().getFigureList().size();
-		g2d.setColor(col.getColor(controller.getCurrentPlayer().getPlayerID()));
-		g2d.fill(new Arc2D.Double(FIFTEEN, FIFTEEN, FOURTY, FOURTY, 0, CIRCLE,
+
+		g2d.setColor(col);
+		g2d.fill(new Arc2D.Double(1, FIVE, FOURTY, FOURTY, 0, CIRCLE,
 				Arc2D.OPEN));
 		g2d.setColor(Color.BLACK);
 		g2d.setFont(new Font("Tahoma", Font.BOLD, TWENTY));
-		g2d.drawString(String.format("%2d", fignum), FONTX, FONTY);
+		g2d.drawString(fig, FONTX, FONTY);
+	}
+	
+	public void changePlayer(int playernum,int fignum) {
+		col = colorM.getColor(playernum);
+		fig = String.format("%2s",fignum);
 	}
 }
