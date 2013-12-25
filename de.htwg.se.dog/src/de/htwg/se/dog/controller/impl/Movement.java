@@ -19,7 +19,7 @@ public class Movement implements MovementStrategy {
     private static final int BLOCKEDFIELD = -6;
 
     private Movement strategie;
-    private GameFieldInterface gameField;
+    protected GameFieldInterface gameField;
 
     public Movement() {}
 

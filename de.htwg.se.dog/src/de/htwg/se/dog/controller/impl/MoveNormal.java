@@ -7,7 +7,6 @@ import de.htwg.se.dog.models.PlayerInterface;
 
 public class MoveNormal extends Movement {
 
-	private GameFieldInterface gameField;
 	
     public MoveNormal(GameFieldInterface gameField) {
         this.gameField = gameField;
