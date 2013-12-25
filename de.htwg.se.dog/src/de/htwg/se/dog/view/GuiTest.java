@@ -54,7 +54,8 @@ public class GuiTest extends JFrame implements IObserver {
 	private GameTableInterface controller;
 	private ColorMap col = new ColorMap();
 	private JFormattedTextField tFieldCurrentPlayer;
-	private JComboBox<Object> cbCards;
+	@SuppressWarnings("rawtypes")
+	private JComboBox cbCards;
 	private JLabel[] cards;
 	private JPanel cardHand;
 	private OverlapLayout layout;
@@ -63,6 +64,7 @@ public class GuiTest extends JFrame implements IObserver {
 	/**
 	 * Create the frame.
 	 */
+	@SuppressWarnings("rawtypes")
 	public GuiTest(GameTableInterface controller) {
 		controller.addObserver(this);
 		setResizable(false);
@@ -118,7 +120,7 @@ public class GuiTest extends JFrame implements IObserver {
 		gameField.setBackground(Color.WHITE);
 		gameField.setLayout(null);
 
-		cbCards = new JComboBox<Object>();
+		cbCards = new JComboBox();
 		cbCards.setBounds(351, 680, 138, 22);
 		gameField.add(cbCards);
 		cbCards.setBackground(Color.WHITE);
@@ -183,12 +185,13 @@ public class GuiTest extends JFrame implements IObserver {
 
 	}
 
+	@SuppressWarnings("rawtypes")
 	@Override
 	public void update(IOEvent e) {
 		PlayerInterface current = controller.getCurrentPlayer();
 		tFieldCurrentPlayer.setForeground(col.getColor(current.getPlayerID()));
 		tFieldCurrentPlayer.setText(current.toString());
-		cbCards.setModel(new DefaultComboBoxModel<Object>(current.getCardList()
+		cbCards.setModel(new DefaultComboBoxModel(current.getCardList()
 				.toArray()));
 		int count = 0;
 		for (CardInterface c : current.getCardList()) {
