@@ -35,6 +35,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 
+
 public class GuiTest extends JFrame implements IObserver {
 	
 	private static final long serialVersionUID = 1L;
@@ -43,7 +44,6 @@ public class GuiTest extends JFrame implements IObserver {
 	private ColorMap col = new ColorMap();
 	private JFormattedTextField tFieldCurrentPlayer;
 	private JComboBox<Object> cbCards;
-
 	/**
 	 * Create the frame.
 	 */
@@ -62,7 +62,6 @@ public class GuiTest extends JFrame implements IObserver {
                     }
             }
         });
-        
 		setBounds(100, 100, 1280, 800);
 		
 		JMenuBar menuBar = new JMenuBar();
@@ -95,49 +94,55 @@ public class GuiTest extends JFrame implements IObserver {
 		
 		JPanel gameField = new GuiDrawGameField(controller);
 		//JPanel gameField = new JPanel();
-		gameField.setBounds(0, 0, 1274, 668);
+		gameField.setBounds(0, 0, 1274, 739);
 		contentPane.add(gameField);
 		gameField.setBackground(Color.WHITE);
+		gameField.setLayout(null);
 		
-		JPanel panel = new JPanel();
-		panel.setBackground(Color.WHITE);
-		panel.setBounds(0, 668, 1274, 96);
-		contentPane.add(panel);
-		panel.setLayout(null);
+		cbCards = new JComboBox<Object>();
+		cbCards.setBounds(351, 680, 138, 22);
+		gameField.add(cbCards);
+		cbCards.setBackground(Color.WHITE);
+		
+		JLabel lblPlayCard = new JLabel("Cardlist");
+		lblPlayCard.setBounds(351, 665, 56, 16);
+		gameField.add(lblPlayCard);
+		lblPlayCard.setFont(new Font("Tahoma", Font.BOLD, 13));
+		
+		JButton btnPlayIt = new JButton("play");
+		btnPlayIt.setBounds(350, 704, 97, 22);
+		gameField.add(btnPlayIt);
+		btnPlayIt.setBackground(Color.WHITE);
+
 		
 		tFieldCurrentPlayer = new JFormattedTextField();
+		tFieldCurrentPlayer.setBounds(12, 633, 116, 22);
+		gameField.add(tFieldCurrentPlayer);
 		tFieldCurrentPlayer.setFont(tFieldCurrentPlayer.getFont().deriveFont(tFieldCurrentPlayer.getFont().getStyle() | Font.BOLD, tFieldCurrentPlayer.getFont().getSize() + 4f));
 		tFieldCurrentPlayer.setBorder(new LineBorder(tFieldCurrentPlayer.getBackground()));
 		tFieldCurrentPlayer.setBackground(Color.WHITE);
-		tFieldCurrentPlayer.setBounds(93, 28, 116, 22);
-		panel.add(tFieldCurrentPlayer);
 		tFieldCurrentPlayer.setColumns(10);
-		
-		JLabel lbCurrentPlayer = new JLabel("CurrentPlayer");
-		lbCurrentPlayer.setFont(new Font("Tahoma", Font.BOLD, 13));
-		lbCurrentPlayer.setBounds(93, 13, 101, 16);
-		panel.add(lbCurrentPlayer);
-		
-		cbCards = new JComboBox<Object>();
-		cbCards.setBackground(Color.WHITE);
-		cbCards.setBounds(232, 28, 138, 22);
-		panel.add(cbCards);
-		
-		JLabel lblPlayCard = new JLabel("Cardlist");
-		lblPlayCard.setFont(new Font("Tahoma", Font.BOLD, 13));
-		lblPlayCard.setBounds(232, 13, 56, 16);
-		panel.add(lblPlayCard);
-		
-		JButton btnPlayIt = new JButton("play");
-		btnPlayIt.setBackground(Color.WHITE);
-		btnPlayIt.setBounds(371, 28, 97, 22);
-		panel.add(btnPlayIt);
-		
+				
 		JPanel figures = new GuiDrawFigures(controller);
 		//JPanel figures = new JPanel();
-		figures.setBounds(18, -3, 72, 60);
-		panel.add(figures);
+		figures.setBounds(12, 666, 72, 60);
+		gameField.add(figures);
 		figures.setBackground(Color.WHITE);
+		
+		JLabel lbCurrentPlayer = new JLabel("CurrentPlayer");
+		lbCurrentPlayer.setBounds(12, 618, 101, 16);
+		gameField.add(lbCurrentPlayer);
+		lbCurrentPlayer.setFont(new Font("Tahoma", Font.BOLD, 13));
+		
+		//JPanel cardHand = new JPanel();
+		JPanel cardHand = new GuiDrawCardHand(controller);
+		cardHand.setBounds(140, 599, 199, 140);
+		cardHand.setBackground(Color.WHITE);
+		cardHand.setLayout(null);
+		gameField.add(cardHand);
+
+		
+		
 	}
 	
 	@Override
@@ -146,7 +151,8 @@ public class GuiTest extends JFrame implements IObserver {
 		tFieldCurrentPlayer.setForeground(col.getColor(current.getPlayerID()));
 		tFieldCurrentPlayer.setText(current.toString());
 		cbCards.setModel(new DefaultComboBoxModel<Object>(current.getCardList().toArray()));
-
-		repaint();
+		this.validate();
+		this.repaint();
 	}
+
 }
