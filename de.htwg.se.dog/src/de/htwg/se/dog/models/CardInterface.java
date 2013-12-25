@@ -17,11 +17,4 @@ public interface CardInterface extends Comparable<CardInterface> {
      */
     String getCardName();
 
-    /**
-     * compares 2 cards by value
-     * 
-     * @param c
-     *            the card to compare
-     * @return
-     */
 }

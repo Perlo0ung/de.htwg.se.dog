@@ -10,7 +10,11 @@ import java.awt.geom.Arc2D;
 import javax.swing.JPanel;
 
 import de.htwg.se.dog.controller.GameTableInterface;
-
+/**
+ * Draws a circle with the number of figures a player has on his hands
+ * @author Michael
+ *
+ */
 public class GuiDrawFigures extends JPanel {
 
 	private static final long serialVersionUID = 1L;
@@ -23,11 +27,18 @@ public class GuiDrawFigures extends JPanel {
 	private static final int FOURTY = 40;
 	private static ColorMap col = new ColorMap();
 
+	/**
+	 * initializes the panel and sets the controller this panel is working with
+	 * @param controller the gamecontroller
+	 */
 	public GuiDrawFigures(GameTableInterface controller) {
 		this.controller = controller;
 		this.setBackground(Color.WHITE);
 	}
 
+	/**
+	 * Draws the point with the number of figures left on a players hand
+	 */
 	@Override
 	protected void paintComponent(Graphics g) {
 		Graphics2D g2d = (Graphics2D) g;

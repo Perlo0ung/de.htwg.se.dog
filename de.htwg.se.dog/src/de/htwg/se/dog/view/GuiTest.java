@@ -171,6 +171,7 @@ public class GuiTest extends JFrame implements IObserver {
 			cards[i] = new JLabel();
 			cards[i].setBounds(0, 0, 75, 95);
 			cards[i].setPreferredSize(new Dimension(80, 110));
+			cards[i].setName(String.valueOf(i));
 			cards[i].addMouseListener(new MouseAdapter() {
 				@Override
 				public void mousePressed(MouseEvent e) {
@@ -200,6 +201,9 @@ public class GuiTest extends JFrame implements IObserver {
 
 	private void cardOut(Component c) {
 		Boolean constraint = layout.getConstraints(c);
+		/*get item at pos i from cardlist
+		System.out.println(controller.getCurrentPlayer().getCardList().get(Integer.parseInt(c.getName())));
+		 */
 		if (up != null) { 
 			layout.addLayoutComponent(up, OverlapLayout.POP_DOWN);
 		}

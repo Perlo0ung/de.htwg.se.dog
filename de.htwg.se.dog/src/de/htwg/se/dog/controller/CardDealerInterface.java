@@ -20,19 +20,19 @@ public interface CardDealerInterface {
      * 
      * @return int: roundnumber
      */
-    public int getRound();
+    int getRound();
 
     /**
      * Returns number of cards used this cards
      * 
      * @return int: cards to be dealed this round
      */
-    public int expectedNumOfCards();
+    int expectedNumOfCards();
 
     /**
      * returns the cardstack-OBJ
      * 
      * @return CardStack: current cardstack
      */
-    public CardStackInterface getObject();
+    CardStackInterface getObject();
 }

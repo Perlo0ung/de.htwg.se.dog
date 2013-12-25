@@ -7,6 +7,7 @@ public class Card implements CardInterface {
     private final int value;
     private static final int ONE = 1;
     private static final int FOURTEEN = 14;
+    private static final int PRIM = 31;
 
     private static final String[] CARDNAMES = { "Ass", "Zwei", "Drei", "Vier", "Fuenf", "Sechs", "Sieben", "Acht", "Neun", "Zehn", "Bube", "Dame", "Koenig", "Joker" };
 
@@ -59,10 +60,7 @@ public class Card implements CardInterface {
 
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + value;
-		return result;
+		return PRIM+value;
 	}
 
 

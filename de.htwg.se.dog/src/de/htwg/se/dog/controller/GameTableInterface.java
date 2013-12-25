@@ -15,7 +15,7 @@ public interface GameTableInterface extends IObservable {
      * 
      * @return
      */
-    public GameFieldInterface getGameField();
+    GameFieldInterface getGameField();
 
     /**
      * Returns weather the playerqueue is empty or not
@@ -114,7 +114,7 @@ public interface GameTableInterface extends IObservable {
      * 
      */
     boolean playCard(int cardNr, Map<Integer, Integer> moves);
-
+ 
     boolean fieldIsEmpty(int fieldnr);
 
     int getFigureOwnerID(int fieldnr);
@@ -123,5 +123,5 @@ public interface GameTableInterface extends IObservable {
 
     boolean isPlayerStartfieldBlocked(PlayerInterface player);
 
-    public boolean isValidMove(int cardNr, Map<Integer, Integer> moves);
+    boolean isValidMove(int cardNr, Map<Integer, Integer> moves);
 }
