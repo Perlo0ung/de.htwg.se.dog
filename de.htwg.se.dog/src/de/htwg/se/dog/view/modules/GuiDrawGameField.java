@@ -91,8 +91,8 @@ public class GuiDrawGameField extends JPanel implements MouseListener {
 		for (int i = 0; i < size; i++) {
 			if (array[i].isHouse()) {
 				
-				x = a + (RADIUS + dif) * Math.cos(t);
-				y = b + (RADIUS + dif) * Math.sin(t);
+				x = a + (RADIUS + dif) * -Math.cos(t);
+				y = b + (RADIUS + dif) * -Math.sin(t);
 				gArc = new Arc2D.Double(x - r2, y - r2, r2, r2, 0, CIRCLE,
 						Arc2D.OPEN);
 				dif -= (r2 * 1.2);
@@ -118,8 +118,8 @@ public class GuiDrawGameField extends JPanel implements MouseListener {
 					g2d.setColor(Color.GRAY);
 				}
 				t = 2 * Math.PI * (counter + 0.075) / (size - house);
-				x = a + RADIUS * Math.cos(t);
-				y = b + RADIUS * Math.sin(t);
+				x = a + RADIUS * -Math.cos(t);
+				y = b + RADIUS * -Math.sin(t);
 				gArc = new Arc2D.Double(x - r2, y - r2, r2, r2, 0, CIRCLE,
 						Arc2D.OPEN);
 				if (i % start == 0 && !array[i].isBlocked()) {
