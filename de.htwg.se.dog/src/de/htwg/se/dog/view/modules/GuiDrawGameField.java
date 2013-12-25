@@ -38,6 +38,11 @@ public class GuiDrawGameField extends JPanel implements MouseListener {
 	private static final int CIRCLE = 360;
 	private static final int MAXRADIUS = 90;
 	private static final int NORM = 35;
+	private static final double TWOTHREE = 2.3;
+	private static final double ONETWO = 1.2;
+	private static final double STRINGX = 0.78;
+	private static final double STRINGY = 0.35;
+
 	private GameTableInterface controller;
 	// Map with all Gamefields
 	private static SortedMap<Integer, Arc2D.Double> gMap;
@@ -68,7 +73,7 @@ public class GuiDrawGameField extends JPanel implements MouseListener {
 	 */
 	@Override
 	protected void paintComponent(Graphics g) {
-		RADIUS = (int) ((this.getHeight() / 2.3) - NORM);
+		RADIUS = (int) ((this.getHeight() / TWOTHREE) - NORM);
 		gMap.clear();
 		Graphics2D g2d = (Graphics2D) g;
 		super.paintComponent(g);
@@ -108,12 +113,12 @@ public class GuiDrawGameField extends JPanel implements MouseListener {
 		//counter for housefields
 		int counterhouse = 1;
 		//-radius where the house field will be drawn
-		double dif = -(r2 * 1.2);
+		double dif = -(r2 * ONETWO);
 		//x,y coordinates for points
 		double x, y;
 		Arc2D.Double gArc;
 		g2d.setStroke(new BasicStroke(RADIUS / HUNDRED));
-		g2d.setFont(new Font("Tahoma", Font.BOLD, (int) Math.round(r2 * 0.5)));
+		g2d.setFont(new Font("Tahoma", Font.BOLD, (int) Math.round(r2 * 1/2)));
 		/**
 		 * house fields are treated different cause they need to be inside the
 		 * circle in one line
@@ -135,7 +140,7 @@ public class GuiDrawGameField extends JPanel implements MouseListener {
 				y = b + (RADIUS + dif) * -Math.sin(t);
 				gArc = new Arc2D.Double(x - r2, y - r2, r2, r2, 0, CIRCLE,
 						Arc2D.OPEN);
-				dif -= (r2 * 1.2);
+				dif -= (r2 * ONETWO);
 				g2d.setColor(col.getColor(array[i].getOwner()));
 				if (array[i].getFigureOwnerNr() != -1) {
 					g2d.fill(gArc);
@@ -150,14 +155,14 @@ public class GuiDrawGameField extends JPanel implements MouseListener {
 				counterhouse++;
 			} else {
 
-				dif = -(r2 * 1.2);
+				dif = -(r2 * ONETWO);
 				counterhouse = 0;
 				if (array[i].getFigureOwnerNr() != -1) {
 					g2d.setColor(col.getColor(array[i].getFigureOwnerNr()));
 				} else {
 					g2d.setColor(Color.GRAY);
 				}
-				t = 2 * Math.PI * (counter + 0.075) / (size - house);
+				t = 2 * Math.PI * (counter) / (size - house);
 				x = a + RADIUS * -Math.cos(t);
 				y = b + RADIUS * -Math.sin(t);
 				gArc = new Arc2D.Double(x - r2, y - r2, r2, r2, 0, CIRCLE,
@@ -211,10 +216,11 @@ public class GuiDrawGameField extends JPanel implements MouseListener {
 	 */
 	private void drawString(Graphics2D g2d, String s, double r2, double x,
 			double y) {
+		
 		g2d.setColor(Color.BLACK);
 		g2d.drawString(String.format("%2s", s),
-				Float.parseFloat(String.valueOf(x - r2 * 0.78)),
-				Float.parseFloat(String.valueOf(y - r2 * 0.35)));
+				Float.parseFloat(String.valueOf(x - r2 * STRINGX)),
+				Float.parseFloat(String.valueOf(y - r2 * STRINGY)));
 	}
 
 	@Override

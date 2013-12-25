@@ -1,7 +1,11 @@
 package de.htwg.se.dog.view.modules;
 
 import java.awt.Color;
-
+/**
+ * class containing 128 different unique colors
+ * @author Michael
+ *
+ */
 public class ColorMap {
 
 	/**

@@ -10,6 +10,11 @@ import de.htwg.se.dog.models.CardInterface;
 import de.htwg.se.dog.models.FigureInterface;
 import de.htwg.se.dog.models.PlayerInterface;
 
+/**
+ * Implementation of PlayerInterface
+ * @author Michael, Christian
+ *
+ */
 public class Player implements PlayerInterface {
 
     private final List<FigureInterface> figure;

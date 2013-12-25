@@ -96,7 +96,7 @@ public interface PlayerInterface {
 	CardInterface getCardfromCardNr(int cardNr);
 
 	/**
-	 * 
+	 * returns the starfield of this player
 	 * @return the startfield of this player
 	 */
 	int getStartFieldNr();

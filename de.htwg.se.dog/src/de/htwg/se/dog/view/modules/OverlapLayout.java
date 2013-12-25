@@ -42,7 +42,8 @@ public class OverlapLayout implements LayoutManager2, java.io.Serializable {
 	private static final long serialVersionUID = 1L;
 	public static Boolean POP_UP = Boolean.TRUE;
 	public static Boolean POP_DOWN = Boolean.FALSE;
-
+	
+	private static final float ALIGN = 0.5f;
 	private static final int PREFERRED = 0;
 	private static final int MINIMUM = 1;
 
@@ -379,17 +380,15 @@ public class OverlapLayout implements LayoutManager2, java.io.Serializable {
 			if (overlapPosition.x < 0) {
 				location.x = parent.getWidth() - maximumSize.width
 						- parentInsets.right - popupInsets.right;
-			}
-			else {
+			} else {
 				location.x = parentInsets.left + popupInsets.left;
 			}
 			// Layout bottom-to-top, else top-to-bottom
 
-			if (overlapPosition.y < 0){
+			if (overlapPosition.y < 0) {
 				location.y = parent.getHeight() - maximumSize.height
 						- parentInsets.bottom - popupInsets.bottom;
-			}
-			else{
+			} else {
 				location.y = parentInsets.top + popupInsets.top;
 			}
 			// Set the size and location for each component
@@ -408,7 +407,8 @@ public class OverlapLayout implements LayoutManager2, java.io.Serializable {
 						int height = parent.getHeight() - parentInsets.top
 								- parentInsets.bottom;
 						component.setSize(width, height);
-					} else // resize each component to be the same size
+					} 
+					else // resize each component to be the same size
 					{
 						component.setSize(maximumSize);
 					}
@@ -450,14 +450,14 @@ public class OverlapLayout implements LayoutManager2, java.io.Serializable {
 	 * Returns the alignment along the x axis. Use center alignment.
 	 */
 	public float getLayoutAlignmentX(Container parent) {
-		return 0.5f;
+		return ALIGN;
 	}
 
 	/**
 	 * Returns the alignment along the y axis. Use center alignment.
 	 */
 	public float getLayoutAlignmentY(Container parent) {
-		return 0.5f;
+		return ALIGN;
 	}
 
 	/**

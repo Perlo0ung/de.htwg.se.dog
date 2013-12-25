@@ -114,7 +114,7 @@ public interface GameTableInterface extends IObservable {
      * 
      */
     boolean playCard(int cardNr, Map<Integer, Integer> moves);
- 
+
     boolean fieldIsEmpty(int fieldnr);
 
     int getFigureOwnerID(int fieldnr);

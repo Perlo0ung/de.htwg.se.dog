@@ -22,15 +22,12 @@ import de.htwg.se.dog.view.modules.GuiDrawFigures;
 import de.htwg.se.dog.view.modules.GuiDrawGameField;
 import de.htwg.se.dog.view.modules.OverlapLayout;
 
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.JLabel;
 
 import java.awt.Font;
 import java.awt.event.KeyEvent;
 
 import javax.swing.ImageIcon;
-import javax.swing.JComboBox;
-import javax.swing.JButton;
 import javax.swing.JFormattedTextField;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
@@ -49,22 +46,49 @@ import javax.swing.JScrollPane;
 
 public class GuiTest extends JFrame implements IObserver {
 
+
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private GameTableInterface controller;
 	private ColorMap col = new ColorMap();
 	private JFormattedTextField tFieldCurrentPlayer;
-	@SuppressWarnings("rawtypes")
-	private JComboBox cbCards;
 	private JLabel[] cards;
-	private JPanel cardHand;
 	private OverlapLayout layout;
 	private Component up;
-
+	// statics for findbugs
+	private final static int WINDOWX = 1280;
+	private final static int WINDOWY = 800;
+	private final static int HUNDRET = 100; 
+	private final static int FIVE = 5;
+	private static final int TEN = 10;
+	private static final int SIXTEEN = 16;
+	private static final int SIXHUNDRETEIGHTEEN = 618;
+	private static final float FONTBOLD = 4f;
+	private static final int TWENTYTWO = 22;
+	private static final int NINETYSEVEN = 97;
+	private static final int TEXTFIELDY = 633;
+	private static final int GAMEFIELDY = 750;
+	private static final int GAMEFIELDX = 1270;
+	private static final int TWELVE = 12;
+	private static final int THIRTEEEN = 13;
+	private static final int EIGHTEEN = 18;
+	private static final int SIXHUNDRETFIFTY = 650;
+	private static final int SEVENTY = 70;
+	private static final int SIXTY = 60;
+	private static final int SIX = 6;
+	private static final int HUNDRETTHIRTY = 130;
+	private static final int TWOHUNDRETTEN = 210;
+	private static final int SIXHUNDRET = 600;
+	private static final int HUNDRETTWENTY = 120;
+	private static final int TWENTY = 20;
+	private static final int TWENTYFIVE = 25;
+	private static final int HUNDRETTEN = 110;
+	private static final int EIGHTY = 80;
+	private static final int NINETYFIVE = 95;
+	private static final int SEVENTYFIVE = 75;
 	/**
 	 * Create the frame.
 	 */
-	@SuppressWarnings("rawtypes")
 	public GuiTest(GameTableInterface controller) {
 		controller.addObserver(this);
 		setResizable(false);
@@ -82,7 +106,7 @@ public class GuiTest extends JFrame implements IObserver {
 				}
 			}
 		});
-		setBounds(100, 100, 1280, 800);
+		setBounds(HUNDRET, HUNDRET, WINDOWX, WINDOWY);
 
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
@@ -109,70 +133,50 @@ public class GuiTest extends JFrame implements IObserver {
 
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		contentPane.setBorder(new EmptyBorder(FIVE, FIVE, FIVE, FIVE));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
 		JPanel gameField = new GuiDrawGameField(controller);
 		//JPanel gameField = new JPanel();
-		gameField.setBounds(0, 0, 1274, 739);
+		gameField.setBounds(0, 0, GAMEFIELDX, GAMEFIELDY);
 		contentPane.add(gameField);
 		gameField.setBackground(Color.WHITE);
 		gameField.setLayout(null);
 
-		cbCards = new JComboBox();
-		cbCards.setBounds(351, 680, 138, 22);
-		gameField.add(cbCards);
-		cbCards.setBackground(Color.WHITE);
-
-		JLabel lblPlayCard = new JLabel("Cardlist");
-		lblPlayCard.setBounds(351, 665, 56, 16);
-		gameField.add(lblPlayCard);
-		lblPlayCard.setFont(new Font("Tahoma", Font.BOLD, 13));
-
-		JButton btnPlayIt = new JButton("play");
-		btnPlayIt.setBounds(350, 704, 97, 22);
-		gameField.add(btnPlayIt);
-		btnPlayIt.setBackground(Color.WHITE);
 
 		tFieldCurrentPlayer = new JFormattedTextField();
-		tFieldCurrentPlayer.setBounds(12, 633, 97, 22);
+		tFieldCurrentPlayer.setBounds(TWELVE, TEXTFIELDY, NINETYSEVEN, GuiTest.TWENTYTWO);
 		gameField.add(tFieldCurrentPlayer);
 		tFieldCurrentPlayer.setFont(tFieldCurrentPlayer.getFont().deriveFont(
 				tFieldCurrentPlayer.getFont().getStyle() | Font.BOLD,
-				tFieldCurrentPlayer.getFont().getSize() + 4f));
+				tFieldCurrentPlayer.getFont().getSize() + GuiTest.FONTBOLD));
 		tFieldCurrentPlayer.setBorder(new LineBorder(tFieldCurrentPlayer
 				.getBackground()));
 		tFieldCurrentPlayer.setBackground(Color.WHITE);
-		tFieldCurrentPlayer.setColumns(10);
-
-		JPanel figures = new GuiDrawFigures(controller);
-		//JPanel figures = new JPanel();
-		figures.setBounds(18, 650, 72, 60);
-		gameField.add(figures);
-		figures.setBackground(Color.WHITE);
+		tFieldCurrentPlayer.setColumns(TEN);
 
 		JLabel lbCurrentPlayer = new JLabel("CurrentPlayer");
-		lbCurrentPlayer.setBounds(12, 618, 101, 16);
+		lbCurrentPlayer.setBounds(TWELVE, GuiTest.SIXHUNDRETEIGHTEEN, HUNDRET, SIXTEEN);
 		gameField.add(lbCurrentPlayer);
-		lbCurrentPlayer.setFont(new Font("Tahoma", Font.BOLD, 13));
+		lbCurrentPlayer.setFont(new Font("Tahoma", Font.BOLD, THIRTEEEN));
 
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setEnabled(false);
 		scrollPane.setBorder(null);
-		scrollPane.setBounds(120, 606, 213, 133);
+		scrollPane.setBounds(HUNDRETTWENTY, SIXHUNDRET, TWOHUNDRETTEN, HUNDRETTHIRTY);
 		gameField.add(scrollPane);
 
-		layout = new OverlapLayout(new Point(25, 0), true);
-		layout.setPopupInsets(new Insets(20, 0, 0, 0));
-		cardHand = new JPanel(layout);
+		layout = new OverlapLayout(new Point(TWENTYFIVE, 0), true);
+		layout.setPopupInsets(new Insets(TWENTY, 0, 0, 0));
+		JPanel cardHand = new JPanel(layout);
 		scrollPane.setViewportView(cardHand);
 		cardHand.setBackground(Color.WHITE);
-		cards = new JLabel[6];
+		cards = new JLabel[SIX];
 		for (int i = 0; i < cards.length; i++) {
 			cards[i] = new JLabel();
-			cards[i].setBounds(0, 0, 75, 95);
-			cards[i].setPreferredSize(new Dimension(80, 110));
+			cards[i].setBounds(0, 0, SEVENTYFIVE, NINETYFIVE);
+			cards[i].setPreferredSize(new Dimension(EIGHTY, HUNDRETTEN));
 			cards[i].setName(String.valueOf(i));
 			cards[i].addMouseListener(new MouseAdapter() {
 				@Override
@@ -182,17 +186,18 @@ public class GuiTest extends JFrame implements IObserver {
 			});
 			cardHand.add(cards[i]);
 		}
-
+		JPanel figures = new GuiDrawFigures(controller);
+		//JPanel figures = new JPanel();
+		figures.setBounds(EIGHTEEN, SIXHUNDRETFIFTY, SEVENTY, SIXTY);
+		gameField.add(figures);
+		figures.setBackground(Color.WHITE);
 	}
 
-	@SuppressWarnings("rawtypes")
 	@Override
 	public void update(IOEvent e) {
 		PlayerInterface current = controller.getCurrentPlayer();
 		tFieldCurrentPlayer.setForeground(col.getColor(current.getPlayerID()));
 		tFieldCurrentPlayer.setText(current.toString());
-		cbCards.setModel(new DefaultComboBoxModel(current.getCardList()
-				.toArray()));
 		int count = 0;
 		for (CardInterface c : current.getCardList()) {
 			cards[count++].setIcon(new ImageIcon(getClass().getResource(

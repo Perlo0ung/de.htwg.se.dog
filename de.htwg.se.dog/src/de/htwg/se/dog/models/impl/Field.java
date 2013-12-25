@@ -2,7 +2,11 @@ package de.htwg.se.dog.models.impl;
 
 import de.htwg.se.dog.models.FieldInterface;
 import de.htwg.se.dog.models.FigureInterface;
-
+/**
+ * implementation of Fieldinterface
+ * @author Michael,Christian
+ *
+ */
 public class Field implements FieldInterface {
 
     private final int owner;
@@ -10,6 +14,10 @@ public class Field implements FieldInterface {
     private boolean blocked;
     private FigureInterface figure;
 
+    /**
+     * Creates a new Field with owner given by argument
+     * @param owner if owner = 0 then the field has no owner
+     */
     public Field(int owner) {
         this.blocked = false;
         if (owner == 0) {
