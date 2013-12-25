@@ -47,6 +47,7 @@ public class Player implements PlayerInterface {
 
     @Override
     public List<CardInterface> getCardList() {
+        
         return this.cards;
     }
 
@@ -57,6 +58,7 @@ public class Player implements PlayerInterface {
 
     @Override
     public void addCard(CardInterface c) {
+    	Collections.sort(this.cards);
         this.cards.add(c);
     }
 
@@ -116,8 +118,6 @@ public class Player implements PlayerInterface {
     @Override
     public String printCardsOnHand() {
         StringBuilder sb = new StringBuilder();
-        List<CardInterface> cards = this.getCardList();
-        Collections.sort(cards);
         for (CardInterface c : this.getCardList()) {
             sb.append(String.format("%s ", c.toString()));
         }

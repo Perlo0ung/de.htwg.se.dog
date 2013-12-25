@@ -16,7 +16,7 @@ public class Dog {
     private static TextUserInterface tui;
     private static GuiTest gui;
     @Inject
-    public Dog(int playernumber) {
+    private Dog(int playernumber) {
         controller = new GameTable(playernumber);
         controller.newRound();
         tui = new TextUserInterface(controller);

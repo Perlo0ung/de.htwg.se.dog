@@ -70,19 +70,19 @@ public class MoveSevenTest {
     @Test
     public void testAnyValidMove() {
         // Search AnyValidMove of Player without Figures on Field
-        assertFalse(movement.AnyValidMove(tp2));
+        assertFalse(movement.anyValidMove(tp2));
         // One Figure moves 7
         array[0].putFigure(tp1.removeFigure(), 0);
-        assertTrue(movement.AnyValidMove(tp1));
+        assertTrue(movement.anyValidMove(tp1));
         // two figures move
         array[7].putFigure(tp1.removeFigure(), 7);
         array[6].putFigure(tp2.removeFigure(), 6);
         array[8].putFigure(tp2.removeFigure(), 8);
         array[6].setBlocked(true);
-        assertTrue(movement.AnyValidMove(tp1));
+        assertTrue(movement.anyValidMove(tp1));
         // No Move possible
         array[8].setBlocked(true);
-        assertFalse(movement.AnyValidMove(tp1));
+        assertFalse(movement.anyValidMove(tp1));
 
     }
 
@@ -96,7 +96,7 @@ public class MoveSevenTest {
         array[2].putFigure(tp2.removeFigure(), 2);
         array[6].setBlocked(true);
         array[2].setBlocked(true);
-        assertFalse(movement.AnyValidMove(tp1));
+        assertFalse(movement.anyValidMove(tp1));
 
     }
 
@@ -110,7 +110,7 @@ public class MoveSevenTest {
         array[3].putFigure(tp2.removeFigure(), 3);
         array[6].setBlocked(true);
         array[3].setBlocked(true);
-        assertFalse(movement.AnyValidMove(tp1));
+        assertFalse(movement.anyValidMove(tp1));
 
     }
 }

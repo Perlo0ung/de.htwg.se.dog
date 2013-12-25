@@ -33,7 +33,7 @@ import de.htwg.se.dog.models.GameFieldInterface;
 public class GuiDrawGameField extends JPanel implements MouseListener {
 
 	private static final long serialVersionUID = 1L;
-	private static int RADIUS;
+	private static int radius;
 	private static final int HUNDRED = 100;
 	private static final int CIRCLE = 360;
 	private static final int MAXRADIUS = 90;
@@ -73,7 +73,7 @@ public class GuiDrawGameField extends JPanel implements MouseListener {
 	 */
 	@Override
 	protected void paintComponent(Graphics g) {
-		RADIUS = (int) ((this.getHeight() / TWOTHREE) - NORM);
+		radius = (int) ((this.getHeight() / TWOTHREE) - NORM);
 		gMap.clear();
 		Graphics2D g2d = (Graphics2D) g;
 		super.paintComponent(g);
@@ -99,10 +99,10 @@ public class GuiDrawGameField extends JPanel implements MouseListener {
 			g2d.drawImage(img, (getWidth() - img.getWidth()) / 2,
 					(getHeight() - img.getHeight()) / 2, null);
 		} catch (IOException e) {
-			e.printStackTrace();
+			System.exit(1);
 		}
 		// PREVENT too big fields e.g when playing with 1:1 fields
-		double r2 = 2 * Math.PI * RADIUS / size;
+		double r2 = 2 * Math.PI * radius / size;
 		if (r2 > MAXRADIUS) {
 			r2 = MAXRADIUS;
 		}
@@ -117,7 +117,7 @@ public class GuiDrawGameField extends JPanel implements MouseListener {
 		//x,y coordinates for points
 		double x, y;
 		Arc2D.Double gArc;
-		g2d.setStroke(new BasicStroke(RADIUS / HUNDRED));
+		g2d.setStroke(new BasicStroke(radius / HUNDRED));
 		g2d.setFont(new Font("Tahoma", Font.BOLD, (int) Math.round(r2 * 1/2)));
 		/**
 		 * house fields are treated different cause they need to be inside the
@@ -136,17 +136,13 @@ public class GuiDrawGameField extends JPanel implements MouseListener {
 
 			if (array[i].isHouse()) {
 
-				x = a + (RADIUS + dif) * -Math.cos(t);
-				y = b + (RADIUS + dif) * -Math.sin(t);
+				x = a + (radius + dif) * -Math.cos(t);
+				y = b + (radius + dif) * -Math.sin(t);
 				gArc = new Arc2D.Double(x - r2, y - r2, r2, r2, 0, CIRCLE,
 						Arc2D.OPEN);
 				dif -= (r2 * ONETWO);
 				g2d.setColor(col.getColor(array[i].getOwner()));
-				if (array[i].getFigureOwnerNr() != -1) {
-					g2d.fill(gArc);
-				} else {
-					g2d.draw(gArc);
-				}
+				setArcType(g2d, gArc, i);
 				drawString(g2d, String.valueOf(counterhouse + 1), r2, x, y);
 
 				if (counterhouse == game.getHouseCount()) {
@@ -157,31 +153,13 @@ public class GuiDrawGameField extends JPanel implements MouseListener {
 
 				dif = -(r2 * ONETWO);
 				counterhouse = 0;
-				if (array[i].getFigureOwnerNr() != -1) {
-					g2d.setColor(col.getColor(array[i].getFigureOwnerNr()));
-				} else {
-					g2d.setColor(Color.GRAY);
-				}
+				drawColoredField(g2d, i);
 				t = 2 * Math.PI * (counter) / (size - house);
-				x = a + RADIUS * -Math.cos(t);
-				y = b + RADIUS * -Math.sin(t);
+				x = a + radius * -Math.cos(t);
+				y = b + radius * -Math.sin(t);
 				gArc = new Arc2D.Double(x - r2, y - r2, r2, r2, 0, CIRCLE,
 						Arc2D.OPEN);
-				if (i % start == 0 && !array[i].isBlocked()) {
-
-					if (array[i].getFigure() == null) {
-						g2d.draw(gArc);
-					} else {
-						g2d.fill(gArc);
-					}
-					drawString(g2d, "S", r2, x, y);
-				} else {
-					g2d.fill(gArc);
-				}
-				if (array[i].isBlocked()) {
-					g2d.setColor(Color.BLACK);
-					drawString(g2d, "B", r2, x, y);
-				}
+				startFieldArc(g2d, start, r2, x, y, gArc, i);
 				counter++;
 			}
 			gMap.put(i, gArc);
@@ -197,6 +175,59 @@ public class GuiDrawGameField extends JPanel implements MouseListener {
 			g2d.fill(arc.getValue());
 			drawString(g2d, String.valueOf(arc.getKey()), r2, arc.getValue().x
 					+ r2, arc.getValue().y + r2);
+		}
+	}
+
+	/**
+	 * @param g2d
+	 * @param gArc
+	 * @param i
+	 */
+	private void setArcType(Graphics2D g2d, Arc2D.Double gArc, int i) {
+		if (array[i].getFigureOwnerNr() != -1) {
+			g2d.fill(gArc);
+		} else {
+			g2d.draw(gArc);
+		}
+	}
+
+	/**
+	 * @param g2d
+	 * @param i
+	 */
+	private void drawColoredField(Graphics2D g2d, int i) {
+		if (array[i].getFigureOwnerNr() != -1) {
+			g2d.setColor(col.getColor(array[i].getFigureOwnerNr()));
+		} else {
+			g2d.setColor(Color.GRAY);
+		}
+	}
+
+	/**
+	 * @param g2d
+	 * @param start
+	 * @param r2
+	 * @param x
+	 * @param y
+	 * @param gArc
+	 * @param i
+	 */
+	private void startFieldArc(Graphics2D g2d, int start, double r2, double x,
+			double y, Arc2D.Double gArc, int i) {
+		if (i % start == 0 && !array[i].isBlocked()) {
+
+			if (array[i].getFigure() == null) {
+				g2d.draw(gArc);
+			} else {
+				g2d.fill(gArc);
+			}
+			drawString(g2d, "S", r2, x, y);
+		} else {
+			g2d.fill(gArc);
+		}
+		if (array[i].isBlocked()) {
+			g2d.setColor(Color.BLACK);
+			drawString(g2d, "B", r2, x, y);
 		}
 	}
 

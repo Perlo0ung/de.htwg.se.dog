@@ -43,8 +43,8 @@ public class Movement implements MovementStrategy {
      * 
      * @param card
      */
-    public void setMoveStrategie(int StrategieNr) {
-        if (StrategieNr != ELEVEN) {
+    public void setMoveStrategie(int strategieNr) {
+        if (strategieNr != ELEVEN) {
             strategie = new MoveNormal(gameField);
         } else {
             strategie = new MoveSwitch(gameField);
@@ -200,7 +200,7 @@ public class Movement implements MovementStrategy {
      *        fieldnumber where figure to check stands
      * @return true if possible figure is found, otherwise false
      */
-    public boolean AnySwitchMove(int fieldnr) {
+    public boolean anySwitchMove(int fieldnr) {
         boolean retval = false;
         int sourceFigOwner = gameField.getGameArray()[fieldnr].getFigureOwnerNr();
         for (FieldInterface field : gameField.getGameArray()) {
@@ -255,7 +255,7 @@ public class Movement implements MovementStrategy {
      *        the player that wants to move
      * @return true if the player can move with the card
      */
-    public boolean AnyValidMove(PlayerInterface p) {
+    public boolean anyValidMove(PlayerInterface p) {
 
         FieldInterface[] array = gameField.copyField();
         setMoveStrategie(VALUEOFCARD7);

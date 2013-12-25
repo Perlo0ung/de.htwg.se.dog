@@ -86,10 +86,10 @@ public class TextUserInterface implements IObserver {
         return true;
     }
 
-    private int processSteps(Scanner scanner, int CardNr) {
+    private int processSteps(Scanner scanner, int cardNr) {
         int steps = 0;
         boolean wertOkay = false;
-        switch (CardNr) {
+        switch (cardNr) {
         case 1:
             while (!wertOkay) {
                 out("Wollen Sie 11 oder 1 laufen? Bitte Zahl eingeben:");
@@ -158,7 +158,7 @@ public class TextUserInterface implements IObserver {
         case 10:
         case 12:
         case 13:
-            steps = CardNr;
+            steps = cardNr;
             break;
         }
         return steps;

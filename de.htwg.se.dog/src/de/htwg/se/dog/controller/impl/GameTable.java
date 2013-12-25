@@ -176,7 +176,7 @@ public class GameTable extends Observable implements GameTableInterface {
                     continue cardIsPossible;
                 }
                 //Switch-Move possible?
-                if (c.getValue() == 11 && movement.AnySwitchMove(field)) {
+                if (c.getValue() == 11 && movement.anySwitchMove(field)) {
                     continue cardIsPossible;
                 }
             }
@@ -241,8 +241,6 @@ public class GameTable extends Observable implements GameTableInterface {
             for (Integer fieldNr : moves.keySet()) {
                 retval = movement.move(moves.get(fieldNr), fieldNr);
             }
-        } else
-        {
             retval = movement.move(moves);
         }
         if (retval) {

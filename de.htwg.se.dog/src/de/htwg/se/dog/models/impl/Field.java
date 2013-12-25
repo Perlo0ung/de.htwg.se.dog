@@ -92,14 +92,15 @@ public class Field implements FieldInterface {
     @Override
     public String toString() {
         String s;
+        String own;
         if (this.figure == null) {
             s = " ";
         } else {
-            String owner = String.valueOf(this.figure.getOwnerNr());
+            own = String.valueOf(this.figure.getOwnerNr());
             if (this.isBlocked()) {
-                owner = String.format("%s%s", "!", owner);
+                own = String.format("%s%s", "!", own);
             }
-            s = String.format("%s", owner);
+            s = String.format("%s", own);
         }
         return s;
     }

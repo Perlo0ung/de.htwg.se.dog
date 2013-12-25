@@ -213,12 +213,12 @@ public class GuiTest extends JFrame implements IObserver {
 		System.out.println(controller.getCurrentPlayer().getCardList().get(Integer.parseInt(c.getName())));
 		 */
 		if (up != null) { 
-			layout.addLayoutComponent(up, OverlapLayout.POP_DOWN);
+			layout.addLayoutComponent(up, OverlapLayout.POPDOWN);
 		}
-		if (constraint == null || constraint == OverlapLayout.POP_DOWN) {
-			layout.addLayoutComponent(c, OverlapLayout.POP_UP);
+		if (constraint == null || constraint == OverlapLayout.POPDOWN) {
+			layout.addLayoutComponent(c, OverlapLayout.POPUP);
 		} else {
-			layout.addLayoutComponent(c, OverlapLayout.POP_DOWN);
+			layout.addLayoutComponent(c, OverlapLayout.POPDOWN);
 		}
 		c.getParent().invalidate();
 		c.getParent().validate();

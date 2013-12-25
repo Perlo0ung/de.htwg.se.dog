@@ -40,8 +40,8 @@ import java.util.ArrayList;
 public class OverlapLayout implements LayoutManager2, java.io.Serializable {
 
 	private static final long serialVersionUID = 1L;
-	public static Boolean POP_UP = Boolean.TRUE;
-	public static Boolean POP_DOWN = Boolean.FALSE;
+	public static final Boolean POPUP = Boolean.TRUE;
+	public static final Boolean POPDOWN = Boolean.FALSE;
 	
 	private static final float ALIGN = 0.5f;
 	private static final int PREFERRED = 0;
@@ -158,7 +158,7 @@ public class OverlapLayout implements LayoutManager2, java.io.Serializable {
 	 * @param overlapPosition
 	 *            the position where the next component is painted
 	 */
-	public void setOverlapPosition(Point overlapPosition) {
+	private void setOverlapPosition(Point overlapPosition) {
 		this.overlapPosition = overlapPosition;
 	}
 
@@ -236,7 +236,7 @@ public class OverlapLayout implements LayoutManager2, java.io.Serializable {
 			for (int i = 0; i < size; i++) {
 				Component c = parent.getComponent(i);
 
-				if (c == component) {
+				if (c.equals(component)) {
 					components.add(i, component);
 
 					// Need to change Z-Order so added components are painted
@@ -316,9 +316,9 @@ public class OverlapLayout implements LayoutManager2, java.io.Serializable {
 			}
 		}
 
-		if (visibleComponents == 0)
+		if (visibleComponents == 0) {
 			return new Dimension(0, 0);
-
+		}
 		// Keep maximum dimension for easy access when laying out components
 
 		if (type == PREFERRED) {
@@ -377,20 +377,7 @@ public class OverlapLayout implements LayoutManager2, java.io.Serializable {
 
 			// Layout right-to-left, else left-to-right
 
-			if (overlapPosition.x < 0) {
-				location.x = parent.getWidth() - maximumSize.width
-						- parentInsets.right - popupInsets.right;
-			} else {
-				location.x = parentInsets.left + popupInsets.left;
-			}
-			// Layout bottom-to-top, else top-to-bottom
-
-			if (overlapPosition.y < 0) {
-				location.y = parent.getHeight() - maximumSize.height
-						- parentInsets.bottom - popupInsets.bottom;
-			} else {
-				location.y = parentInsets.top + popupInsets.top;
-			}
+			overlapPos(parent, location, parentInsets);
 			// Set the size and location for each component
 
 			for (int i = 0; i < size; i++) {
@@ -401,17 +388,7 @@ public class OverlapLayout implements LayoutManager2, java.io.Serializable {
 					// fill
 					// the size of the parent container
 
-					if (overlapPosition.x == 0 && overlapPosition.y == 0) {
-						int width = parent.getWidth() - parentInsets.left
-								- parentInsets.right;
-						int height = parent.getHeight() - parentInsets.top
-								- parentInsets.bottom;
-						component.setSize(width, height);
-					} 
-					else // resize each component to be the same size
-					{
-						component.setSize(maximumSize);
-					}
+					stackOverlay(parent, parentInsets, component);
 
 					// Set location of the component
 
@@ -436,6 +413,49 @@ public class OverlapLayout implements LayoutManager2, java.io.Serializable {
 					location.y += overlapPosition.y;
 				}
 			}
+		}
+	}
+
+	/**
+	 * @param parent
+	 * @param parentInsets
+	 * @param component
+	 */
+	private void stackOverlay(Container parent, Insets parentInsets,
+			Component component) {
+		if (overlapPosition.x == 0 && overlapPosition.y == 0) {
+			int width = parent.getWidth() - parentInsets.left
+					- parentInsets.right;
+			int height = parent.getHeight() - parentInsets.top
+					- parentInsets.bottom;
+			component.setSize(width, height);
+		} 
+		else // resize each component to be the same size
+		{
+			component.setSize(maximumSize);
+		}
+	}
+
+	/**
+	 * @param parent
+	 * @param location
+	 * @param parentInsets
+	 */
+	private void overlapPos(Container parent, Point location,
+			Insets parentInsets) {
+		if (overlapPosition.x < 0) {
+			location.x = parent.getWidth() - maximumSize.width
+					- parentInsets.right - popupInsets.right;
+		} else {
+			location.x = parentInsets.left + popupInsets.left;
+		}
+		// Layout bottom-to-top, else top-to-bottom
+
+		if (overlapPosition.y < 0) {
+			location.y = parent.getHeight() - maximumSize.height
+					- parentInsets.bottom - popupInsets.bottom;
+		} else {
+			location.y = parentInsets.top + popupInsets.top;
 		}
 	}
 
