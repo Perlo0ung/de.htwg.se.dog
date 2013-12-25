@@ -69,38 +69,33 @@ public class GuiDrawGameField extends JPanel implements MouseListener {
 	}
 
 	/**
-	 * Draws the complete gamefield as a circle
+	 * house fields are treated different cause they need to be inside the
+	 * circle in one line
+	 * 
+	 * @t: defines at which radius the point will be drawn next point will
+	 * only be drawn when counter is inkremented so we make sure that
+	 * counter gets only inkremented after all houses have been drawn or
+	 * after each normal field
+	 * 
+	 * @dif: defines where the next point is inside the circle
+	 * 
+	 * @r2: the radius of a 1 gamefield
 	 */
 	@Override
 	protected void paintComponent(Graphics g) {
-		radius = (int) ((this.getHeight() / TWOTHREE) - NORM);
 		gMap.clear();
 		Graphics2D g2d = (Graphics2D) g;
 		super.paintComponent(g);
 
-		// Maximum quality
-		RenderingHints renderHints = new RenderingHints(
-				RenderingHints.KEY_ANTIALIASING,
-				RenderingHints.VALUE_ANTIALIAS_ON);
-		renderHints.put(RenderingHints.KEY_RENDERING,
-				RenderingHints.VALUE_RENDER_QUALITY);
-		g2d.setRenderingHints(renderHints);
-
+		setRendering(g2d);
+		radius = (int) ((this.getHeight() / TWOTHREE) - NORM);
 		int house = game.getHouseCount() * game.getPlayerCount();
 		int size = game.getFieldSize();
 		int start = game.getFieldsTillHouse() + game.getHouseCount();
 		int a = getWidth() / 2;
 		int b = getHeight() / 2;
 
-		// draw comic dog in the middle of this panel
-		try {
-			BufferedImage img = ImageIO.read(new File(this.getClass()
-					.getResource("/dog.jpg").getPath()));
-			g2d.drawImage(img, (getWidth() - img.getWidth()) / 2,
-					(getHeight() - img.getHeight()) / 2, null);
-		} catch (IOException e) {
-			System.exit(1);
-		}
+		drawImageMiddle(g2d);
 		// PREVENT too big fields e.g when playing with 1:1 fields
 		double r2 = 2 * Math.PI * radius / size;
 		if (r2 > MAXRADIUS) {
@@ -119,19 +114,7 @@ public class GuiDrawGameField extends JPanel implements MouseListener {
 		Arc2D.Double gArc;
 		g2d.setStroke(new BasicStroke(radius / HUNDRED));
 		g2d.setFont(new Font("Tahoma", Font.BOLD, (int) Math.round(r2 * 1/2)));
-		/**
-		 * house fields are treated different cause they need to be inside the
-		 * circle in one line
-		 * 
-		 * @t: defines at which radius the point will be drawn next point will
-		 * only be drawn when counter is inkremented so we make sure that
-		 * counter gets only inkremented after all houses have been drawn or
-		 * after each normal field
-		 * 
-		 * @dif: defines where the next point is inside the circle
-		 * 
-		 * @r2: the radius of a 1 gamefield
-		 */
+
 		for (int i = 0; i < size; i++) {
 
 			if (array[i].isHouse()) {
@@ -169,6 +152,15 @@ public class GuiDrawGameField extends JPanel implements MouseListener {
 		 * override the fields with the number and playercolor when they have
 		 * been clicked 
 		 */
+		highlightFields(g2d, r2);
+	}
+
+	/**
+	 * Highlight the fields in gHIgh map
+	 * @param g2d
+	 * @param r2
+	 */
+	private void highlightFields(Graphics2D g2d, double r2) {
 		for (Entry<Integer, Arc2D.Double> arc : gHigh.entrySet()) {
 			g2d.setColor(col.getColor(controller.getCurrentPlayer()
 					.getPlayerID()));
@@ -179,6 +171,37 @@ public class GuiDrawGameField extends JPanel implements MouseListener {
 	}
 
 	/**
+	 * draw image in the middle of Panel
+	 * @param g2d
+	 */
+	private void drawImageMiddle(Graphics2D g2d) {
+		// draw comic dog in the middle of this panel
+		try {
+			BufferedImage img = ImageIO.read(new File(this.getClass()
+					.getResource("/dog.jpg").getPath()));
+			g2d.drawImage(img, (getWidth() - img.getWidth()) / 2,
+					(getHeight() - img.getHeight()) / 2, null);
+		} catch (IOException e) {
+			System.exit(1);
+		}
+	}
+
+	/**
+	 * set the rendering quality
+	 * @param g2d
+	 */
+	private void setRendering(Graphics2D g2d) {
+		// Maximum quality
+		RenderingHints renderHints = new RenderingHints(
+				RenderingHints.KEY_ANTIALIASING,
+				RenderingHints.VALUE_ANTIALIAS_ON);
+		renderHints.put(RenderingHints.KEY_RENDERING,
+				RenderingHints.VALUE_RENDER_QUALITY);
+		g2d.setRenderingHints(renderHints);
+	}
+
+	/**
+	 * sets and draws the arc, filled or unfilles
 	 * @param g2d
 	 * @param gArc
 	 * @param i
@@ -192,6 +215,7 @@ public class GuiDrawGameField extends JPanel implements MouseListener {
 	}
 
 	/**
+	 * Decides what colore the field will be drawn with
 	 * @param g2d
 	 * @param i
 	 */
@@ -204,6 +228,7 @@ public class GuiDrawGameField extends JPanel implements MouseListener {
 	}
 
 	/**
+	 * Draw the startfield arc
 	 * @param g2d
 	 * @param start
 	 * @param r2

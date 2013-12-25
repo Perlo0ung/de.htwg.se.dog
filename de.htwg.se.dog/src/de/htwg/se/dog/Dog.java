@@ -9,7 +9,7 @@ import de.htwg.se.dog.controller.impl.GameTable;
 import de.htwg.se.dog.view.GuiTest;
 import de.htwg.se.dog.view.TextUserInterface;
 
-public class Dog {
+public final class Dog {
     private static Scanner scanner;
     private static GameTableInterface controller;
     private static Dog instance;

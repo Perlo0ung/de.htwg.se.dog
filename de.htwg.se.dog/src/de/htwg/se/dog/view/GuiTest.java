@@ -56,10 +56,10 @@ public class GuiTest extends JFrame implements IObserver {
 	private OverlapLayout layout;
 	private Component up;
 	// statics for findbugs
-	private final static int WINDOWX = 1280;
-	private final static int WINDOWY = 800;
-	private final static int HUNDRET = 100; 
-	private final static int FIVE = 5;
+	private static final int WINDOWX = 1280;
+	private static final int WINDOWY = 800;
+	private static final int HUNDRET = 100; 
+	private static final int FIVE = 5;
 	private static final int TEN = 10;
 	private static final int SIXTEEN = 16;
 	private static final int SIXHUNDRETEIGHTEEN = 618;

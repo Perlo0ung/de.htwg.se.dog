@@ -430,7 +430,8 @@ public class OverlapLayout implements LayoutManager2, java.io.Serializable {
 					- parentInsets.bottom;
 			component.setSize(width, height);
 		} 
-		else // resize each component to be the same size
+		// resize each component to be the same size
+		else 
 		{
 			component.setSize(maximumSize);
 		}
