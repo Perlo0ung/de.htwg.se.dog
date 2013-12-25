@@ -1,4 +1,4 @@
-package de.htwg.se.dog.view;
+package de.htwg.se.dog.view.modules;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -158,6 +158,18 @@ public class GuiDrawGameField extends JPanel implements MouseListener {
 
 	@Override
 	public void mouseClicked(MouseEvent arg0) {
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent arg0) {
+	}
+
+	@Override
+	public void mouseExited(MouseEvent arg0) {
+	}
+
+	@Override
+	public void mousePressed(MouseEvent arg0) {
 		if (arg0.getButton() == 1) {
 			for (Entry<Integer, Arc2D.Double> a : gMap.entrySet()) {
 				if (a.getValue().contains(arg0.getX(), arg0.getY())) {
@@ -166,6 +178,7 @@ public class GuiDrawGameField extends JPanel implements MouseListener {
 							arc.width, arc.height, 0,CIRCLE , Arc2D.OPEN);
 					if (gHigh.containsKey(a.getKey())) {						
 						gHigh.remove(a.getKey());
+						repaint();
 					} else {
 						if (gHigh.size() == 2) {
 							gHigh.clear();
@@ -188,20 +201,6 @@ public class GuiDrawGameField extends JPanel implements MouseListener {
 				}
 			}
 		}
-	}
-
-	@Override
-	public void mouseEntered(MouseEvent arg0) {
-	}
-
-	@Override
-	public void mouseExited(MouseEvent arg0) {
-	}
-
-	@Override
-	public void mousePressed(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
