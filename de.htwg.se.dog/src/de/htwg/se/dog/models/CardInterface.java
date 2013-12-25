@@ -16,5 +16,16 @@ public interface CardInterface extends Comparable<CardInterface> {
      * @return String: the cardname as a string
      */
     String getCardName();
-
+    /**
+     * returns a hashcode for this card
+     * @return
+     */
+    int hashCode();
+    
+    /**
+     * Tests if two cards a equals
+     * @param obj
+     * @return
+     */
+    boolean equals(Object obj);
 }

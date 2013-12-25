@@ -1,8 +1,6 @@
 package de.htwg.se.dog.models;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -55,10 +53,18 @@ public class CardTest {
 
     @Test
     public void testCardEquals() {
-        assertEquals(new Card(5), new Card(5));
+    	CardInterface c = new Card(5);
+        assertEquals(c, new Card(5));
+    	assertEquals(c, c);
         assertNotEquals(new Card(5), new Card(4));
+        assertFalse(c.equals(null));
+        assertFalse(c.equals(new String("a")));
     }
-
+    @Test
+    public void testHashCode() {
+    	CardInterface c = new Card(5);
+        assertEquals(c.hashCode(), c.hashCode());
+    }
     @Test
     public void testCompareTo() {
         CardInterface c1 = new Card(5);

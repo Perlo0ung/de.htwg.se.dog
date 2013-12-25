@@ -57,7 +57,6 @@ public class Card implements CardInterface {
         return ((Integer) this.value).compareTo(o.getValue());
     }
 
-
 	@Override
 	public int hashCode() {
 		return PRIM+value;

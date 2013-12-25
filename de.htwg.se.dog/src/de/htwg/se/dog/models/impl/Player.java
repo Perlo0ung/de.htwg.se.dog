@@ -81,8 +81,9 @@ public class Player implements PlayerInterface {
 
     @Override
     public FigureInterface removeFigure() {
-        if (figure.isEmpty())
+        if (figure.isEmpty()) {
             return null;
+        }
         return figure.remove(0);
     }
 
