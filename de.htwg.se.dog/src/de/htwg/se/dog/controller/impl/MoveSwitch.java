@@ -7,6 +7,8 @@ import de.htwg.se.dog.models.PlayerInterface;
 
 public class MoveSwitch extends Movement {
 
+	private GameFieldInterface gameField;
+	
     public MoveSwitch(GameFieldInterface gameField) {
         this.gameField = gameField;
     }
