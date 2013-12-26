@@ -239,9 +239,11 @@ public class GuiDrawGameField extends JPanel implements MouseListener {
 	 */
 	private void startFieldArc(Graphics2D g2d, int start, double r2, double x,
 			double y, Arc2D.Double gArc, int i) {
+		int size = game.getFieldSize()-1;
 		if (i % start == 0 && !array[i].isBlocked()) {
-
-			if (array[i].getFigure() == null) {
+			if (array[i].getFigure() == null) {			
+				//set startfield color
+				g2d.setColor(col.getColor(array[((size-1)+i)%size].getOwner()));
 				g2d.draw(gArc);
 			} else {
 				g2d.fill(gArc);
@@ -251,7 +253,6 @@ public class GuiDrawGameField extends JPanel implements MouseListener {
 			g2d.fill(gArc);
 		}
 		if (array[i].isBlocked()) {
-			g2d.setColor(Color.BLACK);
 			drawString(g2d, "B", r2, x, y);
 		}
 	}
@@ -336,5 +337,7 @@ public class GuiDrawGameField extends JPanel implements MouseListener {
 		// TODO Auto-generated method stub
 
 	}
-
+	public void clearField() {
+		gHigh.clear();
+	}
 }

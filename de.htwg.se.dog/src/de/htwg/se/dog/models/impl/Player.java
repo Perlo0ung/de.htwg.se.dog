@@ -58,8 +58,8 @@ public class Player implements PlayerInterface {
 
     @Override
     public void addCard(CardInterface c) {
-    	Collections.sort(this.cards);
         this.cards.add(c);
+        Collections.sort(this.cards);
     }
 
     @Override

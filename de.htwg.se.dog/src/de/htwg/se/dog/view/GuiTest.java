@@ -6,12 +6,9 @@ import java.awt.Dimension;
 import java.awt.Event;
 import java.awt.Insets;
 import java.awt.Point;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import javax.swing.border.LineBorder;
-
 import de.htwg.se.dog.controller.GameTableInterface;
 import de.htwg.se.dog.models.CardInterface;
 import de.htwg.se.dog.models.PlayerInterface;
@@ -21,12 +18,10 @@ import de.htwg.se.dog.view.modules.ColorMap;
 import de.htwg.se.dog.view.modules.GuiDrawFigures;
 import de.htwg.se.dog.view.modules.GuiDrawGameField;
 import de.htwg.se.dog.view.modules.OverlapLayout;
-
 import javax.swing.JLabel;
-
 import java.awt.Font;
 import java.awt.event.KeyEvent;
-
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JFormattedTextField;
 import javax.swing.JMenuBar;
@@ -34,14 +29,12 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
-
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-
 import javax.swing.JScrollPane;
 
 public class GuiTest extends JFrame implements IObserver {
@@ -56,6 +49,7 @@ public class GuiTest extends JFrame implements IObserver {
 	private OverlapLayout layout;
 	private Component up;
 	private GuiDrawFigures figures;
+	private GuiDrawGameField gameField;
 	// statics for findbugs		
 	private static final float FONTBOLD = 4f;
 	private static final int FIVE = 5;
@@ -138,7 +132,7 @@ public class GuiTest extends JFrame implements IObserver {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-		JPanel gameField = new GuiDrawGameField(controller);
+		gameField = new GuiDrawGameField(controller);
 		// JPanel gameField = new JPanel();
 		gameField.setBounds(0, 0, GAMEFIELDX, GAMEFIELDY);
 		contentPane.add(gameField);
@@ -146,14 +140,14 @@ public class GuiTest extends JFrame implements IObserver {
 		gameField.setLayout(null);
 
 		tFieldCurrentPlayer = new JFormattedTextField();
+		tFieldCurrentPlayer.setBorder(BorderFactory.createLineBorder(Color.white));
+		tFieldCurrentPlayer.setEditable(false);
 		tFieldCurrentPlayer.setBounds(TWELVE, TEXTFIELDY, NINETYSEVEN,
 				GuiTest.TWENTYTWO);
 		gameField.add(tFieldCurrentPlayer);
 		tFieldCurrentPlayer.setFont(tFieldCurrentPlayer.getFont().deriveFont(
 				tFieldCurrentPlayer.getFont().getStyle() | Font.BOLD,
 				tFieldCurrentPlayer.getFont().getSize() + GuiTest.FONTBOLD));
-		tFieldCurrentPlayer.setBorder(new LineBorder(tFieldCurrentPlayer
-				.getBackground()));
 		tFieldCurrentPlayer.setBackground(Color.WHITE);
 		tFieldCurrentPlayer.setColumns(TEN);
 
@@ -214,7 +208,15 @@ public class GuiTest extends JFrame implements IObserver {
 		int playerID = current.getPlayerID();
 		tFieldCurrentPlayer.setForeground(col.getColor(playerID));
 		tFieldCurrentPlayer.setText(current.toString());
+		// update the figures sysmbol
 		figures.changePlayer(playerID, current.getFigureList().size());
+		// clear gamefield highlighters
+		gameField.clearField();
+		//reset highlighted card
+		if (up != null) {
+			cardOut(up);
+			up = null;
+		}
 		int count = 0;
 		for (CardInterface c : current.getCardList()) {
 			cards[count++].setIcon(new ImageIcon(getClass().getResource(
@@ -232,7 +234,7 @@ public class GuiTest extends JFrame implements IObserver {
 		 * ().getCardList().get(Integer.parseInt(c.getName())));
 		 */
 		if (up != null) {
-			layout.addLayoutComponent(up, OverlapLayout.POPDOWN);
+			layout.addLayoutComponent(up, OverlapLayout.POPDOWN);	
 		}
 		if (constraint == null || constraint == OverlapLayout.POPDOWN) {
 			layout.addLayoutComponent(c, OverlapLayout.POPUP);
