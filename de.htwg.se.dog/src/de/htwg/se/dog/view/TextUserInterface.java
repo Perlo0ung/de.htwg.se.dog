@@ -9,7 +9,6 @@ import org.apache.logging.log4j.Logger;
 
 import de.htwg.se.dog.controller.GameTableInterface;
 import de.htwg.se.dog.models.FieldInterface;
-import de.htwg.se.dog.models.PlayerInterface;
 import de.htwg.se.dog.models.impl.Card;
 import de.htwg.se.dog.util.IOEvent;
 import de.htwg.se.dog.util.IObserver;
@@ -53,13 +52,11 @@ public class TextUserInterface implements IObserver {
             //spieler setzt aus
             if (card == -2)
                 return true;
-            if ((card == 13 || card == 1 || card == 14) && !controller.isPlayerStartfieldBlocked(controller.getCurrentPlayer())) {
+            if ((card == 13 || card == 1 || card == 14) && !controller.isPlayerStartfieldBlocked()) {
                 out("Möchtest du eine neue Figure aufs Spielfeld setzten?(J/N):");
                 char input = scanner.next().charAt(0);
-                if ((input == 'J' || input == 'j') && controller.moveFigureToStart()) {
+                if ((input == 'J' || input == 'j') && controller.moveFigureToStart(card)) {
                     out("Moving Figure to Start-Field");
-                    PlayerInterface currentPlayer = controller.getCurrentPlayer();
-                    currentPlayer.removeCard(currentPlayer.getCardfromCardNr(card));
                     return true;
                 } else {
                     out("Mache normalen Zug.");
@@ -80,7 +77,7 @@ public class TextUserInterface implements IObserver {
         System.out.println("mache Zug :)\n\n\n\n\n\n");
         controller.playCard(card, moves);
         if (controller.currentPlayerHaswon()) {
-            out(String.format("/n/n/n/n/n/n/n/n/n/n/n/nSpieler %d hat Gewonnen!", controller.getCurrentPlayer().getPlayerID()));
+            out(String.format("/n/n/n/n/n/n/n/n/n/n/n/nSpieler %d hat Gewonnen!", controller.getCurrentPlayerID()));
             return false;
         }
         return true;
@@ -172,11 +169,11 @@ public class TextUserInterface implements IObserver {
             try {
                 Integer zahl = Integer.valueOf(input);
                 if (!controller.playerHasCard(zahl)) {
-                    out(String.format("Spieler %d hat keine solche Karte!", controller.getCurrentPlayer().getPlayerID()));
+                    out(String.format("Spieler %d hat keine solche Karte!", controller.getCurrentPlayerID()));
                     continue;
                 }
                 if (!controller.possibleCards(controller.getCurrentPlayer()).contains(new Card(zahl))) {
-                    out(String.format("Spieler %d kann diese Karte nicht benutzen!", controller.getCurrentPlayer().getPlayerID()));
+                    out(String.format("Spieler %d kann diese Karte nicht benutzen!", controller.getCurrentPlayerID()));
                     continue;
                 }
                 card = zahl;
@@ -197,7 +194,7 @@ public class TextUserInterface implements IObserver {
             retval = -1;
         }
         if (input.equalsIgnoreCase("skip")) {
-            out(String.format("Spieler %d wirft seine Karten weg und setzt bis zu nächsten Runde aus.", controller.getCurrentPlayer().getPlayerID()));
+            out(String.format("Spieler %d wirft seine Karten weg und setzt bis zu nächsten Runde aus.", controller.getCurrentPlayerID()));
             controller.getCurrentPlayer().clearCardList();
             retval = -2;
         }
@@ -215,7 +212,7 @@ public class TextUserInterface implements IObserver {
                     out(String.format("Feld %d ist leer!", zahl));
                     continue;
                 }
-                if (controller.getFigureOwnerID(zahl) != controller.getCurrentPlayer().getPlayerID()) {
+                if (controller.getFigureOwnerID(zahl) != controller.getCurrentPlayerID()) {
                     out(String.format("Die Figure auf dem Feld %d gehört Spieler %d", zahl, controller.getFigureOwnerID(zahl)));
                     continue;
                 }

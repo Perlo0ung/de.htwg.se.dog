@@ -9,18 +9,9 @@ import java.util.ArrayList;
 /**
  * The <code>OverlapLayout</code> class is a layout manager that lays out a
  * container's components in an overlapping fashion. A component can be painted
- * "above" or "below" the previous component in the container.
- * 
- * Like the GridLayout, each component is sized to the largest width and height
- * of any component in the container. The amount of overlap is controlled by
- * specifying the overlap postion of each component. You can simulate,
- * left-to-right, right-to-left, top-to-bottom, bottom-to-top and diagonal
- * layouts. As well you can "stack" components completely on top of one another.
- * In this case the components are sized to the space available in the
- * container.
- * 
- * A main usage for this layout might be in the creation of "card games". A few
- * features have been added that might be handy in these cases:
+ * "above" A main usage for this layout might be in the creation of
+ * "card games". A few features have been added that might be handy in these
+ * cases:
  * 
  * a) a "popup" feature - when a component is selected in can "popup" from its
  * regular location so it visibly stands out. To accomplish this some extra
@@ -37,18 +28,14 @@ import java.util.ArrayList;
  * like JButton as rollover effects are painted when a mouse moves over the
  * components.
  */
-public class OverlapLayout implements LayoutManager2, java.io.Serializable {
+public class OverlapLayout implements LayoutManager2 {
 
-	private static final long serialVersionUID = 1L;
 	public static final Boolean POPUP = Boolean.TRUE;
 	public static final Boolean POPDOWN = Boolean.FALSE;
-	
+
 	private static final float ALIGN = 0.5f;
 	private static final int PREFERRED = 0;
 	private static final int MINIMUM = 1;
-
-	// Indicates how a component is painted
-	private boolean overlapAbove;
 
 	private Point overlapPosition;
 
@@ -84,42 +71,7 @@ public class OverlapLayout implements LayoutManager2, java.io.Serializable {
 	 *            a Point defining the relative amount of overlap
 	 */
 	public OverlapLayout(Point overlapPosition) {
-		this(overlapPosition, true);
-	}
-
-	/**
-	 * Create an overlapping layout.
-	 * 
-	 * @param overlapPosition
-	 *            a Point defining the relative amount of overlap
-	 * @param overlayAbove
-	 *            when true components are painted above the previous component,
-	 *            otherwise they are painted below.
-	 */
-	public OverlapLayout(Point overlapPosition, boolean overlapAbove) {
 		setOverlapPosition(overlapPosition);
-		this.overlapAbove = overlapAbove;
-	}
-
-	/**
-	 * When components are overlapped above the ZOrder of each component is
-	 * changed resulting in the components position in the container being
-	 * changed. For example when you add a component to the end of the container
-	 * it will be moved to the beginning. If you then try to access the
-	 * component using Component.componentAt(), you will get the first
-	 * component, not the last.
-	 * 
-	 * This method will convert the index to you access the proper component.
-	 * 
-	 * @param index
-	 *            the index to convert
-	 */
-	public int convertIndex(int index) {
-		if (overlapAbove) {
-			return components.size() - index - 1;
-		} else {
-			return index;
-		}
 	}
 
 	/**
@@ -242,9 +194,7 @@ public class OverlapLayout implements LayoutManager2, java.io.Serializable {
 					// Need to change Z-Order so added components are painted
 					// above the previously added component.
 
-					if (overlapAbove) {
-						parent.setComponentZOrder(component, size - i - 1);
-					}
+					parent.setComponentZOrder(component, size - i - 1);
 
 					break;
 				}
@@ -403,7 +353,6 @@ public class OverlapLayout implements LayoutManager2, java.io.Serializable {
 						x += popupInsets.right - popupInsets.left;
 						y += popupInsets.bottom - popupInsets.top;
 					}
-
 					component.setLocation(x, y);
 
 					// Calculate location of next component using the overlap
@@ -429,10 +378,9 @@ public class OverlapLayout implements LayoutManager2, java.io.Serializable {
 			int height = parent.getHeight() - parentInsets.top
 					- parentInsets.bottom;
 			component.setSize(width, height);
-		} 
+		}
 		// resize each component to be the same size
-		else 
-		{
+		else {
 			component.setSize(maximumSize);
 		}
 	}
@@ -487,15 +435,5 @@ public class OverlapLayout implements LayoutManager2, java.io.Serializable {
 	 */
 	public void invalidateLayout(Container target) {
 		// remove constraints here?
-	}
-
-	/**
-	 * Returns the string representation of this column layout's values.
-	 * 
-	 * @return a string representation of this grid layout
-	 */
-	public String toString() {
-		return getClass().getName() + "[overlapAbove=" + overlapAbove
-				+ ",overlapPosition=" + overlapPosition + "]";
 	}
 }

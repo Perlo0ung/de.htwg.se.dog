@@ -6,26 +6,19 @@ import java.awt.Dimension;
 import java.awt.Event;
 import java.awt.Insets;
 import java.awt.Point;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-
 import de.htwg.se.dog.controller.GameTableInterface;
-import de.htwg.se.dog.models.CardInterface;
-import de.htwg.se.dog.models.PlayerInterface;
 import de.htwg.se.dog.util.IOEvent;
 import de.htwg.se.dog.util.IObserver;
 import de.htwg.se.dog.view.modules.ColorMap;
 import de.htwg.se.dog.view.modules.GuiDrawFigures;
 import de.htwg.se.dog.view.modules.GuiDrawGameField;
 import de.htwg.se.dog.view.modules.OverlapLayout;
-
 import javax.swing.JLabel;
-
 import java.awt.Font;
 import java.awt.event.KeyEvent;
-
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JFormattedTextField;
@@ -34,19 +27,19 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
-
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-
 import javax.swing.JScrollPane;
 
 public class GuiTest extends JFrame implements IObserver {
 
-
+	private static final int CARD14 = 14;
+	private static final int CARD13 = 13;
+	private static final int CARD1 = 1;
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private GameTableInterface controller;
@@ -57,19 +50,19 @@ public class GuiTest extends JFrame implements IObserver {
 	private Component up;
 	private GuiDrawFigures figures;
 	private GuiDrawGameField gameField;
-	// statics for findbugs		
+	// statics for findbugs
 	private static final float FONTBOLD = 4f;
 	private static final int FIVE = 5;
 	private static final int SIX = 6;
 	private static final int TEN = 10;
 	private static final int TWELVE = 12;
 	private static final int THIRTEEEN = 13;
-	private static final int SIXTEEN = 16;	
+	private static final int SIXTEEN = 16;
 	private static final int TWENTY = 20;
 	private static final int TWENTYTWO = 22;
 	private static final int TWENTYFIVE = 25;
 	private static final int THIRTY = 30;
-	private static final int FOURTYFIVE = 45;	
+	private static final int FOURTYFIVE = 45;
 	private static final int SEVENTYFIVE = 75;
 	private static final int EIGHTY = 80;
 	private static final int NINETYFIVE = 95;
@@ -77,24 +70,25 @@ public class GuiTest extends JFrame implements IObserver {
 	private static final int HUNDRET = 100;
 	private static final int HUNDRETTEN = 110;
 	private static final int HUNDRETTWENTY = 120;
-	private static final int HUNDRETTHIRTY = 130;	
+	private static final int HUNDRETTHIRTY = 130;
 	private static final int TWOHUNDRETTEN = 210;
 	private static final int SIXHUNDRET = 600;
 	private static final int SIXHUNDRETEIGHTEEN = 618;
 	private static final int TEXTFIELDY = 633;
-	private static final int SIXHUNDRETSIXTY = 660;	
+	private static final int SIXHUNDRETSIXTY = 660;
 	private static final int GAMEFIELDY = 750;
 	private static final int WINDOWY = 800;
 	private static final int GAMEFIELDX = 1270;
-	private static final int WINDOWX = 1280;	
+	private static final int WINDOWX = 1280;
 
 	/**
 	 * Create the frame.
 	 */
-	public GuiTest(GameTableInterface controller) {
+	public GuiTest(final GameTableInterface controller) {
 		controller.addObserver(this);
 		setResizable(false);
-		this.setIconImage(new ImageIcon(this.getClass().getResource("/dog_icon.png")).getImage());
+		this.setIconImage(new ImageIcon(this.getClass().getResource(
+				"/dog_icon.png")).getImage());
 		this.setVisible(true);
 		this.controller = controller;
 		this.setTitle("DogGame");
@@ -148,7 +142,8 @@ public class GuiTest extends JFrame implements IObserver {
 		gameField.setLayout(null);
 
 		tFieldCurrentPlayer = new JFormattedTextField();
-		tFieldCurrentPlayer.setBorder(BorderFactory.createLineBorder(Color.white));
+		tFieldCurrentPlayer.setBorder(BorderFactory
+				.createLineBorder(Color.white));
 		tFieldCurrentPlayer.setEditable(false);
 		tFieldCurrentPlayer.setBounds(TWELVE, TEXTFIELDY, NINETYSEVEN,
 				GuiTest.TWENTYTWO);
@@ -172,7 +167,7 @@ public class GuiTest extends JFrame implements IObserver {
 				HUNDRETTHIRTY);
 		gameField.add(scrollPane);
 
-		layout = new OverlapLayout(new Point(TWENTYFIVE, 0), true);
+		layout = new OverlapLayout(new Point(TWENTYFIVE, 0));
 		layout.setPopupInsets(new Insets(TWENTY, 0, 0, 0));
 		JPanel cardHand = new JPanel(layout);
 		scrollPane.setViewportView(cardHand);
@@ -195,16 +190,22 @@ public class GuiTest extends JFrame implements IObserver {
 		figures.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent arg0) {
-				int quit = JOptionPane.showConfirmDialog(contentPane,
-						"Spielfigur aufs Spielfeld setzen?", "Rausgehen?",
-						JOptionPane.YES_NO_OPTION);
-				if (quit == JOptionPane.YES_OPTION) {
-					//TODO
+				int card = getValueForCardIcon();
+				if ((card == CARD1 || card == CARD13 || card == CARD14)
+						&& !controller.isPlayerStartfieldBlocked()) {
+					int quit = JOptionPane.showConfirmDialog(contentPane,
+							"Spielfigur aufs Spielfeld setzen?", "Rausgehen?",
+							JOptionPane.YES_NO_OPTION);
+					if (quit == JOptionPane.YES_OPTION) {
+						controller.moveFigureToStart(card);
+						controller.nextPlayer();
+						controller.notifyObservers();
+					}
 				}
 			}
 		});
 		// JPanel figures = new JPanel();
-		figures.setBounds(THIRTY, SIXHUNDRETSIXTY, FOURTYFIVE,FOURTYFIVE);
+		figures.setBounds(THIRTY, SIXHUNDRETSIXTY, FOURTYFIVE, FOURTYFIVE);
 		gameField.add(figures);
 		figures.setBackground(Color.WHITE);
 		figures.setLayout(null);
@@ -212,37 +213,47 @@ public class GuiTest extends JFrame implements IObserver {
 
 	@Override
 	public void update(IOEvent e) {
-		PlayerInterface current = controller.getCurrentPlayer();
-		int playerID = current.getPlayerID();
+		int playerID = controller.getCurrentPlayerID();
 		tFieldCurrentPlayer.setForeground(col.getColor(playerID));
-		tFieldCurrentPlayer.setText(current.toString());
+		tFieldCurrentPlayer.setText(controller.getPlayerString());
 		// update the figures sysmbol
-		figures.changePlayer(playerID, current.getFigureList().size());
+		figures.changePlayer(playerID, controller.getCurrentPlayer()
+				.getFigureList().size());
 		// clear gamefield highlighters
 		gameField.clearField();
-		//reset highlighted card
+		// reset highlighted card
 		if (up != null) {
 			cardOut(up);
 			up = null;
 		}
-		int count = 0;
-		for (CardInterface c : current.getCardList()) {
-			cards[count++].setIcon(new ImageIcon(getClass().getResource(
-					String.format("/%d.gif", c.getValue()))));
-		}
+		/* reset the labels */
+		repaintCardLabels();
+
 		this.validate();
 		this.repaint();
 	}
 
+	/**
+	 * repaint the label icons and make unessesary icons invisible
+	 */
+	private void repaintCardLabels() {
+		int cardListSize = controller.getCurrentPlayer().getCardList().size();
+		for (int i = 0; i < cards.length; i++) {
+			if (i < cardListSize) {
+				int card = controller.getCurrentPlayer().getCardList().get(i)
+						.getValue();
+				cards[i].setIcon(new ImageIcon(getClass().getResource(
+						String.format("/%d.gif", card))));
+				continue;
+			}
+			cards[i].setVisible(false);
+		}
+	}
+
 	private void cardOut(Component c) {
 		Boolean constraint = layout.getConstraints(c);
-		/*
-		 * get item at pos i from cardlist
-		 * System.out.println(controller.getCurrentPlayer
-		 * ().getCardList().get(Integer.parseInt(c.getName())));
-		 */
 		if (up != null) {
-			layout.addLayoutComponent(up, OverlapLayout.POPDOWN);	
+			layout.addLayoutComponent(up, OverlapLayout.POPDOWN);
 		}
 		if (constraint == null || constraint == OverlapLayout.POPDOWN) {
 			layout.addLayoutComponent(c, OverlapLayout.POPUP);
@@ -252,5 +263,16 @@ public class GuiTest extends JFrame implements IObserver {
 		c.getParent().invalidate();
 		c.getParent().validate();
 		up = c;
+	}
+
+	private int getValueForCardIcon() {
+		int ret = -1;
+		if (up != null) {
+			int index = Integer.parseInt(up.getName());
+			int card = controller.getCurrentPlayer().getCardList().get(index)
+					.getValue();
+			ret = card;
+		}
+		return ret;
 	}
 }

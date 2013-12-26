@@ -271,17 +271,22 @@ public class GameTable extends Observable implements GameTableInterface {
     }
 
     @Override
-    public boolean isPlayerStartfieldBlocked(PlayerInterface player) {
-        int startFieldNr = player.getStartFieldNr();
-        return game.getGameArray()[startFieldNr].isBlocked();
+    public boolean isPlayerStartfieldBlocked() {
+        return game.getGameArray()[currentPlayer.getStartFieldNr()].isBlocked();
     }
 
     @Override
-    public boolean moveFigureToStart() {
+    public boolean moveFigureToStart(int card) {
         boolean retval = false;
         if (movement.moveStart(currentPlayer)) {
+            currentPlayer.removeCard(currentPlayer.getCardfromCardNr(card));
             retval = true;
         }
         return retval;
     }
+
+	@Override
+	public int getCurrentPlayerID() { 
+		return currentPlayer.getPlayerID();
+	}
 }
