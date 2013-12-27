@@ -48,7 +48,7 @@ public class GuiTest extends JFrame implements IObserver {
 	private JPanel contentPane;
 	private GameTableInterface controller;
 	private ColorMap col = new ColorMap();
-	private JFormattedTextField tFieldRound,tFieldCurrentPlayer;
+	private JFormattedTextField tFieldRound, tFieldCurrentPlayer;
 	private JLabel[] cards;
 	private OverlapLayout layout;
 	private Component up;
@@ -60,9 +60,9 @@ public class GuiTest extends JFrame implements IObserver {
 	private static final int SIX = 6;
 	private static final int TEN = 10;
 	private static final int TWELVE = 12;
-	private static final int THIRTEEEN = 13;	
+	private static final int THIRTEEEN = 13;
 	private static final int CARD13 = 13;
-	private static final int CARD14 = 14;	
+	private static final int CARD14 = 14;
 	private static final int FIFTEEN = 15;
 	private static final int SIXTEEN = 16;
 	private static final int TWENTY = 20;
@@ -71,7 +71,7 @@ public class GuiTest extends JFrame implements IObserver {
 	private static final int THIRTY = 30;
 	private static final int FOURTYFIVE = 45;
 	private static final int SEVENTYFIVE = 75;
-	private static final int EIGHTY = 80;	
+	private static final int EIGHTY = 80;
 	private static final int NINETY = 90;
 	private static final int NINETYFIVE = 95;
 	private static final int NINETYSEVEN = 97;
@@ -142,13 +142,12 @@ public class GuiTest extends JFrame implements IObserver {
 		contentPane.setBorder(new EmptyBorder(FIVE, FIVE, FIVE, FIVE));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
+
 		tFieldRound = new JFormattedTextField();
 		tFieldRound.setFont(new Font("Tahoma", Font.BOLD, THIRTEEEN));
 		tFieldRound.setEditable(false);
 		tFieldRound.setColumns(10);
-		tFieldRound.setBorder(BorderFactory
-						.createLineBorder(Color.white));
+		tFieldRound.setBorder(BorderFactory.createLineBorder(Color.white));
 		tFieldRound.setBackground(Color.WHITE);
 		tFieldRound.setBounds(TWELVE, SEVENHUNDRETTEN, NINETY, TWENTY);
 		contentPane.add(tFieldRound);
@@ -233,7 +232,7 @@ public class GuiTest extends JFrame implements IObserver {
 		int playerID = controller.getCurrentPlayerID();
 		tFieldCurrentPlayer.setForeground(col.getColor(playerID));
 		tFieldCurrentPlayer.setText(controller.getPlayerString());
-		tFieldRound.setText(String.format("Round: %d", controller.getRound())); 
+		tFieldRound.setText(String.format("Round: %d", controller.getRound()));
 		// update the figures sysmbol
 		figures.changePlayer(playerID, controller.getCurrentPlayer()
 				.getFigureList().size());
@@ -267,6 +266,10 @@ public class GuiTest extends JFrame implements IObserver {
 		}
 	}
 
+	/**
+	 * resets the position of the cardlabel, so it becomes highlighted/dehighlighted
+	 * @param c the component that will be highlighted
+	 */
 	private void cardOut(Component c) {
 		Boolean constraint = layout.getConstraints(c);
 		if (up != null) {
@@ -282,9 +285,13 @@ public class GuiTest extends JFrame implements IObserver {
 		}
 		c.getParent().invalidate();
 		c.getParent().validate();
-		
+
 	}
 
+	/**
+	 * returns the index at which the card is in the players cardlist
+	 * @return index for card, or -1 if no card was highlighted
+	 */
 	private int getValueForCardIcon() {
 		int ret = -1;
 		if (up != null) {
