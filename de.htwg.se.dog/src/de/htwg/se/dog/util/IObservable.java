@@ -20,7 +20,7 @@ public interface IObservable {
      */
     void notifyObservers();
     /**
-     * notfies all observer and sends the even giving in the parameter
+     * notfies all observer and sends the event given in the parameter
      * @param e
      */
     void notifyObservers(IOEvent e);

@@ -11,6 +11,7 @@ import de.htwg.se.dog.models.FigureInterface;
 import de.htwg.se.dog.models.GameFieldInterface;
 import de.htwg.se.dog.models.PlayerInterface;
 
+
 public class Movement implements MovementStrategy {
 
     private static final int VALUEOFCARD7 = 7;
