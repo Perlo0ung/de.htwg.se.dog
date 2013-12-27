@@ -289,4 +289,9 @@ public class GameTable extends Observable implements GameTableInterface {
 	public int getCurrentPlayerID() { 
 		return currentPlayer.getPlayerID();
 	}
+
+	@Override
+	public int getRound() {
+		return dealer.getRound();
+	}
 }

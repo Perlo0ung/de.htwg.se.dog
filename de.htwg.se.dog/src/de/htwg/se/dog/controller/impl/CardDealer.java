@@ -59,7 +59,7 @@ public class CardDealer implements CardDealerInterface {
     }
 
     /**
-     * Returns number of cards used this cards
+     * Returns number of cards used this round
      * 
      * @return int: cards to be dealed this round
      */

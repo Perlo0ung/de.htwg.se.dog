@@ -122,6 +122,12 @@ public interface GameTableInterface extends IObservable {
 	 */
 	boolean playCard(int cardNr, Map<Integer, Integer> moves);
 
+	/**
+	 * Returns the round playing in 
+	 * @return the round
+	 */
+	int getRound();
+
 	boolean fieldIsEmpty(int fieldnr);
 
 	int getFigureOwnerID(int fieldnr);

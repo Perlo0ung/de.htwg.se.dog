@@ -44,26 +44,26 @@ import javax.swing.JScrollPane;
 
 public class GuiTest extends JFrame implements IObserver {
 
-	private static final int CARD14 = 14;
-	private static final int CARD13 = 13;
-	private static final int CARD1 = 1;
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private GameTableInterface controller;
 	private ColorMap col = new ColorMap();
-	private JFormattedTextField tFieldCurrentPlayer;
+	private JFormattedTextField tFieldRound,tFieldCurrentPlayer;
 	private JLabel[] cards;
 	private OverlapLayout layout;
 	private Component up;
 	private GuiDrawFigures figures;
 	private GuiDrawGameField gameField;
 	// statics for findbugs
-	private static final float FONTBOLD = 4f;
+	private static final int CARD1 = 1;
 	private static final int FIVE = 5;
 	private static final int SIX = 6;
 	private static final int TEN = 10;
 	private static final int TWELVE = 12;
-	private static final int THIRTEEEN = 13;
+	private static final int THIRTEEEN = 13;	
+	private static final int CARD13 = 13;
+	private static final int CARD14 = 14;	
+	private static final int FIFTEEN = 15;
 	private static final int SIXTEEN = 16;
 	private static final int TWENTY = 20;
 	private static final int TWENTYTWO = 22;
@@ -71,7 +71,8 @@ public class GuiTest extends JFrame implements IObserver {
 	private static final int THIRTY = 30;
 	private static final int FOURTYFIVE = 45;
 	private static final int SEVENTYFIVE = 75;
-	private static final int EIGHTY = 80;
+	private static final int EIGHTY = 80;	
+	private static final int NINETY = 90;
 	private static final int NINETYFIVE = 95;
 	private static final int NINETYSEVEN = 97;
 	private static final int HUNDRET = 100;
@@ -83,6 +84,7 @@ public class GuiTest extends JFrame implements IObserver {
 	private static final int SIXHUNDRETEIGHTEEN = 618;
 	private static final int TEXTFIELDY = 633;
 	private static final int SIXHUNDRETSIXTY = 660;
+	private static final int SEVENHUNDRETTEN = 710;
 	private static final int GAMEFIELDY = 750;
 	private static final int WINDOWY = 800;
 	private static final int GAMEFIELDX = 1270;
@@ -140,6 +142,16 @@ public class GuiTest extends JFrame implements IObserver {
 		contentPane.setBorder(new EmptyBorder(FIVE, FIVE, FIVE, FIVE));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		
+		tFieldRound = new JFormattedTextField();
+		tFieldRound.setFont(new Font("Tahoma", Font.BOLD, THIRTEEEN));
+		tFieldRound.setEditable(false);
+		tFieldRound.setColumns(10);
+		tFieldRound.setBorder(BorderFactory
+						.createLineBorder(Color.white));
+		tFieldRound.setBackground(Color.WHITE);
+		tFieldRound.setBounds(TWELVE, SEVENHUNDRETTEN, NINETY, TWENTY);
+		contentPane.add(tFieldRound);
 
 		gameField = new GuiDrawGameField(controller);
 		// JPanel gameField = new JPanel();
@@ -155,9 +167,7 @@ public class GuiTest extends JFrame implements IObserver {
 		tFieldCurrentPlayer.setBounds(TWELVE, TEXTFIELDY, NINETYSEVEN,
 				GuiTest.TWENTYTWO);
 		gameField.add(tFieldCurrentPlayer);
-		tFieldCurrentPlayer.setFont(tFieldCurrentPlayer.getFont().deriveFont(
-				tFieldCurrentPlayer.getFont().getStyle() | Font.BOLD,
-				tFieldCurrentPlayer.getFont().getSize() + GuiTest.FONTBOLD));
+		tFieldCurrentPlayer.setFont(new Font("Tahoma", Font.BOLD, FIFTEEN));
 		tFieldCurrentPlayer.setBackground(Color.WHITE);
 		tFieldCurrentPlayer.setColumns(TEN);
 
@@ -223,6 +233,7 @@ public class GuiTest extends JFrame implements IObserver {
 		int playerID = controller.getCurrentPlayerID();
 		tFieldCurrentPlayer.setForeground(col.getColor(playerID));
 		tFieldCurrentPlayer.setText(controller.getPlayerString());
+		tFieldRound.setText(String.format("Round: %d", controller.getRound())); 
 		// update the figures sysmbol
 		figures.changePlayer(playerID, controller.getCurrentPlayer()
 				.getFigureList().size());
@@ -231,7 +242,6 @@ public class GuiTest extends JFrame implements IObserver {
 		// reset highlighted card
 		if (up != null) {
 			cardOut(up);
-			up = null;
 		}
 		/* reset the labels */
 		repaintCardLabels();
@@ -261,15 +271,18 @@ public class GuiTest extends JFrame implements IObserver {
 		Boolean constraint = layout.getConstraints(c);
 		if (up != null) {
 			layout.addLayoutComponent(up, OverlapLayout.POPDOWN);
+			up = null;
 		}
 		if (constraint == null || constraint == OverlapLayout.POPDOWN) {
 			layout.addLayoutComponent(c, OverlapLayout.POPUP);
+			up = c;
 		} else {
 			layout.addLayoutComponent(c, OverlapLayout.POPDOWN);
+			up = null;
 		}
 		c.getParent().invalidate();
 		c.getParent().validate();
-		up = c;
+		
 	}
 
 	private int getValueForCardIcon() {
