@@ -17,6 +17,7 @@ import de.htwg.se.dog.models.GameFieldInterface;
 import de.htwg.se.dog.models.PlayerInterface;
 import de.htwg.se.dog.models.impl.GameField;
 import de.htwg.se.dog.models.impl.Player;
+import de.htwg.se.dog.util.IOMsgEvent;
 import de.htwg.se.dog.util.Observable;
 
 public class GameTable extends Observable implements GameTableInterface {
@@ -100,6 +101,7 @@ public class GameTable extends Observable implements GameTableInterface {
 
     @Override
     public void newRound() {
+    	sendObserverMessage("Neue Runde");
         dealCards();
         dealer.newRound();
     }
@@ -113,6 +115,7 @@ public class GameTable extends Observable implements GameTableInterface {
             }
             temp = turnPlayer.poll();
             if (!canPlay(temp)) {
+            	sendObserverMessage((String.format("Spieler %d kann nicht spielen", temp.getPlayerID())));
                 temp = null;
             }
             currentPlayer = temp;
@@ -293,5 +296,12 @@ public class GameTable extends Observable implements GameTableInterface {
 	@Override
 	public int getRound() {
 		return dealer.getRound();
+	}
+	/**
+	 * sends the message msg to all observers
+	 * @param msg the message
+	 */
+	private void sendObserverMessage(String msg) {
+		notifyObservers(new IOMsgEvent(msg));
 	}
 }

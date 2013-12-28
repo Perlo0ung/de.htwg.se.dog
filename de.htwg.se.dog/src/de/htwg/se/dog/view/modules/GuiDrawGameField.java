@@ -12,12 +12,13 @@ import java.awt.geom.Arc2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map.Entry;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
 import javax.imageio.ImageIO;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import de.htwg.se.dog.controller.GameTableInterface;
@@ -48,10 +49,11 @@ public class GuiDrawGameField extends JPanel implements MouseListener {
 	// Map with all Gamefields
 	private static SortedMap<Integer, Arc2D.Double> gMap;
 	// Map with highlighted GameFields
-	private static SortedMap<Integer, Arc2D.Double> gHigh;
 	private static ColorMap col = new ColorMap();
 	private static GameFieldInterface game;
 	private static FieldInterface[] array;
+	private static List<Integer> fromto;
+	private static boolean selectedStart = false;
 
 	/**
 	 * initializes the panel and sets the controller this panel is working with
@@ -61,9 +63,8 @@ public class GuiDrawGameField extends JPanel implements MouseListener {
 	 */
 	public GuiDrawGameField(GameTableInterface controller) {
 		this.controller = controller;
-		this.setBackground(Color.WHITE);
 		gMap = new TreeMap<Integer, Arc2D.Double>();
-		gHigh = new TreeMap<Integer, Arc2D.Double>();
+		fromto = new ArrayList<Integer>(2);
 		this.addMouseListener(this);
 		game = controller.getGameField();
 		array = game.getGameArray();
@@ -73,10 +74,10 @@ public class GuiDrawGameField extends JPanel implements MouseListener {
 	 * house fields are treated different cause they need to be inside the
 	 * circle in one line
 	 * 
-	 * @t: defines at which radius the point will be drawn next point will
-	 * only be drawn when counter is inkremented so we make sure that
-	 * counter gets only inkremented after all houses have been drawn or
-	 * after each normal field
+	 * @t: defines at which radius the point will be drawn next point will only
+	 *     be drawn when counter is inkremented so we make sure that counter
+	 *     gets only inkremented after all houses have been drawn or after each
+	 *     normal field
 	 * 
 	 * @dif: defines where the next point is inside the circle
 	 * 
@@ -89,31 +90,31 @@ public class GuiDrawGameField extends JPanel implements MouseListener {
 		super.paintComponent(g);
 
 		setRendering(g2d);
-		radius = (int) ((this.getHeight() / TWOTHREE)-NORM);
+		radius = (int) ((this.getHeight() / TWOTHREE) - NORM);
 		int house = game.getHouseCount() * game.getPlayerCount();
 		int size = game.getFieldSize();
 		int start = game.getFieldsTillHouse() + game.getHouseCount();
 		int a = getWidth() / 2;
-		int b = getHeight() / 2 +HEIGHTNORM;
+		int b = getHeight() / 2 + HEIGHTNORM;
 		drawImageMiddle(g2d);
 		// PREVENT too big fields e.g when playing with 1:1 fields
-		double r2 = 2 * Math.PI * radius / size ;
+		double r2 = 2 * Math.PI * radius / size;
 		if (r2 > MAXRADIUS) {
 			r2 = MAXRADIUS;
 		}
-		//next point on outer circle
+		// next point on outer circle
 		double t = 0;
-		//counter for normalfields
+		// counter for normalfields
 		int counter = 1;
-		//counter for housefields
+		// counter for housefields
 		int counterhouse = 1;
-		//-radius where the house field will be drawn
+		// -radius where the house field will be drawn
 		double dif = -(r2 * ONETWO);
-		//x,y coordinates for points
+		// x,y coordinates for points
 		double x, y;
 		Arc2D.Double gArc;
 		g2d.setStroke(new BasicStroke(radius / HUNDRED));
-		g2d.setFont(new Font("Tahoma", Font.BOLD, (int) Math.round(r2 * 1/2)));
+		g2d.setFont(new Font("Tahoma", Font.BOLD, (int) Math.round(r2 * 1 / 2)));
 
 		for (int i = 0; i < size; i++) {
 
@@ -150,28 +151,29 @@ public class GuiDrawGameField extends JPanel implements MouseListener {
 		}
 		/**
 		 * override the fields with the number and playercolor when they have
-		 * been clicked 
+		 * been clicked
 		 */
 		highlightFields(g2d, r2);
 	}
 
 	/**
 	 * Highlight the fields in gHIgh map
+	 * 
 	 * @param g2d
 	 * @param r2
 	 */
 	private void highlightFields(Graphics2D g2d, double r2) {
-		for (Entry<Integer, Arc2D.Double> arc : gHigh.entrySet()) {
-			g2d.setColor(col.getColor(controller.getCurrentPlayer()
-					.getPlayerID()));
-			g2d.fill(arc.getValue());
-			drawString(g2d, String.valueOf(arc.getKey()), r2, arc.getValue().x
-					+ r2, arc.getValue().y + r2);
+		for (Integer i : fromto) {
+			g2d.setColor(col.getColor(controller.getCurrentPlayerID()));
+			Arc2D.Double arc = gMap.get(i);
+			g2d.fill(arc);
+			drawString(g2d, String.valueOf(i), r2, arc.x + r2, arc.y + r2);
 		}
 	}
 
 	/**
 	 * draw image in the middle of Panel
+	 * 
 	 * @param g2d
 	 */
 	private void drawImageMiddle(Graphics2D g2d) {
@@ -179,8 +181,8 @@ public class GuiDrawGameField extends JPanel implements MouseListener {
 		try {
 			BufferedImage img = ImageIO.read(new File(this.getClass()
 					.getResource("/dog.jpg").getPath()));
-			g2d.drawImage(img, (getWidth() - img.getWidth()) / 2,
-					(getHeight()+NORM - img.getHeight()) / 2, null);
+			g2d.drawImage(img, (getWidth() - NORM - img.getWidth()) / 2,
+					(getHeight() + NORM - img.getHeight()) / 2, null);
 		} catch (IOException e) {
 			System.exit(1);
 		}
@@ -188,6 +190,7 @@ public class GuiDrawGameField extends JPanel implements MouseListener {
 
 	/**
 	 * set the rendering quality
+	 * 
 	 * @param g2d
 	 */
 	private void setRendering(Graphics2D g2d) {
@@ -202,6 +205,7 @@ public class GuiDrawGameField extends JPanel implements MouseListener {
 
 	/**
 	 * sets and draws the arc, filled or unfilles
+	 * 
 	 * @param g2d
 	 * @param gArc
 	 * @param i
@@ -216,6 +220,7 @@ public class GuiDrawGameField extends JPanel implements MouseListener {
 
 	/**
 	 * Decides what colore the field will be drawn with
+	 * 
 	 * @param g2d
 	 * @param i
 	 */
@@ -229,6 +234,7 @@ public class GuiDrawGameField extends JPanel implements MouseListener {
 
 	/**
 	 * Draw the startfield arc
+	 * 
 	 * @param g2d
 	 * @param start
 	 * @param r2
@@ -239,11 +245,12 @@ public class GuiDrawGameField extends JPanel implements MouseListener {
 	 */
 	private void startFieldArc(Graphics2D g2d, int start, double r2, double x,
 			double y, Arc2D.Double gArc, int i) {
-		int size = game.getFieldSize()-1;
+		int size = game.getFieldSize() - 1;
 		if (i % start == 0 && !array[i].isBlocked()) {
-			if (array[i].getFigure() == null) {			
-				//set startfield color
-				g2d.setColor(col.getColor(array[((size-1)+i)%size].getOwner()));
+			if (array[i].getFigure() == null) {
+				// set startfield color
+				g2d.setColor(col.getColor(array[((size - 1) + i) % size]
+						.getOwner()));
 				g2d.draw(gArc);
 			} else {
 				g2d.fill(gArc);
@@ -273,7 +280,7 @@ public class GuiDrawGameField extends JPanel implements MouseListener {
 	 */
 	private void drawString(Graphics2D g2d, String s, double r2, double x,
 			double y) {
-		
+
 		g2d.setColor(Color.BLACK);
 		g2d.drawString(String.format("%2s", s),
 				Float.parseFloat(String.valueOf(x - r2 * STRINGX)),
@@ -297,37 +304,37 @@ public class GuiDrawGameField extends JPanel implements MouseListener {
 	 */
 	@Override
 	public void mousePressed(MouseEvent arg0) {
-		if (arg0.getButton() == 1) {
-			for (Entry<Integer, Arc2D.Double> a : gMap.entrySet()) {
-				if (a.getValue().contains(arg0.getX(), arg0.getY())) {
-					Arc2D.Double arc = a.getValue();
-					Arc2D.Double newArc = new Arc2D.Double(arc.x, arc.y,
-							arc.width, arc.height, 0, CIRCLE, Arc2D.OPEN);
-					if (gHigh.containsKey(a.getKey())) {
-						gHigh.remove(a.getKey());
-						repaint();
+		for (Entry<Integer, Arc2D.Double> a : gMap.entrySet()) {
+			if (a.getValue().contains(arg0.getX(), arg0.getY())) {
+				Integer feldId = a.getKey();
+				if (array[feldId].getFigureOwnerNr() == controller
+						.getCurrentPlayerID()) {
+					if (fromto.contains(feldId)) {
+						// start abwählen-> liste leeren
+						fromto.clear();
+						selectedStart = false;
 					} else {
-						if (gHigh.size() == 2) {
-							gHigh.clear();
-						}
-						if (array[a.getKey()].isHouse()) {
-							if (array[a.getKey()].getOwner() == controller
-									.getCurrentPlayer().getPlayerID()) {
-								gHigh.put(a.getKey(), newArc);
-								repaint();
-							}
-						} else {
-							gHigh.put(a.getKey(), newArc);
-							repaint();
-						}
-						if (gHigh.size() == 2) {
-							Object[] str = gHigh.keySet().toArray();
-							JOptionPane.showMessageDialog(null, String.format(
-									"von %s nach %s", str[0], str[1]));
-						}
+						// neuer start -> true
+						selectedStart = fromto.add(feldId);
 					}
-					break;
+					// start geklickt und gehört keinem oder mir -> anklickbar
+				} else if (selectedStart
+						&& (array[feldId].getOwner() == 0 || array[feldId]
+								.getOwner() == controller.getCurrentPlayerID())) {
+					// scohn angeklickt worden -> abwählen
+					if (fromto.contains(feldId)) {
+						fromto.remove(feldId);
+					// nur start angeklickt -> feld anklicken
+					} else if (fromto.size() < 2) {
+						fromto.add(feldId);
+					// scohn 2 felder angeklickt start feld behalten -> zielfeld neu setzen
+					} else {
+						fromto.remove(fromto.size() - 1);
+						fromto.add(feldId);
+					}
 				}
+				repaint();
+				break;
 			}
 		}
 	}
@@ -337,7 +344,23 @@ public class GuiDrawGameField extends JPanel implements MouseListener {
 		// TODO Auto-generated method stub
 
 	}
+	/**
+	 * clears the highlighters
+	 */
 	public void clearField() {
-		gHigh.clear();
+		fromto.clear();
+	}
+
+	/**
+	 * returns an array with the from and to field
+	 * from field is at index 0 , to field at index 1
+	 * @return
+	 */
+	public Integer[] getFromTo() {
+		Integer[] ret = null;
+		if(fromto.size() == 2) {
+			ret = (Integer[]) (fromto.toArray());
+		} 
+		return ret;
 	}
 }

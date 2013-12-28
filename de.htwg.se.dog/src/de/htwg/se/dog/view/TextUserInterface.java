@@ -245,7 +245,9 @@ public class TextUserInterface implements IObserver {
 
 	@Override
 	public void update(IOEvent e) {
-		printTui();
+		if (e == null) { 
+			printTui();
+		}
 	}
 
 }
