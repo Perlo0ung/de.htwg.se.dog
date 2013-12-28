@@ -44,10 +44,12 @@ public class ColorMap {
 	 *         that 128 the methode returns always COLOR.BLACK
 	 */
 	public Color getColor(int code) {
+		Color col;
 		try {
-			return Color.decode(COLORS[code]);
+			col = Color.decode(COLORS[code]);
 		} catch (IndexOutOfBoundsException ex) {
-			return Color.BLACK;
-		}
+			col = Color.BLACK;
+		} 
+		return col;
 	}
 }

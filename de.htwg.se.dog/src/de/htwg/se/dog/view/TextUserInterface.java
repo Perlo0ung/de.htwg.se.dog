@@ -11,7 +11,6 @@ import de.htwg.se.dog.controller.GameTableInterface;
 import de.htwg.se.dog.models.FieldInterface;
 import de.htwg.se.dog.models.impl.Card;
 import de.htwg.se.dog.util.IOEvent;
-import de.htwg.se.dog.util.IOMsgEvent;
 import de.htwg.se.dog.util.IObserver;
 
 public class TextUserInterface implements IObserver {

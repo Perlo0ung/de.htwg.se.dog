@@ -17,7 +17,6 @@ import de.htwg.se.dog.models.GameFieldInterface;
 import de.htwg.se.dog.models.PlayerInterface;
 import de.htwg.se.dog.models.impl.GameField;
 import de.htwg.se.dog.models.impl.Player;
-import de.htwg.se.dog.util.IOMsgEvent;
 import de.htwg.se.dog.util.Observable;
 
 public class GameTable extends Observable implements GameTableInterface {

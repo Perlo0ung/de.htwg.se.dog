@@ -1,7 +1,6 @@
 package de.htwg.se.dog.util;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -14,6 +13,10 @@ public class OberservableTest {
     class TestObserver implements IObserver {
         @Override
         public void update(IOEvent e) {
+        	if(e instanceof IOMsgEvent) {
+        		String a = ((IOMsgEvent) e).getMessage();
+        		assertEquals(a,"test");
+        	}
             ping = true;
         }
 
@@ -29,7 +32,7 @@ public class OberservableTest {
     @Test
     public void testNotify() {
         assertFalse(ping);
-        testObservable.notifyObservers();
+        testObservable.notifyObservers(new IOMsgEvent("test"));
         assertTrue(ping);
     }
 
@@ -48,5 +51,4 @@ public class OberservableTest {
         testObservable.notifyObservers();
         assertFalse(ping);
     }
-
 }

@@ -8,7 +8,7 @@ public class IOMsgEvent implements IOEvent{
 
 	private String message;
 	/**
-	 * inittialise the message that will be send
+	 * initialises the message that will be send
 	 * @param msg the message
 	 */
 	public IOMsgEvent(String msg) {
@@ -16,7 +16,7 @@ public class IOMsgEvent implements IOEvent{
 	}
 
 	/**
-	 * get the string from message object
+	 * get the string from message event
 	 * @return MsgEvent as String
 	 */
 	public String getMessage() {

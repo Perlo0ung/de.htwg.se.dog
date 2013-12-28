@@ -1,7 +1,6 @@
 package de.htwg.se.dog.models;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -81,5 +80,10 @@ public class PlayerTest {
     public void testgetCardfromCardNr() {
     	p1.addCard(card2);
     	assertEquals(card2, p1.getCardfromCardNr(2));
+    }
+    @Test
+    public void testclearCardList() {
+    	p1.clearCardList();
+    	assertTrue(p1.getCardList().isEmpty());
     }
 }
