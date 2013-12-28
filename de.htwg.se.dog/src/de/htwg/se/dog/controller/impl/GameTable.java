@@ -101,9 +101,10 @@ public class GameTable extends Observable implements GameTableInterface {
 
     @Override
     public void newRound() {
-    	sendObserverMessage("Neue Runde");
+    	
         dealCards();
         dealer.newRound();
+        sendObserverMessage("Neue Runde");
     }
 
     @Override

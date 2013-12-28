@@ -27,7 +27,6 @@ import java.awt.event.KeyEvent;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
-import javax.swing.JFormattedTextField;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
@@ -42,6 +41,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -50,13 +50,14 @@ import javax.swing.JButton;
 
 public class GraphicalUserInterface extends JFrame implements IObserver {
 
-
+	private static final int NINETY = 90;
+	private static final int SHSEVENTYEIGHT = 678;
+	private static final int THTHIRTYSEVEN = 337;
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private GameTableInterface controller;
 	private ColorMap col = new ColorMap();
-	private JFormattedTextField tFieldRound;
-	private JLabel tFieldCurrentPlayer;
+	private JLabel tFieldCurrentPlayer, tFieldRound;
 	private JLabel[] cards;
 	private OverlapLayout layout;
 	private Component up;
@@ -86,25 +87,19 @@ public class GraphicalUserInterface extends JFrame implements IObserver {
 	private static final int HUNDRETTEN = 110;
 	private static final int HUNDRETTWENTY = 120;
 	private static final int HUNDRETTHIRTY = 130;
-	private static final int TWOHUNDRETTEN = 210;	
+	private static final int TWOHUNDRETTEN = 210;
 	private static final int THREEHUNDRET = 300;
-	private static final int THTWENTYSIX = 326;
 	private static final int SIXHUNDRET = 600;
 	private static final int SIXHUNDRETEIGHTEEN = 618;
 	private static final int TEXTFIELDY = 633;
 	private static final int SIXHUNDRETFOURTY = 640;
 	private static final int SIXHUNDRETSIXTY = 660;
-	private static final int SEVENHUNDRET = 700;
 	private static final int GAMEFIELDY = 750;
 	private static final int WINDOWY = 800;
 	private static final int NHFIFTY = 950;
 	private static final int GAMEFIELDX = 1270;
 	private static final int WINDOWX = 1280;
 
-	
-	
-	
-	
 	/**
 	 * Create the frame.
 	 * 
@@ -159,16 +154,6 @@ public class GraphicalUserInterface extends JFrame implements IObserver {
 		contentPane.setBorder(new EmptyBorder(FIVE, FIVE, FIVE, FIVE));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-
-		JButton btnGo = new JButton("GO!");
-		contentPane.add(btnGo);
-		btnGo.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				// TODO
-
-			}
-		});
-		btnGo.setBounds(THTWENTYSIX, SEVENHUNDRET, HUNDRET, TWENTYFIVE);
 
 		gameField = new GuiDrawGameField(controller);
 		// JPanel gameField = new JPanel();
@@ -235,7 +220,8 @@ public class GraphicalUserInterface extends JFrame implements IObserver {
 				.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 		panetAreaStatus
 				.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		panetAreaStatus.setBounds(NHFIFTY, SIXHUNDRETFOURTY, THREEHUNDRET, EIGHTY);
+		panetAreaStatus.setBounds(NHFIFTY, SIXHUNDRETFOURTY, THREEHUNDRET,
+				EIGHTY);
 		gameField.add(panetAreaStatus);
 
 		tAreaStatus = new JTextArea();
@@ -243,15 +229,6 @@ public class GraphicalUserInterface extends JFrame implements IObserver {
 		tAreaStatus.setFont(new Font("Tahoma", Font.PLAIN, THIRTEEEN));
 		tAreaStatus.setEditable(false);
 		panetAreaStatus.setViewportView(tAreaStatus);
-
-		tFieldRound = new JFormattedTextField();
-		contentPane.add(tFieldRound);
-		tFieldRound.setFont(new Font("Tahoma", Font.BOLD, THIRTEEEN));
-		tFieldRound.setEditable(false);
-		tFieldRound.setColumns(10);
-		tFieldRound.setBorder(BorderFactory.createLineBorder(Color.white));
-		tFieldRound.setBackground(Color.WHITE);
-		tFieldRound.setBounds(326, 680, 90, 20);
 		cards = new JLabel[SIX];
 		for (int i = 0; i < cards.length; i++) {
 			cards[i] = new JLabel();
@@ -266,6 +243,27 @@ public class GraphicalUserInterface extends JFrame implements IObserver {
 			});
 			cardHand.add(cards[i]);
 		}
+		JButton btnGo = new JButton("GO!");
+		gameField.add(btnGo);
+		btnGo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				List<Integer> fromto = gameField.getFromTo();
+				if (gameField.getFromTo() != null) {
+					int diff = fromto.get(1)
+							- controller.getGameField().getFieldSize();
+					JOptionPane.showMessageDialog(contentPane,
+							String.format("%d", diff));
+				}
+			}
+		});
+		btnGo.setBounds(336, 701, HUNDRET, TWENTYFIVE);
+
+		tFieldRound = new JLabel();
+		gameField.add(tFieldRound);
+		tFieldRound.setFont(new Font("Tahoma", Font.BOLD, THIRTEEEN));
+		tFieldRound.setBorder(BorderFactory.createLineBorder(Color.white));
+		tFieldRound.setBackground(Color.WHITE);
+		tFieldRound.setBounds(THTHIRTYSEVEN, SHSEVENTYEIGHT, NINETY, TWENTY);
 	}
 
 	@Override
@@ -276,6 +274,7 @@ public class GraphicalUserInterface extends JFrame implements IObserver {
 			tAreaStatus.append(String.format("[%s] %s\n", date,
 					((IOMsgEvent) e).getMessage()));
 			tAreaStatus.setCaretPosition(tAreaStatus.getDocument().getLength());
+
 		} else {
 			int playerID = controller.getCurrentPlayerID();
 			tFieldCurrentPlayer.setForeground(col.getColor(playerID));

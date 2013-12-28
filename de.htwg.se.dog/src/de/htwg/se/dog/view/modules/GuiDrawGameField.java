@@ -356,10 +356,10 @@ public class GuiDrawGameField extends JPanel implements MouseListener {
 	 * from field is at index 0 , to field at index 1
 	 * @return
 	 */
-	public Integer[] getFromTo() {
-		Integer[] ret = null;
+	public List<Integer> getFromTo() {
+		List<Integer> ret = null;
 		if(fromto.size() == 2) {
-			ret = (Integer[]) (fromto.toArray());
+			ret = new ArrayList<Integer>(fromto);
 		} 
 		return ret;
 	}
