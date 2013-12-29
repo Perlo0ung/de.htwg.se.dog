@@ -41,7 +41,8 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -247,12 +248,16 @@ public class GraphicalUserInterface extends JFrame implements IObserver {
 		gameField.add(btnGo);
 		btnGo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				List<Integer> fromto = gameField.getFromTo();
-				if (gameField.getFromTo() != null) {
-					int diff = fromto.get(1)
-							- controller.getGameField().getFieldSize();
-					JOptionPane.showMessageDialog(contentPane,
-							String.format("%d", diff));
+				Integer from = gameField.getFromFieldID();
+				int cardval = getValueForCardIcon();
+				if (from != null && cardval != -1) {
+					Map<Integer, Integer> move = new HashMap<Integer, Integer>();
+					move.put(from, cardval);
+					if (controller.isValidMove(cardval, move)) {
+						controller.playCard(cardval, move);
+						controller.nextPlayer();
+						controller.notifyObservers();
+					}
 				}
 			}
 		});
@@ -292,8 +297,6 @@ public class GraphicalUserInterface extends JFrame implements IObserver {
 			}
 			/* reset the labels */
 			repaintCardLabels();
-
-			this.validate();
 			this.repaint();
 		}
 	}
@@ -303,12 +306,14 @@ public class GraphicalUserInterface extends JFrame implements IObserver {
 	 */
 	private void repaintCardLabels() {
 		int cardListSize = controller.getCurrentPlayer().getCardList().size();
+		System.out.println(cardListSize);
 		for (int i = 0; i < cards.length; i++) {
 			if (i < cardListSize) {
 				int card = controller.getCurrentPlayer().getCardList().get(i)
 						.getValue();
 				cards[i].setIcon(new ImageIcon(getClass().getResource(
 						String.format("/%d.gif", card))));
+				cards[i].setVisible(true);
 				continue;
 			}
 			cards[i].setVisible(false);

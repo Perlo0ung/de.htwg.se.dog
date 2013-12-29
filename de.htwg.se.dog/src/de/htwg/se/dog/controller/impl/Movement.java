@@ -10,11 +10,9 @@ import de.htwg.se.dog.models.FieldInterface;
 import de.htwg.se.dog.models.FigureInterface;
 import de.htwg.se.dog.models.GameFieldInterface;
 import de.htwg.se.dog.models.PlayerInterface;
-import de.htwg.se.dog.util.IOMsgEvent;
-import de.htwg.se.dog.util.Observable;
 
 
-public class Movement extends Observable implements MovementStrategy {
+public class Movement implements MovementStrategy {
 
     private static final int VALUEOFCARD7 = 7;
     private static final int ELEVEN = 11;
@@ -86,7 +84,6 @@ public class Movement extends Observable implements MovementStrategy {
             tempPlayer.updateFigurePos(figure.getFignr(), -1);
             // remove figure from field and add it to Playerlist
             tempPlayer.addFigure(figure);
-            sendObserverMessage(String.format("Spieler %d wurde auf Feld %d geschlagen", tempPlayer.getPlayerID(),fieldID));
         }
     }
 
@@ -303,11 +300,4 @@ public class Movement extends Observable implements MovementStrategy {
         }
         return returnval;
     }
-	/**
-	 * sends the message msg to all observers
-	 * @param msg the message
-	 */
-	private void sendObserverMessage(String msg) {
-		notifyObservers(new IOMsgEvent(msg));
-	}
 }

@@ -238,17 +238,15 @@ public class GameTable extends Observable implements GameTableInterface {
     @Override
     public boolean playCard(int cardNr, Map<Integer, Integer> moves) {
         boolean retval = false;
-
         if (moves.size() == 1) {
             movement.setMoveStrategie(cardNr);
             //TODO For-Schleife wegmachen
             for (Integer fieldNr : moves.keySet()) {
                 retval = movement.move(moves.get(fieldNr), fieldNr);
             }
-            retval = movement.move(moves);
         }
         if (retval) {
-            currentPlayer.removeCard(currentPlayer.getCardfromCardNr(cardNr));
+            currentPlayer.removeCard(currentPlayer.getCardfromCardNr(cardNr));          
         }
         return retval;
     }
@@ -304,5 +302,10 @@ public class GameTable extends Observable implements GameTableInterface {
 	 */
 	private void sendObserverMessage(String msg) {
 		notifyObservers(new IOMsgEvent(msg));
+	}
+
+	@Override
+	public int getTargetField(int steps, int startfieldnr) {
+		return movement.getTargetfield(steps, startfieldnr);
 	}
 }

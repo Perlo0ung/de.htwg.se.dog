@@ -127,7 +127,13 @@ public interface GameTableInterface extends IObservable {
 	 * @return the round
 	 */
 	int getRound();
-
+	/**
+	 * delegates to movement, returns the tagetfield for a move
+	 * @param steps
+	 * @param startfieldnr
+	 * @return
+	 */
+	int getTargetField(int steps, int startfieldnr);
 	boolean fieldIsEmpty(int fieldnr);
 
 	int getFigureOwnerID(int fieldnr);
