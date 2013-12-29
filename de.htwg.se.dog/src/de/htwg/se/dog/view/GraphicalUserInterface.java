@@ -10,8 +10,12 @@ import java.awt.Point;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import de.htwg.se.dog.controller.GameTableInterface;
+import de.htwg.se.dog.models.PlayerInterface;
+import de.htwg.se.dog.models.impl.Card;
 import de.htwg.se.dog.util.IOEvent;
 import de.htwg.se.dog.util.IOMsgEvent;
 import de.htwg.se.dog.util.IObserver;
@@ -31,10 +35,13 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.JSpinner;
 import javax.swing.KeyStroke;
+import javax.swing.SpinnerNumberModel;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
@@ -57,6 +64,8 @@ public class GraphicalUserInterface extends JFrame implements IObserver {
 	private static final int SHSEVENTYEIGHT = 678;
 	private static final int THTHIRTYSEVEN = 337;
 	private static final long serialVersionUID = 1L;
+	private ImageIcon icon = new ImageIcon(this.getClass().getResource(
+			"/dog_icon.png"));
 	private JPanel contentPane;
 	private GameTableInterface controller;
 	private ColorMap col = new ColorMap();
@@ -111,8 +120,7 @@ public class GraphicalUserInterface extends JFrame implements IObserver {
 	public GraphicalUserInterface(final GameTableInterface controller) {
 		controller.addObserver(this);
 		setResizable(false);
-		this.setIconImage(new ImageIcon(this.getClass().getResource(
-				"/dog_icon.png")).getImage());
+		this.setIconImage(icon.getImage());
 		this.setVisible(true);
 		this.controller = controller;
 		this.setTitle("DogGame");
@@ -125,6 +133,24 @@ public class GraphicalUserInterface extends JFrame implements IObserver {
 				if (quit == JOptionPane.YES_OPTION) {
 					System.exit(0);
 				}
+			}
+		});
+		this.addKeyListener(new KeyListener() {
+
+			@Override
+			public void keyTyped(KeyEvent arg0) {
+			}
+
+			@Override
+			public void keyReleased(KeyEvent arg0) {
+			}
+
+			@Override
+			public void keyPressed(KeyEvent arg0) {
+				if (arg0.getKeyCode() == KeyEvent.VK_ENTER) {
+					moveToDestination();
+				}
+
 			}
 		});
 		setBounds(HUNDRET, HUNDRET, WINDOWX, WINDOWY);
@@ -362,42 +388,22 @@ public class GraphicalUserInterface extends JFrame implements IObserver {
 	 * moves figure to destination
 	 */
 	private void moveToDestination() {
+		final PlayerInterface current = controller.getCurrentPlayer();
 		Integer from = gameField.getFromFieldID();
 		Integer to = gameField.getToFieldID();
 		int cardval = getValueForCardIcon();
 		if (from != null && cardval != -1) {
 			Map<Integer, Integer> move = new HashMap<Integer, Integer>();
 			if (cardval == CARD1) {
-				Object[] options = { "1", "11" };
-				int decision = JOptionPane.showOptionDialog(this,
-						"Wieviel möchtest du laufen?",
-						"Laufwert?", JOptionPane.YES_NO_OPTION,
-						JOptionPane.INFORMATION_MESSAGE, null, options,
-						options[1]);
-
-				if (decision == JOptionPane.YES_OPTION) {
-					move.put(from, CARD1);
-				} else {
-					move.put(from, CARD11);
-				}
+				cardAceDialog(from, move);
 			} else if (cardval == CARD4) {
-				Object[] options = { "Vorwärts", "Rückwärts" };
-				int decision = JOptionPane.showOptionDialog(this,
-						"In welche Richtung möchtest du laufen?",
-						"Welche Richtung?", JOptionPane.YES_NO_OPTION,
-						JOptionPane.INFORMATION_MESSAGE, null, options,
-						options[1]);
-
-				if (decision == JOptionPane.YES_OPTION) {
-					move.put(from, cardval);
-				} else {
-					move.put(from, -cardval);
-				}
+				card4Dialog(from, cardval, move);
 			} else if (cardval == CARD11) {
 				if (to != null) {
 					move.put(from, to);
 				}
-
+			} else if (cardval == 14) {
+				jokerSpinnerDialog(current, cardval);
 			} else {
 				move.put(from, cardval);
 			}
@@ -406,6 +412,77 @@ public class GraphicalUserInterface extends JFrame implements IObserver {
 				controller.nextPlayer();
 				controller.notifyObservers();
 			}
+		}
+	}
+
+	/**
+	 * creates a dialog for card ass (ace)
+	 * 
+	 * @param from
+	 * @param move
+	 */
+	private void cardAceDialog(Integer from, Map<Integer, Integer> move) {
+		Object[] options = { "1", "11" };
+		int decision = JOptionPane.showOptionDialog(this,
+				"Wieviel möchtest du laufen?", "Laufwert?",
+				JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE,
+				icon, options, options[1]);
+
+		if (decision == JOptionPane.YES_OPTION) {
+			move.put(from, CARD1);
+		} else {
+			move.put(from, CARD11);
+		}
+	}
+
+	/**
+	 * creates the dialog for card 4 whether to run forward or backward
+	 * 
+	 * @param from
+	 * @param cardval
+	 * @param move
+	 */
+	private void card4Dialog(Integer from, int cardval,
+			Map<Integer, Integer> move) {
+		Object[] options = { "Vorwärts", "Rückwärts" };
+		int decision = JOptionPane.showOptionDialog(this,
+				"In welche Richtung möchtest du laufen?", "Welche Richtung?",
+				JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE,
+				icon, options, options[1]);
+
+		if (decision == JOptionPane.YES_OPTION) {
+			move.put(from, cardval);
+		} else {
+			move.put(from, -cardval);
+		}
+	}
+
+	/**
+	 * @param current
+	 * @param cardval
+	 */
+	private void jokerSpinnerDialog(final PlayerInterface current, int cardval) {
+		JPanel input = new JPanel();
+		SpinnerNumberModel sModel = new SpinnerNumberModel(1, 1, 13, 1);
+		final JSpinner spinner = new JSpinner(sModel);
+		final JLabel spinnerLabel = new JLabel("Ass");
+
+		spinner.addChangeListener(new ChangeListener() {
+			@Override
+			public void stateChanged(ChangeEvent arg0) {
+				spinnerLabel.setText(String.format(" %s", new Card(
+						(Integer) spinner.getValue()).getCardName()));
+			}
+		});
+		input.add(spinner);
+		input.add(spinnerLabel);
+		int decision = JOptionPane.showOptionDialog(contentPane, input,
+				"Enter valid number", JOptionPane.OK_CANCEL_OPTION,
+				JOptionPane.QUESTION_MESSAGE, icon, null, null);
+		if (decision == JOptionPane.YES_OPTION) {
+			current.removeCard(new Card(cardval));
+			current.addCard(new Card((Integer) spinner.getValue()));
+			repaintCardLabels();
 		}
 	}
 }
