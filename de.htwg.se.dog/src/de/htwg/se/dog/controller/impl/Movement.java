@@ -114,7 +114,7 @@ public class Movement implements MovementStrategy {
                 nextfieldID = nextField(currentfieldID, steps);
                 int currentFieldOwner = array[currentfieldID].getOwner();
                 // Check if field is Blocked
-                if (array[currentfieldID].isBlocked()) {
+                if (array[currentfieldID].isBlocked() && !array[currentfieldID].isHouse()) {
                     currentfieldID = BLOCKEDFIELD;
                     absSteps = 0;
                 }

@@ -51,6 +51,8 @@ import javax.swing.JButton;
 
 public class GraphicalUserInterface extends JFrame implements IObserver {
 
+	private static final int CARD4 = 4;
+	private static final int CARD11 = 11;
 	private static final int NINETY = 90;
 	private static final int SHSEVENTYEIGHT = 678;
 	private static final int THTHIRTYSEVEN = 337;
@@ -248,17 +250,7 @@ public class GraphicalUserInterface extends JFrame implements IObserver {
 		gameField.add(btnGo);
 		btnGo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Integer from = gameField.getFromFieldID();
-				int cardval = getValueForCardIcon();
-				if (from != null && cardval != -1) {
-					Map<Integer, Integer> move = new HashMap<Integer, Integer>();
-					move.put(from, cardval);
-					if (controller.isValidMove(cardval, move)) {
-						controller.playCard(cardval, move);
-						controller.nextPlayer();
-						controller.notifyObservers();
-					}
-				}
+				moveToDestination();
 			}
 		});
 		btnGo.setBounds(336, 701, HUNDRET, TWENTYFIVE);
@@ -306,7 +298,6 @@ public class GraphicalUserInterface extends JFrame implements IObserver {
 	 */
 	private void repaintCardLabels() {
 		int cardListSize = controller.getCurrentPlayer().getCardList().size();
-		System.out.println(cardListSize);
 		for (int i = 0; i < cards.length; i++) {
 			if (i < cardListSize) {
 				int card = controller.getCurrentPlayer().getCardList().get(i)
@@ -340,6 +331,12 @@ public class GraphicalUserInterface extends JFrame implements IObserver {
 			layout.addLayoutComponent(c, OverlapLayout.POPDOWN);
 			up = null;
 		}
+		int cardval = getValueForCardIcon();
+		if (cardval == 11) {
+			gameField.allowSecond(true);
+		} else {
+			gameField.allowSecond(false);
+		}
 		c.getParent().invalidate();
 		c.getParent().validate();
 
@@ -359,5 +356,56 @@ public class GraphicalUserInterface extends JFrame implements IObserver {
 			ret = card;
 		}
 		return ret;
+	}
+
+	/**
+	 * moves figure to destination
+	 */
+	private void moveToDestination() {
+		Integer from = gameField.getFromFieldID();
+		Integer to = gameField.getToFieldID();
+		int cardval = getValueForCardIcon();
+		if (from != null && cardval != -1) {
+			Map<Integer, Integer> move = new HashMap<Integer, Integer>();
+			if (cardval == CARD1) {
+				Object[] options = { "1", "11" };
+				int decision = JOptionPane.showOptionDialog(this,
+						"Wieviel möchtest du laufen?",
+						"Laufwert?", JOptionPane.YES_NO_OPTION,
+						JOptionPane.INFORMATION_MESSAGE, null, options,
+						options[1]);
+
+				if (decision == JOptionPane.YES_OPTION) {
+					move.put(from, CARD1);
+				} else {
+					move.put(from, CARD11);
+				}
+			} else if (cardval == CARD4) {
+				Object[] options = { "Vorwärts", "Rückwärts" };
+				int decision = JOptionPane.showOptionDialog(this,
+						"In welche Richtung möchtest du laufen?",
+						"Welche Richtung?", JOptionPane.YES_NO_OPTION,
+						JOptionPane.INFORMATION_MESSAGE, null, options,
+						options[1]);
+
+				if (decision == JOptionPane.YES_OPTION) {
+					move.put(from, cardval);
+				} else {
+					move.put(from, -cardval);
+				}
+			} else if (cardval == CARD11) {
+				if (to != null) {
+					move.put(from, to);
+				}
+
+			} else {
+				move.put(from, cardval);
+			}
+			if (controller.isValidMove(cardval, move)) {
+				controller.playCard(cardval, move);
+				controller.nextPlayer();
+				controller.notifyObservers();
+			}
+		}
 	}
 }

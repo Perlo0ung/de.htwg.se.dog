@@ -76,7 +76,7 @@ public class TextUserInterface implements IObserver {
 			}
 			break;
 		}
-		System.out.println("mache Zug :)\n\n\n\n\n\n");
+		out("mache Zug :)\n\n\n\n\n\n");
 		controller.playCard(card, moves);
 		if (controller.currentPlayerHaswon()) {
 			out(String.format(

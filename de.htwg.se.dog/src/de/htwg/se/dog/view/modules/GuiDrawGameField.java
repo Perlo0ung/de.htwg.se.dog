@@ -12,6 +12,8 @@ import java.awt.geom.Arc2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map.Entry;
 import java.util.SortedMap;
 import java.util.TreeMap;
@@ -44,13 +46,15 @@ public class GuiDrawGameField extends JPanel implements MouseListener {
 	private static final double STRINGY = 0.35;
 
 	private GameTableInterface controller;
+
+	private static boolean second;
 	// Map with all Gamefields
 	private static SortedMap<Integer, Arc2D.Double> gMap;
 	// Map with highlighted GameFields
 	private static ColorMap col = new ColorMap();
 	private static GameFieldInterface game;
 	private static FieldInterface[] array;
-	private static Integer from = null;
+	private static List<Integer> fromto = new ArrayList<Integer>();
 
 	/**
 	 * initializes the panel and sets the controller this panel is working with
@@ -159,11 +163,11 @@ public class GuiDrawGameField extends JPanel implements MouseListener {
 	 * @param r2
 	 */
 	private void highlightFields(Graphics2D g2d, double r2) {
-		if (from != null) {
+		for (Integer f : fromto) {
 			g2d.setColor(col.getColor(controller.getCurrentPlayerID()));
-			Arc2D.Double arc = gMap.get(from);
+			Arc2D.Double arc = gMap.get(f);
 			g2d.fill(arc);
-			drawString(g2d, String.valueOf(from), r2, arc.x + r2, arc.y + r2);
+			drawString(g2d, String.valueOf(f), r2, arc.x + r2, arc.y + r2);
 		}
 	}
 
@@ -305,12 +309,24 @@ public class GuiDrawGameField extends JPanel implements MouseListener {
 				Integer feldId = a.getKey();
 				if (array[feldId].getFigureOwnerNr() == controller
 						.getCurrentPlayerID()) {
-					if (from != null) {
+					if (fromto.contains(feldId)) {
 						// start abwählen-> liste leeren
-						from = null;
+						fromto.clear();
 					} else {
 						// neuer start -> true
-						from = feldId;
+						fromto.add(feldId);
+					}
+					// second highlighter for switch move
+				} else if (second && fromto.size() > 0
+						&& array[feldId].getFigure() != null
+						&& !array[feldId].isBlocked()
+						&& !fromto.get(0).equals(feldId)) {
+					if (fromto.contains(feldId)) {
+						fromto.remove(feldId);
+					} else if (fromto.size() == 2) {
+						fromto.set(1, feldId);
+					} else {
+						fromto.add(feldId);
 					}
 				}
 				repaint();
@@ -324,18 +340,56 @@ public class GuiDrawGameField extends JPanel implements MouseListener {
 		// TODO Auto-generated method stub
 
 	}
+
 	/**
 	 * clears the highlighter
 	 */
 	public void clearField() {
-		from = null;
+		fromto.clear();
+		second = false;
 	}
 
 	/**
 	 * returns the fieldID for the starting field
+	 * 
 	 * @return the fieldID
 	 */
 	public Integer getFromFieldID() {
-		return from;
+		Integer i;
+		if (fromto.size() == 0) {
+			i = null;
+		} else {
+			i = fromto.get(0);
+		}
+		return i;
+	}
+
+	/**
+	 * returns the fieldID for the field u are going for
+	 * 
+	 * @return the fieldID
+	 */
+	public Integer getToFieldID() {
+		Integer i;
+		if (fromto.size() != 2) {
+			i = null;
+		} else {
+			i = fromto.get(1);
+		}
+		return i;
+	}
+
+	/**
+	 * allows a second highlighter
+	 * 
+	 * @param ok
+	 */
+	public void allowSecond(boolean ok) {
+		second = ok;
+		if (!ok && fromto.size() == 2) {
+			fromto.remove(1);
+			repaint();
+		}
+
 	}
 }
