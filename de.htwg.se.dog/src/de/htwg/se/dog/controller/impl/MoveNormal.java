@@ -38,7 +38,6 @@ public class MoveNormal extends Movement {
             PlayerInterface ownerF1 = temp.getOwner();
             ownerF1.updateFigurePos(temp.getFignr(), targetfield);
             valid = true;
-            array[startfieldnr].setBlocked(false);
             if (array[targetfield].isHouse()) {
                 array[targetfield].setBlocked(true);
             }

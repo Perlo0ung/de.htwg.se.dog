@@ -281,7 +281,6 @@ public class Movement implements MovementStrategy {
             } else {
                 int target = getTargetfield(array, steps, currentField);
                 FigureInterface fig = array[currentField].removeFigure();
-                array[currentField].setBlocked(false);
                 array[target].setBlocked(true);
                 array[target].putFigure(fig);
 
