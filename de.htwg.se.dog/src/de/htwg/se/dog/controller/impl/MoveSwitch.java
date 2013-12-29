@@ -33,7 +33,9 @@ public class MoveSwitch extends Movement {
             FigureInterface f1 = array[fromNr].removeFigure();
             FigureInterface f2 = array[toNr].removeFigure();
             array[fromNr].putFigure(f2);
+            array[fromNr].setBlocked(false);
             array[toNr].putFigure(f1);
+            array[toNr].setBlocked(false);
             /* update FirgurePositions */
             PlayerInterface ownerF1 = f1.getOwner();
             PlayerInterface ownerF2 = f2.getOwner();
