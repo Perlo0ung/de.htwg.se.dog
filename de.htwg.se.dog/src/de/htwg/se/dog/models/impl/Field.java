@@ -44,6 +44,7 @@ public class Field implements FieldInterface {
     public FigureInterface removeFigure() {
         FigureInterface tmp = this.figure;
         this.figure = null;
+        this.blocked = false;
         return tmp;
     }
 
