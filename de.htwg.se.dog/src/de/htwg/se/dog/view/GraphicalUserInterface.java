@@ -14,6 +14,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import de.htwg.se.dog.controller.GameTableInterface;
+import de.htwg.se.dog.models.CardInterface;
 import de.htwg.se.dog.models.PlayerInterface;
 import de.htwg.se.dog.models.impl.Card;
 import de.htwg.se.dog.util.IOEvent;
@@ -76,6 +77,7 @@ public class GraphicalUserInterface extends JFrame implements IObserver {
 	private GuiDrawFigures figures;
 	private GuiDrawGameField gameField;
 	private JTextArea tAreaStatus;
+	private static boolean changeAble;
 	// statics for findbugs
 	private static final int CARD1 = 1;
 	private static final int FIVE = 5;
@@ -267,7 +269,10 @@ public class GraphicalUserInterface extends JFrame implements IObserver {
 			cards[i].addMouseListener(new MouseAdapter() {
 				@Override
 				public void mousePressed(MouseEvent e) {
-					cardOut(e.getComponent());
+					//joker was recently used the highlighted card hast to be played
+					if (changeAble) {
+						cardOut(e.getComponent());
+					}
 				}
 			});
 			cardHand.add(cards[i]);
@@ -300,6 +305,7 @@ public class GraphicalUserInterface extends JFrame implements IObserver {
 
 		} else {
 			int playerID = controller.getCurrentPlayerID();
+			changeAble = true;
 			tFieldCurrentPlayer.setForeground(col.getColor(playerID));
 			tFieldCurrentPlayer.setText(controller.getPlayerString());
 			tFieldRound.setText(String.format("Round: %d",
@@ -310,12 +316,19 @@ public class GraphicalUserInterface extends JFrame implements IObserver {
 			// clear gamefield highlighters
 			gameField.clearField();
 			// reset highlighted card
-			if (up != null) {
-				cardOut(up);
-			}
+			clearHighlightedCard();
 			/* reset the labels */
 			repaintCardLabels();
 			this.repaint();
+		}
+	}
+
+	/**
+	 * removes the card highlighted
+	 */
+	private void clearHighlightedCard() {
+		if (up != null) {
+			cardOut(up);
 		}
 	}
 
@@ -480,9 +493,12 @@ public class GraphicalUserInterface extends JFrame implements IObserver {
 				"Enter valid number", JOptionPane.OK_CANCEL_OPTION,
 				JOptionPane.QUESTION_MESSAGE, icon, null, null);
 		if (decision == JOptionPane.YES_OPTION) {
+			CardInterface newCard = new Card((Integer) spinner.getValue());
 			current.removeCard(new Card(cardval));
-			current.addCard(new Card((Integer) spinner.getValue()));
+			current.addCard(newCard);
 			repaintCardLabels();
+			cardOut(cards[current.getCardList().lastIndexOf(newCard)]);
+			changeAble = false;
 		}
 	}
 }
