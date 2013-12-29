@@ -313,8 +313,12 @@ public class GuiDrawGameField extends JPanel implements MouseListener {
 						// start abwählen-> liste leeren
 						fromto.clear();
 					} else {
-						// neuer start -> true
-						fromto.add(feldId);
+						// neuer start
+						if (fromto.size() == 1) {
+							fromto.set(0, feldId);
+						} else {
+							fromto.add(feldId);
+						}
 					}
 					// second highlighter for switch move
 				} else if (second && fromto.size() > 0

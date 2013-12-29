@@ -59,6 +59,8 @@ import javax.swing.JButton;
 
 public class GraphicalUserInterface extends JFrame implements IObserver {
 
+	private static final int SEVENHUNDRET = 701;
+	private static final int THTHIRTYSIX = 336;
 	private static final int CARD4 = 4;
 	private static final int CARD11 = 11;
 	private static final int NINETY = 90;
@@ -269,7 +271,8 @@ public class GraphicalUserInterface extends JFrame implements IObserver {
 			cards[i].addMouseListener(new MouseAdapter() {
 				@Override
 				public void mousePressed(MouseEvent e) {
-					//joker was recently used the highlighted card hast to be played
+					// joker was recently used the highlighted card hast to be
+					// played
 					if (changeAble) {
 						cardOut(e.getComponent());
 					}
@@ -278,13 +281,14 @@ public class GraphicalUserInterface extends JFrame implements IObserver {
 			cardHand.add(cards[i]);
 		}
 		JButton btnGo = new JButton("GO!");
-		gameField.add(btnGo);
+		btnGo.setFocusable(false);
 		btnGo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				moveToDestination();
 			}
 		});
-		btnGo.setBounds(336, 701, HUNDRET, TWENTYFIVE);
+		btnGo.setBounds(THTHIRTYSIX, SEVENHUNDRET, HUNDRET, TWENTYFIVE);
+		gameField.add(btnGo);
 
 		tFieldRound = new JLabel();
 		gameField.add(tFieldRound);
@@ -336,6 +340,7 @@ public class GraphicalUserInterface extends JFrame implements IObserver {
 	 * repaint the label icons and make unessesary icons invisible
 	 */
 	private void repaintCardLabels() {
+
 		int cardListSize = controller.getCurrentPlayer().getCardList().size();
 		for (int i = 0; i < cards.length; i++) {
 			if (i < cardListSize) {
@@ -493,9 +498,13 @@ public class GraphicalUserInterface extends JFrame implements IObserver {
 				"Enter valid number", JOptionPane.OK_CANCEL_OPTION,
 				JOptionPane.QUESTION_MESSAGE, icon, null, null);
 		if (decision == JOptionPane.YES_OPTION) {
+			//clear old highlighter
+			clearHighlightedCard();
+			//add the "new card"
 			CardInterface newCard = new Card((Integer) spinner.getValue());
-			current.removeCard(new Card(cardval));
 			current.addCard(newCard);
+			current.removeCard(new Card(cardval));
+			//repaint the labels and highlight the card
 			repaintCardLabels();
 			cardOut(cards[current.getCardList().lastIndexOf(newCard)]);
 			changeAble = false;
