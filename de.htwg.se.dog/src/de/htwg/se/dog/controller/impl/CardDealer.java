@@ -35,7 +35,7 @@ public class CardDealer implements CardDealerInterface {
         if (expectedNumOfCards() > stackObj.getSize()) {
             stackObj = new CardStack(CARDS, players);
         }
-        for (int i = 0; i < (MAXCARDS - round); i++) {
+        for (int i = 0; i < (MAXCARDS - roundNumber()); i++) {
             p.addCard(stackObj.dealCard(0, stackObj.getSize()));
         }
     }
@@ -45,7 +45,7 @@ public class CardDealer implements CardDealerInterface {
      */
     @Override
     public void newRound() {
-        round = (round + 1) % MAXROUND;
+        round++;
     }
 
     /**
@@ -65,7 +65,7 @@ public class CardDealer implements CardDealerInterface {
      */
     @Override
     public int expectedNumOfCards() {
-        return (MAXCARDS - round) * players;
+        return (MAXCARDS - roundNumber()) * players;
     }
 
     /**
@@ -76,5 +76,15 @@ public class CardDealer implements CardDealerInterface {
     @Override
     public CardStackInterface getObject() {
         return stackObj;
+    }
+    
+    /**
+     * fucntion to calculate the roundnumber for 
+     * knowing how much cards should be dealt
+     * @return
+     */
+    private int  roundNumber() {
+    	System.out.println(round % MAXROUND);
+    	return round % MAXROUND;
     }
 }
