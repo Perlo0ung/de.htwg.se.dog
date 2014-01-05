@@ -387,9 +387,9 @@ public class GraphicalUserInterface extends JFrame implements IObserver {
 	}
 
 	/**
-	 * returns the index at which the card is in the players cardlist
+	 * returns the value for the card that was highlighted
 	 * 
-	 * @return index for card, or -1 if no card was highlighted
+	 * @return value for the card, or -1 if no card was highlighted
 	 */
 	private int getValueForCardIcon() {
 		int ret = -1;
