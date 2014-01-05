@@ -11,13 +11,13 @@ import de.htwg.se.dog.models.FigureInterface;
 import de.htwg.se.dog.models.GameFieldInterface;
 import de.htwg.se.dog.models.PlayerInterface;
 
-
 public class Movement implements MovementStrategy {
 
     private static final int VALUEOFCARD7 = 7;
     private static final int ELEVEN = 11;
     private static final int EMPTYFIELD = -5;
     private static final int BLOCKEDFIELD = -6;
+    private static final int OVERHOUSE = -8;
 
     private Movement strategie;
     protected GameFieldInterface gameField;
@@ -103,8 +103,10 @@ public class Movement implements MovementStrategy {
             int startfieldnr) {
         int absSteps = Math.abs(steps);
         int currentfieldID = EMPTYFIELD;
+        boolean isHousefield = false;
         // TODO Monitor whether if-Statment is necessary or not
         if (!fieldEmpty(array[startfieldnr])) {
+            isHousefield = array[startfieldnr].isHouse();
             int playerNr = array[startfieldnr].getFigureOwnerNr();
             currentfieldID = nextField(startfieldnr, steps);
             int nextfieldID = currentfieldID;
@@ -122,6 +124,9 @@ public class Movement implements MovementStrategy {
                 absSteps = adjustSteps(steps, absSteps, array, playerNr,
                         nextfieldID, currentFieldOwner);
             }
+        }
+        if (!array[currentfieldID].isHouse() && isHousefield) {
+            currentfieldID = OVERHOUSE;
         }
         return currentfieldID;
     }
