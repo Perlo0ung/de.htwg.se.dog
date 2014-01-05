@@ -125,7 +125,7 @@ public class Movement implements MovementStrategy {
                         nextfieldID, currentFieldOwner);
             }
         }
-        if (!array[currentfieldID].isHouse() && isHousefield) {
+        if (currentfieldID >= 0 && !array[currentfieldID].isHouse() && isHousefield) {
             currentfieldID = OVERHOUSE;
         }
         return currentfieldID;
