@@ -84,7 +84,6 @@ public class CardDealer implements CardDealerInterface {
      * @return
      */
     private int  roundNumber() {
-    	System.out.println(round % MAXROUND);
     	return round % MAXROUND;
     }
 }
