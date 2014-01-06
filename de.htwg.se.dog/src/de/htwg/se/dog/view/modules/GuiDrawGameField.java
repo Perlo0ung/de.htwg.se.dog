@@ -94,7 +94,7 @@ public class GuiDrawGameField extends JPanel implements MouseListener {
 		int house = game.getHouseCount() * game.getPlayerCount();
 		int size = game.getFieldSize();
 		int start = game.getFieldsTillHouse() + game.getHouseCount();
-		int a = getWidth() / 2;
+		int a = getWidth() / 2 + HEIGHTNORM;
 		int b = getHeight() / 2 + HEIGHTNORM;
 		drawImageMiddle(g2d);
 		// PREVENT too big fields e.g when playing with 1:1 fields
@@ -181,7 +181,7 @@ public class GuiDrawGameField extends JPanel implements MouseListener {
 		try {
 			BufferedImage img = ImageIO.read(new File(this.getClass()
 					.getResource("/dog.jpg").getPath()));
-			g2d.drawImage(img, (getWidth() - NORM - img.getWidth()) / 2,
+			g2d.drawImage(img, (getWidth() + NORM - img.getWidth()) / 2,
 					(getHeight() + NORM - img.getHeight()) / 2, null);
 		} catch (IOException e) {
 			System.exit(1);
