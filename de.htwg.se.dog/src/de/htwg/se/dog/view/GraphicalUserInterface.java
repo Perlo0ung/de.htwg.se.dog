@@ -2,6 +2,7 @@ package de.htwg.se.dog.view;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Event;
 import java.awt.Insets;
@@ -9,7 +10,6 @@ import java.awt.Point;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -69,7 +69,7 @@ public class GraphicalUserInterface extends JFrame implements IObserver {
 	private static final long serialVersionUID = 1L;
 	private ImageIcon icon = new ImageIcon(this.getClass().getResource(
 			"/dog_icon.png"));
-	private JPanel contentPane;
+	private Container contentPane;
 	private GameTableInterface controller;
 	private ColorMap col = new ColorMap();
 	private JLabel tFieldCurrentPlayer, tFieldRound;
@@ -82,7 +82,6 @@ public class GraphicalUserInterface extends JFrame implements IObserver {
 	private static boolean changeAble;
 	// statics for findbugs
 	private static final int CARD1 = 1;
-	private static final int FIVE = 5;
 	private static final int SIX = 6;
 	private static final int TWELVE = 12;
 	private static final int THIRTEEEN = 13;
@@ -124,6 +123,7 @@ public class GraphicalUserInterface extends JFrame implements IObserver {
 	public GraphicalUserInterface(final GameTableInterface controller) {
 		controller.addObserver(this);
 		setResizable(false);
+		contentPane = this.getContentPane();
 		this.setIconImage(icon.getImage());
 		this.setVisible(true);
 		this.controller = controller;
@@ -182,16 +182,10 @@ public class GraphicalUserInterface extends JFrame implements IObserver {
 		mnGame.addSeparator();
 		mnGame.add(mnExit);
 
-		contentPane = new JPanel();
-		contentPane.setBackground(Color.WHITE);
-		contentPane.setBorder(new EmptyBorder(FIVE, FIVE, FIVE, FIVE));
-		setContentPane(contentPane);
-		contentPane.setLayout(null);
-
 		gameField = new GuiDrawGameField(controller);
 		// JPanel gameField = new JPanel();
 		gameField.setBounds(0, 0, GAMEFIELDX, GAMEFIELDY);
-		contentPane.add(gameField);
+		this.add(gameField);
 		gameField.setBackground(Color.WHITE);
 		gameField.setLayout(null);
 
