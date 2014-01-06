@@ -142,7 +142,7 @@ public class OverlapLayout implements LayoutManager2 {
 	public void addLayoutComponent(Component component, Object constraint) {
 		// Support simple Boolean constraint for painting a Component in
 		// its "popped up" position
-				
+
 		if (constraint instanceof Boolean) {
 			constraints.put(component, (Boolean) constraint);
 		}
@@ -159,7 +159,7 @@ public class OverlapLayout implements LayoutManager2 {
 
 			for (int i = 0; i < size; i++) {
 				Component c = parent.getComponent(i);
-				
+
 				if (c.equals(component)) {
 					components.add(i, component);
 
@@ -223,23 +223,15 @@ public class OverlapLayout implements LayoutManager2 {
 	 * @param type either MINIMUM or PREFERRED
 	 */
 	private Dimension getLayoutSize(Container parent, int type) {
-		int visibleComponents = 0;
 		int width = 0;
 		int height = 0;
 
 		// All components will be resized to the maximum dimension
 
 		for (Component component : components) {
-			if (component.isVisible()) {
 				Dimension size = getDimension(component, type);
 				width = Math.max(size.width, width);
 				height = Math.max(size.height, height);
-				visibleComponents++;
-			}
-		}
-
-		if (visibleComponents == 0) {
-			return new Dimension(0, 0);
 		}
 		// Keep maximum dimension for easy access when laying out components
 
@@ -250,9 +242,8 @@ public class OverlapLayout implements LayoutManager2 {
 
 		// Adjust size for each overlapping component
 
-		visibleComponents--;
-		width += visibleComponents * Math.abs(overlapPosition.x);
-		height += visibleComponents * Math.abs(overlapPosition.y);
+		width += Math.abs(overlapPosition.x);
+		height += Math.abs(overlapPosition.y);
 
 		// Adjust for parent Container and popup insets
 
@@ -287,11 +278,6 @@ public class OverlapLayout implements LayoutManager2 {
 	public void layoutContainer(Container parent) {
 		synchronized (parent.getTreeLock()) {
 			int size = components.size();
-
-			if (size == 0) {
-				return;
-			}
-
 			// Determine location of first component
 
 			Point location = new Point(0, 0);
@@ -305,34 +291,29 @@ public class OverlapLayout implements LayoutManager2 {
 			for (int i = 0; i < size; i++) {
 				Component component = components.get(i);
 
-				if (component.isVisible()) {
-					// When components are "stacked" resize each component to
-					// fill
-					// the size of the parent container
+				component.setSize(maximumSize);
 
-					component.setSize(maximumSize);
+				// Set location of the component
 
-					// Set location of the component
+				int x = location.x;
+				int y = location.y;
 
-					int x = location.x;
-					int y = location.y;
+				// Adjust location when component is "popped up"
 
-					// Adjust location when component is "popped up"
+				Boolean constraint = constraints.get(component);
 
-					Boolean constraint = constraints.get(component);
-
-					if (constraint != null && constraint == Boolean.TRUE) {
-						x += popupInsets.right - popupInsets.left;
-						y += popupInsets.bottom - popupInsets.top;
-					}
-					component.setLocation(x, y);
-
-					// Calculate location of next component using the overlap
-					// offsets
-
-					location.x += overlapPosition.x;
-					location.y += overlapPosition.y;
+				if (constraint != null && constraint == Boolean.TRUE) {
+					x += popupInsets.right - popupInsets.left;
+					y += popupInsets.bottom - popupInsets.top;
 				}
+				component.setLocation(x, y);
+
+				// Calculate location of next component using the overlap
+				// offsets
+
+				location.x += overlapPosition.x;
+				location.y += overlapPosition.y;
+
 			}
 		}
 	}
@@ -388,12 +369,13 @@ public class OverlapLayout implements LayoutManager2 {
 	public void invalidateLayout(Container target) {
 		// remove constraints here?
 	}
+
 	/**
 	 * resets all highlighters
 	 */
 	public void resetHighlighters() {
-		for (Entry<Component, Boolean> comp: constraints.entrySet() ) {
-			this.addLayoutComponent(comp.getKey(),POPDOWN);
+		for (Entry<Component, Boolean> comp : constraints.entrySet()) {
+			this.addLayoutComponent(comp.getKey(), POPDOWN);
 		}
 	}
 }
