@@ -1,6 +1,7 @@
 package de.htwg.se.dog.view.modules;
 
 import java.awt.*;
+import java.util.Map.Entry;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.List;
@@ -39,9 +40,6 @@ public class OverlapLayout implements LayoutManager2 {
 
 	private Point overlapPosition;
 
-	// Reserve space for invisible components in the Container
-	private boolean includeInvisible = true;
-
 	// Reserve extra space so a component can "popup"
 	private Insets popupInsets = new Insets(0, 0, 0, 0);
 
@@ -72,27 +70,6 @@ public class OverlapLayout implements LayoutManager2 {
 	 */
 	public OverlapLayout(Point overlapPosition) {
 		setOverlapPosition(overlapPosition);
-	}
-
-	/**
-	 * Get the include invisible property
-	 * 
-	 * @returns the include invisible property
-	 */
-	public boolean isIncludeInvisible() {
-		return includeInvisible;
-	}
-
-	/**
-	 * Controls whether spaces should reserved for invisible components in the
-	 * container
-	 * 
-	 * @param includeInvisible
-	 *            when true, space is reserved otherwise the component is not
-	 *            included in the layout sizing
-	 */
-	public void setIncludeInvisible(boolean includeInvisible) {
-		this.includeInvisible = includeInvisible;
 	}
 
 	/**
@@ -165,14 +142,9 @@ public class OverlapLayout implements LayoutManager2 {
 	public void addLayoutComponent(Component component, Object constraint) {
 		// Support simple Boolean constraint for painting a Component in
 		// its "popped up" position
-
-		if (constraint == null) {
-			constraints.remove(component);
-		} else if (constraint instanceof Boolean) {
+				
+		if (constraint instanceof Boolean) {
 			constraints.put(component, (Boolean) constraint);
-		} else {
-			String message = "Constraint parameter must be of type Boolean";
-			throw new IllegalArgumentException(message);
 		}
 
 		// Keep a separate List of components in the order in which they where
@@ -187,7 +159,7 @@ public class OverlapLayout implements LayoutManager2 {
 
 			for (int i = 0; i < size; i++) {
 				Component c = parent.getComponent(i);
-
+				
 				if (c.equals(component)) {
 					components.add(i, component);
 
@@ -258,7 +230,7 @@ public class OverlapLayout implements LayoutManager2 {
 		// All components will be resized to the maximum dimension
 
 		for (Component component : components) {
-			if (component.isVisible() || includeInvisible) {
+			if (component.isVisible()) {
 				Dimension size = getDimension(component, type);
 				width = Math.max(size.width, width);
 				height = Math.max(size.height, height);
@@ -333,12 +305,12 @@ public class OverlapLayout implements LayoutManager2 {
 			for (int i = 0; i < size; i++) {
 				Component component = components.get(i);
 
-				if (component.isVisible() || includeInvisible) {
+				if (component.isVisible()) {
 					// When components are "stacked" resize each component to
 					// fill
 					// the size of the parent container
 
-					stackOverlay(parent, parentInsets, component);
+					component.setSize(maximumSize);
 
 					// Set location of the component
 
@@ -362,26 +334,6 @@ public class OverlapLayout implements LayoutManager2 {
 					location.y += overlapPosition.y;
 				}
 			}
-		}
-	}
-
-	/**
-	 * @param parent
-	 * @param parentInsets
-	 * @param component
-	 */
-	private void stackOverlay(Container parent, Insets parentInsets,
-			Component component) {
-		if (overlapPosition.x == 0 && overlapPosition.y == 0) {
-			int width = parent.getWidth() - parentInsets.left
-					- parentInsets.right;
-			int height = parent.getHeight() - parentInsets.top
-					- parentInsets.bottom;
-			component.setSize(width, height);
-		}
-		// resize each component to be the same size
-		else {
-			component.setSize(maximumSize);
 		}
 	}
 
@@ -435,5 +387,13 @@ public class OverlapLayout implements LayoutManager2 {
 	 */
 	public void invalidateLayout(Container target) {
 		// remove constraints here?
+	}
+	/**
+	 * resets all highlighters
+	 */
+	public void resetHighlighters() {
+		for (Entry<Component, Boolean> comp: constraints.entrySet() ) {
+			this.addLayoutComponent(comp.getKey(),POPDOWN);
+		}
 	}
 }

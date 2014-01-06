@@ -325,9 +325,8 @@ public class GraphicalUserInterface extends JFrame implements IObserver {
 	 * removes the card highlighted
 	 */
 	private void clearHighlightedCard() {
-		if (up != null) {
-			cardOut(up);
-		}
+		layout.resetHighlighters();
+		cards[1].getParent().revalidate();
 	}
 
 	/**
@@ -358,26 +357,27 @@ public class GraphicalUserInterface extends JFrame implements IObserver {
 	 */
 	private void cardOut(Component c) {
 		Boolean constraint = layout.getConstraints(c);
-		if (up != null) {
-			layout.addLayoutComponent(up, OverlapLayout.POPDOWN);
-			up = null;
-		}
 		if (constraint == null || constraint == OverlapLayout.POPDOWN) {
+			clearHighlightedCard();
 			layout.addLayoutComponent(c, OverlapLayout.POPUP);
 			up = c;
 		} else {
 			layout.addLayoutComponent(c, OverlapLayout.POPDOWN);
 			up = null;
 		}
-		int cardval = getValueForCardIcon();
-		if (cardval == 11) {
-			gameField.allowSecond(true);
-		} else {
-			gameField.allowSecond(false);
-		}
-		c.getParent().invalidate();
-		c.getParent().validate();
+		allowSecondHighlighter();
+		c.getParent().revalidate();
+	}
 
+	/**
+	 * allows a second field to be highlighted in the gamfield
+	 */
+	private void allowSecondHighlighter() {
+		int cardval = getValueForCardIcon();
+		gameField.allowSecond(false);
+		if (cardval == CARD11) {
+			gameField.allowSecond(true);
+		}
 	}
 
 	/**
