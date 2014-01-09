@@ -304,32 +304,30 @@ public class GuiDrawGameField extends JPanel implements MouseListener {
 	 */
 	@Override
 	public void mousePressed(MouseEvent arg0) {
+		int current = controller.getCurrentPlayerID();
 		for (Entry<Integer, Arc2D.Double> a : gMap.entrySet()) {
 			if (a.getValue().contains(arg0.getX(), arg0.getY())) {
 				Integer feldId = a.getKey();
-				if (array[feldId].getFigureOwnerNr() == controller
-						.getCurrentPlayerID()) {
-					if (fromto.contains(feldId)) {
-						// start abwählen-> liste leeren
+				if (fromto.contains(feldId)) {
+					if (fromto.indexOf(feldId) == 0) {
 						fromto.clear();
 					} else {
-						// neuer start
-						if (fromto.size() == 1) {
-							fromto.set(0, feldId);
-						} else {
-							fromto.add(feldId);
-						}
-					}
-					// second highlighter for switch move
-				} else if (second && fromto.size() > 0
-						&& array[feldId].getFigure() != null
-						&& !array[feldId].isBlocked()) {
-					if (fromto.contains(feldId)) {
 						fromto.remove(feldId);
-					} else if (fromto.size() == 2) {
-						fromto.set(1, feldId);
-					} else {
-						fromto.add(feldId);
+					}
+					repaint();
+					break;
+				}
+				if (array[feldId].getFigureOwnerNr() == current && fromto.size() < 1) {
+						fromto.add(0, feldId);
+				}
+				// second highlighter for switch move
+				else if (fromto.size() > 0 && second
+						&& array[feldId].getFigure() != null
+						&& (array[feldId].getFigureOwnerNr() == current || !array[feldId]
+								.isBlocked())) {
+					fromto.add(1, feldId);
+					if (fromto.size() == 3) {
+						fromto.remove(2);
 					}
 				}
 				repaint();
@@ -337,6 +335,7 @@ public class GuiDrawGameField extends JPanel implements MouseListener {
 			}
 		}
 	}
+
 
 	@Override
 	public void mouseReleased(MouseEvent arg0) {

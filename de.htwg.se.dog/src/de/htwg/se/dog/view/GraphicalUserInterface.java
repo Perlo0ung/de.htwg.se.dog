@@ -325,6 +325,7 @@ public class GraphicalUserInterface extends JFrame implements IObserver {
 	 * removes the card highlighted
 	 */
 	private void clearHighlightedCard() {
+		up = null;
 		layout.resetHighlighters();
 		cards[1].getParent().revalidate();
 	}
@@ -489,19 +490,25 @@ public class GraphicalUserInterface extends JFrame implements IObserver {
 		input.add(spinner);
 		input.add(spinnerLabel);
 		int decision = JOptionPane.showOptionDialog(contentPane, input,
-				"Enter valid number", JOptionPane.OK_CANCEL_OPTION,
+				"Karte auswählen", JOptionPane.OK_CANCEL_OPTION,
 				JOptionPane.QUESTION_MESSAGE, icon, null, null);
 		if (decision == JOptionPane.YES_OPTION) {
 			//clear old highlighter
 			clearHighlightedCard();
 			//add the "new card"
 			CardInterface newCard = new Card((Integer) spinner.getValue());
+			CardInterface oldCard = new Card(cardval);
 			current.addCard(newCard);
-			current.removeCard(new Card(cardval));
-			//repaint the labels and highlight the card
-			repaintCardLabels();
-			cardOut(cards[current.getCardList().lastIndexOf(newCard)]);
-			changeAble = false;
+			current.removeCard(oldCard);
+			if (!controller.canPlay(current)) {
+				current.removeCard(newCard);
+				current.addCard(oldCard);
+			} else {
+				//repaint the labels and highlight the card
+				repaintCardLabels();
+				cardOut(cards[current.getCardList().lastIndexOf(newCard)]);
+				changeAble = false;
+			}
 		}
 	}
 }

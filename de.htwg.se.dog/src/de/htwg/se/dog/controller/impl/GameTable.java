@@ -164,7 +164,8 @@ public class GameTable extends Observable implements GameTableInterface {
     public List<CardInterface> possibleCards(PlayerInterface p) {
         List<CardInterface> cards = new LinkedList<CardInterface>(p.getCardList());
         Iterator<CardInterface> it = cards.iterator();
-        cardIsPossible: while (it.hasNext()) {
+        cardIsPossible: 
+        	while (it.hasNext()) {
             CardInterface c = it.next();
             //Put new Figure on field
             boolean validMoveStartCard = (c.getValue() == 1 || c.getValue() == 14 || c.getValue() == 13);
