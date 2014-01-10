@@ -36,9 +36,9 @@ public class GameTable extends Observable implements GameTableInterface {
      * Constructor to generate a new gametable
      * 
      * @param playerCount
-     *        number of players
+     *            number of players
      * @param figCount
-     *        number of figures per player
+     *            number of figures per player
      */
     @Inject
     public GameTable(int playerCount) {
@@ -101,7 +101,7 @@ public class GameTable extends Observable implements GameTableInterface {
 
     @Override
     public void newRound() {
-    	
+
         dealCards();
         dealer.newRound();
         sendObserverMessage("Neue Runde");
@@ -116,7 +116,7 @@ public class GameTable extends Observable implements GameTableInterface {
             }
             temp = turnPlayer.poll();
             if (!canPlay(temp)) {
-            	sendObserverMessage((String.format("Spieler %d kann nicht spielen", temp.getPlayerID())));
+                sendObserverMessage((String.format("Spieler %d kann nicht spielen", temp.getPlayerID())));
                 temp = null;
             }
             currentPlayer = temp;
@@ -127,7 +127,7 @@ public class GameTable extends Observable implements GameTableInterface {
      * Returns true if the Player has a card that can be played
      * 
      * @param p
-     *        the Player that wants to play
+     *            the Player that wants to play
      * @return true if he can play, otherwise false
      */
     @Override
@@ -157,15 +157,14 @@ public class GameTable extends Observable implements GameTableInterface {
      * Returns a list containing the cards that can be played by Player p
      * 
      * @param p
-     *        the player that wants to play
+     *            the player that wants to play
      * @return a list containing the cards that can be played
      */
     @Override
     public List<CardInterface> possibleCards(PlayerInterface p) {
         List<CardInterface> cards = new LinkedList<CardInterface>(p.getCardList());
         Iterator<CardInterface> it = cards.iterator();
-        cardIsPossible: 
-        	while (it.hasNext()) {
+        cardIsPossible: while (it.hasNext()) {
             CardInterface c = it.next();
             //Put new Figure on field
             boolean validMoveStartCard = (c.getValue() == 1 || c.getValue() == 14 || c.getValue() == 13);
@@ -247,7 +246,7 @@ public class GameTable extends Observable implements GameTableInterface {
             }
         }
         if (retval) {
-            currentPlayer.removeCard(currentPlayer.getCardfromCardNr(cardNr));          
+            currentPlayer.removeCard(currentPlayer.getCardfromCardNr(cardNr));
         }
         return retval;
     }
@@ -262,10 +261,9 @@ public class GameTable extends Observable implements GameTableInterface {
             for (Integer fieldNr : moves.keySet()) {
                 retval = movement.validMove(moves.get(fieldNr), fieldNr);
             }
-        } else
-        {
-            //TODO implement check if sevenmove is possible
         }
+
+        //TODO implement check if sevenmove is possible
         return retval;
     }
 
@@ -288,25 +286,28 @@ public class GameTable extends Observable implements GameTableInterface {
         return retval;
     }
 
-	@Override
-	public int getCurrentPlayerID() { 
-		return currentPlayer.getPlayerID();
-	}
+    @Override
+    public int getCurrentPlayerID() {
+        return currentPlayer.getPlayerID();
+    }
 
-	@Override
-	public int getRound() {
-		return dealer.getRound();
-	}
-	/**
-	 * sends the message msg to all observers
-	 * @param msg the message
-	 */
-	private void sendObserverMessage(String msg) {
-		notifyObservers(new IOMsgEvent(msg));
-	}
+    @Override
+    public int getRound() {
+        return dealer.getRound();
+    }
 
-	@Override
-	public int getTargetField(int steps, int startfieldnr) {
-		return movement.getTargetfield(steps, startfieldnr);
-	}
+    /**
+     * sends the message msg to all observers
+     * 
+     * @param msg
+     *            the message
+     */
+    private void sendObserverMessage(String msg) {
+        notifyObservers(new IOMsgEvent(msg));
+    }
+
+    @Override
+    public int getTargetField(int steps, int startfieldnr) {
+        return movement.getTargetfield(steps, startfieldnr);
+    }
 }

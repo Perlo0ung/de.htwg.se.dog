@@ -56,6 +56,7 @@ import de.htwg.se.dog.view.modules.OverlapLayout;
 
 public class GraphicalUserInterface extends JFrame implements IObserver {
 
+    private static final String TAHOMA = "Tahoma";
     private static final int SEVENHUNDRET = 701;
     private static final int THTHIRTYSIX = 336;
     private static final int CARD4 = 4;
@@ -172,7 +173,6 @@ public class GraphicalUserInterface extends JFrame implements IObserver {
         mnGame.add(mnExit);
 
         gameField = new GuiDrawGameField(controller);
-        // JPanel gameField = new JPanel();
         gameField.setBounds(0, 0, GAMEFIELDX, GAMEFIELDY);
         this.add(gameField);
         gameField.setBackground(Color.WHITE);
@@ -182,13 +182,13 @@ public class GraphicalUserInterface extends JFrame implements IObserver {
         tFieldCurrentPlayer.setBorder(BorderFactory.createLineBorder(Color.white));
         tFieldCurrentPlayer.setBounds(TWELVE, TEXTFIELDY, NINETYSEVEN, GraphicalUserInterface.TWENTYTWO);
         gameField.add(tFieldCurrentPlayer);
-        tFieldCurrentPlayer.setFont(new Font("Tahoma", Font.BOLD, FIFTEEN));
+        tFieldCurrentPlayer.setFont(new Font(TAHOMA, Font.BOLD, FIFTEEN));
         tFieldCurrentPlayer.setBackground(Color.WHITE);
 
         JLabel lbCurrentPlayer = new JLabel("CurrentPlayer");
         lbCurrentPlayer.setBounds(TWELVE, GraphicalUserInterface.SIXHUNDRETEIGHTEEN, HUNDRET, SIXTEEN);
         gameField.add(lbCurrentPlayer);
-        lbCurrentPlayer.setFont(new Font("Tahoma", Font.BOLD, THIRTEEEN));
+        lbCurrentPlayer.setFont(new Font(TAHOMA, Font.BOLD, THIRTEEEN));
 
         JScrollPane scrollPane = new JScrollPane();
         scrollPane.setEnabled(false);
@@ -215,7 +215,6 @@ public class GraphicalUserInterface extends JFrame implements IObserver {
                 }
             }
         });
-        // JPanel figures = new JPanel();
         figures.setBounds(THIRTY, SIXHUNDRETSIXTY, FOURTYFIVE, FOURTYFIVE);
         gameField.add(figures);
         figures.setBackground(Color.WHITE);
@@ -231,7 +230,7 @@ public class GraphicalUserInterface extends JFrame implements IObserver {
 
         tAreaStatus = new JTextArea();
         tAreaStatus.setLineWrap(true);
-        tAreaStatus.setFont(new Font("Tahoma", Font.PLAIN, THIRTEEEN));
+        tAreaStatus.setFont(new Font(TAHOMA, Font.PLAIN, THIRTEEEN));
         tAreaStatus.setEditable(false);
         panetAreaStatus.setViewportView(tAreaStatus);
         cards = new JLabel[SIX];
@@ -263,7 +262,7 @@ public class GraphicalUserInterface extends JFrame implements IObserver {
 
         tFieldRound = new JLabel();
         gameField.add(tFieldRound);
-        tFieldRound.setFont(new Font("Tahoma", Font.BOLD, THIRTEEEN));
+        tFieldRound.setFont(new Font(TAHOMA, Font.BOLD, THIRTEEEN));
         tFieldRound.setBorder(BorderFactory.createLineBorder(Color.white));
         tFieldRound.setBackground(Color.WHITE);
         tFieldRound.setBounds(THTHIRTYSEVEN, SHSEVENTYEIGHT, NINETY, TWENTY);
