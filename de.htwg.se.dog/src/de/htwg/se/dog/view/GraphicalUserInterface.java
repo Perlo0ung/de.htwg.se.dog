@@ -56,6 +56,7 @@ import de.htwg.se.dog.view.modules.OverlapLayout;
 
 public class GraphicalUserInterface extends JFrame implements IObserver {
 
+    private static final int THIRTEEN = 13;
     private static final String TAHOMA = "Tahoma";
     private static final int SEVENHUNDRET = 701;
     private static final int THTHIRTYSIX = 336;
@@ -80,8 +81,8 @@ public class GraphicalUserInterface extends JFrame implements IObserver {
     private static final int CARD1 = 1;
     private static final int SIX = 6;
     private static final int TWELVE = 12;
-    private static final int THIRTEEEN = 13;
-    private static final int CARD13 = 13;
+    private static final int THIRTEEEN = THIRTEEN;
+    private static final int CARD13 = THIRTEEN;
     private static final int CARD14 = 14;
     private static final int FIFTEEN = 15;
     private static final int SIXTEEN = 16;
@@ -386,7 +387,7 @@ public class GraphicalUserInterface extends JFrame implements IObserver {
                 if (to != null) {
                     move.put(from, to);
                 }
-            } else if (cardval == 14) {
+            } else if (cardval == CARD14) {
                 jokerSpinnerDialog(current, cardval);
             } else {
                 move.put(from, cardval);
@@ -441,7 +442,7 @@ public class GraphicalUserInterface extends JFrame implements IObserver {
     @Inject
     private void jokerSpinnerDialog(final PlayerInterface current, int cardval) {
         JPanel input = new JPanel();
-        SpinnerNumberModel sModel = new SpinnerNumberModel(1, 1, 13, 1);
+        SpinnerNumberModel sModel = new SpinnerNumberModel(1, 1, THIRTEEN, 1);
         final JSpinner spinner = new JSpinner(sModel);
         final JLabel spinnerLabel = new JLabel("Ass");
 

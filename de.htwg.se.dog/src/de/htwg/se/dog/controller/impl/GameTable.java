@@ -22,6 +22,9 @@ import de.htwg.se.dog.util.Observable;
 
 public class GameTable extends Observable implements GameTableInterface {
 
+    private static final int CARD14 = 14;
+    private static final int CARD13 = 13;
+    private static final int CARD11 = 11;
     private static final int FIELDSTILLHOUSE = 16;
     private static final int HOUSECOUNT = 4;
 
@@ -167,7 +170,7 @@ public class GameTable extends Observable implements GameTableInterface {
         cardIsPossible: while (it.hasNext()) {
             CardInterface c = it.next();
             //Put new Figure on field
-            boolean validMoveStartCard = (c.getValue() == 1 || c.getValue() == 14 || c.getValue() == 13);
+            boolean validMoveStartCard = (c.getValue() == 1 || c.getValue() == CARD14 || c.getValue() == CARD13);
             if (!game.getGameArray()[game.calculatePlayerStart(p.getPlayerID())].isBlocked() && !p.getFigureList().isEmpty() && validMoveStartCard) {
                 continue;
             }
@@ -176,11 +179,11 @@ public class GameTable extends Observable implements GameTableInterface {
             for (Integer field : p.getFigureRegister()) {
                 movement.setMoveStrategie(c.getValue());
                 //Normal-Move possible?
-                if (c.getValue() != 11 && movement.validMove(c.getValue(), field)) {
+                if (c.getValue() != CARD11 && movement.validMove(c.getValue(), field)) {
                     continue cardIsPossible;
                 }
                 //Switch-Move possible?
-                if (c.getValue() == 11 && movement.anySwitchMove(field)) {
+                if (c.getValue() == CARD11 && movement.anySwitchMove(field)) {
                     continue cardIsPossible;
                 }
             }

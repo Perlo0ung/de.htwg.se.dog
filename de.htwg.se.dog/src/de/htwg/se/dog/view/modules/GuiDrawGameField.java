@@ -33,6 +33,7 @@ import de.htwg.se.dog.models.GameFieldInterface;
  */
 public class GuiDrawGameField extends JPanel implements MouseListener {
 
+    private static final int THREE = 3;
     private static final long serialVersionUID = 1L;
     private static int radius;
     private static final int HUNDRED = 100;
@@ -327,7 +328,7 @@ public class GuiDrawGameField extends JPanel implements MouseListener {
         // second highlighter for switch move
         else if (fromto.size() > 0 && second && array[feldId].getFigure() != null && (array[feldId].getFigureOwnerNr() == current || !array[feldId].isBlocked())) {
             fromto.add(1, feldId);
-            if (fromto.size() == 3) {
+            if (fromto.size() == THREE) {
                 fromto.remove(2);
             }
         }

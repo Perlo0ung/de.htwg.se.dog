@@ -15,9 +15,19 @@ import de.htwg.se.dog.util.IObserver;
 
 public class TextUserInterface implements IObserver {
 
+    private static final int CARD12 = 12;
+    private static final int CARD10 = 10;
+    private static final int CARD9 = 9;
+    private static final int CARD8 = 8;
+    private static final int CARD6 = 6;
+    private static final int CARD5 = 5;
+    private static final int CARD3 = 3;
+    private static final int CARD2 = 2;
+    private static final int CARD14 = 14;
+    private static final int CARD13 = 13;
     private static final int NOTINITIALIZED = -99;
     private static final int QUIT = -1;
-    private static final int SKIP = -2;
+    private static final int SKIP = -CARD2;
     private static final int RETRY = -3;
     private static final Logger LOG = LogManager.getLogger("UI");
     private final GameTableInterface controller;
@@ -54,10 +64,10 @@ public class TextUserInterface implements IObserver {
                 return false;
             }
             // spieler setzt aus
-            if (card == -2) {
+            if (card == -CARD2) {
                 return true;
             }
-            if ((card == 13 || card == 1 || card == 14) && !controller.isPlayerStartfieldBlocked()) {
+            if ((card == CARD13 || card == 1 || card == CARD14) && !controller.isPlayerStartfieldBlocked()) {
                 out("Möchtest du eine neue Figure aufs Spielfeld setzten?(J/N):");
                 char input = scanner.next().charAt(0);
                 if ((input == 'J' || input == 'j') && controller.moveFigureToStart(card)) {
@@ -151,15 +161,15 @@ public class TextUserInterface implements IObserver {
 
             }
             break;
-        case 2:
-        case 3:
-        case 5:
-        case 6:
-        case 8:
-        case 9:
-        case 10:
-        case 12:
-        case 13:
+        case CARD2:
+        case CARD3:
+        case CARD5:
+        case CARD6:
+        case CARD8:
+        case CARD9:
+        case CARD10:
+        case CARD12:
+        case CARD13:
             steps = cardNr;
             break;
         }
