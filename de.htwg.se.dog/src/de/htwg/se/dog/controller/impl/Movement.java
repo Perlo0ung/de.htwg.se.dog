@@ -119,6 +119,10 @@ public class Movement implements MovementStrategy {
                 if (array[currentfieldID].isHouse() && array[currentfieldID].getOwner() != playerNr) {
                     continue;
                 }
+                //Check if own house and move backwarts
+                if (array[currentfieldID].getOwner() == playerNr && steps < 0) {
+                    continue;
+                }
                 // Check if field is Blocked
                 if (array[currentfieldID].isBlocked()) {
                     currentfieldID = BLOCKEDFIELD;

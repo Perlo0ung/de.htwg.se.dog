@@ -16,6 +16,9 @@ import de.htwg.se.dog.util.IObserver;
 public class TextUserInterface implements IObserver {
 
     private static final int NOTINITIALIZED = -99;
+    private static final int QUIT = -1;
+    private static final int SKIP = -2;
+    private static final int RETRY = -3;
     private static final Logger LOG = LogManager.getLogger("UI");
     private final GameTableInterface controller;
 
@@ -201,17 +204,19 @@ public class TextUserInterface implements IObserver {
         int retval = NOTINITIALIZED;
         if (input.equalsIgnoreCase("q")) {
             out("Spiel Beendet!");
-            retval = -1;
+            retval = QUIT;
         }
         if (input.equalsIgnoreCase("skip")) {
             out(String
                     .format("Spieler %d wirft seine Karten weg und setzt bis zu nächsten Runde aus.",
                             controller.getCurrentPlayerID()));
             controller.getCurrentPlayer().clearCardList();
-            retval = -2;
+            retval = SKIP;
         }
         if (input.equals("new"))
         {
+
+            retval = RETRY;
             //TODO: eigabe wiederrufen und neu auswählen
         }
         return retval;
