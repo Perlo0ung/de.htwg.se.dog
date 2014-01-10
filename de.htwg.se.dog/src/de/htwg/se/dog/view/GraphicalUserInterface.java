@@ -43,7 +43,6 @@ import javax.swing.event.ChangeListener;
 import com.google.inject.Inject;
 
 import de.htwg.se.dog.controller.GameTableInterface;
-import de.htwg.se.dog.models.CardInterface;
 import de.htwg.se.dog.models.PlayerInterface;
 import de.htwg.se.dog.models.impl.Card;
 import de.htwg.se.dog.util.IOEvent;
@@ -72,17 +71,17 @@ public class GraphicalUserInterface extends JFrame implements IObserver {
     private static final int SHSEVENTYEIGHT = 678;
     private static final int THTHIRTYSEVEN = 337;
     private static final long serialVersionUID = 1L;
-    private ImageIcon icon = new ImageIcon(this.getClass().getResource("/dog_icon.png"));
-    private Container contentPane;
-    private GameTableInterface controller;
-    private ColorMap col = new ColorMap();
-    private JLabel tFieldCurrentPlayer, tFieldRound;
-    private JLabel[] cards;
-    private OverlapLayout layout;
+    private final ImageIcon icon = new ImageIcon(this.getClass().getResource("/dog_icon.png"));
+    private final Container contentPane;
+    private final GameTableInterface controller;
+    private final ColorMap col = new ColorMap();
+    private final JLabel tFieldCurrentPlayer, tFieldRound;
+    private final JLabel[] cards;
+    private final OverlapLayout layout;
     private Component up;
-    private GuiDrawFigures figures;
-    private GuiDrawGameField gameField;
-    private JTextArea tAreaStatus;
+    private final GuiDrawFigures figures;
+    private final GuiDrawGameField gameField;
+    private final JTextArea tAreaStatus;
     // statics for findbugs
     private static final int CARD1 = 1;
     private static final int SIX = 6;
@@ -332,7 +331,7 @@ public class GraphicalUserInterface extends JFrame implements IObserver {
      * highlighted/dehighlighted
      * 
      * @param c
-     *            the component that will be highlighted
+     *        the component that will be highlighted
      */
     private void cardOut(Component c) {
         Boolean constraint = layout.getConstraints(c);
@@ -465,17 +464,8 @@ public class GraphicalUserInterface extends JFrame implements IObserver {
             //clear old highlighter
             clearHighlightedCard();
             //add the "new card"
-            CardInterface newCard = new Card((Integer) spinner.getValue());
-            CardInterface oldCard = new Card(cardval);
-            current.addCard(newCard);
-            current.removeCard(oldCard);
-            if (!controller.canPlay(current)) {
-                current.removeCard(newCard);
-                current.addCard(oldCard);
-                cardOut(cards[current.getCardList().lastIndexOf(oldCard)]);
-            } else {
-                cardOut(cards[current.getCardList().lastIndexOf(newCard)]);
-            }
+            int newCard = (Integer) spinner.getValue();
+            cardOut(cards[current.getCardList().lastIndexOf(controller.playJoker(newCard))]);
             //repaint the labels and highlight the card
             repaintCardLabels();
         }

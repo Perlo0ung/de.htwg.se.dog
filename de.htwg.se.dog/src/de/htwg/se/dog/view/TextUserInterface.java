@@ -171,6 +171,9 @@ public class TextUserInterface implements IObserver {
 
             }
             break;
+        case CARD14:
+
+            break;
         case CARD2:
         case CARD3:
         case CARD5:

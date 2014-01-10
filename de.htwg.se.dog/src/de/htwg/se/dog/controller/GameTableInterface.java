@@ -64,7 +64,7 @@ public interface GameTableInterface extends IObservable {
      * Returns true if the Player has a card that can be played
      * 
      * @param p
-     *            the Player that wants to play
+     *        the Player that wants to play
      * @return true if he can play, otherwise false
      */
     boolean canPlay(PlayerInterface p);
@@ -73,7 +73,7 @@ public interface GameTableInterface extends IObservable {
      * Returns a list containing the cards that can be played by Player p
      * 
      * @param p
-     *            the player that wants to play
+     *        the player that wants to play
      * @return a list containing the cards that can be played
      */
     List<CardInterface> possibleCards(PlayerInterface p);
@@ -142,7 +142,7 @@ public interface GameTableInterface extends IObservable {
      * returns wheater the field is empty or not
      * 
      * @param fieldnr
-     *            the field to be empty
+     *        the field to be empty
      * @return true if empty otherwise false
      */
     boolean fieldIsEmpty(int fieldnr);
@@ -151,7 +151,7 @@ public interface GameTableInterface extends IObservable {
      * Returns the owner for the figure on field given with fieldnr
      * 
      * @param fieldnr
-     *            the field
+     *        the field
      * @return
      */
     int getFigureOwnerID(int fieldnr);
@@ -160,7 +160,7 @@ public interface GameTableInterface extends IObservable {
      * move a figure to startpoint
      * 
      * @param card
-     *            the card that is used for the startmove
+     *        the card that is used for the startmove
      * @return true if movestart was possible
      */
     boolean moveFigureToStart(int card);
@@ -176,10 +176,19 @@ public interface GameTableInterface extends IObservable {
      * checks if the moves in moves map are valid
      * 
      * @param cardNr
-     *            the card that was used
+     *        the card that was used
      * @param moves
-     *            maps with moves
+     *        maps with moves
      * @return true if the moves are valid
      */
     boolean isValidMove(int cardNr, Map<Integer, Integer> moves);
+
+    /**
+     * Switches Jokercard with a Card with cardVal
+     * 
+     * @param cardVal
+     *        number of new card
+     * @return New card if switch possible, otherwise the joker card
+     */
+    CardInterface playJoker(int cardVal);
 }

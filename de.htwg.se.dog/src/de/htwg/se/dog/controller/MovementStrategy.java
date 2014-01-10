@@ -22,9 +22,9 @@ public interface MovementStrategy {
      * 
      * @param gamefield
      * @param steps
-     *            number of steps figure wants to take
+     *        number of steps figure wants to take
      * @param startfieldnr
-     *            from where figure wants to move
+     *        from where figure wants to move
      * @return true if move was successfull, otherwise false
      */
     boolean move(int steps, int startfieldnr);
@@ -34,9 +34,9 @@ public interface MovementStrategy {
      * 
      * @param gamefield
      * @param steps
-     *            number of steps figure want to take
+     *        number of steps figure want to take
      * @param startfieldnr
-     *            from where figure wants to move
+     *        from where figure wants to move
      * @return true if move is valid, otherwise false
      */
     boolean validMove(int steps, int startfieldnr);

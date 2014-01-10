@@ -15,6 +15,7 @@ import de.htwg.se.dog.models.CardInterface;
 import de.htwg.se.dog.models.FieldInterface;
 import de.htwg.se.dog.models.GameFieldInterface;
 import de.htwg.se.dog.models.PlayerInterface;
+import de.htwg.se.dog.models.impl.Card;
 import de.htwg.se.dog.models.impl.GameField;
 import de.htwg.se.dog.models.impl.Player;
 import de.htwg.se.dog.util.IOMsgEvent;
@@ -45,9 +46,9 @@ public class GameTable extends Observable implements GameTableInterface {
      * Constructor to generate a new gametable
      * 
      * @param playerCount
-     *            number of players
+     *        number of players
      * @param figCount
-     *            number of figures per player
+     *        number of figures per player
      */
     @Inject
     public GameTable(int playerCount) {
@@ -136,7 +137,7 @@ public class GameTable extends Observable implements GameTableInterface {
      * Returns true if the Player has a card that can be played
      * 
      * @param p
-     *            the Player that wants to play
+     *        the Player that wants to play
      * @return true if he can play, otherwise false
      */
     @Override
@@ -166,7 +167,7 @@ public class GameTable extends Observable implements GameTableInterface {
      * Returns a list containing the cards that can be played by Player p
      * 
      * @param p
-     *            the player that wants to play
+     *        the player that wants to play
      * @return a list containing the cards that can be played
      */
     @Override
@@ -247,12 +248,15 @@ public class GameTable extends Observable implements GameTableInterface {
     @Override
     public boolean playCard(int cardNr, Map<Integer, Integer> moves) {
         boolean retval = false;
-        if (moves.size() == 1) {
+
+        if (cardNr != 7) {
             movement.setMoveStrategie(cardNr);
             //TODO For-Schleife wegmachen
             for (Integer fieldNr : moves.keySet()) {
                 retval = movement.move(moves.get(fieldNr), fieldNr);
             }
+        } else {
+            retval = movement.move(moves);
         }
         if (retval) {
             currentPlayer.removeCard(currentPlayer.getCardfromCardNr(cardNr));
@@ -309,7 +313,7 @@ public class GameTable extends Observable implements GameTableInterface {
      * sends the message msg to all observers
      * 
      * @param msg
-     *            the message
+     *        the message
      */
     private void sendObserverMessage(String msg) {
         notifyObservers(new IOMsgEvent(msg));
@@ -318,5 +322,23 @@ public class GameTable extends Observable implements GameTableInterface {
     @Override
     public int getTargetField(int steps, int startfieldnr) {
         return movement.getTargetfield(steps, startfieldnr);
+    }
+
+    @Override
+    public CardInterface playJoker(int cardVal) {
+        CardInterface retCard = null;
+        CardInterface newCard = new Card(cardVal);
+        CardInterface oldCard = new Card(CARD14);
+        currentPlayer.addCard(newCard);
+        currentPlayer.removeCard(oldCard);
+        if (!this.canPlay(currentPlayer)) {
+            currentPlayer.removeCard(newCard);
+            currentPlayer.addCard(oldCard);
+            retCard = oldCard;
+        } else {
+            retCard = newCard;
+        }
+
+        return retCard;
     }
 }
