@@ -3,6 +3,12 @@ package de.htwg.se.dog.util;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * Observer logik
+ * 
+ * @author Michael
+ * 
+ */
 public class Observable implements IObservable {
     private List<IObserver> observers = new LinkedList<IObserver>();
 
