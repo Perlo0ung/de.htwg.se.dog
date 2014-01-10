@@ -134,16 +134,6 @@ public class OverlapLayout implements LayoutManager2 {
         return constraints.get(component);
     }
 
-    /**
-     * Adds the specified component with the specified name to the layout.
-     * 
-     * @param name
-     *            the name of the component
-     * @param comp
-     *            the component to be added
-     */
-    @Override
-    public void addLayoutComponent(String name, Component comp) {}
 
     /**
      * (non-Javadoc)
@@ -343,18 +333,8 @@ public class OverlapLayout implements LayoutManager2 {
      * @param parentInsets
      */
     private void overlapPos(Container parent, Point location, Insets parentInsets) {
-        if (overlapPosition.x < 0) {
-            location.x = parent.getWidth() - maximumSize.width - parentInsets.right - popupInsets.right;
-        } else {
             location.x = parentInsets.left + popupInsets.left;
-        }
-        // Layout bottom-to-top, else top-to-bottom
-
-        if (overlapPosition.y < 0) {
-            location.y = parent.getHeight() - maximumSize.height - parentInsets.bottom - popupInsets.bottom;
-        } else {
             location.y = parentInsets.top + popupInsets.top;
-        }
     }
 
     /**
@@ -387,7 +367,6 @@ public class OverlapLayout implements LayoutManager2 {
      */
     @Override
     public void invalidateLayout(Container target) {
-        // remove constraints here?
     }
 
     /**
@@ -398,4 +377,10 @@ public class OverlapLayout implements LayoutManager2 {
             this.addLayoutComponent(comp.getKey(), POPDOWN);
         }
     }
+
+	@Override
+	public void addLayoutComponent(String arg0, Component arg1) {
+		// TODO Auto-generated method stub
+		
+	}
 }

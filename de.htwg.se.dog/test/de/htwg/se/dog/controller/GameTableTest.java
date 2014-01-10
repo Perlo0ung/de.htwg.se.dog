@@ -14,9 +14,11 @@ import de.htwg.se.dog.models.FieldInterface;
 import de.htwg.se.dog.models.FigureInterface;
 import de.htwg.se.dog.models.GameFieldInterface;
 import de.htwg.se.dog.models.PlayerInterface;
+import de.htwg.se.dog.models.impl.Card;
 
 public class GameTableTest {
-    private final int TWO = 2;
+    private static final int JOKER = 14;
+	private final int TWO = 2;
     Movement movement;
     GameTableInterface table;
     GameFieldInterface gamefield;
@@ -27,14 +29,13 @@ public class GameTableTest {
     @Before
     public void setUp() {
         table = new GameTable(2);
-        table.newRound();
-        table.nextPlayer();
-        while (table.getCurrentPlayer().getPlayerID() != 1) {
-            table.newRound();
-            table.nextPlayer();
+        for(PlayerInterface p: table.getPlayerList()) {
+        	p.addCard(new Card(JOKER));
         }
+        table.newRound(); 
+        table.nextPlayer();
         array = table.getGameField().getGameArray();
-        first = table.getCurrentPlayer();
+        first = table.getCurrentPlayer();      
         gamefield = table.getGameField();
     }
 

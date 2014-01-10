@@ -346,4 +346,9 @@ public class GameTable extends Observable implements GameTableInterface {
 
         return retCard;
     }
+
+	@Override
+	public List<PlayerInterface> getPlayerList() {
+		return players;
+	}
 }

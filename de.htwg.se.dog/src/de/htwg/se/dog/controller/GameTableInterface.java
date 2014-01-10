@@ -16,6 +16,11 @@ import de.htwg.se.dog.util.IObservable;
  */
 public interface GameTableInterface extends IObservable {
 
+	/**
+	 * Returns the playerlist
+	 * @return
+	 */
+	List<PlayerInterface> getPlayerList();
     /**
      * Returns the Gamefield currently playing on
      * 
