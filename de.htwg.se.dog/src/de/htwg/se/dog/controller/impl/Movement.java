@@ -15,9 +15,9 @@ public class Movement implements MovementStrategy {
 
     private static final int VALUEOFCARD7 = 7;
     private static final int ELEVEN = 11;
-    private static final int EMPTYFIELD = -5;
-    private static final int BLOCKEDFIELD = -6;
-    private static final int OVERHOUSE = -8;
+    private static final int EMPTYFIELD = -61;
+    private static final int BLOCKEDFIELD = -62;
+    private static final int OVERHOUSE = -63;
 
     private Movement strategie;
     protected GameFieldInterface gameField;
@@ -104,6 +104,7 @@ public class Movement implements MovementStrategy {
         int absSteps = Math.abs(steps);
         int currentfieldID = EMPTYFIELD;
         boolean isHousefield = false;
+        boolean illegalInHouse = false;
         // TODO Monitor whether if-Statment is necessary or not
         if (!fieldEmpty(array[startfieldnr])) {
             isHousefield = array[startfieldnr].isHouse();
@@ -111,7 +112,7 @@ public class Movement implements MovementStrategy {
             currentfieldID = nextField(startfieldnr, steps);
             int nextfieldID = currentfieldID;
             // Loop to move steps
-            while (absSteps > 0) {
+            while (absSteps > 0 || illegalInHouse) {
                 currentfieldID = nextfieldID;
                 nextfieldID = nextField(currentfieldID, steps);
                 int currentFieldOwner = array[currentfieldID].getOwner();
@@ -119,16 +120,22 @@ public class Movement implements MovementStrategy {
                 if (array[currentfieldID].isHouse() && array[currentfieldID].getOwner() != playerNr) {
                     continue;
                 }
-                //Check if own house and move backwarts
-                if (array[currentfieldID].getOwner() == playerNr && steps < 0) {
+                //Check if own house and move backwards
+                if (array[currentfieldID].isHouse() && array[currentfieldID].getOwner() == playerNr && steps < 0) {
                     continue;
                 }
                 // Check if field is Blocked
-                if (array[currentfieldID].isBlocked()) {
+                if (array[currentfieldID].isBlocked() && !array[currentfieldID].isHouse()) {
                     currentfieldID = BLOCKEDFIELD;
-                    absSteps = 0;
+                    break;
                 }
-                // Check if nobody owns next field
+                //Check if field in own house is blocked and you have to move over whole house
+                if (!illegalInHouse && array[currentfieldID].isBlocked() && array[currentfieldID].getOwner() == playerNr && array[currentfieldID].isHouse()) {
+                    illegalInHouse = true;
+                }
+                if (illegalInHouse && !array[currentfieldID].isHouse()) {
+                    illegalInHouse = false;
+                }
                 absSteps = adjustSteps(steps, absSteps, array, playerNr,
                         nextfieldID, currentFieldOwner);
             }
@@ -156,9 +163,10 @@ public class Movement implements MovementStrategy {
         if (currentFieldOwner == 0 || currentFieldOwner == playerNr
                 && steps > 0) {
             absSteps--;
-            // Check if next field is own House and current field ist last
-            // in house
+
         }
+        // Check if next field is own House and current field ist last
+        // in house
         if (currentFieldOwner == playerNr && absSteps > 0
                 && array[nextfieldID].getOwner() != playerNr && steps > 0) {
             absSteps += gameField.getHouseCount();

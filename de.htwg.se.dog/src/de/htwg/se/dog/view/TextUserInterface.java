@@ -83,7 +83,7 @@ public class TextUserInterface implements IObserver {
         controller.playCard(card, moves);
         if (controller.currentPlayerHaswon()) {
             out(String.format(
-                    "/n/n/n/n/n/n/n/n/n/n/n/nSpieler %d hat Gewonnen!",
+                    "%n%n%n%n%n%n%n%n%n%n%n%nSpieler %d hat Gewonnen!",
                     controller.getCurrentPlayerID()));
             return false;
         }
