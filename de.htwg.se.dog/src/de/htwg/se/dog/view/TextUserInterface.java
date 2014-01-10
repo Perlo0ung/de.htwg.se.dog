@@ -15,6 +15,9 @@ import de.htwg.se.dog.util.IObserver;
 
 public class TextUserInterface implements IObserver {
 
+    private static final int CARD4 = 4;
+    private static final int CARD7 = 7;
+    private static final int CARD11 = 11;
     private static final int CARD12 = 12;
     private static final int CARD10 = 10;
     private static final int CARD9 = 9;
@@ -115,26 +118,26 @@ public class TextUserInterface implements IObserver {
                 }
             }
             break;
-        case 4:
+        case CARD4:
             while (!wertOkay) {
                 out("Wollen sie Vorwärts(V) oder Rückwärts(R) laufen?");
                 String tmp = scanner.next();
                 if (tmp.equalsIgnoreCase("V")) {
-                    steps = 4;
+                    steps = CARD4;
                     wertOkay = true;
                 } else if (tmp.equalsIgnoreCase("R")) {
-                    steps = -4;
+                    steps = -CARD4;
                     wertOkay = true;
                 } else {
                     out("Bitte nur R oder V eingeben.");
                 }
             }
             break;
-        case 7:
+        case CARD7:
             // TODO 7 aufteilen
             out("7 ist noch nicht implementiert!");
             break;
-        case 11:
+        case CARD11:
             int targetFieldNr = -1;
             while (true) {
                 String input;
