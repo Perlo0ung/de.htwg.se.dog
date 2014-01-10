@@ -1,5 +1,11 @@
 package de.htwg.se.dog.models;
 
+/**
+ * Interface for the figures
+ * 
+ * @author Michael
+ * 
+ */
 public interface FigureInterface {
     /**
      * returns the owner of this figure

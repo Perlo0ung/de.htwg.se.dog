@@ -2,6 +2,12 @@ package de.htwg.se.dog.models;
 
 import java.util.Stack;
 
+/**
+ * Interface for the actual cardstack
+ * 
+ * @author Michael
+ * 
+ */
 public interface CardStackInterface {
     /**
      * Returns size of the CardStack
