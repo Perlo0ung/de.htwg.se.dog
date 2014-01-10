@@ -58,42 +58,25 @@ public class TextUserInterface implements IObserver {
             moves = new HashMap<Integer, Integer>();
             if (card == QUIT)
                 return false;
-            // spieler setzt aus
             if (card == SKIP)
                 return true;
             if (card == RETRY) {
                 continue;
             }
             if ((card == CARD13 || card == 1 || card == CARD14) && !controller.isPlayerStartfieldBlocked()) {
-                out("Möchtest du eine neue Figure aufs Spielfeld setzten?(J/N):");
-                char input = scanner.next().charAt(0);
-                if ((input == 'J' || input == 'j') && controller.moveFigureToStart(card)) {
-                    out("Moving Figure to Start-Field");
+                if (putOutnewFigure(scanner, card))
                     return true;
-                } else {
-                    out("Mache normalen Zug.");
-                }
             }
-            //Joker auswahl
             if (card == CARD14) {
-                String input;
-                try {
-                    out("Bitte KartenNummer der neuen Karte eingeben:");
-                    input = scanner.next();
-                    int targetFieldNr = Integer.valueOf(input);
-                    if (targetFieldNr <= 0 || targetFieldNr > 14)
-                        throw new NumberFormatException();
-                } catch (NumberFormatException e) {
-                    out("Bitte nur Zahlen im Bereich [1:13] eingeben.");
-                }
+                jokerChoose(scanner);
                 continue;
             }
             fieldnr = processFigureInput(scanner);
             if (fieldnr == QUIT)
                 return false;
-            if (card == SKIP)
+            if (fieldnr == SKIP)
                 return true;
-            if (card == RETRY) {
+            if (fieldnr == RETRY) {
                 continue;
             }
             steps = processSteps(scanner, card);
@@ -107,13 +90,46 @@ public class TextUserInterface implements IObserver {
         }
         out("mache Zug :)\n\n\n\n\n\n");
         controller.playCard(card, moves);
+        if (playerHasWon())
+            return false;
+        return true;
+    }
+
+    private boolean playerHasWon() {
+        boolean retVal = false;
         if (controller.currentPlayerHaswon()) {
             out(String.format(
                     "%n%n%n%n%n%n%n%n%n%n%n%nSpieler %d hat Gewonnen!",
                     controller.getCurrentPlayerID()));
-            return false;
+            return true;
         }
-        return true;
+        return retVal;
+    }
+
+    private int jokerChoose(Scanner scanner) {
+        String input;
+        int cardNr = NOTINITIALIZED;
+        try {
+            out("Bitte KartenNummer der neuen Karte eingeben:");
+            input = scanner.next();
+            cardNr = Integer.valueOf(input);
+            if (cardNr <= 0 || cardNr > 14)
+                throw new NumberFormatException();
+        } catch (NumberFormatException e) {
+            out("Bitte nur Zahlen im Bereich [1:13] eingeben.");
+        }
+        return cardNr;
+    }
+
+    private boolean putOutnewFigure(Scanner scanner, int card) {
+        boolean retVal = false;
+        out("Möchtest du eine neue Figure aufs Spielfeld setzten?(J/N):");
+        char input = scanner.next().charAt(0);
+        if ((input == 'J' || input == 'j') && controller.moveFigureToStart(card)) {
+            out("Moving Figure to Start-Field");
+            return true;
+        }
+        return retVal;
     }
 
     private int processSteps(Scanner scanner, int cardNr) {
@@ -238,7 +254,7 @@ public class TextUserInterface implements IObserver {
                 input = scanner.next();
                 Integer zahl = Integer.valueOf(input);
                 if (controller.fieldIsEmpty(zahl)) {
-                    out(String.format("Feld %d ist leer!", zahl));
+                    out(String.format("Feld %d ist leer oder gibt es nicht!", zahl));
                     continue;
                 }
                 if (controller.getFigureOwnerID(zahl) != controller.getCurrentPlayerID()) {

@@ -223,7 +223,7 @@ public class GameTable extends Observable implements GameTableInterface {
     @Override
     public boolean fieldIsEmpty(int fieldnr) {
         boolean retVal = true;
-        if (fieldnr >= 0 || fieldnr < game.getFieldSize()) {
+        if (fieldnr >= 0 && fieldnr < game.getFieldSize()) {
             retVal = movement.fieldEmpty(game.getFieldForNum(fieldnr));
         }
         return retVal;
