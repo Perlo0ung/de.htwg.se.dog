@@ -54,6 +54,12 @@ import de.htwg.se.dog.view.modules.GuiDrawFigures;
 import de.htwg.se.dog.view.modules.GuiDrawGameField;
 import de.htwg.se.dog.view.modules.OverlapLayout;
 
+/**
+ * Builds the graphical userinterface
+ * 
+ * @author Michael
+ * 
+ */
 public class GraphicalUserInterface extends JFrame implements IObserver {
 
     private static final int THIRTEEN = 13;
