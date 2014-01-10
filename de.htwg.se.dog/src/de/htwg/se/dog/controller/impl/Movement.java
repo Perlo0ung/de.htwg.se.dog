@@ -115,6 +115,10 @@ public class Movement implements MovementStrategy {
                 currentfieldID = nextfieldID;
                 nextfieldID = nextField(currentfieldID, steps);
                 int currentFieldOwner = array[currentfieldID].getOwner();
+                //Check if field is house of another player
+                if (array[currentfieldID].isHouse() && array[currentfieldID].getOwner() != playerNr) {
+                    continue;
+                }
                 // Check if field is Blocked
                 if (array[currentfieldID].isBlocked()) {
                     currentfieldID = BLOCKEDFIELD;
@@ -210,9 +214,8 @@ public class Movement implements MovementStrategy {
         boolean retval = false;
         FieldInterface[] array = gameField.getGameArray();
         int sourceFigOwner = array[fieldnr].getFigureOwnerNr();
-        if (array[fieldnr].isHouse()) {
-        	return retval;
-        }
+        if (array[fieldnr].isHouse())
+            return retval;
         for (FieldInterface field : array) {
             if (field.getFigure() != null && !field.isBlocked() && field.getFigureOwnerNr() != sourceFigOwner) {
                 retval = true;
