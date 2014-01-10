@@ -9,13 +9,13 @@ public class Card implements CardInterface {
     private static final int FOURTEEN = 14;
     private static final int PRIM = 31;
 
-    private static final String[] CARDNAMES = { "Ass", "Zwei", "Drei", "Vier", "Fuenf", "Sechs", "Sieben", "Acht", "Neun", "Zehn", "Bube", "Dame", "Koenig", "Joker" };
+    public static final String[] CARDNAMES = { "Ass", "Zwei", "Drei", "Vier", "Fuenf", "Sechs", "Sieben", "Acht", "Neun", "Zehn", "Bube", "Dame", "Koenig", "Joker" };
 
     /**
      * Constructor to create a new card
      * 
      * @param value
-     *        : int, is the value of the card
+     *            : int, is the value of the card
      */
     public Card(int value) {
         if (value < ONE || value > FOURTEEN) {
@@ -39,7 +39,7 @@ public class Card implements CardInterface {
      * Return the CardName of a Card
      * 
      * @param value
-     *        : Int value of the card
+     *            : Int value of the card
      * @return String: the cardname as a string
      */
     @Override
@@ -57,29 +57,27 @@ public class Card implements CardInterface {
         return ((Integer) this.value).compareTo(o.getValue());
     }
 
-	@Override
-	public int hashCode() {
-		return PRIM+value;
-	}
+    @Override
+    public int hashCode() {
+        return PRIM + value;
+    }
 
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (obj == null) {
-			return false;
-		}
-		if (!(obj instanceof Card)) {
-			return false;
-		}
-		Card other = (Card) obj;
-		if (value != other.value) {
-			return false;
-		}
-		return true;
-	}
-
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (!(obj instanceof Card)) {
+            return false;
+        }
+        Card other = (Card) obj;
+        if (value != other.value) {
+            return false;
+        }
+        return true;
+    }
 
 }
