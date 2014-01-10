@@ -300,7 +300,8 @@ public class GraphicalUserInterface extends JFrame implements IObserver {
     private void clearHighlightedCard() {
         up = null;
         layout.resetHighlighters();
-        cards[1].getParent().revalidate();
+        cards[1].getParent().invalidate();
+        cards[1].getParent().validate();
     }
 
     /**
@@ -338,7 +339,8 @@ public class GraphicalUserInterface extends JFrame implements IObserver {
             up = null;
         }
         allowSecondHighlighter();
-        c.getParent().revalidate();
+        c.getParent().invalidate();
+        c.getParent().validate();
     }
 
     /**
