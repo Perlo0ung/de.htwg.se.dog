@@ -28,8 +28,16 @@ public class Movement implements MovementStrategy {
     private Movement strategie;
     protected GameFieldInterface gameField;
 
+    /**
+     * superkonstruktor
+     */
     public Movement() {}
 
+    /**
+     * konstruktor that sets the gamefield on which we move
+     * 
+     * @param gameField
+     */
     public Movement(GameFieldInterface gameField) {
         this.gameField = gameField;
     }
