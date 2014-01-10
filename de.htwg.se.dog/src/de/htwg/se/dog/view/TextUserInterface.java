@@ -15,9 +15,22 @@ import de.htwg.se.dog.util.IObserver;
 
 public class TextUserInterface implements IObserver {
 
+    private static final int CARD4 = 4;
+    private static final int CARD7 = 7;
+    private static final int CARD11 = 11;
+    private static final int CARD12 = 12;
+    private static final int CARD10 = 10;
+    private static final int CARD9 = 9;
+    private static final int CARD8 = 8;
+    private static final int CARD6 = 6;
+    private static final int CARD5 = 5;
+    private static final int CARD3 = 3;
+    private static final int CARD2 = 2;
+    private static final int CARD14 = 14;
+    private static final int CARD13 = 13;
     private static final int NOTINITIALIZED = -99;
     private static final int QUIT = -1;
-    private static final int SKIP = -2;
+    private static final int SKIP = -CARD2;
     private static final int RETRY = -3;
     private static final Logger LOG = LogManager.getLogger("UI");
     private final GameTableInterface controller;
@@ -53,14 +66,12 @@ public class TextUserInterface implements IObserver {
             if (card == -1)
                 return false;
             // spieler setzt aus
-            if (card == -2)
+            if (card == -CARD2)
                 return true;
-            if ((card == 13 || card == 1 || card == 14)
-                    && !controller.isPlayerStartfieldBlocked()) {
+            if ((card == CARD13 || card == 1 || card == CARD14) && !controller.isPlayerStartfieldBlocked()) {
                 out("Möchtest du eine neue Figure aufs Spielfeld setzten?(J/N):");
                 char input = scanner.next().charAt(0);
-                if ((input == 'J' || input == 'j')
-                        && controller.moveFigureToStart(card)) {
+                if ((input == 'J' || input == 'j') && controller.moveFigureToStart(card)) {
                     out("Moving Figure to Start-Field");
                     return true;
                 } else {
@@ -106,26 +117,26 @@ public class TextUserInterface implements IObserver {
                 }
             }
             break;
-        case 4:
+        case CARD4:
             while (!wertOkay) {
                 out("Wollen sie Vorwärts(V) oder Rückwärts(R) laufen?");
                 String tmp = scanner.next();
                 if (tmp.equalsIgnoreCase("V")) {
-                    steps = 4;
+                    steps = CARD4;
                     wertOkay = true;
                 } else if (tmp.equalsIgnoreCase("R")) {
-                    steps = -4;
+                    steps = -CARD4;
                     wertOkay = true;
                 } else {
                     out("Bitte nur R oder V eingeben.");
                 }
             }
             break;
-        case 7:
+        case CARD7:
             // TODO 7 aufteilen
             out("7 ist noch nicht implementiert!");
             break;
-        case 11:
+        case CARD11:
             int targetFieldNr = -1;
             while (true) {
                 String input;
@@ -137,15 +148,12 @@ public class TextUserInterface implements IObserver {
                     out("Bitte nur Zahlen eingeben.");
                 }
                 // check if targetfield is on gamefield
-                if (targetFieldNr < 0
-                        && targetFieldNr >= controller.getGameField()
-                                .getFieldSize()) {
+                if (targetFieldNr < 0 && targetFieldNr >= controller.getGameField().getFieldSize()) {
                     out("Eingegebenes Feld gibt es nicht auf dem Spielbrett.");
                     continue;
                 }
                 // check if on targetfield is a switchable figure
-                FieldInterface targetField = controller.getGameField()
-                        .getGameArray()[targetFieldNr];
+                FieldInterface targetField = controller.getGameField().getGameArray()[targetFieldNr];
                 if (targetField.getFigure() != null && !targetField.isBlocked()) {
                     steps = targetFieldNr;
                     break;
@@ -155,15 +163,15 @@ public class TextUserInterface implements IObserver {
 
             }
             break;
-        case 2:
-        case 3:
-        case 5:
-        case 6:
-        case 8:
-        case 9:
-        case 10:
-        case 12:
-        case 13:
+        case CARD2:
+        case CARD3:
+        case CARD5:
+        case CARD6:
+        case CARD8:
+        case CARD9:
+        case CARD10:
+        case CARD12:
+        case CARD13:
             steps = cardNr;
             break;
         }
@@ -178,15 +186,11 @@ public class TextUserInterface implements IObserver {
             try {
                 Integer zahl = Integer.valueOf(input);
                 if (!controller.playerHasCard(zahl)) {
-                    out(String.format("Spieler %d hat keine solche Karte!",
-                            controller.getCurrentPlayerID()));
+                    out(String.format("Spieler %d hat keine solche Karte!", controller.getCurrentPlayerID()));
                     continue;
                 }
-                if (!controller.possibleCards(controller.getCurrentPlayer())
-                        .contains(new Card(zahl))) {
-                    out(String.format(
-                            "Spieler %d kann diese Karte nicht benutzen!",
-                            controller.getCurrentPlayerID()));
+                if (!controller.possibleCards(controller.getCurrentPlayer()).contains(new Card(zahl))) {
+                    out(String.format("Spieler %d kann diese Karte nicht benutzen!", controller.getCurrentPlayerID()));
                     continue;
                 }
                 card = zahl;
@@ -207,14 +211,11 @@ public class TextUserInterface implements IObserver {
             retval = QUIT;
         }
         if (input.equalsIgnoreCase("skip")) {
-            out(String
-                    .format("Spieler %d wirft seine Karten weg und setzt bis zu nächsten Runde aus.",
-                            controller.getCurrentPlayerID()));
+            out(String.format("Spieler %d wirft seine Karten weg und setzt bis zu nächsten Runde aus.", controller.getCurrentPlayerID()));
             controller.getCurrentPlayer().clearCardList();
             retval = SKIP;
         }
-        if (input.equals("new"))
-        {
+        if (input.equals("new")) {
 
             retval = RETRY;
             //TODO: eigabe wiederrufen und neu auswählen
@@ -233,11 +234,8 @@ public class TextUserInterface implements IObserver {
                     out(String.format("Feld %d ist leer!", zahl));
                     continue;
                 }
-                if (controller.getFigureOwnerID(zahl) != controller
-                        .getCurrentPlayerID()) {
-                    out(String.format(
-                            "Die Figure auf dem Feld %d gehört Spieler %d",
-                            zahl, controller.getFigureOwnerID(zahl)));
+                if (controller.getFigureOwnerID(zahl) != controller.getCurrentPlayerID()) {
+                    out(String.format("Die Figure auf dem Feld %d gehört Spieler %d", zahl, controller.getFigureOwnerID(zahl)));
                     continue;
                 }
                 fieldnr = zahl;

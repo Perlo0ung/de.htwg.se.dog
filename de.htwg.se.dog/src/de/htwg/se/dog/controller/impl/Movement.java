@@ -99,8 +99,7 @@ public class Movement implements MovementStrategy {
      * @return returns number of targetfield, if startfield is empty it returns
      *         -5 or if field is blocked it returns -6
      */
-    private int getTargetfield(FieldInterface[] array, int steps,
-            int startfieldnr) {
+    private int getTargetfield(FieldInterface[] array, int steps, int startfieldnr) {
         int absSteps = Math.abs(steps);
         int currentfieldID = EMPTYFIELD;
         boolean isHousefield = false;
@@ -157,18 +156,15 @@ public class Movement implements MovementStrategy {
         return getTargetfield(gameField.getGameArray(), steps, startfieldnr);
     }
 
-    private int adjustSteps(int steps, int psteps, FieldInterface[] array,
-            int playerNr, int nextfieldID, int currentFieldOwner) {
+    private int adjustSteps(int steps, int psteps, FieldInterface[] array, int playerNr, int nextfieldID, int currentFieldOwner) {
         int absSteps = psteps;
-        if (currentFieldOwner == 0 || currentFieldOwner == playerNr
-                && steps > 0) {
+        if (currentFieldOwner == 0 || currentFieldOwner == playerNr && steps > 0) {
             absSteps--;
 
         }
         // Check if next field is own House and current field ist last
         // in house
-        if (currentFieldOwner == playerNr && absSteps > 0
-                && array[nextfieldID].getOwner() != playerNr && steps > 0) {
+        if (currentFieldOwner == playerNr && absSteps > 0 && array[nextfieldID].getOwner() != playerNr && steps > 0) {
             absSteps += gameField.getHouseCount();
         }
         return absSteps;
@@ -208,10 +204,8 @@ public class Movement implements MovementStrategy {
         return retval;
     }
 
-    public boolean possibleMoveStart(FieldInterface[] array, int startFieldNr,
-            PlayerInterface player) {
-        return !array[startFieldNr].isBlocked()
-                && !player.getFigureList().isEmpty();
+    public boolean possibleMoveStart(FieldInterface[] array, int startFieldNr, PlayerInterface player) {
+        return !array[startFieldNr].isBlocked() && !player.getFigureList().isEmpty();
     }
 
     /**
@@ -284,8 +278,7 @@ public class Movement implements MovementStrategy {
 
         FieldInterface[] array = gameField.copyField();
         setMoveStrategie(VALUEOFCARD7);
-        LinkedList<Integer> figures = new LinkedList<Integer>(
-                p.getFigureRegister());
+        LinkedList<Integer> figures = new LinkedList<Integer>(p.getFigureRegister());
         Collections.sort(figures, Collections.reverseOrder());
 
         int steps = VALUEOFCARD7;

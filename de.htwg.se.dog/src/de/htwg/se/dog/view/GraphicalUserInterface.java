@@ -56,6 +56,8 @@ import de.htwg.se.dog.view.modules.OverlapLayout;
 
 public class GraphicalUserInterface extends JFrame implements IObserver {
 
+    private static final int THIRTEEN = 13;
+    private static final String TAHOMA = "Tahoma";
     private static final int SEVENHUNDRET = 701;
     private static final int THTHIRTYSIX = 336;
     private static final int CARD4 = 4;
@@ -79,8 +81,8 @@ public class GraphicalUserInterface extends JFrame implements IObserver {
     private static final int CARD1 = 1;
     private static final int SIX = 6;
     private static final int TWELVE = 12;
-    private static final int THIRTEEEN = 13;
-    private static final int CARD13 = 13;
+    private static final int THIRTEEEN = THIRTEEN;
+    private static final int CARD13 = THIRTEEN;
     private static final int CARD14 = 14;
     private static final int FIFTEEN = 15;
     private static final int SIXTEEN = 16;
@@ -172,7 +174,6 @@ public class GraphicalUserInterface extends JFrame implements IObserver {
         mnGame.add(mnExit);
 
         gameField = new GuiDrawGameField(controller);
-        // JPanel gameField = new JPanel();
         gameField.setBounds(0, 0, GAMEFIELDX, GAMEFIELDY);
         this.add(gameField);
         gameField.setBackground(Color.WHITE);
@@ -182,13 +183,13 @@ public class GraphicalUserInterface extends JFrame implements IObserver {
         tFieldCurrentPlayer.setBorder(BorderFactory.createLineBorder(Color.white));
         tFieldCurrentPlayer.setBounds(TWELVE, TEXTFIELDY, NINETYSEVEN, GraphicalUserInterface.TWENTYTWO);
         gameField.add(tFieldCurrentPlayer);
-        tFieldCurrentPlayer.setFont(new Font("Tahoma", Font.BOLD, FIFTEEN));
+        tFieldCurrentPlayer.setFont(new Font(TAHOMA, Font.BOLD, FIFTEEN));
         tFieldCurrentPlayer.setBackground(Color.WHITE);
 
         JLabel lbCurrentPlayer = new JLabel("CurrentPlayer");
         lbCurrentPlayer.setBounds(TWELVE, GraphicalUserInterface.SIXHUNDRETEIGHTEEN, HUNDRET, SIXTEEN);
         gameField.add(lbCurrentPlayer);
-        lbCurrentPlayer.setFont(new Font("Tahoma", Font.BOLD, THIRTEEEN));
+        lbCurrentPlayer.setFont(new Font(TAHOMA, Font.BOLD, THIRTEEEN));
 
         JScrollPane scrollPane = new JScrollPane();
         scrollPane.setEnabled(false);
@@ -208,15 +209,13 @@ public class GraphicalUserInterface extends JFrame implements IObserver {
                 int card = getValueForCardIcon();
                 if ((card == CARD1 || card == CARD13 || card == CARD14) && !controller.isPlayerStartfieldBlocked()) {
                     int quit = JOptionPane.showConfirmDialog(contentPane, "Spielfigur aufs Spielfeld setzen?", "Rausgehen?", JOptionPane.YES_NO_OPTION);
-                    if (quit == JOptionPane.YES_OPTION) {
-                        controller.moveFigureToStart(card);
+                    if (quit == JOptionPane.YES_OPTION && controller.moveFigureToStart(card)) {
                         controller.nextPlayer();
                         controller.notifyObservers();
                     }
                 }
             }
         });
-        // JPanel figures = new JPanel();
         figures.setBounds(THIRTY, SIXHUNDRETSIXTY, FOURTYFIVE, FOURTYFIVE);
         gameField.add(figures);
         figures.setBackground(Color.WHITE);
@@ -232,7 +231,7 @@ public class GraphicalUserInterface extends JFrame implements IObserver {
 
         tAreaStatus = new JTextArea();
         tAreaStatus.setLineWrap(true);
-        tAreaStatus.setFont(new Font("Tahoma", Font.PLAIN, THIRTEEEN));
+        tAreaStatus.setFont(new Font(TAHOMA, Font.PLAIN, THIRTEEEN));
         tAreaStatus.setEditable(false);
         panetAreaStatus.setViewportView(tAreaStatus);
         cards = new JLabel[SIX];
@@ -264,7 +263,7 @@ public class GraphicalUserInterface extends JFrame implements IObserver {
 
         tFieldRound = new JLabel();
         gameField.add(tFieldRound);
-        tFieldRound.setFont(new Font("Tahoma", Font.BOLD, THIRTEEEN));
+        tFieldRound.setFont(new Font(TAHOMA, Font.BOLD, THIRTEEEN));
         tFieldRound.setBorder(BorderFactory.createLineBorder(Color.white));
         tFieldRound.setBackground(Color.WHITE);
         tFieldRound.setBounds(THTHIRTYSEVEN, SHSEVENTYEIGHT, NINETY, TWENTY);
@@ -301,7 +300,8 @@ public class GraphicalUserInterface extends JFrame implements IObserver {
     private void clearHighlightedCard() {
         up = null;
         layout.resetHighlighters();
-        cards[1].getParent().revalidate();
+        cards[1].getParent().invalidate();
+        cards[1].getParent().validate();
     }
 
     /**
@@ -339,7 +339,8 @@ public class GraphicalUserInterface extends JFrame implements IObserver {
             up = null;
         }
         allowSecondHighlighter();
-        c.getParent().revalidate();
+        c.getParent().invalidate();
+        c.getParent().validate();
     }
 
     /**
@@ -386,7 +387,7 @@ public class GraphicalUserInterface extends JFrame implements IObserver {
                 if (to != null) {
                     move.put(from, to);
                 }
-            } else if (cardval == 14) {
+            } else if (cardval == CARD14) {
                 jokerSpinnerDialog(current, cardval);
             } else {
                 move.put(from, cardval);
@@ -441,14 +442,14 @@ public class GraphicalUserInterface extends JFrame implements IObserver {
     @Inject
     private void jokerSpinnerDialog(final PlayerInterface current, int cardval) {
         JPanel input = new JPanel();
-        SpinnerNumberModel sModel = new SpinnerNumberModel(1, 1, 13, 1);
+        SpinnerNumberModel sModel = new SpinnerNumberModel(1, 1, THIRTEEN, 1);
         final JSpinner spinner = new JSpinner(sModel);
         final JLabel spinnerLabel = new JLabel("Ass");
 
         spinner.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent arg0) {
-                spinnerLabel.setText(String.format(" %s", Card.CARDNAMES[(Integer) spinner.getValue()]));
+                spinnerLabel.setText(String.format(" %s", Card.CARDNAMES[(Integer) spinner.getValue() - 1]));
             }
         });
         input.add(spinner);
@@ -465,11 +466,12 @@ public class GraphicalUserInterface extends JFrame implements IObserver {
             if (!controller.canPlay(current)) {
                 current.removeCard(newCard);
                 current.addCard(oldCard);
+                cardOut(cards[current.getCardList().lastIndexOf(oldCard)]);
             } else {
-                //repaint the labels and highlight the card
-                repaintCardLabels();
                 cardOut(cards[current.getCardList().lastIndexOf(newCard)]);
             }
+            //repaint the labels and highlight the card
+            repaintCardLabels();
         }
     }
 }
