@@ -30,7 +30,7 @@ public class TextUserInterface implements IObserver {
     private static final int CARD13 = 13;
     private static final int NOTINITIALIZED = -99;
     private static final int QUIT = -1;
-    private static final int SKIP = -CARD2;
+    private static final int SKIP = -2;
     private static final int RETRY = -3;
     private static final Logger LOG = LogManager.getLogger("UI");
     private final GameTableInterface controller;
@@ -61,13 +61,17 @@ public class TextUserInterface implements IObserver {
         Map<Integer, Integer> moves = null;
         int card = NOTINITIALIZED;
         while (true) {
+            out("Mögliche Sonderbefehle: retry(Zugauswahl von vorne), quit(beendet das Spiel)\n");
             card = processCardInput(scanner);
             moves = new HashMap<Integer, Integer>();
-            if (card == -1)
+            if (card == QUIT)
                 return false;
             // spieler setzt aus
-            if (card == -CARD2)
+            if (card == SKIP)
                 return true;
+            if (card == RETRY) {
+                continue;
+            }
             if ((card == CARD13 || card == 1 || card == CARD14) && !controller.isPlayerStartfieldBlocked()) {
                 out("Möchtest du eine neue Figure aufs Spielfeld setzten?(J/N):");
                 char input = scanner.next().charAt(0);
@@ -79,8 +83,13 @@ public class TextUserInterface implements IObserver {
                 }
             }
             fieldnr = processFigureInput(scanner);
-            if (fieldnr == -1)
+            if (fieldnr == QUIT)
                 return false;
+            if (card == SKIP)
+                return true;
+            if (card == RETRY) {
+                continue;
+            }
             steps = processSteps(scanner, card);
             moves.put(fieldnr, steps);
             // check if valid move, if not, redo turn decision
@@ -133,8 +142,7 @@ public class TextUserInterface implements IObserver {
             }
             break;
         case CARD7:
-            // TODO 7 aufteilen
-            out("7 ist noch nicht implementiert!");
+            steps = CARD7;
             break;
         case CARD11:
             int targetFieldNr = -1;
@@ -206,16 +214,16 @@ public class TextUserInterface implements IObserver {
 
     private int stringEingabe(String input) {
         int retval = NOTINITIALIZED;
-        if (input.equalsIgnoreCase("q")) {
+        if (input.equalsIgnoreCase("quit")) {
             out("Spiel Beendet!");
             retval = QUIT;
         }
         if (input.equalsIgnoreCase("skip")) {
-            out(String.format("Spieler %d wirft seine Karten weg und setzt bis zu nächsten Runde aus.", controller.getCurrentPlayerID()));
+            out(String.format("Spieler %d wirft seine Karten weg und setzt bis zur nächsten Runde aus.", controller.getCurrentPlayerID()));
             controller.getCurrentPlayer().clearCardList();
             retval = SKIP;
         }
-        if (input.equals("new")) {
+        if (input.equals("retry")) {
 
             retval = RETRY;
             //TODO: eigabe wiederrufen und neu auswählen
