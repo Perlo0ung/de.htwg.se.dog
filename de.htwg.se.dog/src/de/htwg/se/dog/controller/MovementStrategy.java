@@ -1,6 +1,11 @@
 package de.htwg.se.dog.controller;
 
-
+/**
+ * interface for movment strategies
+ * 
+ * @author Michael
+ * 
+ */
 public interface MovementStrategy {
     /**
      * <pre>

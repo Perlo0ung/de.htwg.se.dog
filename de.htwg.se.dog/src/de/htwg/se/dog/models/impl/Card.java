@@ -2,6 +2,12 @@ package de.htwg.se.dog.models.impl;
 
 import de.htwg.se.dog.models.CardInterface;
 
+/**
+ * implementation of cardinterface
+ * 
+ * @author Michael
+ * 
+ */
 public class Card implements CardInterface {
 
     private final int value;

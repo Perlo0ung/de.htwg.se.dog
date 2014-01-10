@@ -20,6 +20,12 @@ import de.htwg.se.dog.models.impl.Player;
 import de.htwg.se.dog.util.IOMsgEvent;
 import de.htwg.se.dog.util.Observable;
 
+/**
+ * The Gametable controller who controlls the game logik
+ * 
+ * @author Michael, Christian
+ * 
+ */
 public class GameTable extends Observable implements GameTableInterface {
 
     private static final int CARD14 = 14;

@@ -11,6 +11,12 @@ import de.htwg.se.dog.models.FigureInterface;
 import de.htwg.se.dog.models.GameFieldInterface;
 import de.htwg.se.dog.models.PlayerInterface;
 
+/**
+ * Movment strategy implementation , MoveNormal
+ * 
+ * @author Michael, Christian
+ * 
+ */
 public class Movement implements MovementStrategy {
 
     private static final int VALUEOFCARD7 = 7;
@@ -56,7 +62,7 @@ public class Movement implements MovementStrategy {
      * checks if figure is on field
      * 
      * @param field
-     *        which should be checked
+     *            which should be checked
      * @return true if field is empty, otherwise false;
      */
     public boolean fieldEmpty(FieldInterface field) {
@@ -72,9 +78,9 @@ public class Movement implements MovementStrategy {
      * empty, it does nothing
      * 
      * @param array
-     *        gamefieldarray
+     *            gamefieldarray
      * @param fieldID
-     *        fieldnumber where figure should be kick from
+     *            fieldnumber where figure should be kick from
      */
     protected void kickPlayer(FieldInterface[] array, int fieldID) {
         if (!fieldEmpty(array[fieldID])) {
@@ -93,9 +99,9 @@ public class Movement implements MovementStrategy {
      * 
      * @param gamefield
      * @param steps
-     *        number of steps figure wants to take
+     *            number of steps figure wants to take
      * @param startfieldnr
-     *        startfield number from where figure wants to move
+     *            startfield number from where figure wants to move
      * @return returns number of targetfield, if startfield is empty it returns
      *         -5 or if field is blocked it returns -6
      */
@@ -135,8 +141,7 @@ public class Movement implements MovementStrategy {
                 if (illegalInHouse && !array[currentfieldID].isHouse()) {
                     illegalInHouse = false;
                 }
-                absSteps = adjustSteps(steps, absSteps, array, playerNr,
-                        nextfieldID, currentFieldOwner);
+                absSteps = adjustSteps(steps, absSteps, array, playerNr, nextfieldID, currentFieldOwner);
             }
         }
         if (currentfieldID >= 0 && !array[currentfieldID].isHouse() && isHousefield) {
@@ -175,7 +180,7 @@ public class Movement implements MovementStrategy {
      * otherwise the previous fieldNr
      * 
      * @param fieldSize
-     *        Size of the Gamefield
+     *            Size of the Gamefield
      * @param currentfieldID
      * @param direction
      * @return
@@ -213,15 +218,16 @@ public class Movement implements MovementStrategy {
      * enemy figure
      * 
      * @param fieldnr
-     *        fieldnumber where figure to check stands
+     *            fieldnumber where figure to check stands
      * @return true if possible figure is found, otherwise false
      */
     public boolean anySwitchMove(int fieldnr) {
         boolean retval = false;
         FieldInterface[] array = gameField.getGameArray();
         int sourceFigOwner = array[fieldnr].getFigureOwnerNr();
-        if (array[fieldnr].isHouse())
+        if (array[fieldnr].isHouse()) {
             return retval;
+        }
         for (FieldInterface field : array) {
             if (field.getFigure() != null && !field.isBlocked() && field.getFigureOwnerNr() != sourceFigOwner) {
                 retval = true;
@@ -241,9 +247,9 @@ public class Movement implements MovementStrategy {
      * 
      * @param gamefield
      * @param moves
-     *        Map of moves you want to execute, while the key is the
-     *        startfieldnr and the value is the number of steps from this
-     *        startfieldnr
+     *            Map of moves you want to execute, while the key is the
+     *            startfieldnr and the value is the number of steps from this
+     *            startfieldnr
      * @return true if all moves could be executed, otherwise false
      */
     public boolean move(Map<Integer, Integer> moves) {
@@ -269,9 +275,9 @@ public class Movement implements MovementStrategy {
      * Checks if the Player p can do a move with the card 7
      * 
      * @param gamefield
-     *        the current gamefield played on
+     *            the current gamefield played on
      * @param p
-     *        the player that wants to move
+     *            the player that wants to move
      * @return true if the player can move with the card
      */
     public boolean anyValidMove(PlayerInterface p) {

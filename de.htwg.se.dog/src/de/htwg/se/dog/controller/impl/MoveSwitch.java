@@ -5,6 +5,12 @@ import de.htwg.se.dog.models.FigureInterface;
 import de.htwg.se.dog.models.GameFieldInterface;
 import de.htwg.se.dog.models.PlayerInterface;
 
+/**
+ * Movment strategy implementation , MoveSwitch
+ * 
+ * @author Michael, Christian
+ * 
+ */
 public class MoveSwitch extends Movement {
 
     public MoveSwitch(GameFieldInterface gameField) {
@@ -17,9 +23,9 @@ public class MoveSwitch extends Movement {
      * 
      * @param gamefield
      * @param steps
-     *        number of steps to field of Figure 2
+     *            number of steps to field of Figure 2
      * @param fromNr
-     *        fieldnumber of Figure 1
+     *            fieldnumber of Figure 1
      * @return true if switch was successful, otherwise false
      */
     @Override
@@ -57,9 +63,9 @@ public class MoveSwitch extends Movement {
      * checks if it is possible to switch 2 figures
      * 
      * @param steps
-     *        is targetfieldNr with which you want to switch
+     *            is targetfieldNr with which you want to switch
      * @param fromNr
-     *        is startfieldNr with which you want to switch
+     *            is startfieldNr with which you want to switch
      */
     @Override
     public boolean validMove(int steps, int fromNr) {

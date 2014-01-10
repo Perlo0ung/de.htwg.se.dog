@@ -7,14 +7,20 @@ import de.htwg.se.dog.models.CardStackInterface;
 import de.htwg.se.dog.models.GameFieldInterface;
 import de.htwg.se.dog.models.PlayerInterface;
 
+/**
+ * GoogleJuice Modules
+ * 
+ * @author Michael
+ * 
+ */
 public class DogModule extends AbstractModule {
 
-	@Override
-	protected void configure() {
-		bind(PlayerInterface.class).to(de.htwg.se.dog.models.impl.Player.class);
-		bind(CardDealerInterface.class).to(de.htwg.se.dog.controller.impl.CardDealer.class);
-		bind(CardStackInterface.class).to(de.htwg.se.dog.models.impl.CardStack.class);
-		bind(GameFieldInterface.class).to(de.htwg.se.dog.models.impl.GameField.class);
-	}
+    @Override
+    protected void configure() {
+        bind(PlayerInterface.class).to(de.htwg.se.dog.models.impl.Player.class);
+        bind(CardDealerInterface.class).to(de.htwg.se.dog.controller.impl.CardDealer.class);
+        bind(CardStackInterface.class).to(de.htwg.se.dog.models.impl.CardStack.class);
+        bind(GameFieldInterface.class).to(de.htwg.se.dog.models.impl.GameField.class);
+    }
 
 }

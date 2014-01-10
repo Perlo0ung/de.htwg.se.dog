@@ -9,12 +9,19 @@ import de.htwg.se.dog.controller.impl.GameTable;
 import de.htwg.se.dog.view.GraphicalUserInterface;
 import de.htwg.se.dog.view.TextUserInterface;
 
+/**
+ * Main class to start a new doggame
+ * 
+ * @author Michael,Christian
+ * 
+ */
 public final class Dog {
     private static Scanner scanner;
     private static GameTableInterface controller;
     private static Dog instance;
     private static TextUserInterface tui;
     private static GraphicalUserInterface gui;
+
     @Inject
     private Dog(int playernumber) {
         controller = new GameTable(playernumber);

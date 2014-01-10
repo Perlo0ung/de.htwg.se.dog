@@ -10,137 +10,176 @@ import de.htwg.se.dog.util.IObservable;
 
 public interface GameTableInterface extends IObservable {
 
-	/**
-	 * Returns the Gamefield currently playing on
-	 * 
-	 * @return
-	 */
-	GameFieldInterface getGameField();
+    /**
+     * Returns the Gamefield currently playing on
+     * 
+     * @return
+     */
+    GameFieldInterface getGameField();
 
-	/**
-	 * Returns weather the playerqueue is empty or not
-	 * 
-	 * @return true if empty otherwise false
-	 */
-	boolean playerQueueIsEmpty();
+    /**
+     * Returns weather the playerqueue is empty or not
+     * 
+     * @return true if empty otherwise false
+     */
+    boolean playerQueueIsEmpty();
 
-	/**
-	 * Sets the player that can play first
-	 * 
-	 * @param playernum
-	 */
-	void setStartingPlayer(int playernum);
+    /**
+     * Sets the player that can play first
+     * 
+     * @param playernum
+     */
+    void setStartingPlayer(int playernum);
 
-	/**
-	 * Refills the Playerqueue and deals cards to every player
-	 */
-	void dealCards();
+    /**
+     * Refills the Playerqueue and deals cards to every player
+     */
+    void dealCards();
 
-	/**
-	 * Starts a new round
-	 */
-	void newRound();
+    /**
+     * Starts a new round
+     */
+    void newRound();
 
-	/**
-	 * Choose the next Player
-	 */
-	void nextPlayer();
+    /**
+     * Choose the next Player
+     */
+    void nextPlayer();
 
-	/**
-	 * returns the current playing Player
-	 * 
-	 * @returns the currentPlayer
-	 */
-	PlayerInterface getCurrentPlayer();
+    /**
+     * returns the current playing Player
+     * 
+     * @returns the currentPlayer
+     */
+    PlayerInterface getCurrentPlayer();
 
-	/**
-	 * returns the playerid of current player
-	 * 
-	 * @return the playerid
-	 */
-	int getCurrentPlayerID();
+    /**
+     * returns the playerid of current player
+     * 
+     * @return the playerid
+     */
+    int getCurrentPlayerID();
 
-	/**
-	 * Returns true if the Player has a card that can be played
-	 * 
-	 * @param p
-	 *            the Player that wants to play
-	 * @return true if he can play, otherwise false
-	 */
-	boolean canPlay(PlayerInterface p);
+    /**
+     * Returns true if the Player has a card that can be played
+     * 
+     * @param p
+     *            the Player that wants to play
+     * @return true if he can play, otherwise false
+     */
+    boolean canPlay(PlayerInterface p);
 
-	/**
-	 * Returns a list containing the cards that can be played by Player p
-	 * 
-	 * @param p
-	 *            the player that wants to play
-	 * @return a list containing the cards that can be played
-	 */
-	List<CardInterface> possibleCards(PlayerInterface p);
+    /**
+     * Returns a list containing the cards that can be played by Player p
+     * 
+     * @param p
+     *            the player that wants to play
+     * @return a list containing the cards that can be played
+     */
+    List<CardInterface> possibleCards(PlayerInterface p);
 
-	/**
-	 * Tells if the specified Player has won the game
-	 * 
-	 * @param gamefield
-	 * @param player
-	 * @return true if player has won otherwise false
-	 */
-	boolean currentPlayerHaswon();
+    /**
+     * Tells if the specified Player has won the game
+     * 
+     * @param gamefield
+     * @param player
+     * @return true if player has won otherwise false
+     */
+    boolean currentPlayerHaswon();
 
-	/**
-	 * returns the GameField as a string
-	 * 
-	 * @return
-	 */
-	String getGameFieldString();
+    /**
+     * returns the GameField as a string
+     * 
+     * @return
+     */
+    String getGameFieldString();
 
-	/**
-	 * returns the Players cardlist as a String
-	 * 
-	 * @return
-	 */
-	String getPlayerHandString();
+    /**
+     * returns the Players cardlist as a String
+     * 
+     * @return
+     */
+    String getPlayerHandString();
 
-	/**
-	 * returns the Players as a String
-	 * 
-	 * @return
-	 */
-	String getPlayerString();
+    /**
+     * returns the Players as a String
+     * 
+     * @return
+     */
+    String getPlayerString();
 
-	/**
-	 * Tells if the Player has a Card with speciefied value
-	 * 
-	 * @param cardval
-	 * @return true if he has the card
-	 */
-	boolean playerHasCard(int cardval);
+    /**
+     * Tells if the Player has a Card with speciefied value
+     * 
+     * @param cardval
+     * @return true if he has the card
+     */
+    boolean playerHasCard(int cardval);
 
-	/**
-	 * Wraps the Movement
-	 * 
-	 */
-	boolean playCard(int cardNr, Map<Integer, Integer> moves);
+    /**
+     * Wraps the Movement
+     * 
+     */
+    boolean playCard(int cardNr, Map<Integer, Integer> moves);
 
-	/**
-	 * Returns the round playing in 
-	 * @return the round
-	 */
-	int getRound();
-	/**
-	 * delegates to movement, returns the tagetfield for a move
-	 * @param steps
-	 * @param startfieldnr
-	 * @return
-	 */
-	int getTargetField(int steps, int startfieldnr);
-	boolean fieldIsEmpty(int fieldnr);
+    /**
+     * Returns the round playing in
+     * 
+     * @return the round
+     */
+    int getRound();
 
-	int getFigureOwnerID(int fieldnr);
+    /**
+     * delegates to movement, returns the tagetfield for a move
+     * 
+     * @param steps
+     * @param startfieldnr
+     * @return
+     */
+    int getTargetField(int steps, int startfieldnr);
 
-	boolean moveFigureToStart(int card);
+    /**
+     * returns wheater the field is empty or not
+     * 
+     * @param fieldnr
+     *            the field to be empty
+     * @return true if empty otherwise false
+     */
+    boolean fieldIsEmpty(int fieldnr);
 
-	boolean isPlayerStartfieldBlocked();
+    /**
+     * Returns the owner for the figure on field given with fieldnr
+     * 
+     * @param fieldnr
+     *            the field
+     * @return
+     */
+    int getFigureOwnerID(int fieldnr);
 
-	boolean isValidMove(int cardNr, Map<Integer, Integer> moves);
+    /**
+     * move a figure to startpoint
+     * 
+     * @param card
+     *            the card that is used for the startmove
+     * @return true if movestart was possible
+     */
+    boolean moveFigureToStart(int card);
+
+    /**
+     * is the players startfield blocked?
+     * 
+     * @return true if blocked, else false
+     */
+    boolean isPlayerStartfieldBlocked();
+
+    /**
+     * checks if the moves in moves map are valid
+     * 
+     * @param cardNr
+     *            the card that was used
+     * @param moves
+     *            maps with moves
+     * @return true if the moves are valid
+     */
+    boolean isValidMove(int cardNr, Map<Integer, Integer> moves);
 }
