@@ -18,14 +18,6 @@ public class TextUserInterface implements IObserver {
     private static final int CARD4 = 4;
     private static final int CARD7 = 7;
     private static final int CARD11 = 11;
-    private static final int CARD12 = 12;
-    private static final int CARD10 = 10;
-    private static final int CARD9 = 9;
-    private static final int CARD8 = 8;
-    private static final int CARD6 = 6;
-    private static final int CARD5 = 5;
-    private static final int CARD3 = 3;
-    private static final int CARD2 = 2;
     private static final int CARD14 = 14;
     private static final int CARD13 = 13;
     private static final int NOTINITIALIZED = -99;
@@ -81,6 +73,20 @@ public class TextUserInterface implements IObserver {
                 } else {
                     out("Mache normalen Zug.");
                 }
+            }
+            //Joker auswahl
+            if (card == CARD14) {
+                String input;
+                try {
+                    out("Bitte KartenNummer der neuen Karte eingeben:");
+                    input = scanner.next();
+                    int targetFieldNr = Integer.valueOf(input);
+                    if (targetFieldNr <= 0 || targetFieldNr > 14)
+                        throw new NumberFormatException();
+                } catch (NumberFormatException e) {
+                    out("Bitte nur Zahlen im Bereich [1:13] eingeben.");
+                }
+                continue;
             }
             fieldnr = processFigureInput(scanner);
             if (fieldnr == QUIT)
@@ -171,18 +177,7 @@ public class TextUserInterface implements IObserver {
 
             }
             break;
-        case CARD14:
-
-            break;
-        case CARD2:
-        case CARD3:
-        case CARD5:
-        case CARD6:
-        case CARD8:
-        case CARD9:
-        case CARD10:
-        case CARD12:
-        case CARD13:
+        default:
             steps = cardNr;
             break;
         }
@@ -211,6 +206,7 @@ public class TextUserInterface implements IObserver {
             if (card > NOTINITIALIZED) {
                 break;
             }
+
         }
         return card;
     }
@@ -229,7 +225,6 @@ public class TextUserInterface implements IObserver {
         if (input.equals("retry")) {
 
             retval = RETRY;
-            //TODO: eigabe wiederrufen und neu auswählen
         }
         return retval;
     }
@@ -237,9 +232,10 @@ public class TextUserInterface implements IObserver {
     private int processFigureInput(Scanner scanner) {
         int fieldnr = NOTINITIALIZED;
         while (true) {
-            out("Bitte Feldnummer der zu laufenden Figur auswählen: ");
-            String input = scanner.next();
+            String input = null;
             try {
+                out("Bitte Feldnummer der zu laufenden Figur auswählen: ");
+                input = scanner.next();
                 Integer zahl = Integer.valueOf(input);
                 if (controller.fieldIsEmpty(zahl)) {
                     out(String.format("Feld %d ist leer!", zahl));
