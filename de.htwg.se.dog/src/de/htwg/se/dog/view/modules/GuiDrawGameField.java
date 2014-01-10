@@ -283,42 +283,43 @@ public class GuiDrawGameField extends JPanel implements MouseListener {
 
     @Override
     public void mouseExited(MouseEvent arg0) {}
-	/**
-	 * Highlight a gamefield when we klick on it
-	 */
-	@Override
-	public void mousePressed(MouseEvent arg0) {
-		int current = controller.getCurrentPlayerID();
-		for (Entry<Integer, Arc2D.Double> a : gMap.entrySet()) {
-			if (a.getValue().contains(arg0.getX(), arg0.getY())) {
-				Integer feldId = a.getKey();
-				if (fromto.contains(feldId)) {
-					if (fromto.indexOf(feldId) == 0) {
-						fromto.clear();
-					} else {
-						fromto.remove(feldId);
-					}
-					repaint();
-					break;
-				}
-				if (array[feldId].getFigureOwnerNr() == current && fromto.size() < 1) {
-						fromto.add(0, feldId);
-				}
-				// second highlighter for switch move
-				else if (fromto.size() > 0 && second
-						&& array[feldId].getFigure() != null
-						&& (array[feldId].getFigureOwnerNr() == current || !array[feldId]
-								.isBlocked())) {
-					fromto.add(1, feldId);
-					if (fromto.size() == 3) {
-						fromto.remove(2);
-					}
-				}
-				repaint();
-				break;
-			}
-		}
-	}
+
+    /**
+     * Highlight a gamefield when we klick on it
+     */
+    @Override
+    public void mousePressed(MouseEvent arg0) {
+        int current = controller.getCurrentPlayerID();
+        for (Entry<Integer, Arc2D.Double> a : gMap.entrySet()) {
+            if (a.getValue().contains(arg0.getX(), arg0.getY())) {
+                Integer feldId = a.getKey();
+                if (fromto.contains(feldId)) {
+                    if (fromto.indexOf(feldId) == 0) {
+                        fromto.clear();
+                    } else {
+                        fromto.remove(feldId);
+                    }
+                    repaint();
+                    break;
+                }
+                if (fromto.size() == 1 && !second) {
+                    fromto.remove(0);
+                }
+                if (array[feldId].getFigureOwnerNr() == current && fromto.size() < 1) {
+                    fromto.add(0, feldId);
+                }
+                // second highlighter for switch move
+                else if (fromto.size() > 0 && second && array[feldId].getFigure() != null && (array[feldId].getFigureOwnerNr() == current || !array[feldId].isBlocked())) {
+                    fromto.add(1, feldId);
+                    if (fromto.size() == 3) {
+                        fromto.remove(2);
+                    }
+                }
+                repaint();
+                break;
+            }
+        }
+    }
 
     @Override
     public void mouseReleased(MouseEvent arg0) {

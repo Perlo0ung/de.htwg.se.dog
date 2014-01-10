@@ -208,8 +208,7 @@ public class GraphicalUserInterface extends JFrame implements IObserver {
                 int card = getValueForCardIcon();
                 if ((card == CARD1 || card == CARD13 || card == CARD14) && !controller.isPlayerStartfieldBlocked()) {
                     int quit = JOptionPane.showConfirmDialog(contentPane, "Spielfigur aufs Spielfeld setzen?", "Rausgehen?", JOptionPane.YES_NO_OPTION);
-                    if (quit == JOptionPane.YES_OPTION) {
-                        controller.moveFigureToStart(card);
+                    if (quit == JOptionPane.YES_OPTION && controller.moveFigureToStart(card)) {
                         controller.nextPlayer();
                         controller.notifyObservers();
                     }
@@ -448,7 +447,7 @@ public class GraphicalUserInterface extends JFrame implements IObserver {
         spinner.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent arg0) {
-                spinnerLabel.setText(String.format(" %s", Card.CARDNAMES[(Integer) spinner.getValue()]));
+                spinnerLabel.setText(String.format(" %s", Card.CARDNAMES[(Integer) spinner.getValue() - 1]));
             }
         });
         input.add(spinner);
@@ -465,11 +464,12 @@ public class GraphicalUserInterface extends JFrame implements IObserver {
             if (!controller.canPlay(current)) {
                 current.removeCard(newCard);
                 current.addCard(oldCard);
+                cardOut(cards[current.getCardList().lastIndexOf(oldCard)]);
             } else {
-                //repaint the labels and highlight the card
-                repaintCardLabels();
                 cardOut(cards[current.getCardList().lastIndexOf(newCard)]);
             }
+            //repaint the labels and highlight the card
+            repaintCardLabels();
         }
     }
 }
