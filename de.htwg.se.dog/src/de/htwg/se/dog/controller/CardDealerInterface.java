@@ -3,6 +3,12 @@ package de.htwg.se.dog.controller;
 import de.htwg.se.dog.models.CardStackInterface;
 import de.htwg.se.dog.models.PlayerInterface;
 
+/**
+ * Interface for the cardealer
+ * 
+ * @author Michael,Christian
+ * 
+ */
 public interface CardDealerInterface {
     /**
      * 

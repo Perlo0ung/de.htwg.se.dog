@@ -8,6 +8,12 @@ import de.htwg.se.dog.models.GameFieldInterface;
 import de.htwg.se.dog.models.PlayerInterface;
 import de.htwg.se.dog.util.IObservable;
 
+/**
+ * Interface for the GameController
+ * 
+ * @author Michael,Christian
+ * 
+ */
 public interface GameTableInterface extends IObservable {
 
     /**

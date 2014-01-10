@@ -7,6 +7,12 @@ import de.htwg.se.dog.models.CardStackInterface;
 import de.htwg.se.dog.models.PlayerInterface;
 import de.htwg.se.dog.models.impl.CardStack;
 
+/**
+ * Implementation of carddealerinterface
+ * 
+ * @author Michael, Christian
+ * 
+ */
 public class CardDealer implements CardDealerInterface {
     private CardStackInterface stackObj;
     private static final int MAXCARDS = 6;
@@ -77,13 +83,14 @@ public class CardDealer implements CardDealerInterface {
     public CardStackInterface getObject() {
         return stackObj;
     }
-    
+
     /**
-     * fucntion to calculate the roundnumber for 
-     * knowing how much cards should be dealt
+     * fucntion to calculate the roundnumber for knowing how much cards should
+     * be dealt
+     * 
      * @return
      */
-    private int  roundNumber() {
-    	return round % MAXROUND;
+    private int roundNumber() {
+        return round % MAXROUND;
     }
 }

@@ -12,7 +12,11 @@ import de.htwg.se.dog.models.PlayerInterface;
  * 
  */
 public class MoveSwitch extends Movement {
-
+    /**
+     * konstruktor that sets the gamefield on which we move
+     * 
+     * @param gameField
+     */
     public MoveSwitch(GameFieldInterface gameField) {
         this.gameField = gameField;
     }
