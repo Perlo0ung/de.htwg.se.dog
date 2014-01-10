@@ -326,12 +326,18 @@ public class GuiDrawGameField extends JPanel implements MouseListener {
             fromto.add(0, feldId);
         }
         // second highlighter for switch move
-        else if (fromto.size() > 0 && second && array[feldId].getFigure() != null && (array[feldId].getFigureOwnerNr() == current || !array[feldId].isBlocked())) {
+        else if (secondHighlighterAllowed(current, feldId)) {
             fromto.add(1, feldId);
             if (fromto.size() == THREE) {
                 fromto.remove(2);
             }
         }
+    }
+
+    private boolean secondHighlighterAllowed(int current, Integer feldId) {
+        boolean ok = second && array[feldId].getFigure() != null;
+        boolean ok2 = array[feldId].getFigureOwnerNr() == current || !array[feldId].isBlocked();
+        return (fromto.size() > 0 && ok && ok2);
     }
 
     @Override
