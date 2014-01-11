@@ -393,7 +393,7 @@ public class GraphicalUserInterface extends JFrame implements IObserver {
                     move.put(from, to);
                 }
             } else if (cardval == CARD14) {
-                jokerSpinnerDialog(current, cardval);
+                jokerSpinnerDialog(current);
             } else {
                 move.put(from, cardval);
             }
@@ -460,7 +460,7 @@ public class GraphicalUserInterface extends JFrame implements IObserver {
      * @param cardval
      */
     @Inject
-    private void jokerSpinnerDialog(final PlayerInterface current, int cardval) {
+    private void jokerSpinnerDialog(final PlayerInterface current) {
         JPanel input = new JPanel();
         SpinnerNumberModel sModel = new SpinnerNumberModel(1, 1, THIRTEEN, 1);
         final JSpinner spinner = new JSpinner(sModel);
