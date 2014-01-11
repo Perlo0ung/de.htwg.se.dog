@@ -120,8 +120,6 @@ public class Movement implements MovementStrategy {
         int currentfieldID = EMPTYFIELD;
         boolean isHousefield = false;
         boolean illegalInHouse = false;
-        // TODO Monitor whether if-Statment is necessary or not
-        //if (!fieldEmpty(array[startfieldnr])) {
         isHousefield = array[startfieldnr].isHouse();
         int playerNr = array[startfieldnr].getFigureOwnerNr();
         currentfieldID = nextField(startfieldnr, steps);
@@ -131,12 +129,7 @@ public class Movement implements MovementStrategy {
             currentfieldID = nextfieldID;
             nextfieldID = nextField(currentfieldID, steps);
             int currentFieldOwner = array[currentfieldID].getOwner();
-            //Check if field is house of another player
-            if (array[currentfieldID].isHouse() && array[currentfieldID].getOwner() != playerNr) {
-                continue;
-            }
-            //Check if own house and move backwards
-            if (array[currentfieldID].isHouse() && array[currentfieldID].getOwner() == playerNr && steps < 0) {
+            if (skipCurrentField(array, steps, currentfieldID, playerNr)) {
                 continue;
             }
             // Check if field is Blocked
@@ -147,25 +140,44 @@ public class Movement implements MovementStrategy {
             illegalInHouse = illegalInHouseCheck(array, currentfieldID, illegalInHouse, playerNr);
             absSteps = adjustSteps(steps, absSteps, array, playerNr, nextfieldID, currentFieldOwner);
         }
-        // }
-        if (currentfieldID >= 0 && !array[currentfieldID].isHouse() && isHousefield) {
-            currentfieldID = OVERHOUSE;
-        }
+        currentfieldID = movedOverHouse(array, currentfieldID, isHousefield);
         return currentfieldID;
     }
 
+    private int movedOverHouse(FieldInterface[] array, int currentfieldID, boolean isHousefield) {
+        int retVal = currentfieldID;
+        if (currentfieldID >= 0 && !array[currentfieldID].isHouse() && isHousefield) {
+            retVal = OVERHOUSE;
+        }
+        return retVal;
+    }
+
+    private boolean skipCurrentField(FieldInterface[] array, int steps, int currentfieldID, int playerNr) {
+        boolean continVal = false;
+        //Check if field is house of another player
+        if (array[currentfieldID].isHouse() && array[currentfieldID].getOwner() != playerNr) {
+            continVal = true;
+        }
+        //Check if own house and move backwards
+        if (array[currentfieldID].isHouse() && array[currentfieldID].getOwner() == playerNr && steps < 0) {
+            continVal = true;
+        }
+        return continVal;
+    }
+
     private boolean illegalInHouseCheck(FieldInterface[] array, int currentfieldID, boolean illegalInHouse, int playerNr) {
+        boolean retVal = illegalInHouse;
         //Check if field in own house is blocked and you have to move over whole house
         if (!illegalInHouse
                 && array[currentfieldID].getOwner() == playerNr
                 && array[currentfieldID].isHouse()
                 && array[currentfieldID].isBlocked()) {
-            illegalInHouse = true;
+            retVal = true;
         }
         if (illegalInHouse && !array[currentfieldID].isHouse()) {
-            illegalInHouse = false;
+            retVal = false;
         }
-        return illegalInHouse;
+        return retVal;
     }
 
     /**
