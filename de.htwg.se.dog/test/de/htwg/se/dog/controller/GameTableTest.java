@@ -128,7 +128,7 @@ public class GameTableTest {
     public void testPlayJoker() {
         array[0].putFigure(table.getCurrentPlayer().removeFigure());
         array[1].putFigure(table.getCurrentPlayer().removeFigure());
-        assertEquals(table.playJoker(TWO), new Card(TWO));
+        assertEquals(table.playJoker(JOKER), new Card(JOKER));
         table.getCurrentPlayer().clearCardList();
         table.getCurrentPlayer().addCard(new Card(JOKER));
         table.playJoker(TWO);

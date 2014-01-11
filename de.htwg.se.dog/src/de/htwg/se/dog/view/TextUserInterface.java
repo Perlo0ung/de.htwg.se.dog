@@ -62,8 +62,7 @@ public class TextUserInterface implements IObserver {
      * @return true, if game should continue otherwise false
      */
     public boolean processTurn(Scanner scanner) {
-        boolean retVal = true;
-        boolean noBreakOut = true;
+
         getNextPlayer();
         int fieldnr = -1;
         int steps = 0;
@@ -72,12 +71,9 @@ public class TextUserInterface implements IObserver {
             out("Mögliche Sonderbefehle: quit(beendet das Spiel)\n");
             card = processCardInput(scanner);
             if (card == QUIT) {
-                noBreakOut = false;
-                retVal = false;
-                break;
+                return false;
             } else if (card == SKIP) {
-                noBreakOut = false;
-                break;
+                return true;
             }
             boolean getOutCard = (card == CARDKING || card == 1 || card == CARDJOKER);
             if (getOutCard && !controller.isPlayerStartfieldBlocked() && putOutnewFigure(scanner, card)) {
@@ -99,10 +95,7 @@ public class TextUserInterface implements IObserver {
             }
             out("Das ist kein gültiger Zug, wiederhole Zugauswahl.");
         }
-        if (noBreakOut) {
-            retVal = !playerHasWonCheck();
-        }
-        return retVal;
+        return !playerHasWonCheck();
     }
 
     private void getNextPlayer() {
