@@ -4,7 +4,6 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 import java.util.Queue;
 
 import com.google.inject.Inject;
@@ -46,9 +45,9 @@ public class GameTable extends Observable implements GameTableInterface {
      * Constructor to generate a new gametable
      * 
      * @param playerCount
-     *            number of players
+     *        number of players
      * @param figCount
-     *            number of figures per player
+     *        number of figures per player
      */
     @Inject
     public GameTable(int playerCount) {
@@ -137,7 +136,7 @@ public class GameTable extends Observable implements GameTableInterface {
      * Returns true if the Player has a card that can be played
      * 
      * @param p
-     *            the Player that wants to play
+     *        the Player that wants to play
      * @return true if he can play, otherwise false
      */
     @Override
@@ -155,8 +154,8 @@ public class GameTable extends Observable implements GameTableInterface {
     @Override
     public boolean playerHasCard(int cardval) {
         boolean retval = false;
-        if(currentPlayer.getCardfromCardNr(cardval) != null) {
-                retval = true;
+        if (currentPlayer.getCardfromCardNr(cardval) != null) {
+            retval = true;
         }
         return retval;
     }
@@ -165,7 +164,7 @@ public class GameTable extends Observable implements GameTableInterface {
      * Returns a list containing the cards that can be played by Player p
      * 
      * @param p
-     *            the player that wants to play
+     *        the player that wants to play
      * @return a list containing the cards that can be played
      */
     @Override
@@ -248,18 +247,10 @@ public class GameTable extends Observable implements GameTableInterface {
     }
 
     @Override
-    public boolean playCard(int cardNr, Map<Integer, Integer> moves) {
+    public boolean playCard(int cardNr, int steps, int startfieldNr) {
         boolean retval = false;
-
-        if (cardNr != 7) {
-            movement.setMoveStrategie(cardNr);
-            //TODO For-Schleife wegmachen
-            for (Integer fieldNr : moves.keySet()) {
-                retval = movement.move(moves.get(fieldNr), fieldNr);
-            }
-        } else {
-            retval = movement.move(moves);
-        }
+        movement.setMoveStrategie(cardNr);
+        retval = movement.move(steps, startfieldNr);
         if (retval) {
             currentPlayer.removeCard(currentPlayer.getCardfromCardNr(cardNr));
         }
@@ -267,18 +258,12 @@ public class GameTable extends Observable implements GameTableInterface {
     }
 
     @Override
-    public boolean isValidMove(int cardNr, Map<Integer, Integer> moves) {
+    public boolean isValidMove(int cardNr, int steps, int startfieldNr) {
         boolean retval = false;
 
-        if (moves.size() == 1) {
-            movement.setMoveStrategie(cardNr);
-            //TODO For-Schleife wegmachen
-            for (Integer fieldNr : moves.keySet()) {
-                retval = movement.validMove(moves.get(fieldNr), fieldNr);
-            }
-        }
+        movement.setMoveStrategie(cardNr);
+        retval = movement.validMove(steps, startfieldNr);
 
-        //TODO implement check if sevenmove is possible
         return retval;
     }
 
@@ -311,7 +296,7 @@ public class GameTable extends Observable implements GameTableInterface {
      * sends the message msg to all observers
      * 
      * @param msg
-     *            the message
+     *        the message
      */
     private void sendObserverMessage(String msg) {
         notifyObservers(new IOMsgEvent(msg));
@@ -341,8 +326,8 @@ public class GameTable extends Observable implements GameTableInterface {
         return retCard;
     }
 
-	@Override
-	public List<PlayerInterface> getPlayerList() {
-		return players;
-	}
+    @Override
+    public List<PlayerInterface> getPlayerList() {
+        return players;
+    }
 }

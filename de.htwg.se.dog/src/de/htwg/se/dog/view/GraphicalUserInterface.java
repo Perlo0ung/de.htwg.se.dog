@@ -18,8 +18,6 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -331,7 +329,7 @@ public class GraphicalUserInterface extends JFrame implements IObserver {
      * highlighted/dehighlighted
      * 
      * @param c
-     *            the component that will be highlighted
+     *        the component that will be highlighted
      */
     private void cardOut(Component c) {
         Boolean constraint = layout.getConstraints(c);
@@ -381,24 +379,24 @@ public class GraphicalUserInterface extends JFrame implements IObserver {
         final PlayerInterface current = controller.getCurrentPlayer();
         Integer from = gameField.getFromFieldID();
         Integer to = gameField.getToFieldID();
+        int steps = 0;
         int cardval = getValueForCardIcon();
         if (from != null && cardval != -1) {
-            Map<Integer, Integer> move = new HashMap<Integer, Integer>();
             if (cardval == CARD1) {
-                cardAceDialog(from, move);
+                steps = cardAceDialog();
             } else if (cardval == CARD4) {
-                card4Dialog(from, cardval, move);
+                steps = card4Dialog(cardval);
             } else if (cardval == CARD11) {
                 if (to != null) {
-                    move.put(from, to);
+                    steps = to;
                 }
             } else if (cardval == CARD14) {
                 jokerSpinnerDialog(current);
             } else {
-                move.put(from, cardval);
+                steps = cardval;
             }
-            if (controller.isValidMove(cardval, move)) {
-                controller.playCard(cardval, move);
+            if (controller.isValidMove(cardval, steps, from)) {
+                controller.playCard(cardval, steps, from);
                 winnerDialog();
                 controller.nextPlayer();
                 controller.notifyObservers();
@@ -426,15 +424,15 @@ public class GraphicalUserInterface extends JFrame implements IObserver {
      * @param from
      * @param move
      */
-    private void cardAceDialog(Integer from, Map<Integer, Integer> move) {
+    private int cardAceDialog() {
+        int retVal = CARD11;
         Object[] options = { "1", "11" };
         int decision = JOptionPane.showOptionDialog(this, "Wieviel möchtest du laufen?", "Laufwert?", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, icon, options, options[1]);
 
         if (decision == JOptionPane.YES_OPTION) {
-            move.put(from, CARD1);
-        } else {
-            move.put(from, CARD11);
+            retVal = CARD1;
         }
+        return retVal;
     }
 
     /**
@@ -444,15 +442,15 @@ public class GraphicalUserInterface extends JFrame implements IObserver {
      * @param cardval
      * @param move
      */
-    private void card4Dialog(Integer from, int cardval, Map<Integer, Integer> move) {
+    private int card4Dialog(int cardval) {
+        int retVal = -cardval;
         Object[] options = { "Vorwärts", "Rückwärts" };
         int decision = JOptionPane.showOptionDialog(this, "In welche Richtung möchtest du laufen?", "Welche Richtung?", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, icon, options, options[1]);
 
         if (decision == JOptionPane.YES_OPTION) {
-            move.put(from, cardval);
-        } else {
-            move.put(from, -cardval);
+            retVal = cardval;
         }
+        return retVal;
     }
 
     /**

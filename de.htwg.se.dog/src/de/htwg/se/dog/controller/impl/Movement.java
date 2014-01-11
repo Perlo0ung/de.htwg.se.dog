@@ -2,8 +2,6 @@ package de.htwg.se.dog.controller.impl;
 
 import java.util.Collections;
 import java.util.LinkedList;
-import java.util.Map;
-import java.util.Map.Entry;
 
 import de.htwg.se.dog.controller.MovementStrategy;
 import de.htwg.se.dog.models.FieldInterface;
@@ -59,10 +57,13 @@ public class Movement implements MovementStrategy {
      * @param card
      */
     public void setMoveStrategie(int strategieNr) {
-        if (strategieNr != ELEVEN) {
-            strategie = new MoveNormal(gameField);
-        } else {
+        //TODO Hash-Map erstellen
+        if (strategieNr == VALUEOFCARD7) {
+            strategie = new MoveSeven(gameField);
+        } else if (strategieNr == ELEVEN) {
             strategie = new MoveSwitch(gameField);
+        } else {
+            strategie = new MoveNormal(gameField);
         }
     }
 
@@ -203,8 +204,10 @@ public class Movement implements MovementStrategy {
         }
         return field;
     }
+
     /**
      * Checks if the player given by param player can perform a starting move
+     * 
      * @param player
      * @return
      */
@@ -251,52 +254,6 @@ public class Movement implements MovementStrategy {
     /* ------------------------------------------------------------------------- */
     /* Move Seven Methodes */
     /* ------------------------------------------------------------------------- */
-
-    /**
-     * Move-Method which executes every move given in "moves" or non if one move
-     * is not possible
-     * 
-     * @param gamefield
-     * @param moves
-     *        Map of moves you want to execute, while the key is the
-     *        startfieldnr and the value is the number of steps from this
-     *        startfieldnr
-     * @return true if all moves could be executed, otherwise false
-     */
-    public boolean move(Map<Integer, Integer> moves) {
-        boolean retval = true;
-        this.setMoveStrategie(VALUEOFCARD7);
-        /* Check if all moves are possible */
-        for (Entry<Integer, Integer> field : moves.entrySet()) {
-            if (!this.validMove(field.getValue(), field.getKey())) {
-                retval = false;
-                break;
-            }
-        }
-        /* Move -------------- */
-        for (Entry<Integer, Integer> field : moves.entrySet()) {
-            int startField = field.getKey();
-            int targetField = getTargetfield(field.getValue(), field.getKey());
-            this.move(field.getValue(), startField);
-            int stepsTaken = targetField - startField;
-            if (stepsTaken < 0) {
-                stepsTaken += gameField.getFieldSize() + 1;
-            }
-            FieldInterface[] array = gameField.getGameArray();
-            int currentKickField = startField;
-            for (int i = 0; i < stepsTaken - 1; i++) {
-                if (!array[currentKickField].isHouse()) {
-                    kickPlayer(array, currentKickField);
-                }
-                currentKickField++;
-                if (currentKickField >= gameField.getFieldSize()) {
-                    currentKickField -= gameField.getFieldSize();
-                }
-            }
-
-        }
-        return retval;
-    }
 
     /**
      * Checks if the Player p can do a move with the card 7

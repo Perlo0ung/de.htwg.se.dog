@@ -1,7 +1,6 @@
 package de.htwg.se.dog.controller;
 
 import java.util.List;
-import java.util.Map;
 
 import de.htwg.se.dog.models.CardInterface;
 import de.htwg.se.dog.models.GameFieldInterface;
@@ -16,11 +15,13 @@ import de.htwg.se.dog.util.IObservable;
  */
 public interface GameTableInterface extends IObservable {
 
-	/**
-	 * Returns the playerlist
-	 * @return
-	 */
-	List<PlayerInterface> getPlayerList();
+    /**
+     * Returns the playerlist
+     * 
+     * @return
+     */
+    List<PlayerInterface> getPlayerList();
+
     /**
      * Returns the Gamefield currently playing on
      * 
@@ -130,8 +131,12 @@ public interface GameTableInterface extends IObservable {
     /**
      * Wraps the Movement
      * 
+     * @param cardNr
+     * @param steps
+     * @param startFieldNr
+     * @return true, if move was possible, otherwise false
      */
-    boolean playCard(int cardNr, Map<Integer, Integer> moves);
+    boolean playCard(int cardNr, int steps, int startFieldNr);
 
     /**
      * Returns the round playing in
@@ -192,7 +197,7 @@ public interface GameTableInterface extends IObservable {
      *        maps with moves
      * @return true if the moves are valid
      */
-    boolean isValidMove(int cardNr, Map<Integer, Integer> moves);
+    boolean isValidMove(int cardNr, int steps, int startfieldNr);
 
     /**
      * Switches Jokercard with a Card with cardVal

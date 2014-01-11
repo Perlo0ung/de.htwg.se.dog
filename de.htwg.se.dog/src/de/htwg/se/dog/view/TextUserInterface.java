@@ -1,7 +1,5 @@
 package de.htwg.se.dog.view;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Scanner;
 
 import org.apache.logging.log4j.LogManager;
@@ -50,12 +48,10 @@ public class TextUserInterface implements IObserver {
         controller.notifyObservers();
         int fieldnr = -1;
         int steps = 0;
-        Map<Integer, Integer> moves = null;
         int card = NOTINITIALIZED;
         while (true) {
             out("Mögliche Sonderbefehle: retry(Zugauswahl von vorne), quit(beendet das Spiel)\n");
             card = processCardInput(scanner);
-            moves = new HashMap<Integer, Integer>();
             if (card == QUIT)
                 return false;
             if (card == SKIP)
@@ -80,16 +76,15 @@ public class TextUserInterface implements IObserver {
                 continue;
             }
             steps = processSteps(scanner, card);
-            moves.put(fieldnr, steps);
             // check if valid move, if not, redo turn decision
-            if (!controller.isValidMove(card, moves)) {
+            if (!controller.isValidMove(card, steps, fieldnr)) {
                 out("Das ist kein gültiger Zug, wiederhole Zugauswahl.");
                 continue;
             }
             break;
         }
         out("mache Zug :)\n\n\n\n\n\n");
-        controller.playCard(card, moves);
+        controller.playCard(card, steps, fieldnr);
         if (playerHasWon())
             return false;
         return true;

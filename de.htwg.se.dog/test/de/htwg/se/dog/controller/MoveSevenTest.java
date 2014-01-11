@@ -5,9 +5,6 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.junit.Before;
 import org.junit.Test;
 
@@ -50,21 +47,20 @@ public class MoveSevenTest {
     public void testMoveFigure() {
         // Move Figure from empty Field
         array[2].putFigure(tp1.removeFigure());
+        array[3].putFigure(tp2.removeFigure());
         FigureInterface tempFig = array[2].getFigure();
-        Map<Integer, Integer> moves = new HashMap<Integer, Integer>();
-        moves.put(2, 2);
-        movement.move(moves);
+        movement.move(2, 2);
         // Startfield is empty
         assertNull(array[2].getFigure());
+        //Figure on the Way was kicked
+        assertNull(array[3].getFigure());
         // Figure on targetfield == Figure which moved
         assertEquals(tempFig, array[6].getFigure());
 
-        // Move Figure over blocked field-------------------------
+        //Try to Move Figure over blocked field-------------------------
         array[3].putFigure(tp1.removeFigure());
-        moves = new HashMap<Integer, Integer>();
-        moves.put(1, 2);
         // Move over Blocked field is not possible
-        assertFalse(movement.move(moves));
+        assertFalse(movement.move(1, 2));
     }
 
     @Test
