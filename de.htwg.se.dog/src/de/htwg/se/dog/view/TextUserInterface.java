@@ -11,6 +11,12 @@ import de.htwg.se.dog.models.impl.Card;
 import de.htwg.se.dog.util.IOEvent;
 import de.htwg.se.dog.util.IObserver;
 
+/**
+ * Text User Interface to play the game
+ * 
+ * @author Michael, Christian
+ * 
+ */
 public class TextUserInterface implements IObserver {
 
     private static final int CARD4 = 4;
@@ -56,12 +62,7 @@ public class TextUserInterface implements IObserver {
      * @return true, if game should continue otherwise false
      */
     public boolean processTurn(Scanner scanner) {
-        while (controller.playerQueueIsEmpty()) {
-            out("Kein Spieler hat mehr Karten, beginne neue Runde.");
-            controller.newRound();
-        }
-        controller.nextPlayer();
-        controller.notifyObservers();
+        getNextPlayer();
         int fieldnr = -1;
         int steps = 0;
         int card = NOTINITIALIZED;
@@ -75,10 +76,9 @@ public class TextUserInterface implements IObserver {
             } else if (card == RETRY) {
                 continue;
             }
-            if ((card == CARD13 || card == 1 || card == CARD14) && !controller.isPlayerStartfieldBlocked()) {
-                if (putOutnewFigure(scanner, card)) {
-                    return true;
-                }
+            boolean getOutCard = (card == CARD13 || card == 1 || card == CARD14);
+            if (getOutCard && !controller.isPlayerStartfieldBlocked() && putOutnewFigure(scanner, card)) {
+                return true;
             }
             if (card == CARD14) {
                 jokerChoose(scanner);
@@ -87,11 +87,9 @@ public class TextUserInterface implements IObserver {
             fieldnr = processFigureInput(scanner);
             if (fieldnr == QUIT) {
                 return false;
-            }
-            if (fieldnr == SKIP) {
+            } else if (fieldnr == SKIP) {
                 return true;
-            }
-            if (fieldnr == RETRY) {
+            } else if (fieldnr == RETRY) {
                 continue;
             }
             steps = processSteps(scanner, card);
@@ -102,15 +100,24 @@ public class TextUserInterface implements IObserver {
             }
             break;
         }
-        out("mache Zug :)\n\n\n\n\n\n");
+        out("führe Zug aus :)\n\n\n\n\n\n");
         controller.playCard(card, steps, fieldnr);
-        if (playerHasWon()) {
+        if (playerHasWonCheck()) {
             return false;
         }
         return true;
     }
 
-    private boolean playerHasWon() {
+    private void getNextPlayer() {
+        while (controller.playerQueueIsEmpty()) {
+            out("Kein Spieler hat mehr Karten, beginne neue Runde.");
+            controller.newRound();
+        }
+        controller.nextPlayer();
+        controller.notifyObservers();
+    }
+
+    private boolean playerHasWonCheck() {
         boolean retVal = false;
         if (controller.currentPlayerHaswon()) {
             out(String.format(
@@ -128,7 +135,7 @@ public class TextUserInterface implements IObserver {
             out("Bitte KartenNummer der neuen Karte eingeben:");
             input = scanner.next();
             cardNr = Integer.valueOf(input);
-            if (cardNr <= 0 || cardNr > 14) {
+            if (cardNr <= 0 || cardNr > CARD14) {
                 throw new NumberFormatException();
             }
         } catch (NumberFormatException e) {
@@ -150,68 +157,84 @@ public class TextUserInterface implements IObserver {
 
     private int processSteps(Scanner scanner, int cardNr) {
         int steps = 0;
-        boolean wertOkay = false;
         switch (cardNr) {
         case 1:
-            while (!wertOkay) {
-                out("Wollen Sie 11 oder 1 laufen? Bitte Zahl eingeben:");
-                String tmp = scanner.next();
-                if (tmp.equalsIgnoreCase("1") || tmp.equalsIgnoreCase("11")) {
-                    steps = Integer.valueOf(tmp);
-                    wertOkay = true;
-                } else {
-                    out("Bitte nur 1 oder 11 eingeben.");
-                }
-            }
+            steps = cardAceChoose(scanner, steps);
             break;
         case CARD4:
-            while (!wertOkay) {
-                out("Wollen sie Vorwärts(V) oder Rückwärts(R) laufen?");
-                String tmp = scanner.next();
-                if (tmp.equalsIgnoreCase("V")) {
-                    steps = CARD4;
-                    wertOkay = true;
-                } else if (tmp.equalsIgnoreCase("R")) {
-                    steps = -CARD4;
-                    wertOkay = true;
-                } else {
-                    out("Bitte nur R oder V eingeben.");
-                }
-            }
+            steps = cardFourChoose(scanner, steps);
             break;
         case CARD7:
             steps = CARD7;
             break;
         case CARD11:
-            int targetFieldNr = -1;
-            while (true) {
-                String input;
-                try {
-                    out("Bitte Feldnummer der mit ihrer zu tauschenden Figur eingeben:");
-                    input = scanner.next();
-                    targetFieldNr = Integer.valueOf(input);
-                } catch (NumberFormatException e) {
-                    out("Bitte nur Zahlen eingeben.");
-                }
-                // check if targetfield is on gamefield
-                if (targetFieldNr < 0 && targetFieldNr >= controller.getGameField().getFieldSize()) {
-                    out("Eingegebenes Feld gibt es nicht auf dem Spielbrett.");
-                    continue;
-                }
-                // check if on targetfield is a switchable figure
-                FieldInterface targetField = controller.getGameField().getGameArray()[targetFieldNr];
-                if (targetField.getFigure() != null && !targetField.isBlocked()) {
-                    steps = targetFieldNr;
-                    break;
-                } else {
-                    out("Auf dem Feld steht keine Figur oder sie ist blocked");
-                }
-
-            }
+            steps = cardJackChoose(scanner, steps);
             break;
         default:
             steps = cardNr;
             break;
+        }
+        return steps;
+    }
+
+    private int cardJackChoose(Scanner scanner, int steps) {
+        int targetFieldNr = -1;
+        while (true) {
+            String input;
+            try {
+                out("Bitte Feldnummer der mit ihrer zu tauschenden Figur eingeben:");
+                input = scanner.next();
+                targetFieldNr = Integer.valueOf(input);
+            } catch (NumberFormatException e) {
+                out("Bitte nur Zahlen eingeben.");
+            }
+            // check if targetfield is on gamefield
+            if (targetFieldNr < 0 && targetFieldNr >= controller.getGameField().getFieldSize()) {
+                out("Eingegebenes Feld gibt es nicht auf dem Spielbrett.");
+                continue;
+            }
+            // check if on targetfield is a switchable figure
+            FieldInterface targetField = controller.getGameField().getGameArray()[targetFieldNr];
+            if (targetField.getFigure() != null && !targetField.isBlocked()) {
+                steps = targetFieldNr;
+                break;
+            } else {
+                out("Auf dem Feld steht keine Figur oder sie ist blocked");
+            }
+
+        }
+        return steps;
+    }
+
+    private int cardAceChoose(Scanner scanner, int steps) {
+        boolean aceOkay = false;
+        while (!aceOkay) {
+            out("Wollen Sie 11 oder 1 laufen? Bitte Zahl eingeben:");
+            String tmp = scanner.next();
+            if (tmp.equalsIgnoreCase("1") || tmp.equalsIgnoreCase("11")) {
+                steps = Integer.valueOf(tmp);
+                aceOkay = true;
+            } else {
+                out("Bitte nur 1 oder 11 eingeben.");
+            }
+        }
+        return steps;
+    }
+
+    private int cardFourChoose(Scanner scanner, int steps) {
+        boolean fourOkay = false;
+        while (!fourOkay) {
+            out("Wollen sie Vorwärts(V) oder Rückwärts(R) laufen?");
+            String tmp = scanner.next();
+            if (tmp.equalsIgnoreCase("V")) {
+                steps = CARD4;
+                fourOkay = true;
+            } else if (tmp.equalsIgnoreCase("R")) {
+                steps = -CARD4;
+                fourOkay = true;
+            } else {
+                out("Bitte nur R oder V eingeben.");
+            }
         }
         return steps;
     }
