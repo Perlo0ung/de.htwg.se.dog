@@ -155,10 +155,8 @@ public class GameTable extends Observable implements GameTableInterface {
     @Override
     public boolean playerHasCard(int cardval) {
         boolean retval = false;
-        for (CardInterface c : currentPlayer.getCardList()) {
-            if (c.getValue() == cardval) {
+        if(currentPlayer.getCardfromCardNr(cardval) != null) {
                 retval = true;
-            }
         }
         return retval;
     }
@@ -282,10 +280,6 @@ public class GameTable extends Observable implements GameTableInterface {
 
         //TODO implement check if sevenmove is possible
         return retval;
-    }
-
-    public int getPlayerStartfieldNr(PlayerInterface player) {
-        return player.getStartFieldNr();
     }
 
     @Override

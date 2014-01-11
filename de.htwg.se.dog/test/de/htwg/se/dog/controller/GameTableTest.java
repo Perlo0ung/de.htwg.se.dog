@@ -1,9 +1,6 @@
 package de.htwg.se.dog.controller;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -17,7 +14,13 @@ import de.htwg.se.dog.models.PlayerInterface;
 import de.htwg.se.dog.models.impl.Card;
 
 public class GameTableTest {
-    private static final int JOKER = 14;
+    private static final int TEN = 10;
+	private static final int SIX = 6;
+	private static final int FIVE = 5;
+	private static final int JOKER = 14;
+	private static final int LOW = -1;
+    private static final int NONE = 50;
+    private static final int ELEVEN = 11;
 	private final int TWO = 2;
     Movement movement;
     GameTableInterface table;
@@ -38,7 +41,14 @@ public class GameTableTest {
         first = table.getCurrentPlayer();      
         gamefield = table.getGameField();
     }
-
+    @Test
+    public void testNextPlayer() {
+        for(PlayerInterface p: table.getPlayerList()) {
+        	p.clearCardList();
+        }
+    	table.nextPlayer();   	
+    }
+    
     @Test
     public void testCurrentPlayer() {
         table.newRound();
@@ -58,6 +68,64 @@ public class GameTableTest {
         table.newRound();
     }
 
+    @Test 
+    public void testPossibleCards() {
+    	PlayerInterface current = table.getCurrentPlayer();
+    	PlayerInterface next = table.getPlayerList().get(0);
+    	current.addCard(new Card(JOKER));
+    	assertTrue(!table.possibleCards(table.getCurrentPlayer()).isEmpty());
+    	current.clearCardList();
+    	assertTrue(table.possibleCards(table.getCurrentPlayer()).isEmpty());
+    	current.updateFigurePos(TWO, FIVE);
+   	 	array[FIVE].putFigure(current.removeFigure());
+    	array[SIX].putFigure(next.removeFigure());
+    	current.addCard(new Card(JOKER));
+    	current.addCard(new Card(TWO));
+    	current.addCard(new Card(ELEVEN));
+    	assertTrue(!table.possibleCards(table.getCurrentPlayer()).isEmpty());
+    }
+    
+    @Test
+    public void testFieldIsEmpty() {
+    	assertTrue(table.fieldIsEmpty(NONE));
+    	assertTrue(table.fieldIsEmpty(LOW));
+    	assertTrue(table.fieldIsEmpty(FIVE));
+    }
+    @Test
+    public void testIsPlayerStartfieldBlocked() {
+    	assertFalse(table.isPlayerStartfieldBlocked());
+    }
+    @Test
+    public void testMoveFigureToStart() {
+    	assertTrue(table.moveFigureToStart(ELEVEN));
+    	assertFalse(table.moveFigureToStart(JOKER));
+    }
+    @Test
+    public void testGetCurrentPlayerID() {
+    	assertEquals(1,table.getCurrentPlayerID());
+    }
+    @Test
+    public void testGetFigureOwnerID() {
+    	 array[FIVE].putFigure(table.getCurrentPlayer().removeFigure());
+    	 assertEquals(1,table.getFigureOwnerID(FIVE));
+    }
+    @Test
+    public void testGetTagetField() {
+    	array[FIVE].putFigure(table.getCurrentPlayer().removeFigure());
+    	assertEquals(table.getTargetField(FIVE, FIVE), TEN);
+    }
+    @Test
+    public void testPlayJoker() {
+    	assertEquals(table.playJoker(ELEVEN),new Card(ELEVEN));
+    	table.getCurrentPlayer().clearCardList();
+    	table.getCurrentPlayer().addCard(new Card(JOKER));
+    	table.playJoker(ELEVEN);   
+    	assertEquals(table.playJoker(ELEVEN),new Card(JOKER));
+    }
+    @Test
+    public void testGetRound() {
+   	 assertEquals(1,table.getRound());
+   }
     @Test
     public void testPlayerQueueIsEmpty() {
         assertFalse(table.playerQueueIsEmpty());
@@ -65,26 +133,25 @@ public class GameTableTest {
 
     @Test
     public void testPlayerHasCard() {
-
+    	table.getCurrentPlayer().addCard(new Card(JOKER));
+    	assertFalse(table.playerHasCard(NONE));
+    	assertTrue(table.playerHasCard(JOKER));
     }
 
     @Test
     public void testcanPlay() {
-        System.out.println(first.getFigureRegister());
-        System.out.println(first.printCardsOnHand());
         assertTrue(table.canPlay(first));
-        table.dealCards();
-        first = table.getCurrentPlayer();
-        array[1].putFigure(first.removeFigure(), 1);
-        array[2].putFigure(first.removeFigure(), 2);
-        array[3].putFigure(first.removeFigure(), 3);
-        System.out.println(first.getFigureRegister());
-        assertTrue(table.canPlay(first));
+        table.getCurrentPlayer().clearCardList();
+        assertFalse(table.canPlay(first));
+
     }
 
     @Test
     public void testSetStartingPlayer() {
         GameTable here = new GameTable(2);
+        for(PlayerInterface p: here.getPlayerList()) {
+        	p.addCard(new Card(JOKER));
+        }
         here.newRound();
         here.setStartingPlayer(1);
         here.newRound();
@@ -116,7 +183,7 @@ public class GameTableTest {
         assertTrue(table.currentPlayerHaswon());
 
         //branch coverage
-        GameTable branch = new GameTable(5);
+        GameTable branch = new GameTable(FIVE);
         branch.newRound();
         gamefield = branch.getGameField();
         branch.nextPlayer();
@@ -126,7 +193,7 @@ public class GameTableTest {
 
     @Test
     public void testToStrings() {
-        array[5].putFigure(first.removeFigure(), 5);
+        array[FIVE].putFigure(first.removeFigure(), FIVE);
         assertNotNull(table.getGameFieldString());
         assertNotNull(table.getPlayerHandString());
         assertNotNull(table.getPlayerString());
