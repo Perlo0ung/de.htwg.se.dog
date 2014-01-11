@@ -9,6 +9,7 @@ import de.htwg.se.dog.models.GameFieldInterface;
  * @author Michael, Christian
  * 
  */
+
 public class MoveSeven extends Movement {
     private static final int VALUEOFCARD7 = 7;
     private static final int NORMALMOVE = 2;
