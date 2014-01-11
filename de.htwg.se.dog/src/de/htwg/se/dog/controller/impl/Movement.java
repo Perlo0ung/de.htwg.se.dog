@@ -10,7 +10,7 @@ import de.htwg.se.dog.models.GameFieldInterface;
 import de.htwg.se.dog.models.PlayerInterface;
 
 /**
- * Movment strategy implementation , MoveNormal
+ * Movment strategy implementation
  * 
  * @author Michael, Christian
  * 
