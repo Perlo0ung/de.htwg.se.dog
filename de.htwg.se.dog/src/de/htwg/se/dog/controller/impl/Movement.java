@@ -15,6 +15,7 @@ import de.htwg.se.dog.models.PlayerInterface;
  * @author Michael, Christian
  * 
  */
+
 public class Movement implements MovementStrategy {
 
     private static final int VALUEOFCARD7 = 7;
