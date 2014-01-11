@@ -25,6 +25,12 @@ public class TextUserInterface implements IObserver {
     private static final Logger LOG = LogManager.getLogger("UI");
     private final GameTableInterface controller;
 
+    /**
+     * Constructor to create TUI-OBJ
+     * 
+     * @param controller
+     *        controller which should be used to play with
+     */
     public TextUserInterface(GameTableInterface controller) {
         this.controller = controller;
         controller.addObserver(this);
@@ -34,11 +40,21 @@ public class TextUserInterface implements IObserver {
         LOG.info(str);
     }
 
+    /**
+     * Methode to print gamefield and playercards
+     */
     public synchronized void printTui() {
         out(controller.getGameFieldString());
         out(controller.getPlayerHandString());
     }
 
+    /**
+     * Methode to Process complete player turn
+     * 
+     * @param scanner
+     *        scanner-OBJ to get UserInput
+     * @return true, if game should continue otherwise false
+     */
     public boolean processTurn(Scanner scanner) {
         while (controller.playerQueueIsEmpty()) {
             out("Kein Spieler hat mehr Karten, beginne neue Runde.");
@@ -52,26 +68,29 @@ public class TextUserInterface implements IObserver {
         while (true) {
             out("Mögliche Sonderbefehle: retry(Zugauswahl von vorne), quit(beendet das Spiel)\n");
             card = processCardInput(scanner);
-            if (card == QUIT)
+            if (card == QUIT) {
                 return false;
-            if (card == SKIP)
+            } else if (card == SKIP) {
                 return true;
-            if (card == RETRY) {
+            } else if (card == RETRY) {
                 continue;
             }
             if ((card == CARD13 || card == 1 || card == CARD14) && !controller.isPlayerStartfieldBlocked()) {
-                if (putOutnewFigure(scanner, card))
+                if (putOutnewFigure(scanner, card)) {
                     return true;
+                }
             }
             if (card == CARD14) {
                 jokerChoose(scanner);
                 continue;
             }
             fieldnr = processFigureInput(scanner);
-            if (fieldnr == QUIT)
+            if (fieldnr == QUIT) {
                 return false;
-            if (fieldnr == SKIP)
+            }
+            if (fieldnr == SKIP) {
                 return true;
+            }
             if (fieldnr == RETRY) {
                 continue;
             }
@@ -85,8 +104,9 @@ public class TextUserInterface implements IObserver {
         }
         out("mache Zug :)\n\n\n\n\n\n");
         controller.playCard(card, steps, fieldnr);
-        if (playerHasWon())
+        if (playerHasWon()) {
             return false;
+        }
         return true;
     }
 
@@ -108,8 +128,9 @@ public class TextUserInterface implements IObserver {
             out("Bitte KartenNummer der neuen Karte eingeben:");
             input = scanner.next();
             cardNr = Integer.valueOf(input);
-            if (cardNr <= 0 || cardNr > 14)
+            if (cardNr <= 0 || cardNr > 14) {
                 throw new NumberFormatException();
+            }
         } catch (NumberFormatException e) {
             out("Bitte nur Zahlen im Bereich [1:13] eingeben.");
         }
@@ -222,10 +243,16 @@ public class TextUserInterface implements IObserver {
         return card;
     }
 
+    /**
+     * Methode to Process Custom-User-Commands
+     * 
+     * @param input
+     * @return
+     */
     private int stringEingabe(String input) {
         int retval = NOTINITIALIZED;
         if (input.equalsIgnoreCase("quit")) {
-            out("Spiel Beendet!");
+            out(String.format("%n%n%nSpiel Abgebrochen!%n%n%n"));
             retval = QUIT;
         }
         if (input.equalsIgnoreCase("skip")) {
@@ -240,6 +267,12 @@ public class TextUserInterface implements IObserver {
         return retval;
     }
 
+    /**
+     * Methode to Process User Input to choose figure
+     * 
+     * @param scanner
+     * @return returns fieldNr from Figure, which should be used
+     */
     private int processFigureInput(Scanner scanner) {
         int fieldnr = NOTINITIALIZED;
         while (true) {

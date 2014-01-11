@@ -4,12 +4,15 @@ import de.htwg.se.dog.models.FieldInterface;
 import de.htwg.se.dog.models.FigureInterface;
 import de.htwg.se.dog.models.GameFieldInterface;
 import de.htwg.se.dog.models.PlayerInterface;
+
 /**
  * implementation of Movement for normal cards
+ * 
  * @author Michael,Christian
- *
+ * 
  */
 public class MoveNormal extends Movement {
+
     /**
      * konstruktor that sets the gamefield on which we move
      * 
@@ -25,9 +28,9 @@ public class MoveNormal extends Movement {
      * 
      * @param gamefield
      * @param steps
-     *            number of steps figure wants to take
+     *        number of steps figure wants to take
      * @param startfieldnr
-     *            from where figure wants to move
+     *        from where figure wants to move
      * @return true if figure could be moved, otherwise false
      */
     @Override
@@ -57,9 +60,9 @@ public class MoveNormal extends Movement {
      * 
      * @param gamefield
      * @param steps
-     *            number of steps figure want to take
+     *        number of steps figure want to take
      * @param startfieldnr
-     *            from where figure wants to move
+     *        from where figure wants to move
      * @return true if move is valid, otherwise false
      */
     @Override

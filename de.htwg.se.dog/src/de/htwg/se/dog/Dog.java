@@ -40,7 +40,11 @@ public final class Dog {
         //TODO errorhandling playernumberinput
         System.out.println("Bitte geben sie die Spieler anzahl ein:");
         int playernumber = scanner.nextInt();
+
         instance = new Dog(playernumber);
+        if (instance == null || gui == null) {
+            throw new IllegalStateException();
+        }
         boolean continu = true;
         while (continu) {
             continu = tui.processTurn(scanner);

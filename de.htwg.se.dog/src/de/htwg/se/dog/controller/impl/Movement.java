@@ -241,8 +241,9 @@ public class Movement implements MovementStrategy {
         boolean retval = false;
         FieldInterface[] array = gameField.getGameArray();
         int sourceFigOwner = array[fieldnr].getFigureOwnerNr();
-        if (array[fieldnr].isHouse())
+        if (array[fieldnr].isHouse()) {
             return retval;
+        }
         for (FieldInterface field : array) {
             if (field.getFigure() != null && !field.isBlocked() && field.getFigureOwnerNr() != sourceFigOwner) {
                 retval = true;
@@ -251,10 +252,6 @@ public class Movement implements MovementStrategy {
         }
         return retval;
     }
-
-    /* ------------------------------------------------------------------------- */
-    /* Move Seven Methodes */
-    /* ------------------------------------------------------------------------- */
 
     /**
      * Checks if the Player p can do a move with the card 7
