@@ -144,16 +144,7 @@ public class Movement implements MovementStrategy {
                     currentfieldID = BLOCKEDFIELD;
                     break;
                 }
-                //Check if field in own house is blocked and you have to move over whole house
-                if (!illegalInHouse
-                        && array[currentfieldID].getOwner() == playerNr
-                        && array[currentfieldID].isHouse()
-                        && array[currentfieldID].isBlocked()) {
-                    illegalInHouse = true;
-                }
-                if (illegalInHouse && !array[currentfieldID].isHouse()) {
-                    illegalInHouse = false;
-                }
+                illegalInHouse = illegalInHouseCheck(array, currentfieldID, illegalInHouse, playerNr);
                 absSteps = adjustSteps(steps, absSteps, array, playerNr, nextfieldID, currentFieldOwner);
             }
         }
@@ -161,6 +152,20 @@ public class Movement implements MovementStrategy {
             currentfieldID = OVERHOUSE;
         }
         return currentfieldID;
+    }
+
+    private boolean illegalInHouseCheck(FieldInterface[] array, int currentfieldID, boolean illegalInHouse, int playerNr) {
+        //Check if field in own house is blocked and you have to move over whole house
+        if (!illegalInHouse
+                && array[currentfieldID].getOwner() == playerNr
+                && array[currentfieldID].isHouse()
+                && array[currentfieldID].isBlocked()) {
+            illegalInHouse = true;
+        }
+        if (illegalInHouse && !array[currentfieldID].isHouse()) {
+            illegalInHouse = false;
+        }
+        return illegalInHouse;
     }
 
     /**

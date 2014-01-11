@@ -67,7 +67,8 @@ public class TextUserInterface implements IObserver {
         int fieldnr = -1;
         int steps = 0;
         int card = NOTINITIALIZED;
-        while (true) {
+        boolean whileloop = true;
+        while (whileloop) {
             out("Mögliche Sonderbefehle: quit(beendet das Spiel)\n");
             card = processCardInput(scanner);
             if (card == QUIT) {
@@ -77,7 +78,8 @@ public class TextUserInterface implements IObserver {
             }
             boolean getOutCard = (card == CARDKING || card == 1 || card == CARDJOKER);
             if (getOutCard && !controller.isPlayerStartfieldBlocked() && putOutnewFigure(scanner, card)) {
-                break;
+                whileloop = false;
+                continue;
             }
             if (card == CARDJOKER) {
                 jokerChoose(scanner);
@@ -91,7 +93,8 @@ public class TextUserInterface implements IObserver {
             if (controller.isValidMove(card, steps, fieldnr)) {
                 out("führe Zug aus :)\n\n\n\n\n\n");
                 controller.playCard(card, steps, fieldnr);
-                break;
+                whileloop = false;
+                continue;
             }
             out("Das ist kein gültiger Zug, wiederhole Zugauswahl.");
         }
