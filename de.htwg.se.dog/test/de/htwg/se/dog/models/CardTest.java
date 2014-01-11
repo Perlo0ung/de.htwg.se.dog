@@ -3,9 +3,7 @@ package de.htwg.se.dog.models;
 import static org.junit.Assert.*;
 
 import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 
 import de.htwg.se.dog.models.impl.Card;
 
@@ -13,8 +11,6 @@ public class CardTest {
 
     Card card;
     Card wrong;
-    @Rule
-    public ExpectedException expected = ExpectedException.none();
 
     @Before
     public void setUp() {
@@ -26,13 +22,6 @@ public class CardTest {
         assertEquals(12, card.getValue());
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void testExpectedException() {
-        wrong = new Card(200);
-        assertNotNull(wrong);
-        wrong = new Card(-5);
-        assertNotNull(wrong);
-    }
 
     @Test
     public void testGetCardName() {

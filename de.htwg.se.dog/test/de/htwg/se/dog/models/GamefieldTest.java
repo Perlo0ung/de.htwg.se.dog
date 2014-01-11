@@ -1,12 +1,9 @@
 package de.htwg.se.dog.models;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 
 import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 
 import de.htwg.se.dog.models.impl.GameField;
 
@@ -18,9 +15,7 @@ public class GamefieldTest {
     int houseCount = 3;
     int owner = 2;
     int noowner = 0;
-
-    @Rule
-    public ExpectedException expected = ExpectedException.none();
+    int field = 50;
 
     @Before
     public void setUp() {
@@ -62,5 +57,9 @@ public class GamefieldTest {
     @Test
     public void testGetField() {
         assertNotNull(f.getFieldForNum(3));
+    }
+    @Test
+    public void getFieldforNum() {
+    	assertNull(f.getFieldForNum(field));
     }
 }

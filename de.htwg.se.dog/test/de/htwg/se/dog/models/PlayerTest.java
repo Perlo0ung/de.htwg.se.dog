@@ -78,8 +78,10 @@ public class PlayerTest {
     }
     @Test
     public void testgetCardfromCardNr() {
+    	assertNull(p1.getCardfromCardNr(2));
     	p1.addCard(card2);
     	assertEquals(card2, p1.getCardfromCardNr(2));
+    	assertNull(p1.getCardfromCardNr(12));
     }
     @Test
     public void testclearCardList() {

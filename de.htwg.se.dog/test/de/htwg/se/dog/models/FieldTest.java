@@ -45,6 +45,7 @@ public class FieldTest {
     @Test
     public void testGetFigureOwnerNr() {
         assertEquals(1, feld2.getFigureOwnerNr());
+        assertEquals(-1, feld1.getFigureOwnerNr());
     }
 
     @Test
