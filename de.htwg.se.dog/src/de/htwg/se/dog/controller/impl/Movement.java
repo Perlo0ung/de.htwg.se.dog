@@ -145,7 +145,10 @@ public class Movement implements MovementStrategy {
                     break;
                 }
                 //Check if field in own house is blocked and you have to move over whole house
-                if (!illegalInHouse && array[currentfieldID].isBlocked() && array[currentfieldID].getOwner() == playerNr && array[currentfieldID].isHouse()) {
+                if (!illegalInHouse
+                        && array[currentfieldID].getOwner() == playerNr
+                        && array[currentfieldID].isHouse()
+                        && array[currentfieldID].isBlocked()) {
                     illegalInHouse = true;
                 }
                 if (illegalInHouse && !array[currentfieldID].isHouse()) {
@@ -231,7 +234,7 @@ public class Movement implements MovementStrategy {
 
     /**
      * checks if it is possible to switch the figure on fieldnr with any other
-     * enemy figure
+     * figure
      * 
      * @param fieldnr
      *        fieldnumber where figure to check stands
@@ -240,12 +243,12 @@ public class Movement implements MovementStrategy {
     public boolean anySwitchMove(int fieldnr) {
         boolean retval = false;
         FieldInterface[] array = gameField.getGameArray();
-        int sourceFigOwner = array[fieldnr].getFigureOwnerNr();
         if (array[fieldnr].isHouse()) {
             return retval;
         }
         for (FieldInterface field : array) {
-            if (field.getFigure() != null && !field.isBlocked() && field.getFigureOwnerNr() != sourceFigOwner) {
+            boolean okay = field.getFigure() != null && !field.isBlocked();
+            if (okay) {
                 retval = true;
                 break;
             }

@@ -64,6 +64,12 @@ public class MoveSevenTest {
     }
 
     @Test
+    public void testMoveOverEdgeOfGamefield() {
+        array[9].putFigure(tp1.removeFigure(), 9);
+        assertTrue(movement.move(7, 9));
+    }
+
+    @Test
     public void testAnyValidMove() {
         // Search AnyValidMove of Player without Figures on Field
         assertFalse(movement.anyValidMove(tp2));
@@ -98,7 +104,6 @@ public class MoveSevenTest {
 
     @Test
     public void testAnyValidMove3() {
-
         // eigene fig killen
         array[0].putFigure(tp1.removeFigure(), 0);
         array[1].putFigure(tp1.removeFigure(), 1);

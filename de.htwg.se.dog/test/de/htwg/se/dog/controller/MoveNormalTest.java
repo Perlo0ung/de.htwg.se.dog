@@ -2,6 +2,7 @@ package de.htwg.se.dog.controller;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
@@ -29,6 +30,7 @@ public class MoveNormalTest {
     private final int ZERO = 0;
     private final int TWO = 2;
     private final int FOUR = 4;
+    private final int FIVE = 5;
 
     /* Gamefield from setUp
      * 0 1 2 3 4 5 6 7
@@ -106,6 +108,27 @@ public class MoveNormalTest {
     public void testMoveOverOwnHouse() {
         array[ZERO].putFigure(tp1.removeFigure());
         assertTrue(movement.move(5, 0));
+    }
+
+    //Maybe useless Test :)
+    @Test
+    public void testMoveOverBlockedOwnHouse() {
+        array[FIVE].putFigure(tp1.removeFigure());
+        array[TWO].putFigure(tp1.removeFigure());
+        array[TWO].setBlocked(true);
+        assertNotNull(array[TWO].getFigure());
+        assertTrue(array[TWO].isHouse());
+        assertTrue(array[TWO].isBlocked());
+        assertTrue(movement.move(3, FIVE));
+        assertNull(array[FIVE].getFigure());
+        assertNotNull(array[FOUR].getFigure());
+    }
+
+    @Test
+    public void testMoveOutOfHouse() {
+        array[TWO].putFigure(tp1.removeFigure());
+        assertFalse(movement.move(5, 2));
+
     }
 
     @Test

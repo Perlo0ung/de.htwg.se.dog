@@ -19,11 +19,11 @@ import de.htwg.se.dog.util.IObserver;
  */
 public class TextUserInterface implements IObserver {
 
+    private static final int CARDACE = 1;
     private static final int CARD4 = 4;
-    private static final int CARD7 = 7;
-    private static final int CARD11 = 11;
-    private static final int CARD14 = 14;
-    private static final int CARD13 = 13;
+    private static final int CARDJACK = 11;
+    private static final int CARDJOKER = 14;
+    private static final int CARDKING = 13;
     private static final int NOTINITIALIZED = -99;
     private static final int QUIT = -1;
     private static final int SKIP = -2;
@@ -62,6 +62,8 @@ public class TextUserInterface implements IObserver {
      * @return true, if game should continue otherwise false
      */
     public boolean processTurn(Scanner scanner) {
+        boolean retVal = true;
+        boolean noBreakOut = true;
         getNextPlayer();
         int fieldnr = -1;
         int steps = 0;
@@ -70,15 +72,18 @@ public class TextUserInterface implements IObserver {
             out("Mögliche Sonderbefehle: quit(beendet das Spiel)\n");
             card = processCardInput(scanner);
             if (card == QUIT) {
-                return false;
+                noBreakOut = false;
+                retVal = false;
+                break;
             } else if (card == SKIP) {
-                return true;
+                noBreakOut = false;
+                break;
             }
-            boolean getOutCard = (card == CARD13 || card == 1 || card == CARD14);
+            boolean getOutCard = (card == CARDKING || card == 1 || card == CARDJOKER);
             if (getOutCard && !controller.isPlayerStartfieldBlocked() && putOutnewFigure(scanner, card)) {
-                return true;
+                break;
             }
-            if (card == CARD14) {
+            if (card == CARDJOKER) {
                 jokerChoose(scanner);
                 continue;
             }
@@ -87,16 +92,17 @@ public class TextUserInterface implements IObserver {
                 continue;
             }
             steps = processSteps(scanner, card);
-            // check if valid move, if not, redo turn decision
-            if (!controller.isValidMove(card, steps, fieldnr)) {
-                out("Das ist kein gültiger Zug, wiederhole Zugauswahl.");
-                continue;
+            if (controller.isValidMove(card, steps, fieldnr)) {
+                out("führe Zug aus :)\n\n\n\n\n\n");
+                controller.playCard(card, steps, fieldnr);
+                break;
             }
-            break;
+            out("Das ist kein gültiger Zug, wiederhole Zugauswahl.");
         }
-        out("führe Zug aus :)\n\n\n\n\n\n");
-        controller.playCard(card, steps, fieldnr);
-        return !playerHasWonCheck();
+        if (noBreakOut) {
+            retVal = !playerHasWonCheck();
+        }
+        return retVal;
     }
 
     private void getNextPlayer() {
@@ -119,20 +125,21 @@ public class TextUserInterface implements IObserver {
         return retVal;
     }
 
-    private int jokerChoose(Scanner scanner) {
+    private void jokerChoose(Scanner scanner) {
         String input;
         int cardNr = NOTINITIALIZED;
         try {
             out("Bitte KartenNummer der neuen Karte eingeben:");
             input = scanner.next();
             cardNr = Integer.valueOf(input);
-            if (cardNr <= 0 || cardNr > CARD14) {
+            if (cardNr <= 0 || cardNr > CARDJOKER) {
                 throw new NumberFormatException();
             }
         } catch (NumberFormatException e) {
             out("Bitte nur Zahlen im Bereich [1:13] eingeben.");
         }
-        return cardNr;
+        controller.playJoker(cardNr).getValue();
+        printTui();
     }
 
     private boolean putOutnewFigure(Scanner scanner, int card) {
@@ -140,7 +147,7 @@ public class TextUserInterface implements IObserver {
         out("Möchtest du eine neue Figure aufs Spielfeld setzten?(J/N):");
         char input = scanner.next().charAt(0);
         if ((input == 'J' || input == 'j') && controller.moveFigureToStart(card)) {
-            out("Moving Figure to Start-Field");
+            out("Moving Figure to Start-Field\n\n\n");
             return true;
         }
         return retVal;
@@ -149,17 +156,14 @@ public class TextUserInterface implements IObserver {
     private int processSteps(Scanner scanner, int cardNr) {
         int steps = 0;
         switch (cardNr) {
-        case 1:
-            steps = cardAceChoose(scanner, steps);
+        case CARDACE:
+            steps = cardAceChoose(scanner);
             break;
         case CARD4:
-            steps = cardFourChoose(scanner, steps);
+            steps = cardFourChoose(scanner);
             break;
-        case CARD7:
-            steps = CARD7;
-            break;
-        case CARD11:
-            steps = cardJackChoose(scanner, steps);
+        case CARDJACK:
+            steps = cardJackChoose(scanner);
             break;
         default:
             steps = cardNr;
@@ -168,7 +172,7 @@ public class TextUserInterface implements IObserver {
         return steps;
     }
 
-    private int cardJackChoose(Scanner scanner, int steps) {
+    private int cardJackChoose(Scanner scanner) {
         int targetFieldNr = -1;
         int retVal = -1;
         while (true) {
@@ -198,7 +202,7 @@ public class TextUserInterface implements IObserver {
         return retVal;
     }
 
-    private int cardAceChoose(Scanner scanner, int steps) {
+    private int cardAceChoose(Scanner scanner) {
         boolean aceOkay = false;
         int retVal = -1;
         while (!aceOkay) {
@@ -214,7 +218,7 @@ public class TextUserInterface implements IObserver {
         return retVal;
     }
 
-    private int cardFourChoose(Scanner scanner, int steps) {
+    private int cardFourChoose(Scanner scanner) {
         boolean fourOkay = false;
         int retVal = -1;
         while (!fourOkay) {
@@ -268,16 +272,16 @@ public class TextUserInterface implements IObserver {
      */
     private int stringEingabe(String input) {
         int retval = NOTINITIALIZED;
-        if (input.equalsIgnoreCase("quit")) {
+        if (input.equalsIgnoreCase("quit") || input.equalsIgnoreCase("q")) {
             out(String.format("%n%n%nSpiel Abgebrochen!%n%n%n"));
             retval = QUIT;
         }
-        if (input.equalsIgnoreCase("skip")) {
+        if (input.equalsIgnoreCase("skip") || input.equalsIgnoreCase("s")) {
             out(String.format("Spieler %d wirft seine Karten weg und setzt bis zur nächsten Runde aus.", controller.getCurrentPlayerID()));
             controller.getCurrentPlayer().clearCardList();
             retval = SKIP;
         }
-        if (input.equals("retry")) {
+        if (input.equals("retry") || input.equalsIgnoreCase("r")) {
 
             retval = RETRY;
         }

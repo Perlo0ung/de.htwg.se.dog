@@ -26,6 +26,8 @@ public class MoveSwitchTest {
     private final int PLAYERID2 = 2;
     private final int ZERO = 0;
     private final int ONE = 1;
+    private final int TWO = 2;
+
     private final int THREE = 3;
     private final int FIVE = 5;
     private final int SIX = 6;
@@ -61,6 +63,16 @@ public class MoveSwitchTest {
         assertFalse(movement.move(PLAYER1HOUSEFIELD, ONE));
         assertFalse(movement.move(ONE, PLAYER1HOUSEFIELD));
         assertFalse(movement.move(THREE, SIX));
+    }
+
+    @Test
+    public void testAnySwitchMove() {
+        array[ZERO].putFigure(player1.removeFigure());
+        array[TWO].putFigure(player1.removeFigure());
+        array[TWO].setBlocked(true);
+        array[FIVE].putFigure(player2.removeFigure());
+        assertTrue(movement.anySwitchMove(ZERO));
+        assertFalse(movement.anySwitchMove(TWO));
     }
 
     @Test
