@@ -203,7 +203,11 @@ public class Movement implements MovementStrategy {
         }
         return field;
     }
-
+    /**
+     * Checks if the player given by param player can perform a starting move
+     * @param player
+     * @return
+     */
     public boolean moveStart(PlayerInterface player) {
         boolean retval = false;
         int startFieldNr = gameField.calculatePlayerStart(player.getPlayerID());
@@ -217,7 +221,7 @@ public class Movement implements MovementStrategy {
         return retval;
     }
 
-    public boolean possibleMoveStart(FieldInterface[] array, int startFieldNr, PlayerInterface player) {
+    private boolean possibleMoveStart(FieldInterface[] array, int startFieldNr, PlayerInterface player) {
         return !array[startFieldNr].isBlocked() && !player.getFigureList().isEmpty();
     }
 

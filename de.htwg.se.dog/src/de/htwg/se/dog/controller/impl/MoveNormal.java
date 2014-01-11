@@ -4,7 +4,11 @@ import de.htwg.se.dog.models.FieldInterface;
 import de.htwg.se.dog.models.FigureInterface;
 import de.htwg.se.dog.models.GameFieldInterface;
 import de.htwg.se.dog.models.PlayerInterface;
-
+/**
+ * implementation of Movement for normal cards
+ * @author Michael,Christian
+ *
+ */
 public class MoveNormal extends Movement {
     /**
      * konstruktor that sets the gamefield on which we move

@@ -23,6 +23,10 @@ public final class Dog {
     private static GraphicalUserInterface gui;
 
     @Inject
+    /**
+     * Creates a new Doggame
+     * @param playernumber
+     */
     private Dog(int playernumber) {
         controller = new GameTable(playernumber);
         controller.newRound();
