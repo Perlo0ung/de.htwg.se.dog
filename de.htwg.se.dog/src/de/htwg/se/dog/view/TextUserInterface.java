@@ -67,14 +67,12 @@ public class TextUserInterface implements IObserver {
         int steps = 0;
         int card = NOTINITIALIZED;
         while (true) {
-            out("Mögliche Sonderbefehle: retry(Zugauswahl von vorne), quit(beendet das Spiel)\n");
+            out("Mögliche Sonderbefehle: quit(beendet das Spiel)\n");
             card = processCardInput(scanner);
             if (card == QUIT) {
                 return false;
             } else if (card == SKIP) {
                 return true;
-            } else if (card == RETRY) {
-                continue;
             }
             boolean getOutCard = (card == CARD13 || card == 1 || card == CARD14);
             if (getOutCard && !controller.isPlayerStartfieldBlocked() && putOutnewFigure(scanner, card)) {
@@ -85,11 +83,7 @@ public class TextUserInterface implements IObserver {
                 continue;
             }
             fieldnr = processFigureInput(scanner);
-            if (fieldnr == QUIT) {
-                return false;
-            } else if (fieldnr == SKIP) {
-                return true;
-            } else if (fieldnr == RETRY) {
+            if (fieldnr == RETRY) {
                 continue;
             }
             steps = processSteps(scanner, card);
@@ -102,10 +96,7 @@ public class TextUserInterface implements IObserver {
         }
         out("führe Zug aus :)\n\n\n\n\n\n");
         controller.playCard(card, steps, fieldnr);
-        if (playerHasWonCheck()) {
-            return false;
-        }
-        return true;
+        return !playerHasWonCheck();
     }
 
     private void getNextPlayer() {
@@ -179,6 +170,7 @@ public class TextUserInterface implements IObserver {
 
     private int cardJackChoose(Scanner scanner, int steps) {
         int targetFieldNr = -1;
+        int retVal = -1;
         while (true) {
             String input;
             try {
@@ -196,47 +188,49 @@ public class TextUserInterface implements IObserver {
             // check if on targetfield is a switchable figure
             FieldInterface targetField = controller.getGameField().getGameArray()[targetFieldNr];
             if (targetField.getFigure() != null && !targetField.isBlocked()) {
-                steps = targetFieldNr;
+                retVal = targetFieldNr;
                 break;
             } else {
                 out("Auf dem Feld steht keine Figur oder sie ist blocked");
             }
 
         }
-        return steps;
+        return retVal;
     }
 
     private int cardAceChoose(Scanner scanner, int steps) {
         boolean aceOkay = false;
+        int retVal = -1;
         while (!aceOkay) {
             out("Wollen Sie 11 oder 1 laufen? Bitte Zahl eingeben:");
             String tmp = scanner.next();
             if (tmp.equalsIgnoreCase("1") || tmp.equalsIgnoreCase("11")) {
-                steps = Integer.valueOf(tmp);
+                retVal = Integer.valueOf(tmp);
                 aceOkay = true;
             } else {
                 out("Bitte nur 1 oder 11 eingeben.");
             }
         }
-        return steps;
+        return retVal;
     }
 
     private int cardFourChoose(Scanner scanner, int steps) {
         boolean fourOkay = false;
+        int retVal = -1;
         while (!fourOkay) {
             out("Wollen sie Vorwärts(V) oder Rückwärts(R) laufen?");
             String tmp = scanner.next();
             if (tmp.equalsIgnoreCase("V")) {
-                steps = CARD4;
+                retVal = CARD4;
                 fourOkay = true;
             } else if (tmp.equalsIgnoreCase("R")) {
-                steps = -CARD4;
+                retVal = -CARD4;
                 fourOkay = true;
             } else {
                 out("Bitte nur R oder V eingeben.");
             }
         }
-        return steps;
+        return retVal;
     }
 
     private int processCardInput(Scanner scanner) {
@@ -301,7 +295,7 @@ public class TextUserInterface implements IObserver {
         while (true) {
             String input = null;
             try {
-                out("Bitte Feldnummer der zu laufenden Figur auswählen: ");
+                out("Bitte Feldnummer der zu laufenden Figur auswählen('retry' um die Karte neu auszuwählen): ");
                 input = scanner.next();
                 Integer zahl = Integer.valueOf(input);
                 if (controller.fieldIsEmpty(zahl)) {

@@ -260,10 +260,10 @@ public class GameTable extends Observable implements GameTableInterface {
     @Override
     public boolean isValidMove(int cardNr, int steps, int startfieldNr) {
         boolean retval = false;
-
-        movement.setMoveStrategie(cardNr);
-        retval = movement.validMove(steps, startfieldNr);
-
+        if (startfieldNr >= 0 && startfieldNr < game.getFieldSize()) {
+            movement.setMoveStrategie(cardNr);
+            retval = movement.validMove(steps, startfieldNr);
+        }
         return retval;
     }
 
