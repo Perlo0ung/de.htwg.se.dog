@@ -418,6 +418,7 @@ public class GraphicalUserInterface extends JFrame implements IObserver {
 				}
 			} else if (cardval == CARD14) {
 				jokerSpinnerDialog(current);
+				return;
 			} else {
 				steps = cardval;
 			}
