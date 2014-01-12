@@ -1,9 +1,7 @@
 DOGGAME
 ==============
 
-<a name="sudoku" class="anchor" href="#sudoku"><span class="octicon octicon-link"></span></a>Sudoku</h1>
-
-<p>This project is an implementation of the Sudoku game for the lecture <strong>Software Engineering</strong> at the University of Applied Science Konstanz, Germany.</p>
+<p>This project is an implementation of the Doggame game for the lecture <strong>Software Engineering</strong> at the University of Applied Science Konstanz, Germany.</p>
 
 <p>Main goal of the application is to demonstrate the development of a software project in an agile development methodology. </p>
 
