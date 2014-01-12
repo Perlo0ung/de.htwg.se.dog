@@ -408,27 +408,40 @@ public class GraphicalUserInterface extends JFrame implements IObserver {
 		int steps = 0;
 		int cardval = getValueForCardIcon();
 		if (from != null && cardval != -1) {
-			if (cardval == CARD1) {
-				steps = cardAceDialog();
-			} else if (cardval == CARD4) {
-				steps = card4Dialog(cardval);
-			} else if (cardval == CARD11) {
-				if (to != null) {
-					steps = to;
-				}
-			} else if (cardval == CARD14) {
-				jokerSpinnerDialog(current);
-				return;
-			} else {
-				steps = cardval;
-			}
-			if (controller.isValidMove(cardval, steps, from)) {
+			steps = chooseCardToMove(current, to, steps, cardval);
+			if (controller.isValidMove(cardval, steps, from) && steps > 0) {
 				controller.playCard(cardval, steps, from);
 				winnerDialog();
 				controller.nextPlayer();
 				controller.notifyObservers();
 			}
 		}
+	}
+
+	/**
+	 * @param current
+	 * @param to
+	 * @param steps
+	 * @param cardval
+	 * @return
+	 */
+	private int chooseCardToMove(final PlayerInterface current, Integer to,
+			int steps, int cardval) {
+		if (cardval == CARD1) {
+			steps = cardAceDialog();
+		} else if (cardval == CARD4) {
+			steps = card4Dialog(cardval);
+		} else if (cardval == CARD11) {
+			if (to != null) {
+				steps = to;
+			}
+		} else if (cardval == CARD14) {
+			jokerSpinnerDialog(current);
+			steps = 0;
+		} else {
+			steps = cardval;
+		}
+		return steps;
 	}
 
 	/**
