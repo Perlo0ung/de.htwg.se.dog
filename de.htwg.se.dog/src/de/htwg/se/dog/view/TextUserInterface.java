@@ -91,9 +91,9 @@ public class TextUserInterface implements IObserver {
                 out("führe Zug aus :)\n\n\n\n\n\n");
                 controller.playCard(card, steps, fieldnr);
                 whileloop = false;
-            } else {
-                out("Das ist kein gültiger Zug, wiederhole Zugauswahl.");
+                continue;
             }
+            out("Das ist kein gültiger Zug, wiederhole Zugauswahl.");
         }
         return !playerHasWonCheck();
     }
