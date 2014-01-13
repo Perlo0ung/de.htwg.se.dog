@@ -81,6 +81,7 @@ public class GraphicalUserInterface extends JFrame implements IObserver {
     private final GuiDrawGameField gameField;
     private final JTextArea tAreaStatus;
     // statics for findbugs
+    private static final int CARDNONE = -60;
     private static final int CARD1 = 1;
     private static final int SIX = 6;
     private static final int TWELVE = 12;
@@ -384,7 +385,7 @@ public class GraphicalUserInterface extends JFrame implements IObserver {
         if (from != null && cardval != -1) {
             steps = chooseCardToMove(current, to, steps, cardval);
             //TODO steps wegen switch
-            if (controller.isValidMove(cardval, steps, from) && steps != 0) {
+            if (controller.isValidMove(cardval, steps, from) && steps != CARDNONE) {
                 controller.playCard(cardval, steps, from);
                 winnerDialog();
                 controller.nextPlayer();
@@ -412,7 +413,7 @@ public class GraphicalUserInterface extends JFrame implements IObserver {
             }
         } else if (cardval == CARD14) {
             jokerSpinnerDialog(current);
-            retSteps = 0;
+            retSteps = CARDNONE;
         } else {
             retSteps = cardval;
         }
