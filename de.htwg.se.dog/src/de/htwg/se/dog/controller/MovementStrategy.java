@@ -20,7 +20,6 @@ public interface MovementStrategy {
      * with any other cards, it trys to behaves like it is never called
      * </pre>
      * 
-     * @param gamefield
      * @param steps
      *        number of steps figure wants to take
      * @param startfieldnr
@@ -32,7 +31,6 @@ public interface MovementStrategy {
     /**
      * Returns true if suggested move is valid
      * 
-     * @param gamefield
      * @param steps
      *        number of steps figure want to take
      * @param startfieldnr

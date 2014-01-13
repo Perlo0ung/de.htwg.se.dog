@@ -18,14 +18,14 @@ public interface GameTableInterface extends IObservable {
     /**
      * Returns the playerlist
      * 
-     * @return
+     * @return returns a list with Player-OBJ
      */
     List<PlayerInterface> getPlayerList();
 
     /**
      * Returns the Gamefield currently playing on
      * 
-     * @return
+     * @return returns the Gamefield
      */
     GameFieldInterface getGameField();
 
@@ -40,6 +40,7 @@ public interface GameTableInterface extends IObservable {
      * Sets the player that can play first
      * 
      * @param playernum
+     *        id of Player which should start
      */
     void setStartingPlayer(int playernum);
 
@@ -93,8 +94,6 @@ public interface GameTableInterface extends IObservable {
     /**
      * Tells if the specified Player has won the game
      * 
-     * @param gamefield
-     * @param player
      * @return true if player has won otherwise false
      */
     boolean currentPlayerHaswon();
@@ -102,21 +101,21 @@ public interface GameTableInterface extends IObservable {
     /**
      * returns the GameField as a string
      * 
-     * @return
+     * @return string with gamefield
      */
     String getGameFieldString();
 
     /**
      * returns the Players cardlist as a String
      * 
-     * @return
+     * @return the Players cardlist as a String
      */
     String getPlayerHandString();
 
     /**
      * returns the Players as a String
      * 
-     * @return
+     * @return the Players as a String
      */
     String getPlayerString();
 
@@ -124,6 +123,7 @@ public interface GameTableInterface extends IObservable {
      * Tells if the Player has a Card with speciefied value
      * 
      * @param cardval
+     *        ID of card to check
      * @return true if he has the card
      */
     boolean playerHasCard(int cardval);
@@ -132,8 +132,11 @@ public interface GameTableInterface extends IObservable {
      * Wraps the Movement
      * 
      * @param cardNr
+     *        CardID which should be played
      * @param steps
+     *        steps to take
      * @param startFieldNr
+     *        fieldnr to start from
      * @return true, if move was possible, otherwise false
      */
     boolean playCard(int cardNr, int steps, int startFieldNr);
@@ -149,8 +152,10 @@ public interface GameTableInterface extends IObservable {
      * delegates to movement, returns the tagetfield for a move
      * 
      * @param steps
+     *        steps to take
      * @param startfieldnr
-     * @return
+     *        fieldnr to start from
+     * @return Number of targetfield
      */
     int getTargetField(int steps, int startfieldnr);
 
@@ -168,7 +173,7 @@ public interface GameTableInterface extends IObservable {
      * 
      * @param fieldnr
      *        the field
-     * @return
+     * @return returns the id of the figure owner
      */
     int getFigureOwnerID(int fieldnr);
 
@@ -193,8 +198,10 @@ public interface GameTableInterface extends IObservable {
      * 
      * @param cardNr
      *        the card that was used
-     * @param moves
-     *        maps with moves
+     * @param steps
+     *        number of steps
+     * @param startfieldNr
+     *        fieldID to start from
      * @return true if the moves are valid
      */
     boolean isValidMove(int cardNr, int steps, int startfieldNr);

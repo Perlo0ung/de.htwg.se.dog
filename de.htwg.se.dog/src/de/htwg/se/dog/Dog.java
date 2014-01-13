@@ -34,6 +34,11 @@ public final class Dog {
         gui = new GraphicalUserInterface(controller);
     }
 
+    /**
+     * Main to starte the game
+     * 
+     * @param args
+     */
     public static void main(String[] args) {
         scanner = new Scanner(System.in);
         //TODO change input of playernumber
