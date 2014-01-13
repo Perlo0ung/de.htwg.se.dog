@@ -28,7 +28,8 @@ public class MoveSevenTest {
     private final int SEVEN = 7;
 
     /*
-     * Gamefield from setUp 0 1 2 3 4 5 6 7 8 9 10 11 - - - - 1 1 - - - - 2 2
+     * Gamefield from setUp 0 1 2 3 4 5 6 7 8 9 10 11
+     *                      - - - - 1 1 - - - - 2  2
      */
     /* Generate empty gamefield with 2 players */
     @Before

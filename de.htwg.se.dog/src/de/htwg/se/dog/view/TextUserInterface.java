@@ -69,7 +69,7 @@ public class TextUserInterface implements IObserver {
         int card = NOTINITIALIZED;
         boolean whileloop = true;
         while (whileloop) {
-            out("Mögliche Sonderbefehle: quit(beendet das Spiel)\n");
+            out("Mögliche Sonderbefehle: quit(beendet das Spiel)");
             card = processCardInput(scanner);
             if (card == QUIT) {
                 return false;
