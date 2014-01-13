@@ -383,6 +383,7 @@ public class GraphicalUserInterface extends JFrame implements IObserver {
         int cardval = getValueForCardIcon();
         if (from != null && cardval != -1) {
             steps = chooseCardToMove(current, to, steps, cardval);
+            //TODO steps wegen switch
             if (controller.isValidMove(cardval, steps, from) && steps != 0) {
                 controller.playCard(cardval, steps, from);
                 winnerDialog();
