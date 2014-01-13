@@ -113,13 +113,12 @@ public class MoveNormalTest {
     //Maybe useless Test :)
     @Test
     public void testMoveOverBlockedOwnHouse() {
-        array[FIVE].putFigure(tp1.removeFigure());
-        array[TWO].putFigure(tp1.removeFigure());
-        array[TWO].setBlocked(true);
-        assertNotNull(array[TWO].getFigure());
-        assertTrue(array[TWO].isHouse());
-        assertTrue(array[TWO].isBlocked());
-        assertTrue(movement.move(3, FIVE));
+        array[1].putFigure(tp1.removeFigure());
+        array[6].putFigure(tp1.removeFigure());
+        array[6].setBlocked(true);
+        System.out.println(gamefield.toString());
+        assertTrue(movement.move(3, 1));
+        System.out.println(gamefield.toString());
         assertNull(array[FIVE].getFigure());
         assertNotNull(array[FOUR].getFigure());
     }

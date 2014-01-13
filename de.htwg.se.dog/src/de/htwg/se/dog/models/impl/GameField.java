@@ -99,11 +99,11 @@ public class GameField implements GameFieldInterface {
             int endFieldNr = startFieldNr + range;
             for (int f = startFieldNr; f < endFieldNr; f++) {
                 if (array[f].isHouse()) {
-                    upper.append(String.format("( %3d )", f));
-                    lower.append(String.format("( %3s )", array[f]));
+                    upper.append(String.format("(%2d: %2d )", array[f].getOwner(), f));
+                    lower.append(String.format("( %5s )", array[f]));
                 } else {
-                    upper.append(String.format("| %3d |", f));
-                    lower.append(String.format("| %3s |", array[f]));
+                    upper.append(String.format("| %2d |", f));
+                    lower.append(String.format("| %2s |", array[f]));
                 }
 
             }
