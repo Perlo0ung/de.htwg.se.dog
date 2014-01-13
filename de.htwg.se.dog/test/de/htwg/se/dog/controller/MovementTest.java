@@ -34,6 +34,7 @@ public class MovementTest {
     public void setUp() throws Exception {
 
         gamefield = new GameField(FIELDSTILLHOUSE, PLAYERCOUNT, HOUSECOUNT);
+        movement = new Movement();
         movement = new Movement(gamefield);
         movement.setMoveStrategie(TWO);
         tp1 = new Player(PLAYERID1, FIGCOUNT, gamefield.calculatePlayerStart(PLAYERID1));
