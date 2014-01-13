@@ -12,6 +12,7 @@ import de.htwg.se.dog.models.PlayerInterface;
  * 
  */
 public class MoveNormal extends Movement {
+    private final GameFieldInterface gameField;
 
     /**
      * konstruktor that sets the gamefield on which we move
@@ -19,6 +20,7 @@ public class MoveNormal extends Movement {
      * @param gameField
      */
     public MoveNormal(GameFieldInterface gameField) {
+        super(gameField);
         this.gameField = gameField;
     }
 

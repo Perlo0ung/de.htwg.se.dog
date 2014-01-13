@@ -25,7 +25,7 @@ public class Movement implements MovementStrategy {
     private static final int OVERHOUSE = -63;
 
     private Movement strategie;
-    protected GameFieldInterface gameField;
+    private GameFieldInterface gameField;
 
     /**
      * superkonstruktor

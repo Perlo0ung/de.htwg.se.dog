@@ -13,6 +13,7 @@ import de.htwg.se.dog.models.GameFieldInterface;
 public class MoveSeven extends Movement {
     private static final int VALUEOFCARD7 = 7;
     private static final int NORMALMOVE = 2;
+    private final GameFieldInterface gameField;
 
     /**
      * konstruktor that sets the gamefield on which we move
@@ -20,6 +21,7 @@ public class MoveSeven extends Movement {
      * @param gameField
      */
     public MoveSeven(GameFieldInterface gameField) {
+        super(gameField);
         this.gameField = gameField;
     }
 
