@@ -120,7 +120,7 @@ public class MoveNormalTest {
         assertTrue(movement.move(3, 1));
         System.out.println(gamefield.toString());
         assertNull(array[FIVE].getFigure());
-        assertNotNull(array[FOUR].getFigure());
+        assertNotNull(array[0].getFigure());
     }
 
     @Test
