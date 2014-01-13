@@ -2,6 +2,9 @@ package de.htwg.se.dog;
 
 import java.util.Scanner;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.google.inject.Inject;
 
 import de.htwg.se.dog.controller.GameTableInterface;
@@ -21,6 +24,7 @@ public final class Dog {
     private static Dog instance;
     private static TextUserInterface tui;
     private static GraphicalUserInterface gui;
+    private static final Logger LOG = LogManager.getLogger("UI");
 
     @Inject
     /**
@@ -34,6 +38,10 @@ public final class Dog {
         gui = new GraphicalUserInterface(controller);
     }
 
+    private synchronized static void out(String str) {
+        LOG.info(str);
+    }
+
     /**
      * Main to starte the game
      * 
@@ -43,7 +51,7 @@ public final class Dog {
         scanner = new Scanner(System.in);
         //TODO change input of playernumber
         //TODO errorhandling playernumberinput
-        System.out.println("Bitte geben sie die Spieler anzahl ein:");
+        out("Bitte geben sie die Spieler anzahl ein:");
         int playernumber = scanner.nextInt();
 
         instance = new Dog(playernumber);
