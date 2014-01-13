@@ -260,11 +260,12 @@ public class Movement implements MovementStrategy {
     public boolean anySwitchMove(int fieldnr) {
         boolean retval = false;
         FieldInterface[] array = gameField.getGameArray();
+        FigureInterface sourceFig = array[fieldnr].getFigure();
         if (array[fieldnr].isHouse()) {
             return retval;
         }
         for (FieldInterface field : array) {
-            boolean okay = field.getFigure() != null && !field.isBlocked();
+            boolean okay = field.getFigure() != null && !field.isBlocked() && field.getFigure() != sourceFig;
             if (okay) {
                 retval = true;
                 break;
