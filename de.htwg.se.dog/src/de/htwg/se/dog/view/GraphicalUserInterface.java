@@ -329,7 +329,7 @@ public class GraphicalUserInterface extends JFrame implements IObserver {
      * highlighted/dehighlighted
      * 
      * @param c
-     *            the component that will be highlighted
+     *        the component that will be highlighted
      */
     private void cardOut(Component c) {
         Boolean constraint = layout.getConstraints(c);
@@ -395,26 +395,27 @@ public class GraphicalUserInterface extends JFrame implements IObserver {
     /**
      * @param current
      * @param to
-     * @param steps
+     * @param retSteps
      * @param cardval
      * @return
      */
     private int chooseCardToMove(final PlayerInterface current, Integer to, int steps, int cardval) {
+        int retSteps = steps;
         if (cardval == CARD1) {
-            steps = cardAceDialog();
+            retSteps = cardAceDialog();
         } else if (cardval == CARD4) {
-            steps = card4Dialog(cardval);
+            retSteps = card4Dialog(cardval);
         } else if (cardval == CARD11) {
             if (to != null) {
-                steps = to;
+                retSteps = to;
             }
         } else if (cardval == CARD14) {
             jokerSpinnerDialog(current);
-            steps = 0;
+            retSteps = 0;
         } else {
-            steps = cardval;
+            retSteps = cardval;
         }
-        return steps;
+        return retSteps;
     }
 
     /**
