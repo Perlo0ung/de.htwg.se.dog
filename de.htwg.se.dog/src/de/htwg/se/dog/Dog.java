@@ -38,7 +38,7 @@ public final class Dog {
         gui = new GraphicalUserInterface(controller);
     }
 
-    private synchronized static void out(String str) {
+    private static synchronized void out(String str) {
         LOG.info(str);
     }
 
