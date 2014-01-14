@@ -1,4 +1,4 @@
-package view.modules;
+package de.htwg.se.dog.models;
 
 import static org.junit.Assert.*;
 import org.junit.Before;
