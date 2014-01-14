@@ -1,4 +1,4 @@
-package de.htwg.se.dog.view.modules;
+package de.htwg.se.dog.view.panels;
 
 import javax.swing.JFrame;
 
