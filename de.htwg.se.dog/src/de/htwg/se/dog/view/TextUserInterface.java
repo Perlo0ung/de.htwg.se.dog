@@ -35,7 +35,7 @@ public class TextUserInterface implements IObserver {
      * Constructor to create TUI-OBJ
      * 
      * @param controller
-     *        controller which should be used to play with
+     *            controller which should be used to play with
      */
     public TextUserInterface(GameTableInterface controller) {
         this.controller = controller;
@@ -58,7 +58,7 @@ public class TextUserInterface implements IObserver {
      * Methode to Process complete player turn
      * 
      * @param scanner
-     *        scanner-OBJ to get UserInput
+     *            scanner-OBJ to get UserInput
      * @return true, if game should continue otherwise false
      */
     public boolean processTurn(Scanner scanner) {
@@ -76,7 +76,7 @@ public class TextUserInterface implements IObserver {
             boolean getOutCard = (card == CARDKING || card == 1 || card == CARDJOKER);
             if (getOutCard && !controller.isPlayerStartfieldBlocked() && putOutnewFigure(scanner, card)) {
                 whileloop = false;
-                continue;
+                break;
             }
             if (card == CARDJOKER) {
                 jokerChoose(scanner);
@@ -91,7 +91,7 @@ public class TextUserInterface implements IObserver {
                 out("führe Zug aus :)\n\n\n\n\n\n");
                 controller.playCard(card, steps, fieldnr);
                 whileloop = false;
-                continue;
+                break;
             }
             out("Das ist kein gültiger Zug, wiederhole Zugauswahl.");
         }
@@ -118,9 +118,7 @@ public class TextUserInterface implements IObserver {
     private boolean playerHasWonCheck() {
         boolean retVal = false;
         if (controller.currentPlayerHaswon()) {
-            out(String.format(
-                    "%n%n%n%n%n%n%n%n%n%n%n%nSpieler %d hat Gewonnen!",
-                    controller.getCurrentPlayerID()));
+            out(String.format("%n%n%n%n%n%n%n%n%n%n%n%nSpieler %d hat Gewonnen!", controller.getCurrentPlayerID()));
             return true;
         }
         return retVal;
