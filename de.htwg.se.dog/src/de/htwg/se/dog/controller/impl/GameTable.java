@@ -45,9 +45,9 @@ public class GameTable extends Observable implements GameTableInterface {
      * Constructor to generate a new gametable
      * 
      * @param playerCount
-     *        number of players
+     *            number of players
      * @param figCount
-     *        number of figures per player
+     *            number of figures per player
      */
     @Inject
     public GameTable(int playerCount) {
@@ -136,7 +136,7 @@ public class GameTable extends Observable implements GameTableInterface {
      * Returns true if the Player has a card that can be played
      * 
      * @param p
-     *        the Player that wants to play
+     *            the Player that wants to play
      * @return true if he can play, otherwise false
      */
     @Override
@@ -164,7 +164,7 @@ public class GameTable extends Observable implements GameTableInterface {
      * Returns a list containing the cards that can be played by Player p
      * 
      * @param p
-     *        the player that wants to play
+     *            the player that wants to play
      * @return a list containing the cards that can be played
      */
     @Override
@@ -183,17 +183,22 @@ public class GameTable extends Observable implements GameTableInterface {
             for (Integer field : p.getFigureRegister()) {
                 movement.setMoveStrategie(c.getValue());
                 //Normal-Move possible?
-                if (c.getValue() != CARD11 && movement.validMove(c.getValue(), field)) {
+                if (movePossible(c, field)) {
                     continue cardIsPossible;
                 }
-                //Switch-Move possible?
-                if (c.getValue() == CARD11 && movement.anySwitchMove(field)) {
-                    continue cardIsPossible;
-                }
+
             }
             it.remove();
         }
         return cards;
+    }
+
+    private boolean movePossible(CardInterface c, Integer field) {
+        boolean ret = false;
+        if (c.getValue() != CARD11 && movement.validMove(c.getValue(), field) || c.getValue() == CARD11 && movement.anySwitchMove(field)) {
+            ret = true;
+        }
+        return ret;
     }
 
     @Override
@@ -296,7 +301,7 @@ public class GameTable extends Observable implements GameTableInterface {
      * sends the message msg to all observers
      * 
      * @param msg
-     *        the message
+     *            the message
      */
     private void sendObserverMessage(String msg) {
         notifyObservers(new IOMsgEvent(msg));
