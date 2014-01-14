@@ -1,4 +1,4 @@
-package view.modules;
+package de.htwg.se.dog.view;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;

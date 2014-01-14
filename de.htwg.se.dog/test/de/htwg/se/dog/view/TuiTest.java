@@ -1,4 +1,4 @@
-package view;
+package de.htwg.se.dog.view;
 
 import org.junit.Before;
 import org.junit.Test;

@@ -1,4 +1,4 @@
-package de.htwg.se.dog.models;
+package de.htwg.se.dog.view;
 
 import static org.junit.Assert.*;
 import org.junit.Before;
