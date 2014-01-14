@@ -123,13 +123,7 @@ public class GameField implements GameFieldInterface {
         return copy;
     }
 
-    /**
-     * returns the field-OBJ on pos fieldnr
-     * 
-     * @param fieldnr
-     * @return returns FieldInterface-OBJ, if fieldnr is out-of-bounce it
-     *         returns null
-     */
+    @Override
     public FieldInterface getFieldForNum(int fieldnr) {
         FieldInterface field = null;
         if (gamefield.length > fieldnr) {

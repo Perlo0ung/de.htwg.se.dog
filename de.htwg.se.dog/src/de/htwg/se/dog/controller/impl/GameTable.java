@@ -34,7 +34,7 @@ public class GameTable extends Observable implements GameTableInterface {
     private static final int FIELDSTILLHOUSE = 16;
     private static final int HOUSECOUNT = 4;
 
-    private final GameField game;
+    private final GameFieldInterface game;
     private final List<PlayerInterface> players;
     private Queue<PlayerInterface> turnPlayer;
     private final CardDealerInterface dealer;

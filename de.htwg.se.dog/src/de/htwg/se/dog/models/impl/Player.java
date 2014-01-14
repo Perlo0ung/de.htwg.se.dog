@@ -6,14 +6,17 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import com.google.inject.Inject;
+
 import de.htwg.se.dog.models.CardInterface;
 import de.htwg.se.dog.models.FigureInterface;
 import de.htwg.se.dog.models.PlayerInterface;
 
 /**
  * Implementation of PlayerInterface
+ * 
  * @author Michael, Christian
- *
+ * 
  */
 public class Player implements PlayerInterface {
 
@@ -28,12 +31,13 @@ public class Player implements PlayerInterface {
      * Constructor to create new Player-OBJ
      * 
      * @param playerNr
-     *        number of player
+     *            number of player
      * @param houseFields
-     *        creates number of houseFields many figures
+     *            creates number of houseFields many figures
      * @param startFieldNr
-     *        saves this number as players startFieldNr
+     *            saves this number as players startFieldNr
      */
+    @Inject
     public Player(int playerNr, int houseFields, int startFieldNr) {
         playernum = playerNr;
         figure = new LinkedList<FigureInterface>();
@@ -47,7 +51,7 @@ public class Player implements PlayerInterface {
 
     @Override
     public List<CardInterface> getCardList() {
-        
+
         return this.cards;
     }
 

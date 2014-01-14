@@ -75,4 +75,13 @@ public interface GameFieldInterface extends Cloneable {
      * @return the startfield number
      */
     int calculatePlayerStart(int playerID);
+
+    /**
+     * returns the field-OBJ on pos fieldnr
+     * 
+     * @param fieldnr
+     * @return returns FieldInterface-OBJ, if fieldnr is out-of-bounce it
+     *         returns null
+     */
+    FieldInterface getFieldForNum(int fieldnr);
 }

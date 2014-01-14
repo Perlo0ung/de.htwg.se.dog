@@ -330,7 +330,7 @@ public class GraphicalUserInterface extends JFrame implements IObserver {
      * highlighted/dehighlighted
      * 
      * @param c
-     *        the component that will be highlighted
+     *            the component that will be highlighted
      */
     private void cardOut(Component c) {
         Boolean constraint = layout.getConstraints(c);
@@ -428,6 +428,7 @@ public class GraphicalUserInterface extends JFrame implements IObserver {
             Object[] options = { "Exit" };
             String won = String.format("Glückwunsch Spieler %d du hast gewonnen!!", controller.getCurrentPlayerID());
             int decision = JOptionPane.showOptionDialog(this, won, "SIEG", JOptionPane.YES_OPTION, JOptionPane.INFORMATION_MESSAGE, icon, options, options[0]);
+            this.repaint();
             if (decision < 1) {
                 System.exit(0);
             }
