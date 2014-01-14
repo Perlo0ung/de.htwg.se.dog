@@ -1,4 +1,4 @@
-package de.htwg.se.dog.view.modules;
+package de.htwg.se.dog.util;
 
 import static org.junit.Assert.*;
 import org.junit.Before;
