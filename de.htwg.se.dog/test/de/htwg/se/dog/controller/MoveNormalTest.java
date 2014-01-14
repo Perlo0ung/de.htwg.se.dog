@@ -110,7 +110,6 @@ public class MoveNormalTest {
         assertTrue(movement.move(5, 0));
     }
 
-    //Maybe useless Test :)
     @Test
     public void testMoveOverBlockedOwnHouse() {
         array[1].putFigure(tp1.removeFigure());
@@ -121,6 +120,7 @@ public class MoveNormalTest {
         System.out.println(gamefield.toString());
         assertNull(array[FIVE].getFigure());
         assertNotNull(array[0].getFigure());
+        assertTrue(movement.move(1, 0));
     }
 
     @Test
