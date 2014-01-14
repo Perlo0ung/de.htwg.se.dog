@@ -238,7 +238,7 @@ public class GuiDrawGameField extends JPanel implements MouseListener {
      * @param i
      */
     private void startFieldArc(Graphics2D g2d, int start, double r2, double x, double y, Arc2D.Double gArc, int i) {
-        int size = game.getFieldSize() - 1;
+        int size = game.getFieldSize();
         if (i % start == 0 && !array[i].isBlocked()) {
             if (array[i].getFigure() == null) {
                 // set startfield color
