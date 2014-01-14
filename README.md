@@ -16,7 +16,10 @@ DOGGAME
 <li>patterns</li>
 <li>components and interfaces</li>
 </ul><p>The initial user interface is a console-based text UI. Its purpose is to be able to interact with the application as early as possible. 
-The Tui is built in a way so that it continues to run in parallel with a GUI or WUI. </p></article>
+The Tui is built in a way so that it continues to run in parallel with a GUI or WUI.
+
+The game has been built under Java 1.6. There is currently no .jar availiable, so the game has to be started from Dog.class main in eclipse. 
+</p></article>
   </div>
 
   </div>
