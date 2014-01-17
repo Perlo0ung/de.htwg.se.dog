@@ -28,7 +28,7 @@ public class TextUserInterface implements IObserver {
     private static final int QUIT = -1;
     private static final int SKIP = -2;
     private static final int RETRY = -3;
-    private static final Logger LOG = LogManager.getLogger("UI");
+    private static final Logger LOG = LogManager.getLogger("doggame");
     private final GameTableInterface controller;
 
     /**

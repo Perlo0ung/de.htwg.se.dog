@@ -2,6 +2,6 @@ analyseLocally=true
 eclipse.preferences.version=1
 extraProperties=
 lastAnalysisDate=1385149905776
-projectKey=de.htwg.se.dog\:de.htwg.se.dog
+projectKey=de.htwg.se\:dog
 serverUrl=http\://localhost\:9000
 version=2
