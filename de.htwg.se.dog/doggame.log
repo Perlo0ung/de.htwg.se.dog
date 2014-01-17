@@ -153,3 +153,20 @@ Cards: Drei(3) Sieben(7) Acht(8) Bube(11)
 
 17.01.14 12:10:10 INFO  [AWT-EventQueue-0] (TextUserInterface.java:46) - PlayerId: 2
 Cards: Drei(3) Drei(3) Sechs(6) Acht(8) 
+17.01.14 12:21:34 INFO  [main] (TextUserInterface.java:46) - |  0 ||  1 ||  2 ||  3 ||  4 ||  5 ||  6 ||  7 ||  8 ||  9 || 10 || 11 || 12 || 13 || 14 || 15 |( 2: 16 )( 2: 17 )( 2: 18 )( 2: 19 )
+|    ||    ||    ||    ||    ||    ||    ||    ||    ||    ||    ||    ||    ||    ||    ||    |(       )(       )(       )(       )
+
+| 20 || 21 || 22 || 23 || 24 || 25 || 26 || 27 || 28 || 29 || 30 || 31 || 32 || 33 || 34 || 35 |( 3: 36 )( 3: 37 )( 3: 38 )( 3: 39 )
+|    ||    ||    ||    ||    ||    ||    ||    ||    ||    ||    ||    ||    ||    ||    ||    |(       )(       )(       )(       )
+
+| 40 || 41 || 42 || 43 || 44 || 45 || 46 || 47 || 48 || 49 || 50 || 51 || 52 || 53 || 54 || 55 |( 4: 56 )( 4: 57 )( 4: 58 )( 4: 59 )
+|    ||    ||    ||    ||    ||    ||    ||    ||    ||    ||    ||    ||    ||    ||    ||    |(       )(       )(       )(       )
+
+| 60 || 61 || 62 || 63 || 64 || 65 || 66 || 67 || 68 || 69 || 70 || 71 || 72 || 73 || 74 || 75 |( 1: 76 )( 1: 77 )( 1: 78 )( 1: 79 )
+|    ||    ||    ||    ||    ||    ||    ||    ||    ||    ||    ||    ||    ||    ||    ||    |(       )(       )(       )(       )
+
+
+17.01.14 12:21:34 INFO  [main] (TextUserInterface.java:46) - PlayerId: 1
+Cards: Ass(1) Drei(3) Vier(4) Sechs(6) Dame(12) Koenig(13) 
+17.01.14 12:21:34 INFO  [main] (TextUserInterface.java:46) - Mögliche Sonderbefehle: quit(beendet das Spiel)
+17.01.14 12:21:34 INFO  [main] (TextUserInterface.java:46) - Bitte zu spielende Kartennummer auswählen:
