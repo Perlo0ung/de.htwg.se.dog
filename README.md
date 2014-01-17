@@ -28,8 +28,8 @@ When you start the game, you have to type in the number with how many Players yo
 ![image](https://raw.github.com/miofferg/de.htwg.se.dog/master/de.htwg.se.dog/src/resources/dog_game.JPG)
 
 Contact:
-*[Michael Offergeld](mailto:miofferg@htwg-konstanz.de)
-*[Christian Wäschle](mailto:chwaesch@htwg-konstanz.de)
+* [Michael Offergeld](mailto:miofferg@htwg-konstanz.de)
+* [Christian Wäschle](mailto:chwaesch@htwg-konstanz.de)
 </p></article>
   </div>
 
