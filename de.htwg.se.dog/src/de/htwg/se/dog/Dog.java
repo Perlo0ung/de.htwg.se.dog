@@ -5,8 +5,6 @@ import java.util.Scanner;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.google.inject.Inject;
-
 import de.htwg.se.dog.controller.GameTableInterface;
 import de.htwg.se.dog.controller.impl.GameTable;
 import de.htwg.se.dog.view.GraphicalUserInterface;
@@ -26,9 +24,9 @@ public final class Dog {
     private static GraphicalUserInterface gui;
     private static final Logger LOG = LogManager.getLogger("UI");
 
-    @Inject
     /**
      * Creates a new Doggame
+     * 
      * @param playernumber
      */
     private Dog(int playernumber) {
