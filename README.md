@@ -1,6 +1,5 @@
 DOGGAME
 ==============
-![image](https://www.dropbox.com/s/t8darti3q2t2pcx/dog.JPG)
 
 <p>This project is an implementation of the Doggame game for the lecture <strong>Software Engineering</strong> at the University of Applied Science Konstanz, Germany.</p>
 
@@ -26,6 +25,7 @@ When you start the game, you have to type in the number with how many Players yo
 
 * *Note*: You can switch playing after every round between the TUI and the GUI!
 
+![image](https://raw.github.com/miofferg/de.htwg.se.dog/master/de.htwg.se.dog/src/resources/dog_game.JPG)
 
 Contact:
 [Michael Offergeld](mailto:miofferg@htwg-konstanz.de)
