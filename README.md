@@ -27,9 +27,9 @@ When you start the game, you have to type in the number with how many Players yo
 * *Note*: You can switch playing after every round between the TUI and the GUI!
 
 
-
-* [Michael Offergeld](mailto:miofferg@htwg-konstanz.de)
-* [Christian Wäschle](mailto:chwaesch@htwg-konstanz.de)
+Contact:
+[Michael Offergeld](mailto:miofferg@htwg-konstanz.de)
+[Christian Wäschle](mailto:chwaesch@htwg-konstanz.de)
 </p></article>
   </div>
 
