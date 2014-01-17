@@ -21,7 +21,7 @@ The Tui is built in a way so that it continues to run in parallel with a GUI or 
 The game has been built under Java 1.6. There is currently no .jar availiable, so the game has to be started from Dog.class main in eclipse.
 
 ## How
-When you start the game, you have to type in the number with how many Players you want to play (2 -6). After you typed in the name for each Player, the Gui will start and you are ready to play the game.
+When you start the game, you have to type in the number with how many Players you want to play. After you typed in the name for each Player, the Gui will start and you are ready to play the game.
 
 * *Note*: You can switch playing after every round between the TUI and the GUI!
 
