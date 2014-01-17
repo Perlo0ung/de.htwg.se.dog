@@ -1,6 +1,6 @@
 DOGGAME
 ==============
-
+![image](https://www.dropbox.com/s/t8darti3q2t2pcx/dog.JPG)
 
 <p>This project is an implementation of the Doggame game for the lecture <strong>Software Engineering</strong> at the University of Applied Science Konstanz, Germany.</p>
 
