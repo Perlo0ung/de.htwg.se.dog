@@ -5,7 +5,7 @@ DOGGAME
 
 <p>Main goal of the application is to demonstrate the development of a software project in an agile development methodology. </p>
 
-<p>It shows </p>
+<p>It shows: </p>
 
 <ul>
 <li>version control with git </li>
